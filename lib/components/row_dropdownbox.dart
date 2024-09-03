@@ -6,12 +6,13 @@ class RowDropdownBox extends StatelessWidget {
     super.key,
     required this.title,
     required this.options,
-    required this.onSelecte,
+    required this.onSelect,
+    required this.varName,
   });
   final String title;
   final List<String> options;
-  // String selectedItem;
-  final Function(String?) onSelecte;
+  final String varName;
+  final Function(String?, String) onSelect;
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -29,7 +30,8 @@ class RowDropdownBox extends StatelessWidget {
         DropdownBox(
           options: options,
           selectedItem: options.first,
-          onSelecte: onSelecte,
+          onSelect: onSelect,
+          varName: varName,
         ),
       ],
     );

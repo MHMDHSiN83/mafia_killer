@@ -15,27 +15,60 @@ class PlayersPage extends StatefulWidget {
 }
 
 class _PlayersPageState extends State<PlayersPage> {
+  var games = {'number1': 'کلاسیک', 'number2': '2', 'number3': '00:30'};
   final TextEditingController _controller = TextEditingController();
 
-  String? _selectedItem;
-  String number1 = "2";
-  String number2 = "00:30";
-
-  void _onItemSelected(String? selectedItem) {
+  void _onItemSelected(String? selectedItem, String varName) {
     setState(() {
-      _selectedItem = selectedItem!;
+      games[varName] = selectedItem!;
     });
   }
 
-  void _increaseNumber() {
+  void _increaseNumber(bool isTimer, String varName) {
     setState(() {
-      number1 = (int.parse(number1) + 1).toString();
+      if (isTimer) {
+        final List<String> splitted = games[varName]!.split(':');
+        int minutes = int.parse(splitted[0]);
+        int seconds = int.parse(splitted[1]);
+        if (minutes >= 9 && seconds >= 50) {
+          return;
+        }
+        if (seconds >= 50) {
+          games[varName] = '0${minutes + 1}:00';
+        } else {
+          games[varName] = '0$minutes:${seconds + 10}';
+        }
+      } else {
+        if (games[varName] == '9') {
+          return;
+        }
+        games[varName] = (int.parse(games[varName]!) + 1).toString();
+      }
     });
   }
 
-  void _decreaseNumber() {
+  void _decreaseNumber(bool isTimer, String varName) {
     setState(() {
-      number1 = (int.parse(number1) - 1).toString();
+      if (isTimer) {
+        final List<String> splitted = games[varName]!.split(':');
+        int minutes = int.parse(splitted[0]);
+        int seconds = int.parse(splitted[1]);
+        if (minutes <= 0 && seconds <= 10) {
+          return;
+        }
+        if (seconds <= 0) {
+          games[varName] = '0${minutes - 1}:50';
+        } else if (seconds <= 10) {
+          games[varName] = '0$minutes:${seconds - 10}0';
+        } else {
+          games[varName] = '0$minutes:${seconds - 10}';
+        }
+      } else {
+        if (games[varName] == '0') {
+          return;
+        }
+        games[varName] = (int.parse(games[varName]!) - 1).toString();
+      }
     });
   }
 
@@ -87,7 +120,8 @@ class _PlayersPageState extends State<PlayersPage> {
                     child: RowDropdownBox(
                       title: 'سناریو بازی',
                       options: context.watch<AppHandler>().scenarios,
-                      onSelecte: _onItemSelected,
+                      onSelect: _onItemSelected,
+                      varName: 'number1',
                     ),
                   ),
                 ),
@@ -99,7 +133,23 @@ class _PlayersPageState extends State<PlayersPage> {
                       title: 'تعداد استعلام‌های بازی',
                       increaseNumber: _increaseNumber,
                       decreaseNumber: _decreaseNumber,
-                      number: number1,
+                      number: games['number2']!,
+                      isTimer: false,
+                      varName: 'number2',
+                    ),
+                  ),
+                ),
+                Expanded(
+                  flex: 4,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 30),
+                    child: RowCounterBox(
+                      title: 'تعداد استعلام‌های بازی',
+                      increaseNumber: _increaseNumber,
+                      decreaseNumber: _decreaseNumber,
+                      number: games['number3']!,
+                      isTimer: true,
+                      varName: 'number3',
                     ),
                   ),
                 ),

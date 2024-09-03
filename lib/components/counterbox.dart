@@ -7,10 +7,14 @@ class CounterBox extends StatefulWidget {
     required this.increaseNumber,
     required this.decreaseNumber,
     required this.number,
+    required this.isTimer,
+    required this.varName,
   });
-  final Function() increaseNumber;
-  final Function() decreaseNumber;
+  final Function(bool, String) increaseNumber;
+  final Function(bool, String) decreaseNumber;
+  bool isTimer;
   String number;
+  String varName;
 
   @override
   State<CounterBox> createState() => _CounterBoxState();
@@ -22,7 +26,7 @@ class _CounterBoxState extends State<CounterBox> {
     return Row(
       children: [
         GestureDetector(
-          onTap: widget.increaseNumber,
+          onTap: () => widget.increaseNumber(widget.isTimer, widget.varName),
           child: Icon(
             Icons.keyboard_arrow_right,
             color: Color(0xFF07FFB5),
@@ -37,7 +41,7 @@ class _CounterBoxState extends State<CounterBox> {
           ),
         ),
         GestureDetector(
-          onTap: widget.decreaseNumber,
+          onTap: () => widget.decreaseNumber(widget.isTimer, widget.varName),
           child: Icon(
             Icons.keyboard_arrow_left,
             color: Color(0xFF07FFB5),
