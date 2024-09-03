@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mafia_killer/components/counterbox.dart';
-import 'package:mafia_killer/components/dropdownbox.dart';
 
 class RowCounterBox extends StatelessWidget {
   RowCounterBox({
@@ -9,12 +8,15 @@ class RowCounterBox extends StatelessWidget {
     required this.increaseNumber,
     required this.decreaseNumber,
     required this.number,
+    required this.isTimer,
+    required this.varName,
   });
   final String title;
-  // String selectedItem;
   String number;
-  final Function() increaseNumber;
-  final Function() decreaseNumber;
+  final Function(bool, String) increaseNumber;
+  final Function(bool, String) decreaseNumber;
+  bool isTimer;
+  String varName;
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -33,6 +35,8 @@ class RowCounterBox extends StatelessWidget {
           increaseNumber: increaseNumber,
           decreaseNumber: decreaseNumber,
           number: number,
+          isTimer: isTimer,
+          varName: varName,
         ),
       ],
     );

@@ -4,10 +4,13 @@ class DropdownBox extends StatefulWidget {
   DropdownBox(
       {super.key,
       required this.options,
-      required this.onSelecte,
-      required this.selectedItem});
+      required this.onSelect,
+      required this.selectedItem,
+      required this.varName,
+      });
   final List<String> options;
-  final Function(String?) onSelecte;
+  final Function(String?, String) onSelect;
+  final String varName;
   String selectedItem;
 
   @override
@@ -22,7 +25,7 @@ class _DropdownBoxState extends State<DropdownBox> {
       height: 40,
       child: DropdownButtonFormField<String>(
         value: widget.selectedItem,
-        onChanged: widget.onSelecte,
+        onChanged: (String? selectedItem) => widget.onSelect(selectedItem, widget.varName),
         isExpanded: true,
         dropdownColor: Color(0xFF382E2E),
         decoration: const InputDecoration(
