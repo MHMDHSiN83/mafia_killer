@@ -17,7 +17,7 @@ class _PlayersPageState extends State<PlayersPage> {
   var games = {'number1': 'کلاسیک', 'number2': '2', 'number3': '00:30'};
   final TextEditingController _controller = TextEditingController();
 
-  void _onItemSelected(String? selectedItem, String varName) {/
+  void _onItemSelected(String? selectedItem, String varName) {
     setState(() {
       games[varName] = selectedItem!;
     });

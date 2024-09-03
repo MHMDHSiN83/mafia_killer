@@ -1,5 +1,3 @@
-import 'package:flutter/foundation.dart';
-
 class Player {
   Player(this._name);
 

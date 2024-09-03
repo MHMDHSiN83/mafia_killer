@@ -11,7 +11,7 @@ class IntroPage extends StatelessWidget {
           color: Colors.red,
           child: IconButton(
             onPressed: () {
-              Navigator.pushNamed(context, '/players_page');
+              Navigator.pushNamed(context, '/game_settings_page');
             },
             icon: Icon(
               Icons.play_arrow,
