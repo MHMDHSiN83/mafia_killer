@@ -33,8 +33,6 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: const IntroPage(),
       // theme: ThemeData(fontFamily: 'Negar'),
-      // theme: ThemeData(fontFamily: 'Negar'),
-      theme: ThemeData.dark(),
       routes: {
         '/intro_page': (context) => const IntroPage(),
         '/players_page': (context) => PlayersPage(),
