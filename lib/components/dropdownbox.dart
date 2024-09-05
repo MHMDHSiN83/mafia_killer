@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
 class DropdownBox extends StatefulWidget {
-  DropdownBox(
-      {super.key,
-      required this.options,
-      required this.onSelect,
-      required this.selectedItem,
-      required this.varName,
-      });
+  DropdownBox({
+    super.key,
+    required this.options,
+    required this.onSelect,
+    required this.selectedItem,
+    required this.varName,
+  });
   final List<String> options;
   final Function(String?, String) onSelect;
   final String varName;
@@ -25,7 +25,8 @@ class _DropdownBoxState extends State<DropdownBox> {
       height: 40,
       child: DropdownButtonFormField<String>(
         value: widget.selectedItem,
-        onChanged: (String? selectedItem) => widget.onSelect(selectedItem, widget.varName),
+        onChanged: (String? selectedItem) =>
+            widget.onSelect(selectedItem, widget.varName),
         isExpanded: true,
         dropdownColor: Color(0xFF382E2E),
         decoration: const InputDecoration(
@@ -48,9 +49,11 @@ class _DropdownBoxState extends State<DropdownBox> {
             child: Text(
               value,
               style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16),
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                overflow: TextOverflow.ellipsis,
+                fontSize: 16,
+              ),
             ),
           );
         }).toList(),
