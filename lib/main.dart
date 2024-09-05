@@ -33,8 +33,8 @@ class MyApp extends StatelessWidget {
       locale: Locale("fa", "IR"), // OR Locale('ar', 'AE') OR Other RTL locales,
       debugShowCheckedModeBanner: false,
       home: const IntroPage(),
-      // theme: ThemeData(fontFamily: 'Negar'),
-      // theme: ThemeData(fontFamily: 'Negar'),
+      //theme: ThemeData(fontFamily: 'Negar'),
+      //theme: ThemeData(fontFamily: 'Negar'),
       theme: ThemeData.dark(),
       routes: {
         '/intro_page': (context) => const IntroPage(),

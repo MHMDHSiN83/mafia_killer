@@ -35,11 +35,11 @@ class MyOutlinedButton extends StatelessWidget {
               children: [
                 Icon(
                   icon,
-                  size: 30,
+                  size: 40,
                   color: color,
                 ),
                 Text(
-                  "$text  ",
+                  "$text    ",
                   style: TextStyle(
                     color: color,
                     fontSize: 26,
@@ -62,7 +62,7 @@ class MyOutlinedButton extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                "  $text",
+                "    $text",
                 style: TextStyle(
                   color: color,
                   fontSize: 26,
@@ -71,7 +71,7 @@ class MyOutlinedButton extends StatelessWidget {
               ),
               Icon(
                 icon,
-                size: 100,
+                size: 40,
                 color: color,
               )
             ],
