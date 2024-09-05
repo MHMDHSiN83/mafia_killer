@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mafia_killer/models/language.dart';
+import 'package:mafia_killer/themes/app_color.dart';
 
 class CounterBox extends StatefulWidget {
   CounterBox({
@@ -29,14 +30,14 @@ class _CounterBoxState extends State<CounterBox> {
           onTap: () => widget.increaseNumber(widget.isTimer, widget.varName),
           child: Icon(
             Icons.keyboard_arrow_right,
-            color: Color(0xFF07FFB5),
+            color: AppColors.greenColor,
             size: 40,
           ),
         ),
         Text(
           Language.toPersian(widget.number),
           style: TextStyle(
-            color: Colors.white,
+            color: Theme.of(context).colorScheme.inversePrimary,
             fontSize: 30,
           ),
         ),
@@ -44,7 +45,7 @@ class _CounterBoxState extends State<CounterBox> {
           onTap: () => widget.decreaseNumber(widget.isTimer, widget.varName),
           child: Icon(
             Icons.keyboard_arrow_left,
-            color: Color(0xFF07FFB5),
+            color: AppColors.greenColor,
             size: 40,
           ),
         ),

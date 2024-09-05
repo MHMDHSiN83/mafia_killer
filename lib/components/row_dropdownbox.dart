@@ -22,7 +22,7 @@ class RowDropdownBox extends StatelessWidget {
         Text(
           title,
           style: TextStyle(
-            color: Colors.white,
+            color: Theme.of(context).colorScheme.inversePrimary,
             fontWeight: FontWeight.bold,
             fontSize: 18,
           ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mafia_killer/themes/app_color.dart';
 
 class DialogBox extends StatelessWidget {
   DialogBox(
@@ -15,7 +16,7 @@ class DialogBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-        backgroundColor: Color(0xFF382E2E),
+        backgroundColor: Theme.of(context).colorScheme.primary,
         elevation: 10,
         content: SizedBox(
             height: 160,
@@ -24,19 +25,28 @@ class DialogBox extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 TextField(
-                  style: const TextStyle(color: Colors.white),
-                  decoration: const InputDecoration(
+                  style: TextStyle(
+                      color: Theme.of(context).colorScheme.inversePrimary),
+                  decoration: InputDecoration(
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(4)),
-                        borderSide: BorderSide(width: 1, color: Colors.white),
+                        borderSide: BorderSide(
+                          width: 1,
+                          color: Theme.of(context).colorScheme.inversePrimary,
+                        ),
                       ),
                       // border: OutlineInputBorder(),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(4)),
-                        borderSide: BorderSide(width: 1, color: Colors.white),
+                        borderSide: BorderSide(
+                          width: 1,
+                          color: Theme.of(context).colorScheme.inversePrimary,
+                        ),
                       ),
                       labelText: "نام بازیکن",
-                      labelStyle: TextStyle(color: Colors.white, fontSize: 20),
+                      labelStyle: TextStyle(
+                          color: Theme.of(context).colorScheme.inversePrimary,
+                          fontSize: 20),
                       hintText: 'نام بازیکن را وارد کنید...',
                       hintStyle:
                           TextStyle(color: Color.fromARGB(139, 255, 255, 255))),
@@ -50,18 +60,20 @@ class DialogBox extends StatelessWidget {
                       child: Text(
                         "ذخیره",
                         style: TextStyle(
-                            color: Colors.white, fontWeight: FontWeight.bold),
+                            color: Theme.of(context).colorScheme.inversePrimary,
+                            fontWeight: FontWeight.bold),
                       ),
-                      color: Color(0xFF17C692),
+                      color: AppColors.darkgreenColor,
                     ),
                     MaterialButton(
                       onPressed: onCancel,
                       child: Text(
                         "بازگشت",
                         style: TextStyle(
-                            color: Colors.white, fontWeight: FontWeight.bold),
+                            color: Theme.of(context).colorScheme.inversePrimary,
+                            fontWeight: FontWeight.bold),
                       ),
-                      color: Color(0xFFE01357),
+                      color: AppColors.redColor,
                     )
                   ],
                 )

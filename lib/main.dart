@@ -3,6 +3,7 @@ import 'package:mafia_killer/models/app_handler.dart';
 import 'package:mafia_killer/pages/game_settings_page.dart';
 import 'package:mafia_killer/pages/intro_page.dart';
 import 'package:mafia_killer/pages/players_page.dart';
+import 'package:mafia_killer/themes/dark_mode.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
@@ -34,8 +35,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: const IntroPage(),
       // theme: ThemeData(fontFamily: 'Negar'),
-      // theme: ThemeData(fontFamily: 'Negar'),
-      theme: ThemeData.dark(),
+      theme: darkMode,
       routes: {
         '/intro_page': (context) => const IntroPage(),
         '/players_page': (context) => PlayersPage(),

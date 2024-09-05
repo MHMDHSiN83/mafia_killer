@@ -3,6 +3,7 @@ import 'package:mafia_killer/components/my_divider.dart';
 import 'package:mafia_killer/components/row_counterbox.dart';
 import 'package:mafia_killer/components/row_dropdownbox.dart';
 import 'package:mafia_killer/models/app_handler.dart';
+import 'package:mafia_killer/themes/app_color.dart';
 import 'package:provider/provider.dart';
 
 class GameSettingsPage extends StatefulWidget {
@@ -81,12 +82,16 @@ class _GameSettingsPageState extends State<GameSettingsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "Mafia Killer",
-        ),
-      ),
-      body: Padding(
+      body: Container(
+        decoration: const BoxDecoration(
+            gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [
+            Color.fromRGBO(17, 7, 7, 1),
+            Color.fromRGBO(40, 7, 7, 1),
+          ],
+        )),
         padding: const EdgeInsets.symmetric(horizontal: 30),
         child: ListView(
           children: [
@@ -137,7 +142,7 @@ class _GameSettingsPageState extends State<GameSettingsPage> {
                 Text(
                   'صدای موزیک بازی در شب',
                   style: TextStyle(
-                    color: Colors.white,
+                    color: Theme.of(context).colorScheme.inversePrimary,
                     fontWeight: FontWeight.bold,
                     fontSize: 18,
                   ),
@@ -155,8 +160,8 @@ class _GameSettingsPageState extends State<GameSettingsPage> {
                           : Icons.volume_off_rounded,
                       size: 40,
                       color: gameSettings['playMusic']
-                          ? Color(0xFF07FFB5)
-                          : Color(0xFFE01357),
+                          ? AppColors.greenColor
+                          : AppColors.redColor,
                     )),
               ],
             ),
@@ -167,7 +172,7 @@ class _GameSettingsPageState extends State<GameSettingsPage> {
                 Text(
                   'افکت‌های صوتی',
                   style: TextStyle(
-                    color: Colors.white,
+                    color: Theme.of(context).colorScheme.inversePrimary,
                     fontWeight: FontWeight.bold,
                     fontSize: 18,
                   ),
@@ -184,8 +189,8 @@ class _GameSettingsPageState extends State<GameSettingsPage> {
                     decoration: BoxDecoration(
                         border: Border.all(
                           color: gameSettings['soundEffect']
-                              ? Color(0xFFE01357)
-                              : Color(0xFF07FFB5),
+                              ? AppColors.redColor
+                              : AppColors.greenColor,
                           width: 2,
                         ),
                         borderRadius: BorderRadius.circular(2)),
@@ -193,8 +198,8 @@ class _GameSettingsPageState extends State<GameSettingsPage> {
                       gameSettings['soundEffect'] ? "غیرفعال" : "فعال",
                       style: TextStyle(
                         color: gameSettings['soundEffect']
-                            ? Color(0xFFE01357)
-                            : Color(0xFF07FFB5),
+                            ? AppColors.redColor
+                            : AppColors.greenColor,
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                       ),

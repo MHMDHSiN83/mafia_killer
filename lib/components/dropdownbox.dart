@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mafia_killer/themes/app_color.dart';
 
 class DropdownBox extends StatefulWidget {
   DropdownBox({
@@ -40,7 +41,7 @@ class _DropdownBoxState extends State<DropdownBox> {
         ),
         icon: Icon(
           Icons.keyboard_arrow_down,
-          color: Color(0xFF07FFB5),
+          color: AppColors.greenColor,
           size: 38,
         ),
         items: widget.options.map<DropdownMenuItem<String>>((String value) {
@@ -49,7 +50,7 @@ class _DropdownBoxState extends State<DropdownBox> {
             child: Text(
               value,
               style: TextStyle(
-                color: Colors.white,
+                color: Theme.of(context).colorScheme.inversePrimary,
                 fontWeight: FontWeight.bold,
                 overflow: TextOverflow.ellipsis,
                 fontSize: 16,

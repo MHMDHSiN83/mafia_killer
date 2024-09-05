@@ -3,6 +3,7 @@ import 'package:mafia_killer/components/checkbox.dart';
 import 'package:mafia_killer/components/dialogbox.dart';
 import 'package:mafia_killer/models/app_handler.dart';
 import 'package:mafia_killer/models/player.dart';
+import 'package:mafia_killer/themes/app_color.dart';
 import 'package:provider/provider.dart';
 
 class PlayerTile extends StatefulWidget {
@@ -51,8 +52,11 @@ class _PlayerTileState extends State<PlayerTile> {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          color: const Color(0xFF382E2E),
-          border: Border.all(color: Color(0xFF707070), width: 3),
+          // color: const Color(0xFF382E2E),
+          // border: Border.all(color: Color(0xFF707070), width: 3),
+          color: Theme.of(context).colorScheme.primary,
+          border: Border.all(
+              color: Theme.of(context).colorScheme.secondary, width: 3),
           borderRadius: BorderRadius.circular(5)),
       height: 60.0,
       child: Padding(
@@ -71,7 +75,7 @@ class _PlayerTileState extends State<PlayerTile> {
                   child: Text(
                     widget.player.name,
                     style: TextStyle(
-                      color: Colors.white,
+                      color: Theme.of(context).colorScheme.inversePrimary,
                       fontSize: 27,
                     ),
                   ),
@@ -90,7 +94,7 @@ class _PlayerTileState extends State<PlayerTile> {
                   icon: Icon(
                     Icons.edit,
                     size: 35,
-                    color: Colors.white,
+                    color: Theme.of(context).colorScheme.inversePrimary,
                   ),
                 ),
                 IconButton(
@@ -99,7 +103,7 @@ class _PlayerTileState extends State<PlayerTile> {
                   icon: Icon(
                     Icons.delete,
                     size: 35,
-                    color: Color(0xFFE01357),
+                    color: AppColors.redColor,
                   ),
                 ),
               ],

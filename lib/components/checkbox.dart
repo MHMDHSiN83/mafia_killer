@@ -21,6 +21,7 @@ class _MyCheckBoxState extends State<MyCheckBox> {
       scale: widget.scale,
       child: Checkbox(
         value: widget.isChecked,
+        checkColor: Theme.of(context).colorScheme.inversePrimary,
         onChanged: widget.onChanged,
         fillColor:
             WidgetStateProperty.resolveWith<Color>((Set<WidgetState> states) {

@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:mafia_killer/components/my_outlined_button.dart';
 import 'package:mafia_killer/components/player_tile.dart';
-import 'package:mafia_killer/components/row_counterbox.dart';
-import 'package:mafia_killer/components/row_dropdownbox.dart';
 import 'package:mafia_killer/models/app_handler.dart';
+import 'package:mafia_killer/themes/app_color.dart';
 import 'package:provider/provider.dart';
 
 class PlayersPage extends StatefulWidget {
@@ -84,11 +82,6 @@ class _PlayersPageState extends State<PlayersPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xFF111111),
-      appBar: AppBar(
-        title: Text(
-          "Mafia Killer",
-        ),
-      ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -114,46 +107,6 @@ class _PlayersPageState extends State<PlayersPage> {
                   }),
                 ),
                 Expanded(
-                  flex: 4,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 30),
-                    child: RowDropdownBox(
-                      title: 'سناریو بازی',
-                      options: context.watch<AppHandler>().scenarios,
-                      onSelect: _onItemSelected,
-                      varName: 'number1',
-                    ),
-                  ),
-                ),
-                Expanded(
-                  flex: 4,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 30),
-                    child: RowCounterBox(
-                      title: 'تعداد استعلام‌های بازی',
-                      increaseNumber: _increaseNumber,
-                      decreaseNumber: _decreaseNumber,
-                      number: games['number2']!,
-                      isTimer: false,
-                      varName: 'number2',
-                    ),
-                  ),
-                ),
-                Expanded(
-                  flex: 4,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 30),
-                    child: RowCounterBox(
-                      title: 'تعداد استعلام‌های بازی',
-                      increaseNumber: _increaseNumber,
-                      decreaseNumber: _decreaseNumber,
-                      number: games['number3']!,
-                      isTimer: true,
-                      varName: 'number3',
-                    ),
-                  ),
-                ),
-                Expanded(
                   flex: 1,
                   child: Padding(
                     padding:
@@ -162,7 +115,14 @@ class _PlayersPageState extends State<PlayersPage> {
                       Expanded(
                         flex: 1,
                         child: Container(
-                            color: Colors.white,
+                            decoration: BoxDecoration(
+                              color:
+                                  Theme.of(context).colorScheme.inversePrimary,
+                              borderRadius: BorderRadius.only(
+                                bottomRight: Radius.circular(4),
+                                topRight: Radius.circular(4),
+                              ),
+                            ),
                             child: IconButton(
                                 padding: EdgeInsets.zero,
                                 onPressed: () {
@@ -170,7 +130,7 @@ class _PlayersPageState extends State<PlayersPage> {
                                 },
                                 icon: Icon(
                                   Icons.person_add_outlined,
-                                  color: Color(0xFF07FFB5),
+                                  color: AppColors.greenColor,
                                   size: 50,
                                 ))),
                       ),
@@ -178,26 +138,31 @@ class _PlayersPageState extends State<PlayersPage> {
                         flex: 4,
                         child: TextField(
                           textAlign: TextAlign.center,
-                          style: const TextStyle(
-                              color: Colors.black,
+                          style: TextStyle(
+                              color: Theme.of(context).colorScheme.primary,
                               fontSize: 20,
                               fontWeight: FontWeight.bold),
-                          decoration: const InputDecoration(
-                              contentPadding: EdgeInsets.symmetric(
+                          decoration: InputDecoration(
+                              contentPadding: const EdgeInsets.symmetric(
                                   vertical: 10, horizontal: 5),
                               filled: true,
-                              fillColor: Colors.white,
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(0)),
+                              fillColor:
+                                  Theme.of(context).colorScheme.inversePrimary,
+                              enabledBorder: const OutlineInputBorder(
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(4),
+                                  bottomLeft: Radius.circular(4),
+                                ),
                               ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(0)),
+                              focusedBorder: const OutlineInputBorder(
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(4),
+                                  bottomLeft: Radius.circular(4),
+                                ),
                               ),
                               hintText: 'نام بازیکن را وارد کنید...',
                               hintStyle: TextStyle(
-                                  color: Color(0xFFD2CAD8),
+                                  color: Theme.of(context).colorScheme.tertiary,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 20)),
                           controller: _controller,
@@ -219,7 +184,7 @@ class _PlayersPageState extends State<PlayersPage> {
                   flex: 10,
                   child: MyOutlinedButton(
                     text: "بعدی",
-                    color: Color(0xFF07FFB5),
+                    color: AppColors.greenColor,
                     hasIcon: true,
                     isIconRight: true,
                     onTap: () => Navigator.pushNamed(context, '/intro_page'),
@@ -235,7 +200,7 @@ class _PlayersPageState extends State<PlayersPage> {
                   child: MyOutlinedButton(
                     text: "قبلی",
                     hasIcon: false,
-                    color: Color(0xFFE01357),
+                    color: AppColors.redColor,
                     onTap: () => Navigator.pop(context),
                     //icon: Icons.keyboard_arrow_left,
                   ),
