@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:mafia_killer/models/isar_service.dart';
 
 class IntroPage extends StatelessWidget {
   const IntroPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    IsarService();
     return Scaffold(
       body: Center(
         child: Container(

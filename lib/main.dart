@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mafia_killer/models/app_handler.dart';
-import 'package:mafia_killer/models/player.dart';
+import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/pages/game_settings_page.dart';
 import 'package:mafia_killer/pages/intro_page.dart';
 import 'package:mafia_killer/pages/players_page.dart';
@@ -12,7 +12,7 @@ void main() {
   runApp(MultiProvider(
       providers: [
         ChangeNotifierProvider<AppHandler>(create: (context) => AppHandler()),
-        ChangeNotifierProvider<Player>(create: (context) => Player.n()),
+        ChangeNotifierProvider<Player>(create: (context) => Player.static()),
       ],
     child: Directionality(
       child: MyApp(),

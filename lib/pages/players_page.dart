@@ -3,7 +3,7 @@ import 'package:mafia_killer/components/my_outlined_button.dart';
 import 'package:mafia_killer/components/page_frame.dart';
 import 'package:mafia_killer/components/player_tile.dart';
 import 'package:mafia_killer/models/app_handler.dart';
-import 'package:mafia_killer/models/player.dart';
+import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/themes/app_color.dart';
 import 'package:provider/provider.dart';
 
@@ -23,7 +23,7 @@ class _PlayersPageState extends State<PlayersPage> {
     }
     // context.read<AppHandler>().addPlayer(_controller.text);
     // _controller.text = '';
-    context.read<Player>().addPlayer(_controller.text);
+    Player.addPlayer(_controller.text);
     _controller.text = '';
   }
 
@@ -45,26 +45,43 @@ class _PlayersPageState extends State<PlayersPage> {
                 children: [
                   Expanded(
                     flex: 9,
-                    child: Consumer<AppHandler>(
-                        builder: (context, handler, child) {
-                      return ListView.builder(
-                        itemCount: handler.players.length,
-                        itemBuilder: (context, index) {
-                          return Container(
-                            margin: EdgeInsets.symmetric(vertical: 5),
-                            child: PlayerTile(player: handler.players[index]),
-                          );
-                        },
-                        padding:
-                            EdgeInsets.symmetric(vertical: 50, horizontal: 10),
-                      );
-                    }),
+                    child: StreamBuilder<List<Player>>(
+                        stream: Player.listenToPlayers(),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return const Center(
+                                child: CircularProgressIndicator());
+                          } else if (snapshot.hasError) {
+                            return Center(
+                                child: Text('Error: ${snapshot.error}'));
+                          } else if (!snapshot.hasData ||
+                              snapshot.data!.isEmpty) {
+                            return const Center(
+                                child: Text('No players available'));
+                          } else {
+                            final players = snapshot.data!;
+                            return ListView.builder(
+                              padding: EdgeInsets.symmetric(
+                                  vertical: 50, horizontal: 15),
+                              itemCount: players.length,
+                              itemBuilder: (context, index) {
+                                return Container(
+                                  margin: EdgeInsets.symmetric(vertical: 5),
+                                  child: PlayerTile(
+                                    player: players[index],
+                                  ),
+                                );
+                              },
+                            );
+                          }
+                        }),
                   ),
                   Expanded(
                     flex: 1,
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
-                          vertical: 0, horizontal: 5),
+                          vertical: 0, horizontal: 10),
                       child: Row(children: [
                         Expanded(
                           flex: 1,

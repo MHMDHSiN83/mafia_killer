@@ -77,6 +77,7 @@ Player _playerDeserialize(
   final object = Player(
     reader.readString(offsets[2]),
   );
+  object.doesParticipate = reader.readBool(offsets[0]);
   object.id = id;
   return object;
 }
