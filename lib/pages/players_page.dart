@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mafia_killer/components/my_outlined_button.dart';
 import 'package:mafia_killer/components/player_tile.dart';
 import 'package:mafia_killer/models/app_handler.dart';
+import 'package:mafia_killer/models/player.dart';
 import 'package:mafia_killer/themes/app_color.dart';
 import 'package:provider/provider.dart';
 
@@ -74,7 +75,9 @@ class _PlayersPageState extends State<PlayersPage> {
     if (_controller.text == "") {
       return;
     }
-    context.read<AppHandler>().addPlayer(_controller.text);
+    // context.read<AppHandler>().addPlayer(_controller.text);
+    // _controller.text = '';
+    context.read<Player>().addPlayer(_controller.text);
     _controller.text = '';
   }
 
@@ -91,20 +94,39 @@ class _PlayersPageState extends State<PlayersPage> {
               children: [
                 Expanded(
                   flex: 3,
-                  child:
-                      Consumer<AppHandler>(builder: (context, handler, child) {
-                    return ListView.builder(
-                      itemCount: handler.players.length,
-                      itemBuilder: (context, index) {
-                        return Container(
-                          margin: EdgeInsets.symmetric(vertical: 5),
-                          child: PlayerTile(player: handler.players[index]),
-                        );
-                      },
-                      padding:
-                          EdgeInsets.symmetric(vertical: 100, horizontal: 30),
-                    );
-                  }),
+                  child: StreamBuilder<List<Player>>(
+                    stream: context.read<Player>().listenToPlayers(),
+                    builder: (context, snapshot) => GridView.count(
+                      crossAxisCount: 2,
+                      // crossAxisSpacing: 8,
+                      // mainAxisSpacing: 8,
+                      scrollDirection: Axis.horizontal,
+                      children: snapshot.hasData
+                          ? snapshot.data!.map((player) {
+                              return ElevatedButton(
+                                onPressed: () {},
+                                child: Text(
+                                  player.name,
+                                  style: TextStyle(color: Colors.blue),
+                                ),
+                              );
+                            }).toList()
+                          : [],
+                    ),
+                  ),
+                  //     Consumer<Player>(builder: (context, player, child) {
+                  //   return ListView.builder(
+                  //     itemCount: player.length,
+                  //     itemBuilder: (context, index) {
+                  //       return Container(
+                  //         margin: EdgeInsets.symmetric(vertical: 5),
+                  //         child: PlayerTile(player: player[index]),
+                  //       );
+                  //     },
+                  //     padding:
+                  //         EdgeInsets.symmetric(vertical: 100, horizontal: 30),
+                  //   );
+                  // }),
                 ),
                 Expanded(
                   flex: 1,
