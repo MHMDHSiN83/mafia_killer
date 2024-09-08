@@ -37,7 +37,7 @@ class _PlayersPageState extends State<PlayersPage> {
           Expanded(
             flex: 18,
             child: PageFrame(
-              pageTitle: "تنظیمات  این دست",
+              pageTitle: "نام بازیکنان",
               child: Column(
                 children: [
                   Expanded(
@@ -128,7 +128,8 @@ class _PlayersPageState extends State<PlayersPage> {
                     color: AppColors.greenColor,
                     hasIcon: true,
                     isIconRight: true,
-                    onTap: () => Navigator.pushNamed(context, '/intro_page'),
+                    onTap: () =>
+                        Navigator.pushNamed(context, '/game_settings_page'),
                     icon: Icons.keyboard_arrow_right,
                   ),
                 ),
