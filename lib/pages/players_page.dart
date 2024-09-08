@@ -37,9 +37,9 @@ class _PlayersPageState extends State<PlayersPage> {
             height: 50,
           ),
           Expanded(
-            flex: 12,
+            flex: 18,
             child: PageFrame(
-              pageTitle: "نقش های بازی",
+              pageTitle: "تنظیمات  این دست",
               child: Column(
                 children: [
                   Expanded(
@@ -119,12 +119,12 @@ class _PlayersPageState extends State<PlayersPage> {
 
           // next and previous button
           Expanded(
-            flex: 1,
+            flex: 2,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Expanded(
-                  flex: 10,
+                  flex: 12,
                   child: MyOutlinedButton(
                     text: "بعدی",
                     color: Color(0xFF07FFB5),
@@ -134,21 +134,19 @@ class _PlayersPageState extends State<PlayersPage> {
                     icon: Icons.keyboard_arrow_right,
                   ),
                 ),
-                Expanded(
+                const Spacer(
                   flex: 1,
-                  child: SizedBox(),
                 ),
                 Expanded(
-                  flex: 10,
-                  child: MyOutlinedButton(
-                    text: "قبلی",
-                    hasIcon: true,
-                    color: Color(0xFFE01357),
-                    onTap: () => Navigator.pop(context),
-                    isIconRight: false,
-                    icon: Icons.keyboard_arrow_left,
-                  ),
-                )
+                    flex: 12,
+                    child: MyOutlinedButton(
+                      text: "قبلی",
+                      hasIcon: true,
+                      color: Color(0xFFE01357),
+                      onTap: () => Navigator.pop(context),
+                      isIconRight: false,
+                      icon: Icons.keyboard_arrow_left,
+                    )),
               ],
             ),
           ),

@@ -6,17 +6,21 @@ class PageFrame extends StatelessWidget {
   final Widget? child;
   final String pageTitle;
 
-  final List<double> Fontsizes = [28, 35, 39];
+  final Map<String, double> Fontsizes = {
+    "small": 28,
+    "medium": 35,
+    "large": 39
+  };
   double determineTitleFontsize() {
     double len = pageTitle.length.toDouble();
     int numberOfWords = pageTitle.split(' ').length;
     if (len <= 12 && numberOfWords <= 2) {
-      return Fontsizes[2];
+      return Fontsizes["large"]!;
     } else if ((len > 12 && len <= 14 && numberOfWords <= 2) ||
         (len <= 12 && numberOfWords > 2)) {
-      return Fontsizes[1];
+      return Fontsizes["medium"]!;
     } else {
-      return Fontsizes[0];
+      return Fontsizes["small"]!;
     }
   }
 
@@ -38,94 +42,103 @@ class PageFrame extends StatelessWidget {
           top: -3,
           left: 0,
           right: 0,
-          child: Center(
-            child: Container(
-              //TODO
-              width: 225,
-              height: 80,
-              //padding: EdgeInsets.symmetric(horizontal: 10),
-              decoration: BoxDecoration(
-                  color: Color(0xFF111111),
-                  borderRadius: BorderRadius.circular(40),
-                  border: Border.all(
-                    color: Colors.white,
-                    width: 3.0,
-                  )),
-              child: Center(
-                child: Text(
-                  pageTitle,
-                  style: TextStyle(
-                    fontSize: determineTitleFontsize(),
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xFFE01357),
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ),
-        // question mark button on the left
-        Positioned(
-          top: 7,
-          left: 27,
-          child: Container(
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              border: Border.all(
-                color: Colors.white,
-                width: 3,
-              ),
-            ),
-            child: CircleAvatar(
-              backgroundColor: Color(0xFF111111),
-              radius: 25,
-              child: Center(
-                child: IconButton(
-                  icon: Transform(
-                    alignment: Alignment.center,
-                    transform: Matrix4.rotationY(math.pi),
-                    child: Icon(
-                      Icons.question_mark,
-                      size: 35,
-                      opticalSize: 100,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              // question mark button on the left
+              Expanded(
+                flex: 1,
+                child: Container(
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                      color: Colors.white, // Border color
+                      width: 3, // Border width
                     ),
                   ),
-                  color: Color(0xFFE01357),
-                  onPressed: () {
-                    print('Icon Button Pressed');
-                  },
-                ),
-              ),
-            ),
-          ),
-        ),
-        // setting button on the right
-        Positioned(
-          top: 7,
-          right: 27,
-          child: Container(
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              border: Border.all(
-                color: Colors.white, // Border color
-                width: 3, // Border width
-              ),
-            ),
-            child: CircleAvatar(
-              backgroundColor: Color(0xFF111111),
-              radius: 25, // Size of the circular button
+                  child: CircleAvatar(
+                    backgroundColor: Color(0xFF111111),
+                    radius: 25, // Size of the circular button
 
-              child: IconButton(
-                icon: Icon(
-                  Icons.settings_outlined,
-                  size: 35,
+                    child: IconButton(
+                      icon: Icon(
+                        Icons.settings_outlined,
+                        size: 35,
+                      ),
+                      color: Color(0xFFE01357),
+                      onPressed: () {
+                        print('Icon Button Pressed');
+                      },
+                    ),
+                  ),
                 ),
-                color: Color(0xFFE01357),
-                onPressed: () {
-                  print('Icon Button Pressed');
-                },
               ),
-            ),
+              // SizedBox(
+              //   width: 5,
+              // ),
+              Expanded(
+                flex: 3,
+                child: Container(
+                  //TODO
+                  height: 80,
+                  //padding: EdgeInsets.symmetric(horizontal: 10),
+                  decoration: BoxDecoration(
+                      color: Color(0xFF111111),
+                      borderRadius: BorderRadius.circular(40),
+                      border: Border.all(
+                        color: Colors.white,
+                        width: 3.0,
+                      )),
+                  child: Center(
+                    child: Text(
+                      pageTitle,
+                      style: TextStyle(
+                        fontSize: determineTitleFontsize(),
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xFFE01357),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              // SizedBox(
+              //   width: 5,
+              // ),
+              // setting button on the right
+              Expanded(
+                flex: 1,
+                child: Container(
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                      color: Colors.white,
+                      width: 3,
+                    ),
+                  ),
+                  child: CircleAvatar(
+                    backgroundColor: Color(0xFF111111),
+                    radius: 25,
+                    child: Center(
+                      child: IconButton(
+                        icon: Transform(
+                          alignment: Alignment.center,
+                          transform: Matrix4.rotationY(math.pi),
+                          child: Icon(
+                            Icons.question_mark,
+                            size: 35,
+                            opticalSize: 100,
+                          ),
+                        ),
+                        color: Color(0xFFE01357),
+                        onPressed: () {
+                          print('Icon Button Pressed');
+                        },
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       ],
