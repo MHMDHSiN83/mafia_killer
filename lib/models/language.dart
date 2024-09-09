@@ -7,4 +7,16 @@ class Language {
     }
     return input;
   }
+
+  static Duration convertStringToDuration(String time) {
+    List<String> parts = time.split(":");
+    int minutes = int.parse(parts[0]);
+    int seconds = int.parse(parts[1]);
+
+    return Duration(minutes: minutes, seconds: seconds);
+  }
+
+  static String convertDurationToString(Duration time) {
+    return "0${time.inMinutes}:${time.inSeconds.remainder(60)}";
+  }
 }

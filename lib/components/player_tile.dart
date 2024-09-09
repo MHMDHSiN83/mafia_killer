@@ -17,9 +17,7 @@ class PlayerTile extends StatefulWidget {
 class _PlayerTileState extends State<PlayerTile> {
   TextEditingController controller = TextEditingController();
   void onChanged(bool? value) async {
-    print(widget.player.doesParticipate);
     await Player.changePlayerStatus(widget.player);
-    print(widget.player.doesParticipate);
   }
 
   void removePlayer() {

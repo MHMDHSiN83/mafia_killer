@@ -26,7 +26,7 @@ class _PlayersPageState extends State<PlayersPage> {
     Player.addPlayer(_controller.text);
     _controller.text = '';
   }
-
+   
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -163,8 +163,7 @@ class _PlayersPageState extends State<PlayersPage> {
                     color: AppColors.greenColor,
                     hasIcon: true,
                     isIconRight: true,
-                    onTap: () =>
-                        Navigator.pushNamed(context, '/game_settings_page'),
+                    onTap: () => Navigator.pushNamed(context, '/loading_page'),
                     icon: Icons.keyboard_arrow_right,
                   ),
                 ),
