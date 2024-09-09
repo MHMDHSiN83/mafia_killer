@@ -92,197 +92,142 @@ class _GameSettingsPageState extends State<GameSettingsPage> {
     gameSettings = data['gameSettings'];
     newGameSettings = data['newGameSettings'];
     return Scaffold(
-      body: Container(
-        decoration: const BoxDecoration(
-            gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [
-            // Color.fromRGBO(17, 7, 7, 1),
-            // Color.fromRGBO(40, 7, 7, 1),
-            Color(0xFF111111),
-            Color(0xFF3F0000)
-          ],
-        )),
-        child: Column(
+      body: PageFrame(
+        pageTitle: "تنظیمات این دست",
+        rightButtonText: "بعدی",
+        leftButtonText: "قبلی",
+        leftButtonOnTap: () => Navigator.pop(context),
+        rightButtonOnTap: () => Navigator.pushNamed(context, '/intro_page'),
+        //rightButtonIcon: Icons.keyboard_arrow_down_outlined,
+        child: ListView(
+          padding: EdgeInsets.symmetric(
+            horizontal: 20,
+            vertical: 50,
+          ),
           children: [
-            SizedBox(
-              height: 50,
+            RowDropdownBox(
+              title: 'سناریو بازی',
+              options: Scenario.getScenarioNames(),
+              onSelect: _onItemSelected,
+              selectedItem: newGameSettings['scenario'],
+              varName: 'scenario',
             ),
-            Expanded(
-              flex: 18,
-              child: PageFrame(
-                pageTitle: "تنظیمات این دست",
-                child: ListView(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 20,
-                    vertical: 50,
+            const MyDivider(),
+            RowCounterBox(
+              title: 'فرصت صحبت در روز معارفه',
+              increaseNumber: _increaseNumber,
+              decreaseNumber: _decreaseNumber,
+              number: newGameSettings['introTime']!,
+              isTimer: true,
+              varName: 'introTime',
+            ),
+            const MyDivider(),
+            RowCounterBox(
+              title: 'فرصت صحبت کردن در روز',
+              increaseNumber: _increaseNumber,
+              decreaseNumber: _decreaseNumber,
+              number: newGameSettings['mainSpeakTime']!,
+              isTimer: true,
+              varName: 'mainSpeakTime',
+            ),
+            const MyDivider(),
+            RowCounterBox(
+              title: 'تعداد استعلام های بازی',
+              increaseNumber: _increaseNumber,
+              decreaseNumber: _decreaseNumber,
+              number: newGameSettings['inquiry']!,
+              isTimer: false,
+              varName: 'inquiry',
+            ),
+            const MyDivider(),
+            RowDropdownBox(
+              title: 'صدای گرداننده بازی (راوی)',
+              options: newGameSettings['narrators'],
+              selectedItem: newGameSettings['narrator'],
+              onSelect: _onItemSelected,
+              varName: 'narrator',
+            ),
+            const MyDivider(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'صدای موزیک بازی در شب',
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.inversePrimary,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
                   ),
-                  children: [
-                    RowDropdownBox(
-                      title: 'سناریو بازی',
-                      options: Scenario.getScenarioNames(),
-                      onSelect: _onItemSelected,
-                      selectedItem: newGameSettings['scenario'],
-                      varName: 'scenario',
-                    ),
-                    const MyDivider(),
-                    RowCounterBox(
-                      title: 'فرصت صحبت در روز معارفه',
-                      increaseNumber: _increaseNumber,
-                      decreaseNumber: _decreaseNumber,
-                      number: newGameSettings['introTime'],
-                      isTimer: true,
-                      varName: 'introTime',
-                    ),
-                    const MyDivider(),
-                    RowCounterBox(
-                      title: 'فرصت صحبت کردن در روز',
-                      increaseNumber: _increaseNumber,
-                      decreaseNumber: _decreaseNumber,
-                      number: newGameSettings['mainSpeakTime'],
-                      isTimer: true,
-                      varName: 'mainSpeakTime',
-                    ),
-                    const MyDivider(),
-                    RowCounterBox(
-                      title: 'تعداد استعلام های بازی',
-                      increaseNumber: _increaseNumber,
-                      decreaseNumber: _decreaseNumber,
-                      number: newGameSettings['inquiry'],
-                      isTimer: false,
-                      varName: 'inquiry',
-                    ),
-                    const MyDivider(),
-                    RowDropdownBox(
-                      title: 'صدای گرداننده بازی (راوی)',
-                      options: newGameSettings['narrators'],
-                      selectedItem: newGameSettings['narrator'],
-                      onSelect: _onItemSelected,
-                      varName: 'narrator',
-                    ),
-                    const MyDivider(),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'صدای موزیک بازی در شب',
-                          style: TextStyle(
-                            color: Theme.of(context).colorScheme.inversePrimary,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18,
-                          ),
-                        ),
-                        IconButton(
-                            onPressed: () {
-                              setState(() {
-                                newGameSettings['playMusic'] =
-                                    !newGameSettings['playMusic'];
-                              });
-                            },
-                            padding: EdgeInsets.zero,
-                            icon: Icon(
-                              newGameSettings['playMusic']
-                                  ? Icons.volume_up_rounded
-                                  : Icons.volume_off_rounded,
-                              size: 40,
-                              color: newGameSettings['playMusic']
-                                  ? AppColors.greenColor
-                                  : AppColors.redColor,
-                            )),
-                      ],
-                    ),
-                    const MyDivider(),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'افکت‌های صوتی',
-                          style: TextStyle(
-                            color: Theme.of(context).colorScheme.inversePrimary,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18,
-                          ),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              newGameSettings['soundEffect'] =
-                                  !newGameSettings['soundEffect'];
-                            });
-                          },
-                          child: Container(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 25, vertical: 2),
-                            decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: newGameSettings['soundEffect']
-                                      ? AppColors.greenColor
-                                      : AppColors.redColor,
-                                  width: 2,
-                                ),
-                                borderRadius: BorderRadius.circular(2)),
-                            child: Text(
-                              newGameSettings['soundEffect']
-                                  ? "فعال"
-                                  : "غیرفعال",
-                              style: TextStyle(
-                                color: newGameSettings['soundEffect']
-                                    ? AppColors.greenColor
-                                    : AppColors.redColor,
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    IconButton(
-                      onPressed: () {
-                        GameSettings.updateSettings(
-                            gameSettings!, newGameSettings);
-                        // Navigator.pushNamed(context, '/intro_page');
-                      },
-                      icon: Icon(Icons.plus_one),
-                    )
-                  ],
                 ),
-              ),
+                IconButton(
+                    onPressed: () {
+                      setState(() {
+                        newGameSettings['playMusic'] =
+                            !newGameSettings['playMusic'];
+                      });
+                    },
+                    padding: EdgeInsets.zero,
+                    icon: Icon(
+                      newGameSettings['playMusic']
+                          ? Icons.volume_up_rounded
+                          : Icons.volume_off_rounded,
+                      size: 40,
+                      color: newGameSettings['playMusic']
+                          ? AppColors.greenColor
+                          : AppColors.redColor,
+                    )),
+              ],
             ),
-            Expanded(
-              flex: 2,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Expanded(
-                    flex: 12,
-                    child: MyOutlinedButton(
-                      text: "بعدی",
-                      color: AppColors.greenColor,
-                      hasIcon: true,
-                      isIconRight: true,
-                      onTap: () =>
-                          Navigator.pushNamed(context, '/game_settings_page'),
-                      icon: Icons.keyboard_arrow_right,
+            const MyDivider(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'افکت‌های صوتی',
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.inversePrimary,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      newGameSettings['soundEffect'] =
+                          !newGameSettings['soundEffect'];
+                    });
+                  },
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 25, vertical: 2),
+                    decoration: BoxDecoration(
+                        border: Border.all(
+                          color: newGameSettings['soundEffect']
+                              ? AppColors.greenColor
+                              : AppColors.redColor,
+                          width: 2,
+                        ),
+                        borderRadius: BorderRadius.circular(2)),
+                    child: Text(
+                      newGameSettings['soundEffect'] ? "غیرفعال" : "فعال",
+                      style: TextStyle(
+                        color: newGameSettings['soundEffect']
+                            ? AppColors.greenColor
+                            : AppColors.redColor,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
-                  const Spacer(
-                    flex: 1,
-                  ),
-                  Expanded(
-                      flex: 12,
-                      child: MyOutlinedButton(
-                        text: "قبلی",
-                        hasIcon: true,
-                        color: AppColors.redColor,
-                        onTap: () => Navigator.pop(context),
-                        isIconRight: false,
-                        icon: Icons.keyboard_arrow_left,
-                      )),
-                ],
-              ),
+                ),
+              ],
             ),
+            IconButton(
+              onPressed: () {
+                GameSettings.updateSettings(gameSettings!, newGameSettings);
+                // Navigator.pushNamed(context, '/intro_page');
+              },
+              icon: Icon(Icons.plus_one),
+            )
           ],
         ),
       ),
