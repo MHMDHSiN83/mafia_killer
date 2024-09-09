@@ -88,6 +88,8 @@ class _GameSettingsPageState extends State<GameSettingsPage> {
         pageTitle: "تنظیمات این دست",
         rightButtonText: "بعدی",
         leftButtonText: "قبلی",
+        leftButtonOnTap: () => Navigator.pop(context),
+        rightButtonOnTap: () => Navigator.pushNamed(context, '/intro_page'),
         //rightButtonIcon: Icons.keyboard_arrow_down_outlined,
         child: ListView(
           padding: EdgeInsets.symmetric(

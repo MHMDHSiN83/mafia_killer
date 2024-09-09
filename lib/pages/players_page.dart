@@ -27,12 +27,16 @@ class _PlayersPageState extends State<PlayersPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: PageFrame(
         pageTitle: "نام بازیکنان",
         leftButtonText: "صحبت کردن",
         rightButtonText: "دفاعیه",
         leftButtonIcon: Icons.keyboard_arrow_left,
         rightButtonIcon: Icons.keyboard_arrow_right,
+        leftButtonOnTap: () => Navigator.pop(context),
+        rightButtonOnTap: () =>
+            Navigator.pushNamed(context, '/game_settings_page'),
         child: Column(
           children: [
             Expanded(
@@ -91,7 +95,7 @@ class _PlayersPageState extends State<PlayersPage> {
                           ),
                           hintText: 'نام بازیکن را وارد کنید...',
                           hintStyle: TextStyle(
-                              color: Color(0xFFD2CAD8),
+                              color: Color.fromARGB(255, 96, 96, 96),
                               fontWeight: FontWeight.bold,
                               fontSize: 20)),
                       controller: _controller,

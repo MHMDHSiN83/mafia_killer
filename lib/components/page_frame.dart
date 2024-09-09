@@ -10,6 +10,8 @@ class PageFrame extends StatelessWidget {
     required this.pageTitle,
     required this.leftButtonText,
     required this.rightButtonText,
+    required this.leftButtonOnTap,
+    required this.rightButtonOnTap,
     this.leftButtonIcon,
     this.rightButtonIcon,
     this.questionOnTap,
@@ -19,6 +21,8 @@ class PageFrame extends StatelessWidget {
   final String pageTitle;
   final String leftButtonText;
   final String rightButtonText;
+  final VoidCallback leftButtonOnTap;
+  final VoidCallback rightButtonOnTap;
   final Function? questionOnTap; //this shouldn't be nullable
   final IconData? leftButtonIcon;
   final IconData? rightButtonIcon;
@@ -193,8 +197,7 @@ class PageFrame extends StatelessWidget {
                     color: AppColors.greenColor,
                     hasIcon: true,
                     isIconRight: true,
-                    onTap: () =>
-                        Navigator.pushNamed(context, '/game_settings_page'),
+                    onTap: rightButtonOnTap,
                     icon: rightButtonIcon,
                   ),
                 ),
@@ -207,7 +210,7 @@ class PageFrame extends StatelessWidget {
                       text: leftButtonText,
                       hasIcon: true,
                       color: AppColors.redColor,
-                      onTap: () => Navigator.pop(context),
+                      onTap: leftButtonOnTap,
                       isIconRight: false,
                       icon: leftButtonIcon,
                     )),
