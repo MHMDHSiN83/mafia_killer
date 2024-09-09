@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:mafia_killer/models/player.dart';
+import 'package:mafia_killer/databases/player.dart';
 
 class AppHandler extends ChangeNotifier {
   // players page stuff
@@ -31,7 +31,7 @@ class AppHandler extends ChangeNotifier {
   bool playMusic = true;
   String a = '2';
   void changePlayerStatus(Player player) {
-    player.changeStatus();
+    // player.changeStatus();
     notifyListeners();
   }
 
@@ -41,7 +41,7 @@ class AppHandler extends ChangeNotifier {
   }
 
   void editPlayerName(Player player, String newName) {
-    player.name = newName;
+    // player.name = newName;
     notifyListeners();
   }
 
