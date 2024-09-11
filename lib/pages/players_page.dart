@@ -33,13 +33,12 @@ class _PlayersPageState extends State<PlayersPage> {
       resizeToAvoidBottomInset: false,
       body: PageFrame(
         pageTitle: "نام بازیکنان",
-        leftButtonText: "صحبت کردن",
-        rightButtonText: "دفاعیه",
+        leftButtonText: "بعدی",
+        rightButtonText: "قبلی",
         leftButtonIcon: Icons.keyboard_arrow_left,
         rightButtonIcon: Icons.keyboard_arrow_right,
         leftButtonOnTap: () => Navigator.pop(context),
-        rightButtonOnTap: () =>
-            Navigator.pushNamed(context, '/game_settings_page'),
+        rightButtonOnTap: () => Navigator.pushNamed(context, '/loading_page'),
         child: Column(
           children: [
             Expanded(
