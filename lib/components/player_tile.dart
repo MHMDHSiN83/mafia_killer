@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:mafia_killer/components/checkbox.dart';
 import 'package:mafia_killer/components/dialogbox.dart';
-import 'package:mafia_killer/models/app_handler.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/themes/app_color.dart';
-import 'package:provider/provider.dart';
 
+// ignore: must_be_immutable
 class PlayerTile extends StatefulWidget {
   Player player;
   PlayerTile({super.key, required this.player});
@@ -17,9 +16,7 @@ class PlayerTile extends StatefulWidget {
 class _PlayerTileState extends State<PlayerTile> {
   TextEditingController controller = TextEditingController();
   void onChanged(bool? value) async {
-    print(widget.player.doesParticipate);
     await Player.changePlayerStatus(widget.player);
-    print(widget.player.doesParticipate);
   }
 
   void removePlayer() {
@@ -61,7 +58,7 @@ class _PlayerTileState extends State<PlayerTile> {
           borderRadius: BorderRadius.circular(5)),
       height: 60.0,
       child: Padding(
-        padding: EdgeInsets.all(5.0),
+        padding: const EdgeInsets.all(5.0),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -81,7 +78,7 @@ class _PlayerTileState extends State<PlayerTile> {
                     ),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 5,
                 ),
               ],
@@ -101,7 +98,7 @@ class _PlayerTileState extends State<PlayerTile> {
                 IconButton(
                   padding: EdgeInsets.zero,
                   onPressed: removePlayer,
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.delete,
                     size: 35,
                     color: AppColors.redColor,

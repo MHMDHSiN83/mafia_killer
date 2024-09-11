@@ -10,13 +10,13 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() {
   runApp(MultiProvider(
-      providers: [
-        ChangeNotifierProvider<AppHandler>(create: (context) => AppHandler()),
-        ChangeNotifierProvider<Player>(create: (context) => Player.static()),
-      ],
-    child: Directionality(
-      child: MyApp(),
+    providers: [
+      ChangeNotifierProvider<AppHandler>(create: (context) => AppHandler()),
+      ChangeNotifierProvider<Player>(create: (context) => Player.static()),
+    ],
+    child: const Directionality(
       textDirection: TextDirection.rtl,
+      child: MyApp(),
     ),
   ));
 }
@@ -27,23 +27,24 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      localizationsDelegates: [
+      localizationsDelegates: const [
         GlobalCupertinoLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
       ],
-      supportedLocales: [
+      supportedLocales: const [
         Locale("fa", "IR"), // OR Locale('ar', 'AE') OR Other RTL locales
       ],
-      locale: Locale("fa", "IR"), // OR Locale('ar', 'AE') OR Other RTL locales,
+      locale: const Locale(
+          "fa", "IR"), // OR Locale('ar', 'AE') OR Other RTL locales,
       debugShowCheckedModeBanner: false,
       home: const IntroPage(),
       //theme: ThemeData(fontFamily: 'Negar'),
       theme: darkMode,
       routes: {
         '/intro_page': (context) => const IntroPage(),
-        '/players_page': (context) => PlayersPage(),
-        '/game_settings_page': (context) => GameSettingsPage(),
+        '/players_page': (context) => const PlayersPage(),
+        '/game_settings_page': (context) => const GameSettingsPage(),
       },
     );
   }
