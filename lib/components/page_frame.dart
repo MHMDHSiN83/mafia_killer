@@ -48,129 +48,66 @@ class PageFrame extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
-          gradient: LinearGradient(
-        begin: Alignment.topCenter,
-        end: Alignment.bottomCenter,
-        colors: [
-          Color(0xFF111111),
-          //Color.fromRGBO(17, 7, 7, 1),
-          Color.fromRGBO(40, 7, 7, 1),
-          Color.fromARGB(255, 52, 0, 0),
-        ],
-      )),
-      child: Column(
-        children: [
-          SizedBox(
-            height: 50,
-          ),
-          Expanded(
-            flex: 20,
-            child: Stack(
-              clipBehavior: Clip.none,
-              children: [
-                Container(
-                  margin: EdgeInsets.fromLTRB(5, 35, 5, 10),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.white, width: 5),
-                    borderRadius: BorderRadius.circular(10),
+    return SafeArea(
+      child: Container(
+        decoration: const BoxDecoration(
+            gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [
+            Color(0xFF111111),
+            //Color.fromRGBO(17, 7, 7, 1),
+            Color.fromRGBO(40, 7, 7, 1),
+            Color.fromARGB(255, 52, 0, 0),
+          ],
+        )),
+        child: Column(
+          children: [
+            //const SizedBox(
+            //  height: 50,
+            //),
+            Expanded(
+              flex: 20,
+              child: Stack(
+                clipBehavior: Clip.none,
+                children: [
+                  Container(
+                    margin: const EdgeInsets.fromLTRB(5, 35, 5, 10),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.white, width: 5),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: child,
                   ),
-                  child: child,
-                ),
-                // page title
-                Positioned(
-                  top: -3,
-                  left: 0,
-                  right: 0,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      // question mark button on the left
-                      Expanded(
-                        flex: 1,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            border: Border.all(
-                              color: Colors.white, // Border color
-                              width: 3, // Border width
-                            ),
-                          ),
-                          child: CircleAvatar(
-                            backgroundColor: Color(0xFF111111),
-                            radius: 25, // Size of the circular button
-
-                            child: IconButton(
-                              icon: Icon(
-                                Icons.settings_outlined,
-                                size: 35,
-                              ),
-                              color: Color(0xFFE01357),
-                              onPressed: () {
-                                print('Icon Button Pressed');
-                              },
-                            ),
-                          ),
-                        ),
-                      ),
-                      // SizedBox(
-                      //   width: 5,
-                      // ),
-                      Expanded(
-                        flex: 3,
-                        child: Container(
-                          //TODO
-                          height: 80,
-                          //padding: EdgeInsets.symmetric(horizontal: 10),
-                          decoration: BoxDecoration(
-                              color: Color(0xFF111111),
-                              borderRadius: BorderRadius.circular(40),
+                  // page title
+                  Positioned(
+                    top: -3,
+                    left: 0,
+                    right: 0,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        // question mark button on the left
+                        Expanded(
+                          flex: 1,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
                               border: Border.all(
-                                color: Colors.white,
-                                width: 3.0,
-                              )),
-                          child: Center(
-                            child: Text(
-                              pageTitle,
-                              style: TextStyle(
-                                fontSize: determineTitleFontsize(),
-                                fontWeight: FontWeight.bold,
-                                color: Color(0xFFE01357),
+                                color: Colors.white, // Border color
+                                width: 3, // Border width
                               ),
                             ),
-                          ),
-                        ),
-                      ),
-                      // SizedBox(
-                      //   width: 5,
-                      // ),
-                      // setting button on the right
-                      Expanded(
-                        flex: 1,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            border: Border.all(
-                              color: Colors.white,
-                              width: 3,
-                            ),
-                          ),
-                          child: CircleAvatar(
-                            backgroundColor: Color(0xFF111111),
-                            radius: 25,
-                            child: Center(
+                            child: CircleAvatar(
+                              backgroundColor: const Color(0xFF111111),
+                              radius: 25, // Size of the circular button
+
                               child: IconButton(
-                                icon: Transform(
-                                  alignment: Alignment.center,
-                                  transform: Matrix4.rotationY(math.pi),
-                                  child: Icon(
-                                    Icons.question_mark,
-                                    size: 35,
-                                    opticalSize: 100,
-                                  ),
+                                icon: const Icon(
+                                  Icons.settings_outlined,
+                                  size: 35,
                                 ),
-                                color: Color(0xFFE01357),
+                                color: const Color(0xFFE01357),
                                 onPressed: () {
                                   print('Icon Button Pressed');
                                 },
@@ -178,46 +115,111 @@ class PageFrame extends StatelessWidget {
                             ),
                           ),
                         ),
-                      ),
-                    ],
+                        // SizedBox(
+                        //   width: 5,
+                        // ),
+                        Expanded(
+                          flex: 3,
+                          child: Container(
+                            //TODO
+                            height: 80,
+                            //padding: EdgeInsets.symmetric(horizontal: 10),
+                            decoration: BoxDecoration(
+                                color: const Color(0xFF111111),
+                                borderRadius: BorderRadius.circular(40),
+                                border: Border.all(
+                                  color: Colors.white,
+                                  width: 3.0,
+                                )),
+                            child: Center(
+                              child: Text(
+                                pageTitle,
+                                style: TextStyle(
+                                  fontSize: determineTitleFontsize(),
+                                  fontWeight: FontWeight.bold,
+                                  color: const Color(0xFFE01357),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        // SizedBox(
+                        //   width: 5,
+                        // ),
+                        // setting button on the right
+                        Expanded(
+                          flex: 1,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              border: Border.all(
+                                color: Colors.white,
+                                width: 3,
+                              ),
+                            ),
+                            child: CircleAvatar(
+                              backgroundColor: const Color(0xFF111111),
+                              radius: 25,
+                              child: Center(
+                                child: IconButton(
+                                  icon: Transform(
+                                    alignment: Alignment.center,
+                                    transform: Matrix4.rotationY(math.pi),
+                                    child: const Icon(
+                                      Icons.question_mark,
+                                      size: 35,
+                                      opticalSize: 100,
+                                    ),
+                                  ),
+                                  color: const Color(0xFFE01357),
+                                  onPressed: () {
+                                    print('Icon Button Pressed');
+                                  },
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-          Expanded(
-            flex: 2,
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Expanded(
-                  flex: 12,
-                  child: MyOutlinedButton(
-                    text: rightButtonText,
-                    color: AppColors.greenColor,
-                    hasIcon: true,
-                    isIconRight: true,
-                    onTap: rightButtonOnTap,
-                    icon: rightButtonIcon,
-                  ),
-                ),
-                Spacer(
-                  flex: 1,
-                ),
-                Expanded(
+            Expanded(
+              flex: 2,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
                     flex: 12,
                     child: MyOutlinedButton(
-                      text: leftButtonText,
+                      text: rightButtonText,
+                      color: AppColors.greenColor,
                       hasIcon: true,
-                      color: AppColors.redColor,
-                      onTap: leftButtonOnTap,
-                      isIconRight: false,
-                      icon: leftButtonIcon,
-                    )),
-              ],
+                      isIconRight: true,
+                      onTap: rightButtonOnTap,
+                      icon: rightButtonIcon,
+                    ),
+                  ),
+                  const Spacer(
+                    flex: 1,
+                  ),
+                  Expanded(
+                      flex: 12,
+                      child: MyOutlinedButton(
+                        text: leftButtonText,
+                        hasIcon: true,
+                        color: AppColors.redColor,
+                        onTap: leftButtonOnTap,
+                        isIconRight: false,
+                        icon: leftButtonIcon,
+                      )),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

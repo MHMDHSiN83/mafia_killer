@@ -2,13 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:mafia_killer/components/my_outlined_button.dart';
 import 'package:mafia_killer/components/page_frame.dart';
 import 'package:mafia_killer/components/player_tile.dart';
+import 'package:mafia_killer/components/role_selection_tile.dart';
 import 'package:mafia_killer/models/app_handler.dart';
 import 'package:mafia_killer/databases/player.dart';
+import 'package:mafia_killer/models/role.dart';
 import 'package:mafia_killer/themes/app_color.dart';
 import 'package:provider/provider.dart';
 
 class PlayersPage extends StatefulWidget {
-  PlayersPage({super.key});
+  const PlayersPage({super.key});
 
   @override
   State<PlayersPage> createState() => _PlayersPageState();
@@ -55,12 +57,12 @@ class _PlayersPageState extends State<PlayersPage> {
                     } else {
                       final players = snapshot.data!;
                       return ListView.builder(
-                        padding:
-                            EdgeInsets.symmetric(vertical: 50, horizontal: 15),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 50, horizontal: 15),
                         itemCount: players.length,
                         itemBuilder: (context, index) {
                           return Container(
-                            margin: EdgeInsets.symmetric(vertical: 5),
+                            margin: const EdgeInsets.symmetric(vertical: 5),
                             child: PlayerTile(
                               player: players[index],
                             ),
@@ -70,17 +72,22 @@ class _PlayersPageState extends State<PlayersPage> {
                     }
                   }),
             ),
+            RoleSelectionTile(
+              onTap: () {},
+              role: Role("شهروند ساده", "salam"),
+            ),
             Expanded(
               flex: 1,
               child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 5),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
                 child: Row(children: [
                   Expanded(
                     flex: 1,
                     child: Container(
                         decoration: BoxDecoration(
                           color: Theme.of(context).colorScheme.inversePrimary,
-                          borderRadius: BorderRadius.only(
+                          borderRadius: const BorderRadius.only(
                             bottomRight: Radius.circular(4),
                             topRight: Radius.circular(4),
                           ),
@@ -90,7 +97,7 @@ class _PlayersPageState extends State<PlayersPage> {
                             onPressed: () {
                               addPlayer();
                             },
-                            icon: Icon(
+                            icon: const Icon(
                               Icons.person_add_outlined,
                               color: AppColors.greenColor,
                               size: 50,

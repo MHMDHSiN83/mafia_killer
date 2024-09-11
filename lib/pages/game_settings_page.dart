@@ -15,7 +15,7 @@ import 'package:mafia_killer/themes/app_color.dart';
 import 'package:provider/provider.dart';
 
 class GameSettingsPage extends StatefulWidget {
-  GameSettingsPage({super.key});
+  const GameSettingsPage({super.key});
 
   @override
   State<GameSettingsPage> createState() => _GameSettingsPageState();
@@ -100,7 +100,7 @@ class _GameSettingsPageState extends State<GameSettingsPage> {
         rightButtonOnTap: () => Navigator.pushNamed(context, '/intro_page'),
         //rightButtonIcon: Icons.keyboard_arrow_down_outlined,
         child: ListView(
-          padding: EdgeInsets.symmetric(
+          padding: const EdgeInsets.symmetric(
             horizontal: 20,
             vertical: 50,
           ),
@@ -198,7 +198,8 @@ class _GameSettingsPageState extends State<GameSettingsPage> {
                     });
                   },
                   child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 25, vertical: 2),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 25, vertical: 2),
                     decoration: BoxDecoration(
                         border: Border.all(
                           color: newGameSettings['soundEffect']
