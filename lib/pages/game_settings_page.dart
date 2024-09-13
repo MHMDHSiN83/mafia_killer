@@ -10,7 +10,7 @@ import 'package:mafia_killer/models/app_handler.dart';
 import 'package:mafia_killer/models/global.dart';
 import 'package:mafia_killer/models/isar_service.dart';
 import 'package:mafia_killer/models/language.dart';
-import 'package:mafia_killer/models/scenario.dart';
+import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/themes/app_color.dart';
 import 'package:provider/provider.dart';
 
@@ -97,13 +97,11 @@ class _GameSettingsPageState extends State<GameSettingsPage> {
         rightButtonText: "بعدی",
         leftButtonText: "قبلی",
         leftButtonOnTap: () => Navigator.pop(context),
-        rightButtonOnTap: () => Navigator.pushNamed(context, '/intro_page'),
+        rightButtonOnTap: () =>
+            Navigator.pushNamed(context, '/role_selection_page'),
         //rightButtonIcon: Icons.keyboard_arrow_down_outlined,
         child: ListView(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 20,
-            vertical: 50,
-          ),
+          padding: const EdgeInsets.only(bottom: 50, left: 20, right: 20),
           children: [
             RowDropdownBox(
               title: 'سناریو بازی',
@@ -227,7 +225,7 @@ class _GameSettingsPageState extends State<GameSettingsPage> {
                 GameSettings.updateSettings(gameSettings!, newGameSettings);
                 // Navigator.pushNamed(context, '/intro_page');
               },
-              icon: Icon(Icons.plus_one),
+              icon: const Icon(Icons.plus_one),
             )
           ],
         ),

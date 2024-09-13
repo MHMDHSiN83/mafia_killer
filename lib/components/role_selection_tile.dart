@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mafia_killer/components/checkbox.dart';
-import 'package:mafia_killer/models/role.dart';
+import 'package:mafia_killer/databases/role.dart';
 
 // ignore: must_be_immutable
 class RoleSelectionTile extends StatefulWidget {

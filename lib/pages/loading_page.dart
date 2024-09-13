@@ -17,6 +17,9 @@ class _LoadingPageState extends State<LoadingPage> {
     final isar = await IsarService.db;
     GameSettings? gameSettings = await isar.gameSettings.get(1);
     gameSettings!.scenario.loadSync();
+    // gameSettings!.scenario.value!.roles.loadSync();
+    print("sssssssssssssssssssssssssssssss");
+    print(gameSettings.scenario.value!.roles.toList()[0].name);
     Map<String, dynamic> newGameSettings = gameSettings.getSettingsInMap();
     Navigator.pushReplacementNamed(context, '/game_settings_page', arguments: {
       'newGameSettings': newGameSettings,

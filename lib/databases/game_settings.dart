@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:isar/isar.dart';
 import 'package:mafia_killer/models/isar_service.dart';
 import 'package:mafia_killer/models/language.dart';
-import 'package:mafia_killer/models/scenario.dart';
+import 'package:mafia_killer/databases/scenario.dart';
 
 part 'game_settings.g.dart';
 
@@ -62,13 +62,16 @@ class GameSettings {
     soundEffect = newGameSettings['soundEffect'];
   }
 
-  static void setDefaultSettings() async {
+  static Future<void> setDefaultSettings() async {
     final GameSettings gameSettings = GameSettings();
+    // gameSettings.scenario.value!.roles.loadSync();
+
+    print(gameSettings.scenario.value!.roles.toList());
     final isar = await IsarService.db;
     isar.writeTxnSync(() => isar.gameSettings.putSync(gameSettings));
   }
 
-  static void updateSettings(
+  static Future<void> updateSettings(
       GameSettings gameSettings, Map<String, dynamic> newGameSettings) async {
     final isar = await IsarService.db;
     isar.writeTxnSync(() {

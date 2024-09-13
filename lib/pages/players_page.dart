@@ -5,7 +5,7 @@ import 'package:mafia_killer/components/player_tile.dart';
 import 'package:mafia_killer/components/role_selection_tile.dart';
 import 'package:mafia_killer/models/app_handler.dart';
 import 'package:mafia_killer/databases/player.dart';
-import 'package:mafia_killer/models/role.dart';
+import 'package:mafia_killer/databases/role.dart';
 import 'package:mafia_killer/themes/app_color.dart';
 import 'package:provider/provider.dart';
 
@@ -35,8 +35,8 @@ class _PlayersPageState extends State<PlayersPage> {
       resizeToAvoidBottomInset: false,
       body: PageFrame(
         pageTitle: "نام بازیکنان",
-        leftButtonText: "بعدی",
-        rightButtonText: "قبلی",
+        leftButtonText: "قبلی",
+        rightButtonText: "بعدی",
         leftButtonIcon: Icons.keyboard_arrow_left,
         rightButtonIcon: Icons.keyboard_arrow_right,
         leftButtonOnTap: () => Navigator.pop(context),
@@ -57,8 +57,7 @@ class _PlayersPageState extends State<PlayersPage> {
                     } else {
                       final players = snapshot.data!;
                       return ListView.builder(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 50, horizontal: 15),
+                        padding: const EdgeInsets.symmetric(horizontal: 15),
                         itemCount: players.length,
                         itemBuilder: (context, index) {
                           return Container(
@@ -71,10 +70,6 @@ class _PlayersPageState extends State<PlayersPage> {
                       );
                     }
                   }),
-            ),
-            RoleSelectionTile(
-              onTap: () {},
-              role: Role("شهروند ساده", "salam"),
             ),
             Expanded(
               flex: 1,

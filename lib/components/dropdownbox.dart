@@ -21,7 +21,7 @@ class DropdownBox extends StatefulWidget {
 class _DropdownBoxState extends State<DropdownBox> {
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: 140,
       height: 40,
       child: DropdownButtonFormField<String>(
@@ -29,7 +29,7 @@ class _DropdownBoxState extends State<DropdownBox> {
         onChanged: (String? selectedItem) =>
             widget.onSelect(selectedItem, widget.varName),
         isExpanded: true,
-        dropdownColor: Color(0xFF382E2E),
+        dropdownColor: const Color(0xFF382E2E),
         decoration: const InputDecoration(
           focusedBorder:
               OutlineInputBorder(borderSide: BorderSide(color: Colors.white)),
@@ -39,7 +39,7 @@ class _DropdownBoxState extends State<DropdownBox> {
           )),
           contentPadding: EdgeInsets.symmetric(vertical: -20, horizontal: 10),
         ),
-        icon: Icon(
+        icon: const Icon(
           Icons.keyboard_arrow_down,
           color: AppColors.greenColor,
           size: 38,

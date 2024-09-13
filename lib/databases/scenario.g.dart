@@ -29,7 +29,14 @@ const ScenarioSchema = CollectionSchema(
   deserializeProp: _scenarioDeserializeProp,
   idName: r'id',
   indexes: {},
-  links: {},
+  links: {
+    r'roles': LinkSchema(
+      id: 5680275096832532476,
+      name: r'roles',
+      target: r'Role',
+      single: false,
+    )
+  },
   embeddedSchemas: {},
   getId: _scenarioGetId,
   getLinks: _scenarioGetLinks,
@@ -88,11 +95,12 @@ Id _scenarioGetId(Scenario object) {
 }
 
 List<IsarLinkBase<dynamic>> _scenarioGetLinks(Scenario object) {
-  return [];
+  return [object.roles];
 }
 
 void _scenarioAttach(IsarCollection<dynamic> col, Id id, Scenario object) {
   object.id = id;
+  object.roles.attach(col, col.isar.collection<Role>(), r'roles', id);
 }
 
 extension ScenarioQueryWhereSort on QueryBuilder<Scenario, Scenario, QWhere> {
@@ -359,7 +367,64 @@ extension ScenarioQueryObject
     on QueryBuilder<Scenario, Scenario, QFilterCondition> {}
 
 extension ScenarioQueryLinks
-    on QueryBuilder<Scenario, Scenario, QFilterCondition> {}
+    on QueryBuilder<Scenario, Scenario, QFilterCondition> {
+  QueryBuilder<Scenario, Scenario, QAfterFilterCondition> roles(
+      FilterQuery<Role> q) {
+    return QueryBuilder.apply(this, (query) {
+      return query.link(q, r'roles');
+    });
+  }
+
+  QueryBuilder<Scenario, Scenario, QAfterFilterCondition> rolesLengthEqualTo(
+      int length) {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(r'roles', length, true, length, true);
+    });
+  }
+
+  QueryBuilder<Scenario, Scenario, QAfterFilterCondition> rolesIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(r'roles', 0, true, 0, true);
+    });
+  }
+
+  QueryBuilder<Scenario, Scenario, QAfterFilterCondition> rolesIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(r'roles', 0, false, 999999, true);
+    });
+  }
+
+  QueryBuilder<Scenario, Scenario, QAfterFilterCondition> rolesLengthLessThan(
+    int length, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(r'roles', 0, true, length, include);
+    });
+  }
+
+  QueryBuilder<Scenario, Scenario, QAfterFilterCondition>
+      rolesLengthGreaterThan(
+    int length, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(r'roles', length, include, 999999, true);
+    });
+  }
+
+  QueryBuilder<Scenario, Scenario, QAfterFilterCondition> rolesLengthBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(
+          r'roles', lower, includeLower, upper, includeUpper);
+    });
+  }
+}
 
 extension ScenarioQuerySortBy on QueryBuilder<Scenario, Scenario, QSortBy> {
   QueryBuilder<Scenario, Scenario, QAfterSortBy> sortByName() {

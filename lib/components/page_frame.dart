@@ -72,7 +72,10 @@ class PageFrame extends StatelessWidget {
                 clipBehavior: Clip.none,
                 children: [
                   Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height,
                     margin: const EdgeInsets.fromLTRB(5, 35, 5, 10),
+                    padding: const EdgeInsets.only(top: 50),
                     decoration: BoxDecoration(
                       border: Border.all(color: Colors.white, width: 5),
                       borderRadius: BorderRadius.circular(10),
