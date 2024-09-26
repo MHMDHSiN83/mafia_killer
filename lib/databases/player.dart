@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:isar/isar.dart';
 import 'package:mafia_killer/models/isar_service.dart';
-import 'package:provider/provider.dart';
 
 // dart run build_runner build
 part 'player.g.dart';
@@ -17,17 +16,28 @@ class Player extends ChangeNotifier {
   late bool doesParticipate;
   late String name;
 
+  static List<Player> players = [];
+
   // C R E A T E
   static Future<void> addPlayer(String name) async {
     final newPlayer = Player(name);
     final isar = await IsarService.db;
     isar.writeTxnSync(() => isar.players.putSync(newPlayer));
+    fetchPlayers();
   }
 
   // R E A D
   static Stream<List<Player>> listenToPlayers() async* {
+    fetchPlayers();
     final isar = await IsarService.db;
     yield* isar.players.where().watch(fireImmediately: true);
+  }
+
+  static Future<void> fetchPlayers() async {
+    final isar = await IsarService.db;
+    List<Player> fetchedPlayers = isar.players.where().findAllSync();
+    players.clear();
+    players.addAll(fetchedPlayers);
   }
 
   // U P D A T E
@@ -37,6 +47,7 @@ class Player extends ChangeNotifier {
       player.name = newName;
       isar.players.putSync(player);
     });
+    fetchPlayers();
   }
 
   static Future<void> changePlayerStatus(Player player) async {
@@ -45,6 +56,7 @@ class Player extends ChangeNotifier {
       player.doesParticipate = !player.doesParticipate;
       isar.players.putSync(player);
     });
+    fetchPlayers();
   }
 
   // D E L E T E
@@ -53,5 +65,6 @@ class Player extends ChangeNotifier {
     isar.writeTxnSync(() {
       isar.players.deleteSync(player.id);
     });
+    fetchPlayers();
   }
 }

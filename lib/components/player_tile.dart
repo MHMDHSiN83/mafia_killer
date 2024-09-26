@@ -4,7 +4,6 @@ import 'package:mafia_killer/components/dialogbox.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/themes/app_color.dart';
 
-// ignore: must_be_immutable
 class PlayerTile extends StatefulWidget {
   Player player;
   PlayerTile({super.key, required this.player});

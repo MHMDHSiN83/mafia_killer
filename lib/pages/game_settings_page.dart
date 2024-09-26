@@ -1,18 +1,11 @@
-import 'package:duration/duration.dart';
 import 'package:flutter/material.dart';
 import 'package:mafia_killer/components/my_divider.dart';
-import 'package:mafia_killer/components/my_outlined_button.dart';
 import 'package:mafia_killer/components/page_frame.dart';
 import 'package:mafia_killer/components/row_counterbox.dart';
 import 'package:mafia_killer/components/row_dropdownbox.dart';
 import 'package:mafia_killer/databases/game_settings.dart';
-import 'package:mafia_killer/models/app_handler.dart';
-import 'package:mafia_killer/models/global.dart';
-import 'package:mafia_killer/models/isar_service.dart';
-import 'package:mafia_killer/models/language.dart';
 import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/themes/app_color.dart';
-import 'package:provider/provider.dart';
 
 class GameSettingsPage extends StatefulWidget {
   const GameSettingsPage({super.key});
@@ -23,10 +16,11 @@ class GameSettingsPage extends StatefulWidget {
 
 class _GameSettingsPageState extends State<GameSettingsPage> {
   Map<String, dynamic> newGameSettings = {};
-  GameSettings? gameSettings;
 
   @override
   void initState() {
+    newGameSettings = GameSettings.currentGameSettings.getSettingsInMap();
+
     super.initState();
   }
 
@@ -88,9 +82,6 @@ class _GameSettingsPageState extends State<GameSettingsPage> {
 
   @override
   Widget build(BuildContext context) {
-    Map data = ModalRoute.of(context)!.settings.arguments! as Map;
-    gameSettings = data['gameSettings'];
-    newGameSettings = data['newGameSettings'];
     return Scaffold(
       body: PageFrame(
         pageTitle: "تنظیمات این دست",
@@ -222,7 +213,8 @@ class _GameSettingsPageState extends State<GameSettingsPage> {
             ),
             IconButton(
               onPressed: () {
-                GameSettings.updateSettings(gameSettings!, newGameSettings);
+                GameSettings.updateSettings(
+                    GameSettings.currentGameSettings, newGameSettings);
                 // Navigator.pushNamed(context, '/intro_page');
               },
               icon: const Icon(Icons.plus_one),

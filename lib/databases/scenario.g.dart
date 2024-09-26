@@ -21,6 +21,11 @@ const ScenarioSchema = CollectionSchema(
       id: 0,
       name: r'name',
       type: IsarType.string,
+    ),
+    r'rolesJson': PropertySchema(
+      id: 1,
+      name: r'rolesJson',
+      type: IsarType.string,
     )
   },
   estimateSize: _scenarioEstimateSize,
@@ -29,14 +34,7 @@ const ScenarioSchema = CollectionSchema(
   deserializeProp: _scenarioDeserializeProp,
   idName: r'id',
   indexes: {},
-  links: {
-    r'roles': LinkSchema(
-      id: 5680275096832532476,
-      name: r'roles',
-      target: r'Role',
-      single: false,
-    )
-  },
+  links: {},
   embeddedSchemas: {},
   getId: _scenarioGetId,
   getLinks: _scenarioGetLinks,
@@ -51,6 +49,7 @@ int _scenarioEstimateSize(
 ) {
   var bytesCount = offsets.last;
   bytesCount += 3 + object.name.length * 3;
+  bytesCount += 3 + object.rolesJson.length * 3;
   return bytesCount;
 }
 
@@ -61,6 +60,7 @@ void _scenarioSerialize(
   Map<Type, List<int>> allOffsets,
 ) {
   writer.writeString(offsets[0], object.name);
+  writer.writeString(offsets[1], object.rolesJson);
 }
 
 Scenario _scenarioDeserialize(
@@ -73,6 +73,7 @@ Scenario _scenarioDeserialize(
     reader.readString(offsets[0]),
   );
   object.id = id;
+  object.rolesJson = reader.readString(offsets[1]);
   return object;
 }
 
@@ -85,6 +86,8 @@ P _scenarioDeserializeProp<P>(
   switch (propertyId) {
     case 0:
       return (reader.readString(offset)) as P;
+    case 1:
+      return (reader.readString(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
   }
@@ -95,12 +98,11 @@ Id _scenarioGetId(Scenario object) {
 }
 
 List<IsarLinkBase<dynamic>> _scenarioGetLinks(Scenario object) {
-  return [object.roles];
+  return [];
 }
 
 void _scenarioAttach(IsarCollection<dynamic> col, Id id, Scenario object) {
   object.id = id;
-  object.roles.attach(col, col.isar.collection<Role>(), r'roles', id);
 }
 
 extension ScenarioQueryWhereSort on QueryBuilder<Scenario, Scenario, QWhere> {
@@ -361,70 +363,144 @@ extension ScenarioQueryFilter
       ));
     });
   }
+
+  QueryBuilder<Scenario, Scenario, QAfterFilterCondition> rolesJsonEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'rolesJson',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Scenario, Scenario, QAfterFilterCondition> rolesJsonGreaterThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'rolesJson',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Scenario, Scenario, QAfterFilterCondition> rolesJsonLessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'rolesJson',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Scenario, Scenario, QAfterFilterCondition> rolesJsonBetween(
+    String lower,
+    String upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'rolesJson',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Scenario, Scenario, QAfterFilterCondition> rolesJsonStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'rolesJson',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Scenario, Scenario, QAfterFilterCondition> rolesJsonEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'rolesJson',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Scenario, Scenario, QAfterFilterCondition> rolesJsonContains(
+      String value,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'rolesJson',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Scenario, Scenario, QAfterFilterCondition> rolesJsonMatches(
+      String pattern,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'rolesJson',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Scenario, Scenario, QAfterFilterCondition> rolesJsonIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'rolesJson',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<Scenario, Scenario, QAfterFilterCondition>
+      rolesJsonIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'rolesJson',
+        value: '',
+      ));
+    });
+  }
 }
 
 extension ScenarioQueryObject
     on QueryBuilder<Scenario, Scenario, QFilterCondition> {}
 
 extension ScenarioQueryLinks
-    on QueryBuilder<Scenario, Scenario, QFilterCondition> {
-  QueryBuilder<Scenario, Scenario, QAfterFilterCondition> roles(
-      FilterQuery<Role> q) {
-    return QueryBuilder.apply(this, (query) {
-      return query.link(q, r'roles');
-    });
-  }
-
-  QueryBuilder<Scenario, Scenario, QAfterFilterCondition> rolesLengthEqualTo(
-      int length) {
-    return QueryBuilder.apply(this, (query) {
-      return query.linkLength(r'roles', length, true, length, true);
-    });
-  }
-
-  QueryBuilder<Scenario, Scenario, QAfterFilterCondition> rolesIsEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.linkLength(r'roles', 0, true, 0, true);
-    });
-  }
-
-  QueryBuilder<Scenario, Scenario, QAfterFilterCondition> rolesIsNotEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.linkLength(r'roles', 0, false, 999999, true);
-    });
-  }
-
-  QueryBuilder<Scenario, Scenario, QAfterFilterCondition> rolesLengthLessThan(
-    int length, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.linkLength(r'roles', 0, true, length, include);
-    });
-  }
-
-  QueryBuilder<Scenario, Scenario, QAfterFilterCondition>
-      rolesLengthGreaterThan(
-    int length, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.linkLength(r'roles', length, include, 999999, true);
-    });
-  }
-
-  QueryBuilder<Scenario, Scenario, QAfterFilterCondition> rolesLengthBetween(
-    int lower,
-    int upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.linkLength(
-          r'roles', lower, includeLower, upper, includeUpper);
-    });
-  }
-}
+    on QueryBuilder<Scenario, Scenario, QFilterCondition> {}
 
 extension ScenarioQuerySortBy on QueryBuilder<Scenario, Scenario, QSortBy> {
   QueryBuilder<Scenario, Scenario, QAfterSortBy> sortByName() {
@@ -436,6 +512,18 @@ extension ScenarioQuerySortBy on QueryBuilder<Scenario, Scenario, QSortBy> {
   QueryBuilder<Scenario, Scenario, QAfterSortBy> sortByNameDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'name', Sort.desc);
+    });
+  }
+
+  QueryBuilder<Scenario, Scenario, QAfterSortBy> sortByRolesJson() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'rolesJson', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Scenario, Scenario, QAfterSortBy> sortByRolesJsonDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'rolesJson', Sort.desc);
     });
   }
 }
@@ -465,6 +553,18 @@ extension ScenarioQuerySortThenBy
       return query.addSortBy(r'name', Sort.desc);
     });
   }
+
+  QueryBuilder<Scenario, Scenario, QAfterSortBy> thenByRolesJson() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'rolesJson', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Scenario, Scenario, QAfterSortBy> thenByRolesJsonDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'rolesJson', Sort.desc);
+    });
+  }
 }
 
 extension ScenarioQueryWhereDistinct
@@ -473,6 +573,13 @@ extension ScenarioQueryWhereDistinct
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'name', caseSensitive: caseSensitive);
+    });
+  }
+
+  QueryBuilder<Scenario, Scenario, QDistinct> distinctByRolesJson(
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'rolesJson', caseSensitive: caseSensitive);
     });
   }
 }
@@ -488,6 +595,12 @@ extension ScenarioQueryProperty
   QueryBuilder<Scenario, String, QQueryOperations> nameProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'name');
+    });
+  }
+
+  QueryBuilder<Scenario, String, QQueryOperations> rolesJsonProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'rolesJson');
     });
   }
 }

@@ -1,8 +1,5 @@
-import 'package:duration/duration.dart';
-import 'package:flutter/foundation.dart';
 import 'package:isar/isar.dart';
 import 'package:mafia_killer/models/isar_service.dart';
-import 'package:mafia_killer/models/language.dart';
 import 'package:mafia_killer/databases/scenario.dart';
 
 part 'game_settings.g.dart';
@@ -29,7 +26,15 @@ class GameSettings {
   late bool playMusic;
   late bool soundEffect;
   late List<String> narrators;
+  static late GameSettings currentGameSettings; 
 
+
+  static Future<void> getGameSettingsFromDatabase() async{
+    final isar = await IsarService.db;
+    currentGameSettings = (await isar.gameSettings.get(1))!;
+    currentGameSettings.scenario.loadSync();
+    Scenario.currentScenario = currentGameSettings.scenario.value!;
+  }
   // String get introTime {
   //   return "0${_introTime.inMinutes}:${_introTime.inSeconds.remainder(60)}";
   // }
@@ -53,6 +58,7 @@ class GameSettings {
 
   void setNewSettings(Map<String, dynamic> newGameSettings) {
     scenario.value = Scenario.getScenarioByName(newGameSettings['scenario']);
+    Scenario.currentScenario = scenario.value!;
     soundEffect = newGameSettings['soundEffect'];
     introTime = newGameSettings['introTime'];
     mainSpeakTime = newGameSettings['mainSpeakTime'];
@@ -63,12 +69,11 @@ class GameSettings {
   }
 
   static Future<void> setDefaultSettings() async {
-    final GameSettings gameSettings = GameSettings();
+    currentGameSettings = GameSettings();
     // gameSettings.scenario.value!.roles.loadSync();
-
-    print(gameSettings.scenario.value!.roles.toList());
     final isar = await IsarService.db;
-    isar.writeTxnSync(() => isar.gameSettings.putSync(gameSettings));
+    isar.writeTxnSync(() => isar.gameSettings.putSync(currentGameSettings));
+    Scenario.currentScenario = currentGameSettings.scenario.value!;
   }
 
   static Future<void> updateSettings(

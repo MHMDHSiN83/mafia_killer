@@ -1,0 +1,1 @@
+enum RoleSide { mafia, citizen, independant }

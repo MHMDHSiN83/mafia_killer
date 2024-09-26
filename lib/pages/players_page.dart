@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:mafia_killer/components/my_outlined_button.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:mafia_killer/components/page_frame.dart';
 import 'package:mafia_killer/components/player_tile.dart';
 import 'package:mafia_killer/components/role_selection_tile.dart';
-import 'package:mafia_killer/models/app_handler.dart';
 import 'package:mafia_killer/databases/player.dart';
-import 'package:mafia_killer/databases/role.dart';
 import 'package:mafia_killer/themes/app_color.dart';
-import 'package:provider/provider.dart';
 
 class PlayersPage extends StatefulWidget {
   const PlayersPage({super.key});
@@ -40,7 +37,8 @@ class _PlayersPageState extends State<PlayersPage> {
         leftButtonIcon: Icons.keyboard_arrow_left,
         rightButtonIcon: Icons.keyboard_arrow_right,
         leftButtonOnTap: () => Navigator.pop(context),
-        rightButtonOnTap: () => Navigator.pushNamed(context, '/loading_page'),
+        rightButtonOnTap: () =>
+            Navigator.pushNamed(context, '/game_settings_page'),
         child: Column(
           children: [
             Expanded(
@@ -49,7 +47,13 @@ class _PlayersPageState extends State<PlayersPage> {
                   stream: Player.listenToPlayers(),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const Center(child: CircularProgressIndicator());
+                      return Center(
+                        child: SpinKitSpinningLines(
+                          color: Theme.of(context).colorScheme.inversePrimary,
+                          size: 100.0,
+                          lineWidth: 7,
+                        ),
+                      );
                     } else if (snapshot.hasError) {
                       return Center(child: Text('Error: ${snapshot.error}'));
                     } else if (!snapshot.hasData || snapshot.data!.isEmpty) {

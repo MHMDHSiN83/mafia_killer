@@ -1,7 +1,6 @@
 import 'package:isar/isar.dart';
 import 'package:mafia_killer/databases/game_settings.dart';
 import 'package:mafia_killer/databases/player.dart';
-import 'package:mafia_killer/databases/role.dart';
 import 'package:mafia_killer/databases/scenario.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -10,14 +9,14 @@ class IsarService {
 
   IsarService() {
     db = openDB();
-    setValues();
+    setInitialValues();
   }
 
   Future<Isar> openDB() async {
     final dir = await getApplicationDocumentsDirectory();
     if (Isar.instanceNames.isEmpty) {
       final isar = await Isar.open(
-        [PlayerSchema, GameSettingsSchema, ScenarioSchema, RoleSchema],
+        [PlayerSchema, GameSettingsSchema, ScenarioSchema],
         inspector: true,
         directory: dir.path,
       );
@@ -26,17 +25,19 @@ class IsarService {
     return Future.value(Isar.getInstance());
   }
 
-  void setValues() async {
+  void setInitialValues() async {
     final isar = await IsarService.db;
     int count = await isar.scenarios.count();
     if (count == 0) {
-      Scenario.setDefaultScenarios();
+      await Scenario.setDefaultScenarios();
     } else {
-      Scenario.getScenariosFromDatabase();
+      await Scenario.getScenariosFromDatabase();
     }
     count = await isar.gameSettings.count();
     if (count == 0) {
-      GameSettings.setDefaultSettings();
+      await GameSettings.setDefaultSettings();
+    } else {
+      await GameSettings.getGameSettingsFromDatabase();
     }
   }
 }
