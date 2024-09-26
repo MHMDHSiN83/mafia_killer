@@ -6,6 +6,7 @@ import 'package:mafia_killer/components/page_frame.dart';
 import 'package:mafia_killer/components/role_selection_tile.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/databases/scenario.dart';
+import 'package:mafia_killer/models/language.dart';
 import 'package:mafia_killer/models/role.dart';
 import 'package:mafia_killer/models/role_side.dart';
 import 'package:mafia_killer/themes/app_color.dart';
@@ -18,19 +19,60 @@ class TalkingPage extends StatefulWidget {
 }
 
 class _TalkingPageState extends State<TalkingPage> {
-  int _start = 60; // Start timer at 10 minutes (600 seconds)
+  double _start = 6;
   late Timer _timer;
-
+  bool _isRunning = false;
+  bool _hasStarted = false;
+  bool _hasFinished = false;
   @override
   void initState() {
     super.initState();
-    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+  }
+
+  void startAndStopTimer() {
+    _hasStarted = true;
+    if (!_isRunning) {
+      startTimer();
+    } else {
+      stopTimer();
+    }
+  }
+
+  void startTimer() {
+    _isRunning = true;
+    _timer = Timer.periodic(const Duration(milliseconds: 100), (timer) {
       if (_start > 0) {
         setState(() {
-          _start--;
+          _start -= 0.1;
         });
       } else {
-        _timer.cancel();
+        setState(() {
+          _hasFinished = true;
+          _timer.cancel();
+          _isRunning = false;
+        });
+      }
+    });
+  }
+
+  void stopTimer() {
+    _timer.cancel();
+    setState(() {
+      _isRunning = false;
+    });
+  }
+
+  void resetTimer() {
+    stopTimer();
+    setState(() {
+      if (_hasFinished) {
+        _hasStarted = true;
+        _hasFinished = false;
+        _start = 6;
+        startTimer();
+      } else {
+        _hasStarted = false;
+        _start = 6;
       }
     });
   }
@@ -39,12 +81,6 @@ class _TalkingPageState extends State<TalkingPage> {
   void dispose() {
     _timer.cancel();
     super.dispose();
-  }
-
-  String formatTime(int seconds) {
-    final minutes = (seconds ~/ 60).toString().padLeft(2, '0');
-    final secs = (seconds % 60).toString().padLeft(2, '0');
-    return '$minutes:$secs';
   }
 
   @override
@@ -59,9 +95,60 @@ class _TalkingPageState extends State<TalkingPage> {
         rightButtonIcon: Icons.keyboard_arrow_right,
         leftButtonOnTap: () => Navigator.pop(context),
         rightButtonOnTap: () => Navigator.pushNamed(context, '/loading_page'),
-        child: Text(
-          formatTime(_start),
-          style: const TextStyle(fontSize: 48),
+        child: Column(
+          children: [
+            Text(
+              Language.formatTime(_start.toInt()),
+              style: const TextStyle(fontSize: 48),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                if (!_hasFinished)
+                  ElevatedButton(
+                    onPressed: startAndStopTimer,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: _isRunning
+                          ? AppColors.redColor
+                          : AppColors.darkgreenColor,
+                      elevation: 12.0,
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 15, vertical: 10),
+                      child: Text(
+                        _isRunning ? 'توقف' : 'شروع',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                          color: Theme.of(context).colorScheme.inversePrimary,
+                        ),
+                      ),
+                    ),
+                  ),
+                if (_hasStarted)
+                  ElevatedButton(
+                    onPressed: resetTimer,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.darkgreenColor,
+                      elevation: 12.0,
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 15, vertical: 10),
+                      child: Text(
+                        'شروع مجدد',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                          color: Theme.of(context).colorScheme.inversePrimary,
+                        ),
+                      ),
+                    ),
+                  ),
+              ],
+            ),
+          ],
         ),
       ),
     );
