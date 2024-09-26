@@ -25,12 +25,12 @@ const GameSettingsSchema = CollectionSchema(
     r'introTime': PropertySchema(
       id: 1,
       name: r'introTime',
-      type: IsarType.string,
+      type: IsarType.long,
     ),
     r'mainSpeakTime': PropertySchema(
       id: 2,
       name: r'mainSpeakTime',
-      type: IsarType.string,
+      type: IsarType.long,
     ),
     r'narrator': PropertySchema(
       id: 3,
@@ -80,8 +80,6 @@ int _gameSettingsEstimateSize(
   Map<Type, List<int>> allOffsets,
 ) {
   var bytesCount = offsets.last;
-  bytesCount += 3 + object.introTime.length * 3;
-  bytesCount += 3 + object.mainSpeakTime.length * 3;
   bytesCount += 3 + object.narrator.length * 3;
   bytesCount += 3 + object.narrators.length * 3;
   {
@@ -100,8 +98,8 @@ void _gameSettingsSerialize(
   Map<Type, List<int>> allOffsets,
 ) {
   writer.writeLong(offsets[0], object.inquiry);
-  writer.writeString(offsets[1], object.introTime);
-  writer.writeString(offsets[2], object.mainSpeakTime);
+  writer.writeLong(offsets[1], object.introTime);
+  writer.writeLong(offsets[2], object.mainSpeakTime);
   writer.writeString(offsets[3], object.narrator);
   writer.writeStringList(offsets[4], object.narrators);
   writer.writeBool(offsets[5], object.playMusic);
@@ -117,8 +115,8 @@ GameSettings _gameSettingsDeserialize(
   final object = GameSettings();
   object.id = id;
   object.inquiry = reader.readLong(offsets[0]);
-  object.introTime = reader.readString(offsets[1]);
-  object.mainSpeakTime = reader.readString(offsets[2]);
+  object.introTime = reader.readLong(offsets[1]);
+  object.mainSpeakTime = reader.readLong(offsets[2]);
   object.narrator = reader.readString(offsets[3]);
   object.narrators = reader.readStringList(offsets[4]) ?? [];
   object.playMusic = reader.readBool(offsets[5]);
@@ -136,9 +134,9 @@ P _gameSettingsDeserializeProp<P>(
     case 0:
       return (reader.readLong(offset)) as P;
     case 1:
-      return (reader.readString(offset)) as P;
+      return (reader.readLong(offset)) as P;
     case 2:
-      return (reader.readString(offset)) as P;
+      return (reader.readLong(offset)) as P;
     case 3:
       return (reader.readString(offset)) as P;
     case 4:
@@ -357,58 +355,49 @@ extension GameSettingsQueryFilter
   }
 
   QueryBuilder<GameSettings, GameSettings, QAfterFilterCondition>
-      introTimeEqualTo(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+      introTimeEqualTo(int value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'introTime',
         value: value,
-        caseSensitive: caseSensitive,
       ));
     });
   }
 
   QueryBuilder<GameSettings, GameSettings, QAfterFilterCondition>
       introTimeGreaterThan(
-    String value, {
+    int value, {
     bool include = false,
-    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
         property: r'introTime',
         value: value,
-        caseSensitive: caseSensitive,
       ));
     });
   }
 
   QueryBuilder<GameSettings, GameSettings, QAfterFilterCondition>
       introTimeLessThan(
-    String value, {
+    int value, {
     bool include = false,
-    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
         property: r'introTime',
         value: value,
-        caseSensitive: caseSensitive,
       ));
     });
   }
 
   QueryBuilder<GameSettings, GameSettings, QAfterFilterCondition>
       introTimeBetween(
-    String lower,
-    String upper, {
+    int lower,
+    int upper, {
     bool includeLower = true,
     bool includeUpper = true,
-    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
@@ -417,134 +406,54 @@ extension GameSettingsQueryFilter
         includeLower: includeLower,
         upper: upper,
         includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
       ));
     });
   }
 
   QueryBuilder<GameSettings, GameSettings, QAfterFilterCondition>
-      introTimeStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'introTime',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<GameSettings, GameSettings, QAfterFilterCondition>
-      introTimeEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'introTime',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<GameSettings, GameSettings, QAfterFilterCondition>
-      introTimeContains(String value, {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'introTime',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<GameSettings, GameSettings, QAfterFilterCondition>
-      introTimeMatches(String pattern, {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'introTime',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<GameSettings, GameSettings, QAfterFilterCondition>
-      introTimeIsEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'introTime',
-        value: '',
-      ));
-    });
-  }
-
-  QueryBuilder<GameSettings, GameSettings, QAfterFilterCondition>
-      introTimeIsNotEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'introTime',
-        value: '',
-      ));
-    });
-  }
-
-  QueryBuilder<GameSettings, GameSettings, QAfterFilterCondition>
-      mainSpeakTimeEqualTo(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+      mainSpeakTimeEqualTo(int value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'mainSpeakTime',
         value: value,
-        caseSensitive: caseSensitive,
       ));
     });
   }
 
   QueryBuilder<GameSettings, GameSettings, QAfterFilterCondition>
       mainSpeakTimeGreaterThan(
-    String value, {
+    int value, {
     bool include = false,
-    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
         property: r'mainSpeakTime',
         value: value,
-        caseSensitive: caseSensitive,
       ));
     });
   }
 
   QueryBuilder<GameSettings, GameSettings, QAfterFilterCondition>
       mainSpeakTimeLessThan(
-    String value, {
+    int value, {
     bool include = false,
-    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
         property: r'mainSpeakTime',
         value: value,
-        caseSensitive: caseSensitive,
       ));
     });
   }
 
   QueryBuilder<GameSettings, GameSettings, QAfterFilterCondition>
       mainSpeakTimeBetween(
-    String lower,
-    String upper, {
+    int lower,
+    int upper, {
     bool includeLower = true,
     bool includeUpper = true,
-    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
@@ -553,77 +462,6 @@ extension GameSettingsQueryFilter
         includeLower: includeLower,
         upper: upper,
         includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<GameSettings, GameSettings, QAfterFilterCondition>
-      mainSpeakTimeStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'mainSpeakTime',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<GameSettings, GameSettings, QAfterFilterCondition>
-      mainSpeakTimeEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'mainSpeakTime',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<GameSettings, GameSettings, QAfterFilterCondition>
-      mainSpeakTimeContains(String value, {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'mainSpeakTime',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<GameSettings, GameSettings, QAfterFilterCondition>
-      mainSpeakTimeMatches(String pattern, {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'mainSpeakTime',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<GameSettings, GameSettings, QAfterFilterCondition>
-      mainSpeakTimeIsEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'mainSpeakTime',
-        value: '',
-      ));
-    });
-  }
-
-  QueryBuilder<GameSettings, GameSettings, QAfterFilterCondition>
-      mainSpeakTimeIsNotEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'mainSpeakTime',
-        value: '',
       ));
     });
   }
@@ -1204,18 +1042,16 @@ extension GameSettingsQueryWhereDistinct
     });
   }
 
-  QueryBuilder<GameSettings, GameSettings, QDistinct> distinctByIntroTime(
-      {bool caseSensitive = true}) {
+  QueryBuilder<GameSettings, GameSettings, QDistinct> distinctByIntroTime() {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'introTime', caseSensitive: caseSensitive);
+      return query.addDistinctBy(r'introTime');
     });
   }
 
-  QueryBuilder<GameSettings, GameSettings, QDistinct> distinctByMainSpeakTime(
-      {bool caseSensitive = true}) {
+  QueryBuilder<GameSettings, GameSettings, QDistinct>
+      distinctByMainSpeakTime() {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'mainSpeakTime',
-          caseSensitive: caseSensitive);
+      return query.addDistinctBy(r'mainSpeakTime');
     });
   }
 
@@ -1259,13 +1095,13 @@ extension GameSettingsQueryProperty
     });
   }
 
-  QueryBuilder<GameSettings, String, QQueryOperations> introTimeProperty() {
+  QueryBuilder<GameSettings, int, QQueryOperations> introTimeProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'introTime');
     });
   }
 
-  QueryBuilder<GameSettings, String, QQueryOperations> mainSpeakTimeProperty() {
+  QueryBuilder<GameSettings, int, QQueryOperations> mainSpeakTimeProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'mainSpeakTime');
     });

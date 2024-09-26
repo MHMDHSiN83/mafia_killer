@@ -33,23 +33,15 @@ class _GameSettingsPageState extends State<GameSettingsPage> {
   void _increaseNumber(bool isTimer, String varName) {
     setState(() {
       if (isTimer) {
-        final List<String> splitted = newGameSettings[varName]!.split(':');
-        int minutes = int.parse(splitted[0]);
-        int seconds = int.parse(splitted[1]);
-        if (minutes >= 9 && seconds >= 50) {
+        if (newGameSettings[varName] >= 590) {
           return;
         }
-        if (seconds >= 50) {
-          newGameSettings[varName] = '0${minutes + 1}:00';
-        } else {
-          newGameSettings[varName] = '0$minutes:${seconds + 10}';
-        }
+        newGameSettings[varName] += 10;
       } else {
-        if (newGameSettings[varName] == '9') {
+        if (newGameSettings[varName] == 9) {
           return;
         }
-        newGameSettings[varName] =
-            (int.parse(newGameSettings[varName]!) + 1).toString();
+        newGameSettings[varName]++;
       }
     });
   }
@@ -57,25 +49,15 @@ class _GameSettingsPageState extends State<GameSettingsPage> {
   void _decreaseNumber(bool isTimer, String varName) {
     setState(() {
       if (isTimer) {
-        final List<String> splitted = newGameSettings[varName]!.split(':');
-        int minutes = int.parse(splitted[0]);
-        int seconds = int.parse(splitted[1]);
-        if (minutes <= 0 && seconds <= 10) {
+        if (newGameSettings[varName] <= 10) {
           return;
         }
-        if (seconds <= 0) {
-          newGameSettings[varName] = '0${minutes - 1}:50';
-        } else if (seconds <= 10) {
-          newGameSettings[varName] = '0$minutes:${seconds - 10}0';
-        } else {
-          newGameSettings[varName] = '0$minutes:${seconds - 10}';
-        }
+        newGameSettings[varName] -= 10;
       } else {
-        if (newGameSettings[varName] == '1') {
+        if (newGameSettings[varName] == 1) {
           return;
         }
-        newGameSettings[varName] =
-            (int.parse(newGameSettings[varName]!) - 1).toString();
+        newGameSettings[varName]--;
       }
     });
   }

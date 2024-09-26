@@ -8,8 +8,8 @@ part 'game_settings.g.dart';
 class GameSettings {
   GameSettings() {
     scenario.value = Scenario.scenarios[0];
-    introTime = '00:30';
-    mainSpeakTime = '02:00';
+    introTime = 30;
+    mainSpeakTime = 120;
     inquiry = 2;
     narrator = 'کامبیز دیرباز';
     playMusic = true;
@@ -19,8 +19,8 @@ class GameSettings {
 
   Id id = Isar.autoIncrement;
   var scenario = IsarLink<Scenario>();
-  late String introTime;
-  late String mainSpeakTime;
+  late int introTime;
+  late int mainSpeakTime;
   late int inquiry;
   late String narrator;
   late bool playMusic;
@@ -48,7 +48,7 @@ class GameSettings {
       'scenario': scenario.value!.name,
       'introTime': introTime,
       'mainSpeakTime': mainSpeakTime,
-      'inquiry': inquiry.toString(),
+      'inquiry': inquiry,
       'narrator': narrator,
       'playMusic': playMusic,
       'soundEffect': soundEffect,
@@ -62,7 +62,7 @@ class GameSettings {
     soundEffect = newGameSettings['soundEffect'];
     introTime = newGameSettings['introTime'];
     mainSpeakTime = newGameSettings['mainSpeakTime'];
-    inquiry = int.parse(newGameSettings['inquiry']);
+    inquiry = newGameSettings['inquiry'];
     narrator = newGameSettings['narrator'];
     playMusic = newGameSettings['playMusic'];
     soundEffect = newGameSettings['soundEffect'];
