@@ -1,56 +1,47 @@
 import 'package:flutter/material.dart';
 import 'package:mafia_killer/components/my_divider.dart';
-import 'package:mafia_killer/components/my_outlined_button.dart';
 import 'package:mafia_killer/components/page_frame.dart';
 import 'package:mafia_killer/components/row_counterbox.dart';
 import 'package:mafia_killer/components/row_dropdownbox.dart';
-import 'package:mafia_killer/models/app_handler.dart';
+import 'package:mafia_killer/databases/game_settings.dart';
+import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/themes/app_color.dart';
-import 'package:provider/provider.dart';
 
 class GameSettingsPage extends StatefulWidget {
-  GameSettingsPage({super.key});
+  const GameSettingsPage({super.key});
 
   @override
   State<GameSettingsPage> createState() => _GameSettingsPageState();
 }
 
 class _GameSettingsPageState extends State<GameSettingsPage> {
-  Map<String, dynamic> gameSettings = {};
-  AppHandler handler = AppHandler();
+  Map<String, dynamic> newGameSettings = {};
+
   @override
   void initState() {
-    AppHandler handler = context.read<AppHandler>();
-    gameSettings = handler.gameSettings;
+    newGameSettings = GameSettings.currentGameSettings.getSettingsInMap();
+
     super.initState();
   }
 
   void _onItemSelected(String? selectedItem, String varName) {
     setState(() {
-      gameSettings[varName] = selectedItem!;
+      newGameSettings[varName] = selectedItem!;
     });
   }
 
   void _increaseNumber(bool isTimer, String varName) {
     setState(() {
       if (isTimer) {
-        final List<String> splitted = gameSettings[varName]!.split(':');
-        int minutes = int.parse(splitted[0]);
-        int seconds = int.parse(splitted[1]);
-        if (minutes >= 9 && seconds >= 50) {
+        if (newGameSettings[varName] >= 590) {
           return;
         }
-        if (seconds >= 50) {
-          gameSettings[varName] = '0${minutes + 1}:00';
-        } else {
-          gameSettings[varName] = '0$minutes:${seconds + 10}';
-        }
+        newGameSettings[varName] += 10;
       } else {
-        if (gameSettings[varName] == '9') {
+        if (newGameSettings[varName] == 9) {
           return;
         }
-        gameSettings[varName] =
-            (int.parse(gameSettings[varName]!) + 1).toString();
+        newGameSettings[varName]++;
       }
     });
   }
@@ -58,25 +49,15 @@ class _GameSettingsPageState extends State<GameSettingsPage> {
   void _decreaseNumber(bool isTimer, String varName) {
     setState(() {
       if (isTimer) {
-        final List<String> splitted = gameSettings[varName]!.split(':');
-        int minutes = int.parse(splitted[0]);
-        int seconds = int.parse(splitted[1]);
-        if (minutes <= 0 && seconds <= 10) {
+        if (newGameSettings[varName] <= 10) {
           return;
         }
-        if (seconds <= 0) {
-          gameSettings[varName] = '0${minutes - 1}:50';
-        } else if (seconds <= 10) {
-          gameSettings[varName] = '0$minutes:${seconds - 10}0';
-        } else {
-          gameSettings[varName] = '0$minutes:${seconds - 10}';
-        }
+        newGameSettings[varName] -= 10;
       } else {
-        if (gameSettings[varName] == '0') {
+        if (newGameSettings[varName] == 1) {
           return;
         }
-        gameSettings[varName] =
-            (int.parse(gameSettings[varName]!) - 1).toString();
+        newGameSettings[varName]--;
       }
     });
   }
@@ -89,18 +70,17 @@ class _GameSettingsPageState extends State<GameSettingsPage> {
         rightButtonText: "بعدی",
         leftButtonText: "قبلی",
         leftButtonOnTap: () => Navigator.pop(context),
-        rightButtonOnTap: () => Navigator.pushNamed(context, '/intro_page'),
+        rightButtonOnTap: () =>
+            Navigator.pushNamed(context, '/role_selection_page'),
         //rightButtonIcon: Icons.keyboard_arrow_down_outlined,
         child: ListView(
-          padding: EdgeInsets.symmetric(
-            horizontal: 20,
-            vertical: 50,
-          ),
+          padding: const EdgeInsets.only(bottom: 50, left: 20, right: 20),
           children: [
             RowDropdownBox(
               title: 'سناریو بازی',
-              options: handler.scenarios,
+              options: Scenario.getScenarioNames(),
               onSelect: _onItemSelected,
+              selectedItem: newGameSettings['scenario'],
               varName: 'scenario',
             ),
             const MyDivider(),
@@ -108,7 +88,7 @@ class _GameSettingsPageState extends State<GameSettingsPage> {
               title: 'فرصت صحبت در روز معارفه',
               increaseNumber: _increaseNumber,
               decreaseNumber: _decreaseNumber,
-              number: gameSettings['introTime']!,
+              number: newGameSettings['introTime']!,
               isTimer: true,
               varName: 'introTime',
             ),
@@ -117,7 +97,7 @@ class _GameSettingsPageState extends State<GameSettingsPage> {
               title: 'فرصت صحبت کردن در روز',
               increaseNumber: _increaseNumber,
               decreaseNumber: _decreaseNumber,
-              number: gameSettings['mainSpeakTime']!,
+              number: newGameSettings['mainSpeakTime']!,
               isTimer: true,
               varName: 'mainSpeakTime',
             ),
@@ -126,14 +106,15 @@ class _GameSettingsPageState extends State<GameSettingsPage> {
               title: 'تعداد استعلام های بازی',
               increaseNumber: _increaseNumber,
               decreaseNumber: _decreaseNumber,
-              number: gameSettings['inquiry']!,
+              number: newGameSettings['inquiry']!,
               isTimer: false,
               varName: 'inquiry',
             ),
             const MyDivider(),
             RowDropdownBox(
               title: 'صدای گرداننده بازی (راوی)',
-              options: handler.narrators,
+              options: newGameSettings['narrators'],
+              selectedItem: newGameSettings['narrator'],
               onSelect: _onItemSelected,
               varName: 'narrator',
             ),
@@ -152,16 +133,17 @@ class _GameSettingsPageState extends State<GameSettingsPage> {
                 IconButton(
                     onPressed: () {
                       setState(() {
-                        gameSettings['playMusic'] = !gameSettings['playMusic'];
+                        newGameSettings['playMusic'] =
+                            !newGameSettings['playMusic'];
                       });
                     },
                     padding: EdgeInsets.zero,
                     icon: Icon(
-                      gameSettings['playMusic']
+                      newGameSettings['playMusic']
                           ? Icons.volume_up_rounded
                           : Icons.volume_off_rounded,
                       size: 40,
-                      color: gameSettings['playMusic']
+                      color: newGameSettings['playMusic']
                           ? AppColors.greenColor
                           : AppColors.redColor,
                     )),
@@ -182,26 +164,27 @@ class _GameSettingsPageState extends State<GameSettingsPage> {
                 GestureDetector(
                   onTap: () {
                     setState(() {
-                      gameSettings['soundEffect'] =
-                          !gameSettings['soundEffect'];
+                      newGameSettings['soundEffect'] =
+                          !newGameSettings['soundEffect'];
                     });
                   },
                   child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 25, vertical: 2),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 25, vertical: 2),
                     decoration: BoxDecoration(
                         border: Border.all(
-                          color: gameSettings['soundEffect']
-                              ? AppColors.redColor
-                              : AppColors.greenColor,
+                          color: newGameSettings['soundEffect']
+                              ? AppColors.greenColor
+                              : AppColors.redColor,
                           width: 2,
                         ),
                         borderRadius: BorderRadius.circular(2)),
                     child: Text(
-                      gameSettings['soundEffect'] ? "غیرفعال" : "فعال",
+                      newGameSettings['soundEffect'] ? "غیرفعال" : "فعال",
                       style: TextStyle(
-                        color: gameSettings['soundEffect']
-                            ? AppColors.redColor
-                            : AppColors.greenColor,
+                        color: newGameSettings['soundEffect']
+                            ? AppColors.greenColor
+                            : AppColors.redColor,
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                       ),
@@ -210,6 +193,14 @@ class _GameSettingsPageState extends State<GameSettingsPage> {
                 ),
               ],
             ),
+            IconButton(
+              onPressed: () {
+                GameSettings.updateSettings(
+                    GameSettings.currentGameSettings, newGameSettings);
+                // Navigator.pushNamed(context, '/intro_page');
+              },
+              icon: const Icon(Icons.plus_one),
+            )
           ],
         ),
       ),

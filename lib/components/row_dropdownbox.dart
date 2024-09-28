@@ -8,9 +8,11 @@ class RowDropdownBox extends StatelessWidget {
     required this.options,
     required this.onSelect,
     required this.varName,
+    required this.selectedItem,
   });
   final String title;
   final List<String> options;
+  final String selectedItem;
   final String varName;
   final Function(String?, String) onSelect;
   @override
@@ -29,7 +31,7 @@ class RowDropdownBox extends StatelessWidget {
         ),
         DropdownBox(
           options: options,
-          selectedItem: options.first,
+          selectedItem: selectedItem,
           onSelect: onSelect,
           varName: varName,
         ),

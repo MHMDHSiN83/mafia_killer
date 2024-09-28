@@ -12,7 +12,7 @@ class RowCounterBox extends StatelessWidget {
     required this.varName,
   });
   final String title;
-  String number;
+  int number;
   final Function(bool, String) increaseNumber;
   final Function(bool, String) decreaseNumber;
   bool isTimer;

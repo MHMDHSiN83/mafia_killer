@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mafia_killer/components/checkbox.dart';
 import 'package:mafia_killer/components/dialogbox.dart';
-import 'package:mafia_killer/models/app_handler.dart';
-import 'package:mafia_killer/models/player.dart';
+import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/themes/app_color.dart';
-import 'package:provider/provider.dart';
 
 class PlayerTile extends StatefulWidget {
   Player player;
@@ -16,21 +14,20 @@ class PlayerTile extends StatefulWidget {
 
 class _PlayerTileState extends State<PlayerTile> {
   TextEditingController controller = TextEditingController();
-  void onChanged(bool? value) {
-    // Provider.of<AppHandler>(context, listen: false)
-    //     .changePlayerStatus(widget.player);
-    context.read<AppHandler>().changePlayerStatus(widget.player);
+  void onChanged(bool? value) async {
+    await Player.changePlayerStatus(widget.player);
   }
 
   void removePlayer() {
-    context.read<AppHandler>().removePlayer(widget.player);
+    Player.deletePlayer(widget.player);
   }
 
   void editPlayerName() {
     if (controller.text == "") {
       return;
     }
-    context.read<AppHandler>().editPlayerName(widget.player, controller.text);
+    // context.read<AppHandler>().editPlayerName(widget.player, controller.text);
+    Player.editPlayerName(widget.player, controller.text);
     Navigator.of(context).pop();
   }
 
@@ -60,7 +57,7 @@ class _PlayerTileState extends State<PlayerTile> {
           borderRadius: BorderRadius.circular(5)),
       height: 60.0,
       child: Padding(
-        padding: EdgeInsets.all(5.0),
+        padding: const EdgeInsets.all(5.0),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -80,7 +77,7 @@ class _PlayerTileState extends State<PlayerTile> {
                     ),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 5,
                 ),
               ],
@@ -100,7 +97,7 @@ class _PlayerTileState extends State<PlayerTile> {
                 IconButton(
                   padding: EdgeInsets.zero,
                   onPressed: removePlayer,
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.delete,
                     size: 35,
                     color: AppColors.redColor,
