@@ -22,10 +22,11 @@ const ScenarioSchema = CollectionSchema(
       name: r'name',
       type: IsarType.string,
     ),
-    r'rolesJson': PropertySchema(
+    r'roles': PropertySchema(
       id: 1,
-      name: r'rolesJson',
-      type: IsarType.string,
+      name: r'roles',
+      type: IsarType.objectList,
+      target: r'Role',
     )
   },
   estimateSize: _scenarioEstimateSize,
@@ -35,7 +36,7 @@ const ScenarioSchema = CollectionSchema(
   idName: r'id',
   indexes: {},
   links: {},
-  embeddedSchemas: {},
+  embeddedSchemas: {r'Role': RoleSchema},
   getId: _scenarioGetId,
   getLinks: _scenarioGetLinks,
   attach: _scenarioAttach,
@@ -49,7 +50,14 @@ int _scenarioEstimateSize(
 ) {
   var bytesCount = offsets.last;
   bytesCount += 3 + object.name.length * 3;
-  bytesCount += 3 + object.rolesJson.length * 3;
+  bytesCount += 3 + object.roles.length * 3;
+  {
+    final offsets = allOffsets[Role]!;
+    for (var i = 0; i < object.roles.length; i++) {
+      final value = object.roles[i];
+      bytesCount += RoleSchema.estimateSize(value, offsets, allOffsets);
+    }
+  }
   return bytesCount;
 }
 
@@ -60,7 +68,12 @@ void _scenarioSerialize(
   Map<Type, List<int>> allOffsets,
 ) {
   writer.writeString(offsets[0], object.name);
-  writer.writeString(offsets[1], object.rolesJson);
+  writer.writeObjectList<Role>(
+    offsets[1],
+    allOffsets,
+    RoleSchema.serialize,
+    object.roles,
+  );
 }
 
 Scenario _scenarioDeserialize(
@@ -73,7 +86,13 @@ Scenario _scenarioDeserialize(
     reader.readString(offsets[0]),
   );
   object.id = id;
-  object.rolesJson = reader.readString(offsets[1]);
+  object.roles = reader.readObjectList<Role>(
+        offsets[1],
+        RoleSchema.deserialize,
+        allOffsets,
+        Role(),
+      ) ??
+      [];
   return object;
 }
 
@@ -87,7 +106,13 @@ P _scenarioDeserializeProp<P>(
     case 0:
       return (reader.readString(offset)) as P;
     case 1:
-      return (reader.readString(offset)) as P;
+      return (reader.readObjectList<Role>(
+            offset,
+            RoleSchema.deserialize,
+            allOffsets,
+            Role(),
+          ) ??
+          []) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
   }
@@ -364,140 +389,101 @@ extension ScenarioQueryFilter
     });
   }
 
-  QueryBuilder<Scenario, Scenario, QAfterFilterCondition> rolesJsonEqualTo(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<Scenario, Scenario, QAfterFilterCondition> rolesLengthEqualTo(
+      int length) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'rolesJson',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.listLength(
+        r'roles',
+        length,
+        true,
+        length,
+        true,
+      );
     });
   }
 
-  QueryBuilder<Scenario, Scenario, QAfterFilterCondition> rolesJsonGreaterThan(
-    String value, {
+  QueryBuilder<Scenario, Scenario, QAfterFilterCondition> rolesIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'roles',
+        0,
+        true,
+        0,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<Scenario, Scenario, QAfterFilterCondition> rolesIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'roles',
+        0,
+        false,
+        999999,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<Scenario, Scenario, QAfterFilterCondition> rolesLengthLessThan(
+    int length, {
     bool include = false,
-    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'rolesJson',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Scenario, Scenario, QAfterFilterCondition> rolesJsonLessThan(
-    String value, {
-    bool include = false,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'rolesJson',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Scenario, Scenario, QAfterFilterCondition> rolesJsonBetween(
-    String lower,
-    String upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'rolesJson',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Scenario, Scenario, QAfterFilterCondition> rolesJsonStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'rolesJson',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Scenario, Scenario, QAfterFilterCondition> rolesJsonEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'rolesJson',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Scenario, Scenario, QAfterFilterCondition> rolesJsonContains(
-      String value,
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'rolesJson',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Scenario, Scenario, QAfterFilterCondition> rolesJsonMatches(
-      String pattern,
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'rolesJson',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Scenario, Scenario, QAfterFilterCondition> rolesJsonIsEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'rolesJson',
-        value: '',
-      ));
+      return query.listLength(
+        r'roles',
+        0,
+        true,
+        length,
+        include,
+      );
     });
   }
 
   QueryBuilder<Scenario, Scenario, QAfterFilterCondition>
-      rolesJsonIsNotEmpty() {
+      rolesLengthGreaterThan(
+    int length, {
+    bool include = false,
+  }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'rolesJson',
-        value: '',
-      ));
+      return query.listLength(
+        r'roles',
+        length,
+        include,
+        999999,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<Scenario, Scenario, QAfterFilterCondition> rolesLengthBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'roles',
+        lower,
+        includeLower,
+        upper,
+        includeUpper,
+      );
     });
   }
 }
 
 extension ScenarioQueryObject
-    on QueryBuilder<Scenario, Scenario, QFilterCondition> {}
+    on QueryBuilder<Scenario, Scenario, QFilterCondition> {
+  QueryBuilder<Scenario, Scenario, QAfterFilterCondition> rolesElement(
+      FilterQuery<Role> q) {
+    return QueryBuilder.apply(this, (query) {
+      return query.object(q, r'roles');
+    });
+  }
+}
 
 extension ScenarioQueryLinks
     on QueryBuilder<Scenario, Scenario, QFilterCondition> {}
@@ -512,18 +498,6 @@ extension ScenarioQuerySortBy on QueryBuilder<Scenario, Scenario, QSortBy> {
   QueryBuilder<Scenario, Scenario, QAfterSortBy> sortByNameDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'name', Sort.desc);
-    });
-  }
-
-  QueryBuilder<Scenario, Scenario, QAfterSortBy> sortByRolesJson() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'rolesJson', Sort.asc);
-    });
-  }
-
-  QueryBuilder<Scenario, Scenario, QAfterSortBy> sortByRolesJsonDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'rolesJson', Sort.desc);
     });
   }
 }
@@ -553,18 +527,6 @@ extension ScenarioQuerySortThenBy
       return query.addSortBy(r'name', Sort.desc);
     });
   }
-
-  QueryBuilder<Scenario, Scenario, QAfterSortBy> thenByRolesJson() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'rolesJson', Sort.asc);
-    });
-  }
-
-  QueryBuilder<Scenario, Scenario, QAfterSortBy> thenByRolesJsonDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'rolesJson', Sort.desc);
-    });
-  }
 }
 
 extension ScenarioQueryWhereDistinct
@@ -573,13 +535,6 @@ extension ScenarioQueryWhereDistinct
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'name', caseSensitive: caseSensitive);
-    });
-  }
-
-  QueryBuilder<Scenario, Scenario, QDistinct> distinctByRolesJson(
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'rolesJson', caseSensitive: caseSensitive);
     });
   }
 }
@@ -598,9 +553,9 @@ extension ScenarioQueryProperty
     });
   }
 
-  QueryBuilder<Scenario, String, QQueryOperations> rolesJsonProperty() {
+  QueryBuilder<Scenario, List<Role>, QQueryOperations> rolesProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'rolesJson');
+      return query.addPropertyName(r'roles');
     });
   }
 }

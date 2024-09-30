@@ -14,24 +14,25 @@ class Scenario {
   Future<void> readJson() async {
     final String response =
         await rootBundle.loadString('lib/assets/roles.json');
-    rolesJson = jsonEncode(jsonDecode(response)[name]);
-    // rolesJson = (await json.decode(response))[name].toString();
+    // print(jsonDecode(response)[name]);
+    List<dynamic> decodedList = (jsonDecode(response)[name]);
+    roles = decodedList.map((item) => Role.fromJson(item)).toList();
   }
 
   Id id = Isar.autoIncrement;
   late final String name;
-  late String rolesJson;
+  late List<Role> roles;
   static late Scenario currentScenario;
 
-  @ignore
-  List<Role> get roles {
-    List<dynamic> decodedList = jsonDecode(rolesJson);
-    return decodedList.map((item) => Role.fromJson(item)).toList();
-  }
+  // @ignore
+  // List<Role> get roles {
+  //   List<dynamic> decodedList = jsonDecode(rolesJson);
+  //   return decodedList.map((item) => Role.fromJson(item)).toList();
+  // }
 
-  set roles(List<Role> rolesList) {
-    rolesJson = jsonEncode(rolesList.map((role) => role.toJson()).toList());
-  }
+  // set roles(List<Role> rolesList) {
+  //   rolesJson = jsonEncode(rolesList.map((role) => role.toJson()).toList());
+  // }
 
   static List<Scenario> scenarios = [];
 

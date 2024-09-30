@@ -79,7 +79,9 @@ class _TalkingPageState extends State<TalkingPage> {
 
   @override
   void dispose() {
-    _timer.cancel();
+    if (_isRunning) {
+      _timer.cancel();
+    }
     super.dispose();
   }
 

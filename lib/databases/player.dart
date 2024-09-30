@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:isar/isar.dart';
 import 'package:mafia_killer/models/isar_service.dart';
+import 'package:mafia_killer/models/role.dart';
 
 // dart run build_runner build
 part 'player.g.dart';
@@ -17,7 +18,6 @@ class Player extends ChangeNotifier {
   late String name;
 
   static List<Player> players = [];
-
   // C R E A T E
   static Future<void> addPlayer(String name) async {
     final newPlayer = Player(name);

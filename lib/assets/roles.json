@@ -69,13 +69,17 @@
             "name": "مافیا",
             "description": "مافیا ساده",
             "roleSide": "mafia",
-            "counter": 0
+            "counter": 0,
+            "imagePath": "lib/images/roles/godfather.jpg"
+
         },
         {
             "name": "شهروند",
             "description": "شهروند ساده",
             "roleSide": "mafia",
-            "counter": 0
+            "counter": 0,
+            "imagePath": "lib/images/roles/godfather.jpg"
+
         }
     ]
 }

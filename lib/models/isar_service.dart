@@ -2,6 +2,7 @@ import 'package:isar/isar.dart';
 import 'package:mafia_killer/databases/game_settings.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/databases/scenario.dart';
+import 'package:mafia_killer/models/role.dart';
 import 'package:path_provider/path_provider.dart';
 
 class IsarService {
