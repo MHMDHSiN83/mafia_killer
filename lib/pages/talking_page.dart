@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:mafia_killer/components/page_frame.dart';
+import 'package:mafia_killer/components/player_role_card.dart';
 import 'package:mafia_killer/components/role_selection_tile.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/databases/scenario.dart';
@@ -24,6 +25,11 @@ class _TalkingPageState extends State<TalkingPage> {
   bool _isRunning = false;
   bool _hasStarted = false;
   bool _hasFinished = false;
+
+  // test
+  Player player = Player("محمد امین بهاری");
+  bool isVisible = true;
+
   @override
   void initState() {
     super.initState();
@@ -85,6 +91,8 @@ class _TalkingPageState extends State<TalkingPage> {
 
   @override
   Widget build(BuildContext context) {
+    player.role =
+        Scenario.currentScenario.getRolesBySide(RoleSide.independant)[0];
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: PageFrame(

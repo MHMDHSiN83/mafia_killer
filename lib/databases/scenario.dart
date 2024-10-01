@@ -100,4 +100,9 @@ class Scenario {
     }
     return counter;
   }
+
+  // get a specific role by its name in current scenario
+  Role? getRoleByName(String name) {
+    return roles.where((role) => role.name == name).firstOrNull;
+  }
 }

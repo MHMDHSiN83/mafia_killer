@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:isar/isar.dart';
 import 'package:mafia_killer/models/isar_service.dart';
+import 'package:mafia_killer/models/role.dart';
 
 // dart run build_runner build
 part 'player.g.dart';
@@ -15,6 +16,7 @@ class Player extends ChangeNotifier {
   Id id = Isar.autoIncrement;
   late bool doesParticipate;
   late String name;
+  late Role role;
 
   static List<Player> players = [];
 

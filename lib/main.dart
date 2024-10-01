@@ -6,6 +6,7 @@ import 'package:mafia_killer/pages/game_settings_page.dart';
 import 'package:mafia_killer/pages/intro_page.dart';
 import 'package:mafia_killer/pages/loading_page.dart';
 import 'package:mafia_killer/pages/players_page.dart';
+import 'package:mafia_killer/pages/role_distribution_page.dart';
 import 'package:mafia_killer/pages/role_selection_page.dart';
 import 'package:mafia_killer/pages/talking_page.dart';
 import 'package:mafia_killer/themes/dark_mode.dart';
@@ -51,6 +52,7 @@ class MyApp extends StatelessWidget {
         '/game_settings_page': (context) => const GameSettingsPage(),
         '/loading_page': (context) => const LoadingPage(),
         '/role_selection_page': (context) => RoleSelectionPage(),
+        '/role_distribution_page': (context) => const RoleDistributionPage(),
         '/talking_page': (context) => const TalkingPage(),
       },
     );

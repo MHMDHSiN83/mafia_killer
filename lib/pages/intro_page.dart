@@ -15,7 +15,7 @@ class IntroPage extends StatelessWidget {
             onPressed: () {
               Navigator.pushNamed(context, '/players_page');
             },
-            icon: Icon(
+            icon: const Icon(
               Icons.play_arrow,
               size: 200,
             ),
