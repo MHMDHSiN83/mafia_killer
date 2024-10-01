@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mafia_killer/models/isar_service.dart';
+import 'package:mafia_killer/themes/app_color.dart';
 
 class IntroPage extends StatelessWidget {
   const IntroPage({super.key});
@@ -8,17 +9,137 @@ class IntroPage extends StatelessWidget {
   Widget build(BuildContext context) {
     IsarService();
     return Scaffold(
-      body: Center(
+      body: SafeArea(
         child: Container(
-          color: Colors.red,
-          child: IconButton(
-            onPressed: () {
-              Navigator.pushNamed(context, '/players_page');
-            },
-            icon: Icon(
-              Icons.play_arrow,
-              size: 200,
-            ),
+          decoration: const BoxDecoration(
+              gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Color(0xFF111111),
+              Color.fromRGBO(40, 7, 7, 1),
+              Color.fromARGB(255, 52, 0, 0),
+              Color.fromRGBO(40, 7, 7, 1),
+              Color(0xFF111111),
+            ],
+          )),
+          child: Column(
+            children: [
+              Expanded(
+                flex: 8,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    IconButton(
+                      onPressed: () {},
+                      icon: const Icon(
+                        Icons.lightbulb_outline,
+                        color: AppColors.redColor,
+                        size: 60,
+                      ),
+                    ),
+                    IconButton(
+                      onPressed: () {},
+                      icon: const Icon(
+                        Icons.settings,
+                        color: AppColors.redColor,
+                        size: 60,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Expanded(
+                flex: 14,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "مافیا",
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.inversePrimary,
+                        fontSize: 110,
+                      ),
+                    ),
+                    const Text(
+                      "کش",
+                      style: TextStyle(
+                        color: AppColors.redColor,
+                        fontSize: 110,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Expanded(
+                flex: 32,
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 40),
+                  child: Transform.scale(
+                    scale: 1.35,
+                    child: const Image(
+                      image: AssetImage(
+                        'lib/images/IntroBackgroundImage.png',
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              const Spacer(
+                flex: 3,
+              ),
+              Expanded(
+                flex: 26,
+                child: ClipOval(
+                  child: Material(
+                    color: Colors.transparent,
+                    child: InkWell(
+                      splashColor: Theme.of(context).colorScheme.inversePrimary,
+                      onTap: () =>
+                          Navigator.pushNamed(context, '/players_page'),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(
+                            color: Theme.of(context).colorScheme.inversePrimary,
+                            width: 6,
+                          ),
+                        ),
+                        child: const Icon(
+                          Icons.play_arrow_rounded,
+                          size: 220,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              Expanded(
+                flex: 8,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    IconButton(
+                      onPressed: () {},
+                      icon: const Icon(
+                        Icons.attach_money_rounded,
+                        color: AppColors.redColor,
+                        size: 60,
+                      ),
+                    ),
+                    IconButton(
+                      onPressed: () {},
+                      icon: const Icon(
+                        Icons.shopping_cart_rounded,
+                        color: AppColors.redColor,
+                        size: 60,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
         ),
       ),
