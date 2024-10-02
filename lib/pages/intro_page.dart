@@ -26,24 +26,30 @@ class IntroPage extends StatelessWidget {
           child: Column(
             children: [
               Expanded(
-                flex: 8,
+                flex: 9,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    IconButton(
-                      onPressed: () {},
-                      icon: const Icon(
-                        Icons.lightbulb_outline,
-                        color: AppColors.redColor,
-                        size: 60,
+                    Padding(
+                      padding: const EdgeInsets.only(right: 8),
+                      child: IconButton(
+                        onPressed: () {},
+                        icon: const Icon(
+                          Icons.lightbulb_outline,
+                          color: AppColors.redColor,
+                          size: 60,
+                        ),
                       ),
                     ),
-                    IconButton(
-                      onPressed: () {},
-                      icon: const Icon(
-                        Icons.settings,
-                        color: AppColors.redColor,
-                        size: 60,
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8),
+                      child: IconButton(
+                        onPressed: () {},
+                        icon: const Icon(
+                          Icons.settings,
+                          color: AppColors.redColor,
+                          size: 60,
+                        ),
                       ),
                     ),
                   ],
@@ -52,7 +58,6 @@ class IntroPage extends StatelessWidget {
               Expanded(
                 flex: 14,
                 child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
@@ -90,7 +95,7 @@ class IntroPage extends StatelessWidget {
                 flex: 3,
               ),
               Expanded(
-                flex: 26,
+                flex: 22,
                 child: ClipOval(
                   child: Material(
                     color: Colors.transparent,
@@ -103,12 +108,12 @@ class IntroPage extends StatelessWidget {
                           shape: BoxShape.circle,
                           border: Border.all(
                             color: Theme.of(context).colorScheme.inversePrimary,
-                            width: 6,
+                            width: 12,
                           ),
                         ),
                         child: const Icon(
                           Icons.play_arrow_rounded,
-                          size: 220,
+                          size: 190,
                         ),
                       ),
                     ),
@@ -116,24 +121,30 @@ class IntroPage extends StatelessWidget {
                 ),
               ),
               Expanded(
-                flex: 8,
+                flex: 9,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    IconButton(
-                      onPressed: () {},
-                      icon: const Icon(
-                        Icons.attach_money_rounded,
-                        color: AppColors.redColor,
-                        size: 60,
+                    Padding(
+                      padding: const EdgeInsets.only(right: 8),
+                      child: IconButton(
+                        onPressed: () {},
+                        icon: const Icon(
+                          Icons.attach_money_rounded,
+                          color: AppColors.redColor,
+                          size: 60,
+                        ),
                       ),
                     ),
-                    IconButton(
-                      onPressed: () {},
-                      icon: const Icon(
-                        Icons.shopping_cart_rounded,
-                        color: AppColors.redColor,
-                        size: 60,
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8),
+                      child: IconButton(
+                        onPressed: () {},
+                        icon: const Icon(
+                          Icons.shopping_cart_rounded,
+                          color: AppColors.redColor,
+                          size: 60,
+                        ),
                       ),
                     ),
                   ],
