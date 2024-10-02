@@ -18,6 +18,7 @@ class Player extends ChangeNotifier {
   late String name;
 
   static List<Player> players = [];
+  static List<Player> inGamePlayers = [];
   // C R E A T E
   static Future<void> addPlayer(String name) async {
     final newPlayer = Player(name);
@@ -38,6 +39,14 @@ class Player extends ChangeNotifier {
     List<Player> fetchedPlayers = isar.players.where().findAllSync();
     players.clear();
     players.addAll(fetchedPlayers);
+  }
+
+  static Future<void> fetchReadyPlayers() async {
+    final isar = await IsarService.db;
+    List<Player> fetchedPlayers =
+        isar.players.filter().doesParticipateEqualTo(true).findAllSync();
+    inGamePlayers.clear();
+    inGamePlayers.addAll(fetchedPlayers);
   }
 
   // U P D A T E

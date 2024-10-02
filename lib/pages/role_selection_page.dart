@@ -14,8 +14,9 @@ class RoleSelectionPage extends StatelessWidget {
   List<Role> mafiaRoles = [];
   List<Role> citizenRoles = [];
   List<Role> independantRoles = [];
-  final int numberOfPlayers = Player.players.length;
+
   void getRoles() async {
+    
     mafiaRoles = Scenario.currentScenario.getRolesBySide(RoleSide.mafia);
     citizenRoles = Scenario.currentScenario.getRolesBySide(RoleSide.citizen);
     independantRoles =

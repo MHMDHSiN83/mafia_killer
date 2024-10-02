@@ -37,7 +37,7 @@ class _RoleSelectionTileState extends State<RoleSelectionTile> {
 
   void increaseNumber() {
     setState(() {
-      if (Player.players.length <= Scenario.currentScenario.numberOfRoles()) {
+      if (Player.inGamePlayers.length <= Scenario.currentScenario.numberOfRoles()) {
         return;
       }
       widget.role.counter++;

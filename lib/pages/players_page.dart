@@ -37,8 +37,10 @@ class _PlayersPageState extends State<PlayersPage> {
         leftButtonIcon: Icons.keyboard_arrow_left,
         rightButtonIcon: Icons.keyboard_arrow_right,
         leftButtonOnTap: () => Navigator.pop(context),
-        rightButtonOnTap: () =>
-            Navigator.pushNamed(context, '/game_settings_page'),
+        rightButtonOnTap: () {
+          Player.fetchReadyPlayers();
+          Navigator.pushNamed(context, '/game_settings_page');
+        },
         child: Column(
           children: [
             Expanded(
@@ -111,28 +113,29 @@ class _PlayersPageState extends State<PlayersPage> {
                           fontSize: 20,
                           fontWeight: FontWeight.bold),
                       decoration: InputDecoration(
-                          contentPadding: const EdgeInsets.symmetric(
-                              vertical: 10, horizontal: 5),
-                          filled: true,
-                          fillColor:
-                              Theme.of(context).colorScheme.inversePrimary,
-                          enabledBorder: const OutlineInputBorder(
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(4),
-                              bottomLeft: Radius.circular(4),
-                            ),
+                        contentPadding: const EdgeInsets.symmetric(
+                            vertical: 10, horizontal: 5),
+                        filled: true,
+                        fillColor: Theme.of(context).colorScheme.inversePrimary,
+                        enabledBorder: const OutlineInputBorder(
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(4),
+                            bottomLeft: Radius.circular(4),
                           ),
-                          focusedBorder: const OutlineInputBorder(
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(4),
-                              bottomLeft: Radius.circular(4),
-                            ),
+                        ),
+                        focusedBorder: const OutlineInputBorder(
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(4),
+                            bottomLeft: Radius.circular(4),
                           ),
-                          hintText: 'نام بازیکن را وارد کنید...',
-                          hintStyle: TextStyle(
-                              color: Theme.of(context).colorScheme.tertiary,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20)),
+                        ),
+                        hintText: 'نام بازیکن را وارد کنید...',
+                        hintStyle: TextStyle(
+                          color: Theme.of(context).colorScheme.tertiary,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                        ),
+                      ),
                       controller: _controller,
                     ),
                   ),
