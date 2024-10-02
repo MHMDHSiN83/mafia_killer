@@ -7,4 +7,5 @@ class AppColors {
   static const Color greenColor = Color(0xFF07FFB5);
   static const Color darkgreenColor = Color(0xFF17C692);
   static const Color hoverGreenColor = Color.fromARGB(255, 22, 148, 110);
+  static const Color brownColor = Color(0xFF55351A);
 }

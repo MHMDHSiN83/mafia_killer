@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/models/app_handler.dart';
 import 'package:mafia_killer/databases/player.dart';
+import 'package:mafia_killer/pages/defense_voting_page.dart';
 import 'package:mafia_killer/pages/game_settings_page.dart';
 import 'package:mafia_killer/pages/intro_page.dart';
 import 'package:mafia_killer/pages/loading_page.dart';
 import 'package:mafia_killer/pages/players_page.dart';
+import 'package:mafia_killer/pages/regular_voting_page.dart';
 import 'package:mafia_killer/pages/role_distribution_page.dart';
 import 'package:mafia_killer/pages/role_selection_page.dart';
 import 'package:mafia_killer/pages/talking_page.dart';
@@ -54,6 +56,8 @@ class MyApp extends StatelessWidget {
         '/role_selection_page': (context) => RoleSelectionPage(),
         '/role_distribution_page': (context) => const RoleDistributionPage(),
         '/talking_page': (context) => const TalkingPage(),
+        '/regular_voting_page': (context) => const RegularVotingPage(),
+        '/defense_voting_page': (context) => const DefenseVotingPage(),
       },
     );
   }

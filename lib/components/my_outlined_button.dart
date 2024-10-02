@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class MyOutlinedButton extends StatelessWidget {
-  const MyOutlinedButton({
+  MyOutlinedButton({
     super.key,
     required this.hasIcon,
     required this.text,
@@ -17,6 +17,24 @@ class MyOutlinedButton extends StatelessWidget {
   final IconData? icon;
   final bool? isIconRight;
 
+  final Map<String, double> ButtonFontsizes = {
+    "small": 22,
+    "medium": 26,
+    "large": 30
+  };
+  double determineButtonFontsize() {
+    double len = text.length.toDouble();
+    int numberOfWords = text.split(' ').length;
+    if (len <= 10 && numberOfWords <= 2) {
+      return ButtonFontsizes["large"]!;
+    } else if ((len > 10 && len <= 14 && numberOfWords <= 2) ||
+        (len <= 12 && numberOfWords > 2)) {
+      return ButtonFontsizes["medium"]!;
+    } else {
+      return ButtonFontsizes["small"]!;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return OutlinedButton.icon(
@@ -27,12 +45,14 @@ class MyOutlinedButton extends StatelessWidget {
               ? IconAlignment.start
               : IconAlignment.end,
       label: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 4),
+        padding: const EdgeInsets.symmetric(horizontal: 4),
         child: Text(
           textAlign: TextAlign.center,
           text,
           style: TextStyle(
-              color: color, fontWeight: FontWeight.bold, fontSize: 26),
+              color: color,
+              fontWeight: FontWeight.bold,
+              fontSize: determineButtonFontsize()),
         ),
       ),
       style: OutlinedButton.styleFrom(

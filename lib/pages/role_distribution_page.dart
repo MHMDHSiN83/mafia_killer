@@ -52,7 +52,8 @@ class _RoleDistributionPageState extends State<RoleDistributionPage> {
         leftButtonIcon: Icons.keyboard_arrow_left,
         rightButtonIcon: Icons.keyboard_arrow_right,
         leftButtonOnTap: () => Navigator.pop(context),
-        rightButtonOnTap: () => Navigator.pushNamed(context, '/loading_page'),
+        rightButtonOnTap: () =>
+            Navigator.pushNamed(context, '/regular_voting_page'),
         child: Column(
           //crossAxisAlignment: CrossAxisAlignment.center,
           children: [
