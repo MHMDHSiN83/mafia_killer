@@ -35,7 +35,8 @@ class RoleSelectionPage extends StatelessWidget {
         leftButtonIcon: Icons.keyboard_arrow_left,
         rightButtonIcon: Icons.keyboard_arrow_right,
         leftButtonOnTap: () => Navigator.pop(context),
-        rightButtonOnTap: () => Navigator.pushNamed(context, '/talking_page'),
+        rightButtonOnTap: () =>
+            Navigator.pushNamed(context, '/role_distribution_page'),
         child: ListView(
           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
           children: [

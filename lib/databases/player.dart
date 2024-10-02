@@ -16,6 +16,7 @@ class Player extends ChangeNotifier {
   Id id = Isar.autoIncrement;
   late bool doesParticipate;
   late String name;
+  late Role role;
 
   static List<Player> players = [];
   static List<Player> inGamePlayers = [];
