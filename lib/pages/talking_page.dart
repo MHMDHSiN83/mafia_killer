@@ -10,6 +10,7 @@ import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/models/language.dart';
 import 'package:mafia_killer/models/role.dart';
 import 'package:mafia_killer/models/role_side.dart';
+import 'package:mafia_killer/models/talking_page_screen_arguments.dart';
 import 'package:mafia_killer/themes/app_color.dart';
 
 class TalkingPage extends StatefulWidget {
@@ -20,11 +21,13 @@ class TalkingPage extends StatefulWidget {
 }
 
 class _TalkingPageState extends State<TalkingPage> {
-  double _start = 6;
+  late double _start;
   late Timer _timer;
   bool _isRunning = false;
   bool _hasStarted = false;
   bool _hasFinished = false;
+
+  late TalkingPageScreenArguments args;
 
   // test
   Player player = Player("محمد امین بهاری");
@@ -93,8 +96,10 @@ class _TalkingPageState extends State<TalkingPage> {
 
   @override
   Widget build(BuildContext context) {
-    player.role =
-        Scenario.currentScenario.getRolesBySide(RoleSide.independant)[0];
+    args = ModalRoute.of(context)?.settings.arguments
+        as TalkingPageScreenArguments;
+    _start = args.seconds.toDouble();
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: PageFrame(
@@ -104,7 +109,7 @@ class _TalkingPageState extends State<TalkingPage> {
         leftButtonIcon: Icons.keyboard_arrow_left,
         rightButtonIcon: Icons.keyboard_arrow_right,
         leftButtonOnTap: () => Navigator.pop(context),
-        rightButtonOnTap: () => Navigator.pushNamed(context, '/loading_page'),
+        rightButtonOnTap: () => Navigator.pushNamed(context, args.nextPagePath),
         child: Column(
           children: [
             Text(

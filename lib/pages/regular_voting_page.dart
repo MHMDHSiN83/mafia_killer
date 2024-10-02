@@ -3,6 +3,7 @@ import 'package:mafia_killer/components/page_frame.dart';
 import 'package:mafia_killer/components/voting_tile.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/databases/scenario.dart';
+import 'package:mafia_killer/models/talking_page_screen_arguments.dart';
 
 class RegularVotingPage extends StatelessWidget {
   const RegularVotingPage({super.key});
@@ -38,8 +39,9 @@ class RegularVotingPage extends StatelessWidget {
         //leftButtonIcon: Icons.keyboard_arrow_left,
         //rightButtonIcon: Icons.keyboard_arrow_right,
         leftButtonOnTap: () => Navigator.pop(context),
-        rightButtonOnTap: () =>
-            Navigator.pushNamed(context, '/defense_voting_page'),
+        rightButtonOnTap: () => Navigator.pushNamed(context, '/talking_page',
+            arguments: TalkingPageScreenArguments(
+                nextPagePath: '/defense_voting_page', seconds: 120)),
         child: ListView.builder(
           itemCount: (players.length / 2)
               .ceil(), // Divide by 2 because each row has two items

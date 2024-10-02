@@ -46,24 +46,6 @@ class PageFrame extends StatelessWidget {
     }
   }
 
-  final Map<String, double> ButtonFontsizes = {
-    "small": 28,
-    "medium": 35,
-    "large": 39
-  };
-  double determineButtonFontsize() {
-    double len = pageTitle.length.toDouble();
-    int numberOfWords = pageTitle.split(' ').length;
-    if (len <= 12 && numberOfWords <= 2) {
-      return ButtonFontsizes["large"]!;
-    } else if ((len > 12 && len <= 14 && numberOfWords <= 2) ||
-        (len <= 12 && numberOfWords > 2)) {
-      return ButtonFontsizes["medium"]!;
-    } else {
-      return ButtonFontsizes["small"]!;
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(

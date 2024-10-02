@@ -4,6 +4,7 @@ import 'package:mafia_killer/components/player_role_card.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/models/role.dart';
+import 'package:mafia_killer/models/talking_page_screen_arguments.dart';
 import 'package:mafia_killer/themes/app_color.dart';
 
 class RoleDistributionPage extends StatefulWidget {
@@ -52,8 +53,12 @@ class _RoleDistributionPageState extends State<RoleDistributionPage> {
         leftButtonIcon: Icons.keyboard_arrow_left,
         rightButtonIcon: Icons.keyboard_arrow_right,
         leftButtonOnTap: () => Navigator.pop(context),
-        rightButtonOnTap: () =>
-            Navigator.pushNamed(context, '/regular_voting_page'),
+        rightButtonOnTap: () => Navigator.pushNamed(
+          context,
+          '/talking_page',
+          arguments: TalkingPageScreenArguments(
+              nextPagePath: '/regular_voting_page', seconds: 30),
+        ),
         child: Column(
           //crossAxisAlignment: CrossAxisAlignment.center,
           children: [
