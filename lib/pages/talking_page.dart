@@ -22,6 +22,7 @@ class TalkingPage extends StatefulWidget {
 
 class _TalkingPageState extends State<TalkingPage> {
   late double _start;
+  int cnt = 0;
   late Timer _timer;
   bool _isRunning = false;
   bool _hasStarted = false;
@@ -36,6 +37,15 @@ class _TalkingPageState extends State<TalkingPage> {
   @override
   void initState() {
     super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    args = ModalRoute.of(context)?.settings.arguments
+        as TalkingPageScreenArguments;
+    _start = args.seconds.toDouble();
+
+    super.didChangeDependencies();
   }
 
   void startAndStopTimer() {
@@ -77,11 +87,11 @@ class _TalkingPageState extends State<TalkingPage> {
       if (_hasFinished) {
         _hasStarted = true;
         _hasFinished = false;
-        _start = 6;
+        _start = args.seconds.toDouble();
         startTimer();
       } else {
         _hasStarted = false;
-        _start = 6;
+        _start = args.seconds.toDouble();
       }
     });
   }
@@ -96,14 +106,10 @@ class _TalkingPageState extends State<TalkingPage> {
 
   @override
   Widget build(BuildContext context) {
-    args = ModalRoute.of(context)?.settings.arguments
-        as TalkingPageScreenArguments;
-    _start = args.seconds.toDouble();
-
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: PageFrame(
-        pageTitle: " نفش‌های بازی",
+        pageTitle: "صحبت کردن",
         leftButtonText: "قبلی",
         rightButtonText: "بعدی",
         leftButtonIcon: Icons.keyboard_arrow_left,
@@ -112,9 +118,48 @@ class _TalkingPageState extends State<TalkingPage> {
         rightButtonOnTap: () => Navigator.pushNamed(context, args.nextPagePath),
         child: Column(
           children: [
-            Text(
-              Language.formatTime(_start.toInt()),
-              style: const TextStyle(fontSize: 48),
+            SizedBox(
+              width: 300,
+              height: 300,
+              child: Stack(fit: StackFit.expand, children: [
+                SizedBox(
+                  width: 250,
+                  height: 250,
+                  child: Stack(
+                    fit: StackFit.expand,
+                    children: [
+                      Center(
+                        child: Text(
+                          Language.formatTime(_start.toInt()),
+                          style: const TextStyle(fontSize: 60),
+                        ),
+                      ),
+                      FractionallySizedBox(
+                        widthFactor: 0.75,
+                        heightFactor: 0.75,
+                        child: CircularProgressIndicator(
+                          value: _start / args.seconds,
+                          valueColor: const AlwaysStoppedAnimation(
+                              AppColors.greenColor),
+                          backgroundColor:
+                              Theme.of(context).colorScheme.inversePrimary,
+                          strokeWidth: 10,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Center(
+                  child: Image.asset(
+                    'lib/images/backgrounds/alarm-clock.png',
+                    scale: 0.5,
+                    fit: BoxFit.fitWidth,
+                  ),
+                )
+              ]),
+            ),
+            const SizedBox(
+              height: 20,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
