@@ -8,10 +8,10 @@ import 'package:mafia_killer/models/role.dart';
 import 'package:mafia_killer/models/role_side.dart';
 import 'package:mafia_killer/themes/app_color.dart';
 
-// ignore: must_be_immutable
 class RoleSelectionTile extends StatefulWidget {
-  RoleSelectionTile({super.key, required this.role});
+  RoleSelectionTile({super.key, required this.role, required this.counter});
   Role role;
+  int counter;
   @override
   State<RoleSelectionTile> createState() => _RoleSelectionTileState();
 }
@@ -36,23 +36,26 @@ class _RoleSelectionTileState extends State<RoleSelectionTile> {
   }
 
   void increaseNumber() {
-    setState(() {
-      if (Player.inGamePlayers.length <= Scenario.currentScenario.numberOfRoles()) {
-        return;
-      }
-      widget.role.counter++;
-    });
-    Scenario.changeRoleCounter(widget.role);
-  }
-
-  void decreaseNumber() {
-    if (widget.role.counter == 0) {
+    if (Player.inGamePlayers.length <=
+        Scenario.currentScenario.inGameRoles.length) {
       return;
     }
     setState(() {
-      widget.role.counter--;
+      widget.counter++;
     });
-    Scenario.changeRoleCounter(widget.role);
+    // Scenario.changeRoleCounter(widget.role);
+    Scenario.addRole(widget.role);
+  }
+
+  void decreaseNumber() {
+    if (widget.counter == 0) {
+      return;
+    }
+    setState(() {
+      widget.counter--;
+    });
+    // Scenario.changeRoleCounter(widget.role);
+    Scenario.removeRole(widget.role);
   }
 
   @override
@@ -118,7 +121,7 @@ class _RoleSelectionTileState extends State<RoleSelectionTile> {
                     width: 15,
                   ),
                   Text(
-                    Language.toPersian(widget.role.counter.toString()),
+                    Language.toPersian(widget.counter.toString()),
                     style: const TextStyle(
                       fontSize: 30,
                       fontWeight: FontWeight.bold,

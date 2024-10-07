@@ -13,28 +13,23 @@ const RoleSchema = Schema(
   name: r'Role',
   id: 5641257444705586666,
   properties: {
-    r'counter': PropertySchema(
-      id: 0,
-      name: r'counter',
-      type: IsarType.long,
-    ),
     r'description': PropertySchema(
-      id: 1,
+      id: 0,
       name: r'description',
       type: IsarType.string,
     ),
     r'imagePath': PropertySchema(
-      id: 2,
+      id: 1,
       name: r'imagePath',
       type: IsarType.string,
     ),
     r'name': PropertySchema(
-      id: 3,
+      id: 2,
       name: r'name',
       type: IsarType.string,
     ),
     r'roleSide': PropertySchema(
-      id: 4,
+      id: 3,
       name: r'roleSide',
       type: IsarType.int,
       enumMap: _RoleroleSideEnumValueMap,
@@ -64,11 +59,10 @@ void _roleSerialize(
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  writer.writeLong(offsets[0], object.counter);
-  writer.writeString(offsets[1], object.description);
-  writer.writeString(offsets[2], object.imagePath);
-  writer.writeString(offsets[3], object.name);
-  writer.writeInt(offsets[4], object.roleSide.index);
+  writer.writeString(offsets[0], object.description);
+  writer.writeString(offsets[1], object.imagePath);
+  writer.writeString(offsets[2], object.name);
+  writer.writeInt(offsets[3], object.roleSide.index);
 }
 
 Role _roleDeserialize(
@@ -78,12 +72,11 @@ Role _roleDeserialize(
   Map<Type, List<int>> allOffsets,
 ) {
   final object = Role();
-  object.counter = reader.readLong(offsets[0]);
-  object.description = reader.readString(offsets[1]);
-  object.imagePath = reader.readString(offsets[2]);
-  object.name = reader.readString(offsets[3]);
+  object.description = reader.readString(offsets[0]);
+  object.imagePath = reader.readString(offsets[1]);
+  object.name = reader.readString(offsets[2]);
   object.roleSide =
-      _RoleroleSideValueEnumMap[reader.readIntOrNull(offsets[4])] ??
+      _RoleroleSideValueEnumMap[reader.readIntOrNull(offsets[3])] ??
           RoleSide.mafia;
   return object;
 }
@@ -96,14 +89,12 @@ P _roleDeserializeProp<P>(
 ) {
   switch (propertyId) {
     case 0:
-      return (reader.readLong(offset)) as P;
+      return (reader.readString(offset)) as P;
     case 1:
       return (reader.readString(offset)) as P;
     case 2:
       return (reader.readString(offset)) as P;
     case 3:
-      return (reader.readString(offset)) as P;
-    case 4:
       return (_RoleroleSideValueEnumMap[reader.readIntOrNull(offset)] ??
           RoleSide.mafia) as P;
     default:
@@ -123,58 +114,6 @@ const _RoleroleSideValueEnumMap = {
 };
 
 extension RoleQueryFilter on QueryBuilder<Role, Role, QFilterCondition> {
-  QueryBuilder<Role, Role, QAfterFilterCondition> counterEqualTo(int value) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'counter',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<Role, Role, QAfterFilterCondition> counterGreaterThan(
-    int value, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'counter',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<Role, Role, QAfterFilterCondition> counterLessThan(
-    int value, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'counter',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<Role, Role, QAfterFilterCondition> counterBetween(
-    int lower,
-    int upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'counter',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-      ));
-    });
-  }
-
   QueryBuilder<Role, Role, QAfterFilterCondition> descriptionEqualTo(
     String value, {
     bool caseSensitive = true,

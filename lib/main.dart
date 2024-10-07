@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mafia_killer/databases/scenario.dart';
-import 'package:mafia_killer/models/app_handler.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/pages/game_settings_page.dart';
 import 'package:mafia_killer/pages/intro_page.dart';
@@ -14,16 +12,17 @@ import 'package:provider/provider.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() {
-  runApp(MultiProvider(
-    providers: [
-      ChangeNotifierProvider<AppHandler>(create: (context) => AppHandler()),
-      ChangeNotifierProvider<Player>(create: (context) => Player.static()),
-    ],
-    child: const Directionality(
-      textDirection: TextDirection.rtl,
-      child: MyApp(),
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider<Player>(create: (context) => Player('handler')),
+      ],
+      child: const Directionality(
+        textDirection: TextDirection.rtl,
+        child: MyApp(),
+      ),
     ),
-  ));
+  );
 }
 
 class MyApp extends StatelessWidget {

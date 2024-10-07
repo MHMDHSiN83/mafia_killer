@@ -16,7 +16,6 @@ class RoleSelectionPage extends StatelessWidget {
   List<Role> independantRoles = [];
 
   void getRoles() async {
-    
     mafiaRoles = Scenario.currentScenario.getRolesBySide(RoleSide.mafia);
     citizenRoles = Scenario.currentScenario.getRolesBySide(RoleSide.citizen);
     independantRoles =
@@ -35,8 +34,9 @@ class RoleSelectionPage extends StatelessWidget {
         leftButtonIcon: Icons.keyboard_arrow_left,
         rightButtonIcon: Icons.keyboard_arrow_right,
         leftButtonOnTap: () => Navigator.pop(context),
-        rightButtonOnTap: () =>
-            Navigator.pushNamed(context, '/role_distribution_page'),
+        rightButtonOnTap: () {
+          Navigator.pushNamed(context, '/role_distribution_page');
+        },
         child: ListView(
           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
           children: [
@@ -64,6 +64,8 @@ class RoleSelectionPage extends StatelessWidget {
                     padding: const EdgeInsets.only(left: 10),
                     child: RoleSelectionTile(
                       role: mafiaRoles[index],
+                      counter: Scenario.currentScenario
+                          .numberOfRoles(mafiaRoles[index]),
                     ),
                   );
                 },
@@ -97,6 +99,8 @@ class RoleSelectionPage extends StatelessWidget {
                     padding: const EdgeInsets.only(left: 10),
                     child: RoleSelectionTile(
                       role: citizenRoles[index],
+                      counter: Scenario.currentScenario
+                          .numberOfRoles(citizenRoles[index]),
                     ),
                   );
                 },
@@ -129,6 +133,8 @@ class RoleSelectionPage extends StatelessWidget {
                     padding: const EdgeInsets.only(left: 10),
                     child: RoleSelectionTile(
                       role: independantRoles[index],
+                      counter: Scenario.currentScenario
+                          .numberOfRoles(independantRoles[index]),
                     ),
                   );
                 },

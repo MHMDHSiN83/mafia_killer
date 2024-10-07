@@ -22,6 +22,7 @@ class Scenario {
   Id id = Isar.autoIncrement;
   late final String name;
   late List<Role> roles;
+  late List<Role> inGameRoles = List.empty(growable: true);
   static late Scenario currentScenario;
 
   // @ignore
@@ -80,24 +81,58 @@ class Scenario {
 
   // Scenario isCurrentScenario
 
-  static Future<void> changeRoleCounter(Role newRole) async {
+  // static Future<void> changeRoleCounter(Role newRole) async {
+  //   final isar = await IsarService.db;
+  //   isar.writeTxnSync(() {
+  //     List<Role> tmp = currentScenario.roles;
+  //     for (Role role in tmp) {
+  //       if (role.name == newRole.name) {
+  //         role.counter = newRole.counter;
+  //       }
+  //     }
+  //     currentScenario.roles = tmp;
+  //     isar.scenarios.putSync(currentScenario);
+  //   });
+  // }
+
+  static Future<void> addRole(Role newRole) async {
     final isar = await IsarService.db;
     isar.writeTxnSync(() {
-      List<Role> tmp = currentScenario.roles;
-      for (Role role in tmp) {
-        if (role.name == newRole.name) {
-          role.counter = newRole.counter;
-        }
-      }
-      currentScenario.roles = tmp;
+      currentScenario.inGameRoles = List.from(currentScenario.inGameRoles);
+      currentScenario.inGameRoles.add(Role.copy(newRole));
       isar.scenarios.putSync(currentScenario);
     });
   }
 
-  int numberOfRoles() {
+  static Future<void> removeRole(Role role) async {
+    final isar = await IsarService.db;
+    isar.writeTxnSync(() {
+      currentScenario.inGameRoles = List.from(currentScenario.inGameRoles);
+
+      for (Role r in currentScenario.inGameRoles) {
+        if (r.name == role.name) {
+          currentScenario.inGameRoles.remove(r);
+          break;
+        }
+      }
+      isar.scenarios.putSync(currentScenario);
+    });
+  }
+
+  // int numberOfRoles() {
+  //   int counter = 0;
+  //   for (Role role in roles) {
+  //     counter += role.counter;
+  //   }
+  //   return counter;
+  // }
+
+  int numberOfRoles(Role role) {
     int counter = 0;
-    for (Role role in roles) {
-      counter += role.counter;
+    for (Role r in inGameRoles) {
+      if (r.name == role.name) {
+        counter++;
+      }
     }
     return counter;
   }

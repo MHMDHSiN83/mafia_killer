@@ -17,13 +17,19 @@ const ScenarioSchema = CollectionSchema(
   name: r'Scenario',
   id: 6313981072805766721,
   properties: {
-    r'name': PropertySchema(
+    r'inGameRoles': PropertySchema(
       id: 0,
+      name: r'inGameRoles',
+      type: IsarType.objectList,
+      target: r'Role',
+    ),
+    r'name': PropertySchema(
+      id: 1,
       name: r'name',
       type: IsarType.string,
     ),
     r'roles': PropertySchema(
-      id: 1,
+      id: 2,
       name: r'roles',
       type: IsarType.objectList,
       target: r'Role',
@@ -49,6 +55,14 @@ int _scenarioEstimateSize(
   Map<Type, List<int>> allOffsets,
 ) {
   var bytesCount = offsets.last;
+  bytesCount += 3 + object.inGameRoles.length * 3;
+  {
+    final offsets = allOffsets[Role]!;
+    for (var i = 0; i < object.inGameRoles.length; i++) {
+      final value = object.inGameRoles[i];
+      bytesCount += RoleSchema.estimateSize(value, offsets, allOffsets);
+    }
+  }
   bytesCount += 3 + object.name.length * 3;
   bytesCount += 3 + object.roles.length * 3;
   {
@@ -67,9 +81,15 @@ void _scenarioSerialize(
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  writer.writeString(offsets[0], object.name);
   writer.writeObjectList<Role>(
-    offsets[1],
+    offsets[0],
+    allOffsets,
+    RoleSchema.serialize,
+    object.inGameRoles,
+  );
+  writer.writeString(offsets[1], object.name);
+  writer.writeObjectList<Role>(
+    offsets[2],
     allOffsets,
     RoleSchema.serialize,
     object.roles,
@@ -83,11 +103,18 @@ Scenario _scenarioDeserialize(
   Map<Type, List<int>> allOffsets,
 ) {
   final object = Scenario(
-    reader.readString(offsets[0]),
+    reader.readString(offsets[1]),
   );
   object.id = id;
+  object.inGameRoles = reader.readObjectList<Role>(
+        offsets[0],
+        RoleSchema.deserialize,
+        allOffsets,
+        Role(),
+      ) ??
+      [];
   object.roles = reader.readObjectList<Role>(
-        offsets[1],
+        offsets[2],
         RoleSchema.deserialize,
         allOffsets,
         Role(),
@@ -104,8 +131,16 @@ P _scenarioDeserializeProp<P>(
 ) {
   switch (propertyId) {
     case 0:
-      return (reader.readString(offset)) as P;
+      return (reader.readObjectList<Role>(
+            offset,
+            RoleSchema.deserialize,
+            allOffsets,
+            Role(),
+          ) ??
+          []) as P;
     case 1:
+      return (reader.readString(offset)) as P;
+    case 2:
       return (reader.readObjectList<Role>(
             offset,
             RoleSchema.deserialize,
@@ -256,6 +291,94 @@ extension ScenarioQueryFilter
         upper: upper,
         includeUpper: includeUpper,
       ));
+    });
+  }
+
+  QueryBuilder<Scenario, Scenario, QAfterFilterCondition>
+      inGameRolesLengthEqualTo(int length) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'inGameRoles',
+        length,
+        true,
+        length,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<Scenario, Scenario, QAfterFilterCondition> inGameRolesIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'inGameRoles',
+        0,
+        true,
+        0,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<Scenario, Scenario, QAfterFilterCondition>
+      inGameRolesIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'inGameRoles',
+        0,
+        false,
+        999999,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<Scenario, Scenario, QAfterFilterCondition>
+      inGameRolesLengthLessThan(
+    int length, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'inGameRoles',
+        0,
+        true,
+        length,
+        include,
+      );
+    });
+  }
+
+  QueryBuilder<Scenario, Scenario, QAfterFilterCondition>
+      inGameRolesLengthGreaterThan(
+    int length, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'inGameRoles',
+        length,
+        include,
+        999999,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<Scenario, Scenario, QAfterFilterCondition>
+      inGameRolesLengthBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'inGameRoles',
+        lower,
+        includeLower,
+        upper,
+        includeUpper,
+      );
     });
   }
 
@@ -477,6 +600,13 @@ extension ScenarioQueryFilter
 
 extension ScenarioQueryObject
     on QueryBuilder<Scenario, Scenario, QFilterCondition> {
+  QueryBuilder<Scenario, Scenario, QAfterFilterCondition> inGameRolesElement(
+      FilterQuery<Role> q) {
+    return QueryBuilder.apply(this, (query) {
+      return query.object(q, r'inGameRoles');
+    });
+  }
+
   QueryBuilder<Scenario, Scenario, QAfterFilterCondition> rolesElement(
       FilterQuery<Role> q) {
     return QueryBuilder.apply(this, (query) {
@@ -544,6 +674,12 @@ extension ScenarioQueryProperty
   QueryBuilder<Scenario, int, QQueryOperations> idProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'id');
+    });
+  }
+
+  QueryBuilder<Scenario, List<Role>, QQueryOperations> inGameRolesProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'inGameRoles');
     });
   }
 

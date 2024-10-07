@@ -31,6 +31,12 @@ const PlayerSchema = CollectionSchema(
       id: 2,
       name: r'name',
       type: IsarType.string,
+    ),
+    r'role': PropertySchema(
+      id: 3,
+      name: r'role',
+      type: IsarType.object,
+      target: r'Role',
     )
   },
   estimateSize: _playerEstimateSize,
@@ -40,7 +46,7 @@ const PlayerSchema = CollectionSchema(
   idName: r'id',
   indexes: {},
   links: {},
-  embeddedSchemas: {},
+  embeddedSchemas: {r'Role': RoleSchema},
   getId: _playerGetId,
   getLinks: _playerGetLinks,
   attach: _playerAttach,
@@ -54,6 +60,13 @@ int _playerEstimateSize(
 ) {
   var bytesCount = offsets.last;
   bytesCount += 3 + object.name.length * 3;
+  {
+    final value = object.role;
+    if (value != null) {
+      bytesCount +=
+          3 + RoleSchema.estimateSize(value, allOffsets[Role]!, allOffsets);
+    }
+  }
   return bytesCount;
 }
 
@@ -66,6 +79,12 @@ void _playerSerialize(
   writer.writeBool(offsets[0], object.doesParticipate);
   writer.writeBool(offsets[1], object.hasListeners);
   writer.writeString(offsets[2], object.name);
+  writer.writeObject<Role>(
+    offsets[3],
+    allOffsets,
+    RoleSchema.serialize,
+    object.role,
+  );
 }
 
 Player _playerDeserialize(
@@ -79,6 +98,11 @@ Player _playerDeserialize(
   );
   object.doesParticipate = reader.readBool(offsets[0]);
   object.id = id;
+  object.role = reader.readObjectOrNull<Role>(
+    offsets[3],
+    RoleSchema.deserialize,
+    allOffsets,
+  );
   return object;
 }
 
@@ -95,6 +119,12 @@ P _playerDeserializeProp<P>(
       return (reader.readBool(offset)) as P;
     case 2:
       return (reader.readString(offset)) as P;
+    case 3:
+      return (reader.readObjectOrNull<Role>(
+        offset,
+        RoleSchema.deserialize,
+        allOffsets,
+      )) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
   }
@@ -388,9 +418,32 @@ extension PlayerQueryFilter on QueryBuilder<Player, Player, QFilterCondition> {
       ));
     });
   }
+
+  QueryBuilder<Player, Player, QAfterFilterCondition> roleIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'role',
+      ));
+    });
+  }
+
+  QueryBuilder<Player, Player, QAfterFilterCondition> roleIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'role',
+      ));
+    });
+  }
 }
 
-extension PlayerQueryObject on QueryBuilder<Player, Player, QFilterCondition> {}
+extension PlayerQueryObject on QueryBuilder<Player, Player, QFilterCondition> {
+  QueryBuilder<Player, Player, QAfterFilterCondition> role(
+      FilterQuery<Role> q) {
+    return QueryBuilder.apply(this, (query) {
+      return query.object(q, r'role');
+    });
+  }
+}
 
 extension PlayerQueryLinks on QueryBuilder<Player, Player, QFilterCondition> {}
 
@@ -525,6 +578,12 @@ extension PlayerQueryProperty on QueryBuilder<Player, Player, QQueryProperty> {
   QueryBuilder<Player, String, QQueryOperations> nameProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'name');
+    });
+  }
+
+  QueryBuilder<Player, Role?, QQueryOperations> roleProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'role');
     });
   }
 }

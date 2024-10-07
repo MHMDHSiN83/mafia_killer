@@ -7,15 +7,14 @@ import 'package:mafia_killer/themes/app_color.dart';
 import 'package:mafia_killer/databases/scenario.dart';
 
 class PlayerRoleCard extends StatefulWidget {
-  PlayerRoleCard(
-      {super.key,
-      required this.player,
-      this.isVisible = true,
-      required this.onTap});
+  PlayerRoleCard({
+    super.key,
+    required this.player,
+    required this.onTap,
+  });
 
   Player player;
-  bool isVisible;
-  Function onTap;
+  VoidCallback onTap;
 
   @override
   State<PlayerRoleCard> createState() => _PlayerRoleCardState();
@@ -24,7 +23,7 @@ class PlayerRoleCard extends StatefulWidget {
 class _PlayerRoleCardState extends State<PlayerRoleCard> {
   Color determineColor() {
     Color color;
-    switch (widget.player.role.roleSide) {
+    switch (widget.player.role!.roleSide) {
       case RoleSide.mafia:
         color = AppColors.redColor;
         break;
@@ -41,16 +40,22 @@ class _PlayerRoleCardState extends State<PlayerRoleCard> {
   }
 
   @override
+  void initState() {
+    widget.player.seenRole = false;
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     Color color = determineColor();
-    // create the back of the card => player name and a background
     return GestureDetector(
       onTap: () {
         setState(() {
-          widget.isVisible = false;
+          widget.player.seenRole = true;
         });
         showDialog(
             context: context,
+            barrierDismissible: false,
             builder: (context) {
               return Dialog(
                 child: Container(
@@ -76,7 +81,7 @@ class _PlayerRoleCardState extends State<PlayerRoleCard> {
                           width: 280,
                           child: Image(
                             image: AssetImage(
-                              widget.player.role.imagePath,
+                              widget.player.role!.imagePath,
                             ),
                           ),
                         ),
@@ -90,6 +95,7 @@ class _PlayerRoleCardState extends State<PlayerRoleCard> {
                         ),
                         ElevatedButton(
                           onPressed: () {
+                            widget.onTap();
                             Navigator.pop(context);
                           },
                           style: ElevatedButton.styleFrom(
@@ -114,10 +120,12 @@ class _PlayerRoleCardState extends State<PlayerRoleCard> {
                       ],
                     )),
               );
-            });
+            }).then((value) {
+          widget.onTap;
+        });
       },
       child: Visibility(
-        visible: widget.isVisible,
+        visible: !widget.player.seenRole,
         maintainSize: true,
         maintainAnimation: true,
         maintainState: true,
