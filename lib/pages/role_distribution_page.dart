@@ -7,6 +7,7 @@ import 'package:mafia_killer/components/player_role_card.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/models/role.dart';
+import 'package:mafia_killer/models/talking_page_screen_arguments.dart';
 import 'package:mafia_killer/themes/app_color.dart';
 
 class RoleDistributionPage extends StatefulWidget {

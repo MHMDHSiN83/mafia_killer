@@ -28,7 +28,7 @@ class PageFrame extends StatelessWidget {
   final IconData? rightButtonIcon;
   final Widget? child;
 
-  final Map<String, double> Fontsizes = {
+  final Map<String, double> TitleFontsizes = {
     "small": 28,
     "medium": 35,
     "large": 39
@@ -37,12 +37,12 @@ class PageFrame extends StatelessWidget {
     double len = pageTitle.length.toDouble();
     int numberOfWords = pageTitle.split(' ').length;
     if (len <= 12 && numberOfWords <= 2) {
-      return Fontsizes["large"]!;
+      return TitleFontsizes["large"]!;
     } else if ((len > 12 && len <= 14 && numberOfWords <= 2) ||
         (len <= 12 && numberOfWords > 2)) {
-      return Fontsizes["medium"]!;
+      return TitleFontsizes["medium"]!;
     } else {
-      return Fontsizes["small"]!;
+      return TitleFontsizes["small"]!;
     }
   }
 
