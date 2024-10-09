@@ -43,6 +43,7 @@ dependencies:
   isar_flutter_libs: ^3.1.0+1
   path_provider: ^2.1.4
   duration: ^4.0.3
+  deep_collection: ^1.0.2
 
 dev_dependencies:
   flutter_test:
@@ -75,6 +76,7 @@ flutter:
     - lib/images/
     - lib/images/backgrounds/
 
+
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 
@@ -89,8 +91,8 @@ flutter:
   fonts:
     - family: Negar
       fonts:
-        # - asset: lib/fonts/Negaar-Regular.ttf
-        - asset: lib/fonts/test.ttf
+        - asset: lib/fonts/Negaar-Regular.ttf
+        # - asset: lib/fonts/test.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro

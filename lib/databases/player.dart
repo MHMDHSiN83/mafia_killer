@@ -1,5 +1,7 @@
+import 'package:deep_collection/deep_collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:isar/isar.dart';
+import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/models/isar_service.dart';
 import 'package:mafia_killer/models/role.dart';
 
@@ -8,15 +10,16 @@ part 'player.g.dart';
 
 @collection
 class Player extends ChangeNotifier {
-  Player(this.name) {
-    doesParticipate = false;
-  }
-  Player.static();
+  Player(this.name);
+  Player.static(this.name);
 
   Id id = Isar.autoIncrement;
-  late bool doesParticipate;
-  late String name;
-  late Role role;
+  bool doesParticipate = false;
+  String name;
+  Role? role;
+
+  @ignore
+  bool seenRole = false;
 
   static List<Player> players = [];
   static List<Player> inGamePlayers = [];
@@ -42,7 +45,7 @@ class Player extends ChangeNotifier {
     players.addAll(fetchedPlayers);
   }
 
-  static Future<void> fetchReadyPlayers() async {
+  static Future<void> fetchInGamePlayers() async {
     final isar = await IsarService.db;
     List<Player> fetchedPlayers =
         isar.players.filter().doesParticipateEqualTo(true).findAllSync();
@@ -76,5 +79,42 @@ class Player extends ChangeNotifier {
       isar.players.deleteSync(player.id);
     });
     fetchPlayers();
+  }
+
+  static Future<List<Player>> distributeRoles() async {
+    // if (inGamePlayers[0].role != null) {
+    //   return inGamePlayers;
+    // }
+    // List<Role> roles = [];
+    // for (Role r in Scenario.currentScenario.roles) {
+    //   for (int i = 0; i < r.counter; i++) {
+    //     roles.add(r);
+    //   }
+    // }
+    List<Role> roles = Scenario.currentScenario.inGameRoles.deepCopy();
+    roles.shuffle();
+    List<Player> tempPlayers = inGamePlayers.deepCopy();
+    for (int i = 0; i < tempPlayers.length; i++) {
+      tempPlayers[i].role = roles[i];
+    }
+    return tempPlayers;
+  }
+
+  static Future<void> updateInGamePlayers(List<Player> newPlayers) async {
+    inGamePlayers = newPlayers;
+    final isar = await IsarService.db;
+    isar.writeTxnSync(() {
+      isar.players.putAllSync(newPlayers);
+    });
+  }
+
+  static Future<void> freePlayers() async {
+    final isar = await IsarService.db;
+    isar.writeTxnSync(() {
+      for (Player player in players) {
+        player.role = null;
+      }
+      isar.players.putAllSync(players);
+    });
   }
 }

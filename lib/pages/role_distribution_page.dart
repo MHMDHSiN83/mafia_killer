@@ -1,4 +1,7 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:mafia_killer/components/page_frame.dart';
 import 'package:mafia_killer/components/player_role_card.dart';
 import 'package:mafia_killer/databases/player.dart';
@@ -15,36 +18,71 @@ class RoleDistributionPage extends StatefulWidget {
 }
 
 class _RoleDistributionPageState extends State<RoleDistributionPage> {
-  void playerCardOnClick() {
-    setState(() {});
+  late List<Player> players;
+  final ScrollController _controller = ScrollController();
+  double circleSize = 22;
+  late double padding;
+  int inGamePlayersNumber = Player.inGamePlayers.length;
+  int arrowCounter = 0;
+  int circleCounter = 0;
+
+  double calculateWidth() {
+    double width = inGamePlayersNumber * (circleSize + 2 * padding);
+    return min(width, MediaQuery.of(context).size.width - 100);
+  }
+
+  double calculateSizeOfPadding() {
+    double width = MediaQuery.of(context).size.width - 100;
+    if (inGamePlayersNumber > 11) {
+      padding = (width - 11 * circleSize) / 22;
+    } else {
+      padding = 3;
+    }
+    return padding;
+  }
+
+  void _moveCircles() {
+    setState(() {
+      circleCounter++;
+      _controller.animateTo(
+        (circleSize + 2 * padding) * circleCounter,
+        duration: const Duration(seconds: 1),
+        curve: Curves.fastOutSlowIn,
+      );
+    });
+  }
+
+  void _moveArrow() {
+    setState(() {
+      arrowCounter++;
+    });
+  }
+
+  void _scrollRight() {
+    int playersLeft = inGamePlayersNumber - arrowCounter - circleCounter;
+    if (arrowCounter < 5 || playersLeft <= 6) {
+      _moveArrow();
+    } else {
+      _moveCircles();
+    }
+  }
+
+  bool _hasEveryoneSeen() {
+    if (inGamePlayersNumber == arrowCounter + circleCounter) {
+      return true;
+    }
+    return false;
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    const double horizantalMargin = 40.0;
-    // for (var role in Scenario.currentScenario.roles) {
-    //   print(role.name);
-    // }
-    Player player = Player("امین");
-    player.role = Scenario.currentScenario.getRoleByName("پدرخوانده")!;
-    Player player2 = Player("رضا");
-    player2.role = Scenario.currentScenario.getRoleByName("نوستراداموس")!;
-    Player player3 = Player("حسین");
-    player3.role = Scenario.currentScenario.getRoleByName("لئون حرفه‌ای")!;
-    List<Player> players = [
-      player,
-      player,
-      player,
-      player,
-      player,
-      player,
-      player,
-      player2,
-      player3,
-      player2,
-      player3,
-    ];
-
+    padding = calculateSizeOfPadding();
     return Scaffold(
       body: PageFrame(
         pageTitle: "تقسیم نقش ها",
@@ -53,21 +91,74 @@ class _RoleDistributionPageState extends State<RoleDistributionPage> {
         leftButtonIcon: Icons.keyboard_arrow_left,
         rightButtonIcon: Icons.keyboard_arrow_right,
         leftButtonOnTap: () => Navigator.pop(context),
-        rightButtonOnTap: () => Navigator.pushNamed(
-          context,
-          '/talking_page',
-          arguments: TalkingPageScreenArguments(
-              nextPagePath: '/regular_voting_page', seconds: 30),
-        ),
+        rightButtonOnTap: () {
+          if (_hasEveryoneSeen()) {
+            Player.updateInGamePlayers(players);
+            Navigator.pushNamed(context, '/loading_page');
+          }
+        },
         child: Column(
-          //crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            Expanded(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    width: calculateWidth(),
+                    child: ListView.builder(
+                      controller: _controller,
+                      reverse: true,
+                      itemCount: inGamePlayersNumber,
+                      physics: const NeverScrollableScrollPhysics(),
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding:
+                              EdgeInsets.only(left: padding, right: padding),
+                          child: Icon(
+                            Icons.circle,
+                            size: circleSize,
+                            color: (index < arrowCounter + circleCounter)
+                                ? Theme.of(context).colorScheme.primary
+                                : Theme.of(context).colorScheme.inversePrimary,
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Expanded(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  AnimatedPadding(
+                    duration: const Duration(seconds: 1),
+                    curve: Curves.fastOutSlowIn,
+                    padding: EdgeInsets.only(
+                        left: 51 +
+                            (MediaQuery.of(context).size.width -
+                                    100 -
+                                    calculateWidth()) /
+                                2 +
+                            (circleSize + 2 * padding) * arrowCounter),
+                    child: Transform.scale(
+                      scale: 10,
+                      child: const Icon(
+                        Icons.arrow_drop_up,
+                        size: 6,
+                        color: AppColors.greenColor,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
             Expanded(
               flex: 2,
               child: Container(
-                margin:
-                    const EdgeInsets.symmetric(horizontal: horizantalMargin),
-                padding: const EdgeInsets.symmetric(vertical: 0),
+                margin: const EdgeInsets.symmetric(horizontal: 40),
                 decoration: BoxDecoration(
                     border: Border.all(
                   color: AppColors.redColor,
@@ -83,43 +174,53 @@ class _RoleDistributionPageState extends State<RoleDistributionPage> {
             ),
             Expanded(
               flex: 14,
-              child: ListView.builder(
-                itemCount: (players.length / 2)
-                    .ceil(), // Divide by 2 because each row has two items
-                itemBuilder: (context, index) {
-                  int firstItemIndex = index * 2;
-                  int secondItemIndex = firstItemIndex + 1;
-
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: horizantalMargin, vertical: 8.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        PlayerRoleCard(
-                          player: players[firstItemIndex],
-                          onTap: () {},
+              child: Container(
+                margin: const EdgeInsets.symmetric(horizontal: 40),
+                child: FutureBuilder(
+                  future: Player.distributeRoles(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      players = snapshot.data!;
+                      return ListView.builder(
+                        itemCount: (players.length / 2).ceil(),
+                        itemBuilder: (context, index) {
+                          int firstItemIndex = index * 2;
+                          int secondItemIndex = firstItemIndex + 1;
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 8.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                PlayerRoleCard(
+                                  player: players[firstItemIndex],
+                                  onTap: _scrollRight,
+                                ),
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                if (secondItemIndex <
+                                    players
+                                        .length) // Check if second item exists
+                                  PlayerRoleCard(
+                                    player: players[secondItemIndex],
+                                    onTap: _scrollRight,
+                                  )
+                              ],
+                            ),
+                          );
+                        },
+                      );
+                    } else {
+                      return Center(
+                        child: SpinKitSpinningLines(
+                          color: Theme.of(context).colorScheme.inversePrimary,
+                          size: 100.0,
+                          lineWidth: 7,
                         ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        if (secondItemIndex <
-                            players.length) // Check if second item exists
-                          PlayerRoleCard(
-                            player: players[secondItemIndex],
-                            onTap: () {},
-                          )
-                        else
-                          PlayerRoleCard(
-                            player: players[secondItemIndex - 1],
-                            isVisible: false,
-                            onTap:
-                                () {}, // it's a hidden object so there will be no onTap
-                          )
-                      ],
-                    ),
-                  );
-                },
+                      );
+                    }
+                  },
+                ),
               ),
             ),
           ],

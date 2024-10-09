@@ -38,7 +38,7 @@ class _PlayersPageState extends State<PlayersPage> {
         rightButtonIcon: Icons.keyboard_arrow_right,
         leftButtonOnTap: () => Navigator.pop(context),
         rightButtonOnTap: () {
-          Player.fetchReadyPlayers();
+          Player.fetchInGamePlayers();
           Navigator.pushNamed(context, '/game_settings_page');
         },
         child: Column(

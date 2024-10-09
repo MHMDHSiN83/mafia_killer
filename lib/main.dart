@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:mafia_killer/databases/scenario.dart';
-import 'package:mafia_killer/models/app_handler.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/pages/defense_voting_page.dart';
 import 'package:mafia_killer/pages/game_settings_page.dart';
 import 'package:mafia_killer/pages/intro_page.dart';
 import 'package:mafia_killer/pages/loading_page.dart';
+import 'package:mafia_killer/pages/night_events%D9%80page.dart';
 import 'package:mafia_killer/pages/players_page.dart';
 import 'package:mafia_killer/pages/regular_voting_page.dart';
 import 'package:mafia_killer/pages/role_distribution_page.dart';
@@ -16,16 +15,17 @@ import 'package:provider/provider.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() {
-  runApp(MultiProvider(
-    providers: [
-      ChangeNotifierProvider<AppHandler>(create: (context) => AppHandler()),
-      ChangeNotifierProvider<Player>(create: (context) => Player.static()),
-    ],
-    child: const Directionality(
-      textDirection: TextDirection.rtl,
-      child: MyApp(),
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider<Player>(create: (context) => Player('handler')),
+      ],
+      child: const Directionality(
+        textDirection: TextDirection.rtl,
+        child: MyApp(),
+      ),
     ),
-  ));
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -58,6 +58,7 @@ class MyApp extends StatelessWidget {
         '/talking_page': (context) => const TalkingPage(),
         '/regular_voting_page': (context) => const RegularVotingPage(),
         '/defense_voting_page': (context) => const DefenseVotingPage(),
+        '/night_events': (context) => const NightEventsPage(),
       },
     );
   }
