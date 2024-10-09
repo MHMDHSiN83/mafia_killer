@@ -34,6 +34,7 @@ class Player extends ChangeNotifier {
   // R E A D
   static Stream<List<Player>> listenToPlayers() async* {
     fetchPlayers();
+    freePlayers();
     final isar = await IsarService.db;
     yield* isar.players.where().watch(fireImmediately: true);
   }
@@ -82,22 +83,15 @@ class Player extends ChangeNotifier {
   }
 
   static Future<List<Player>> distributeRoles() async {
-    // if (inGamePlayers[0].role != null) {
-    //   return inGamePlayers;
-    // }
-    // List<Role> roles = [];
-    // for (Role r in Scenario.currentScenario.roles) {
-    //   for (int i = 0; i < r.counter; i++) {
-    //     roles.add(r);
-    //   }
-    // }
+    if (inGamePlayers[0].role != null) {
+      return inGamePlayers;
+    }
     List<Role> roles = Scenario.currentScenario.inGameRoles.deepCopy();
     roles.shuffle();
-    List<Player> tempPlayers = inGamePlayers.deepCopy();
-    for (int i = 0; i < tempPlayers.length; i++) {
-      tempPlayers[i].role = roles[i];
+    for (int i = 0; i < inGamePlayers.length; i++) {
+      inGamePlayers[i].role = roles[i];
     }
-    return tempPlayers;
+    return inGamePlayers;
   }
 
   static Future<void> updateInGamePlayers(List<Player> newPlayers) async {

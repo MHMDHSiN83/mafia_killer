@@ -102,7 +102,7 @@ class IntroPage extends StatelessWidget {
                     child: InkWell(
                       splashColor: Theme.of(context).colorScheme.inversePrimary,
                       onTap: () =>
-                          Navigator.pushNamed(context, '/night_events'),
+                          Navigator.pushNamed(context, '/players_page'),
                       child: Container(
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,

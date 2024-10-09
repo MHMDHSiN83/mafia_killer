@@ -28,7 +28,6 @@ class IsarService {
 
   void setInitialValues() async {
     final isar = await IsarService.db;
-    await Player.freePlayers();
     int count = await isar.scenarios.count();
     if (count == 0) {
       await Scenario.setDefaultScenarios();
