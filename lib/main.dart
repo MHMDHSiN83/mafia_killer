@@ -4,7 +4,7 @@ import 'package:mafia_killer/pages/defense_voting_page.dart';
 import 'package:mafia_killer/pages/game_settings_page.dart';
 import 'package:mafia_killer/pages/intro_page.dart';
 import 'package:mafia_killer/pages/loading_page.dart';
-import 'package:mafia_killer/pages/night_events.dart';
+import 'package:mafia_killer/pages/night_events%D9%80page.dart';
 import 'package:mafia_killer/pages/players_page.dart';
 import 'package:mafia_killer/pages/regular_voting_page.dart';
 import 'package:mafia_killer/pages/role_distribution_page.dart';
@@ -58,7 +58,7 @@ class MyApp extends StatelessWidget {
         '/talking_page': (context) => const TalkingPage(),
         '/regular_voting_page': (context) => const RegularVotingPage(),
         '/defense_voting_page': (context) => const DefenseVotingPage(),
-        '/night_events': (context) => const NightEvents(),
+        '/night_events': (context) => const NightEventsPage(),
       },
     );
   }

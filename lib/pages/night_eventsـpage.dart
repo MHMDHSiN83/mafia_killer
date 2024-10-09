@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:mafia_killer/components/inquiry_dialog.dart';
 import 'package:mafia_killer/components/night_event_tile.dart';
 import 'package:mafia_killer/components/page_frame.dart';
 import 'package:mafia_killer/components/player_tile.dart';
@@ -7,19 +8,75 @@ import 'package:mafia_killer/components/role_selection_tile.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/themes/app_color.dart';
 
-class NightEvents extends StatefulWidget {
-  const NightEvents({super.key});
+class NightEventsPage extends StatefulWidget {
+  const NightEventsPage({super.key});
 
   @override
-  State<NightEvents> createState() => _PlayersPageState();
+  State<NightEventsPage> createState() => _PlayersPageState();
 }
 
-class _PlayersPageState extends State<NightEvents> {
+class _PlayersPageState extends State<NightEventsPage> {
   late double width;
   late double height;
   void calculateSizeOfImage() {
     width = MediaQuery.of(context).size.width;
     height = 406 * width / 329;
+  }
+
+  void showInquiryDialog(context) {
+    showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (context) {
+        return InquiryDialog(
+          child: Column(
+            children: [
+              Text(
+                '۲ شهروند',
+                style: TextStyle(
+                  fontSize: 20,
+                  color: Theme.of(context).colorScheme.inversePrimary,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Text(
+                '۱ مافیا',
+                style: TextStyle(
+                  fontSize: 20,
+                  color: Theme.of(context).colorScheme.inversePrimary,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Text(
+                '۱ نوستراداموس',
+                style: TextStyle(
+                  fontSize: 20,
+                  color: Theme.of(context).colorScheme.inversePrimary,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Text(
+                'از بازی خارج شدند.',
+                style: TextStyle(
+                  fontSize: 20,
+                  color: Theme.of(context).colorScheme.inversePrimary,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 
   @override
@@ -69,7 +126,9 @@ class _PlayersPageState extends State<NightEvents> {
                           Expanded(
                             flex: 2,
                             child: ElevatedButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                showInquiryDialog(context);
+                              },
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: AppColors.brownColor,
                                 elevation: 12.0,

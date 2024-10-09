@@ -91,8 +91,8 @@ flutter:
   fonts:
     - family: Negar
       fonts:
-        # - asset: lib/fonts/Negaar-Regular.ttf
-        - asset: lib/fonts/test.ttf
+        - asset: lib/fonts/Negaar-Regular.ttf
+        # - asset: lib/fonts/test.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro
