@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mafia_killer/components/page_frame.dart';
 import 'package:mafia_killer/components/player_tile.dart';
 import 'package:mafia_killer/components/role_selection_tile.dart';
@@ -31,6 +32,7 @@ class _PlayersPageState extends State<PlayersPage> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: PageFrame(
+        isInGame: false,
         pageTitle: "نام بازیکنان",
         leftButtonText: "قبلی",
         rightButtonText: "بعدی",
