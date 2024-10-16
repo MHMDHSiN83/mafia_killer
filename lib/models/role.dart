@@ -1,4 +1,5 @@
 import 'package:isar/isar.dart';
+import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/models/role_side.dart';
 
 part 'role.g.dart';
@@ -11,10 +12,6 @@ class Role {
   @Enumerated(EnumType.ordinal32)
   late RoleSide roleSide;
 
-  // Role(this.name, this.description, this.roleSide, this.counter,
-  //     this.imagePath) {
-  //   isInGame = false;
-  // }
   Role();
   factory Role.copy(Role role) {
     Role newRole = Role();
@@ -52,5 +49,13 @@ class Role {
     };
   }
 
-  void changeRoleStatus(Role role) {}
+  void nightAction(Player player) {}
+
+  void setAvailablePlayers() {
+    throw UnimplementedError("Mafia Kos");
+  }
+  bool hasAbility(){
+    return true;
+  }
+
 }

@@ -2,6 +2,7 @@ import 'package:deep_collection/deep_collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:isar/isar.dart';
 import 'package:mafia_killer/databases/scenario.dart';
+import 'package:mafia_killer/models/Player_status.dart';
 import 'package:mafia_killer/models/isar_service.dart';
 import 'package:mafia_killer/models/role.dart';
 
@@ -17,6 +18,9 @@ class Player extends ChangeNotifier {
   bool doesParticipate = false;
   String name;
   Role? role;
+
+  @Enumerated(EnumType.ordinal32)
+  late PlayerStatus playerStatus = PlayerStatus.Active;
 
   @ignore
   bool seenRole = false;
