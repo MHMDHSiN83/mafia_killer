@@ -8,6 +8,13 @@ import 'package:mafia_killer/models/scenarios/godfather/godfather_scenario.dart'
 class SaulGoodman extends Role {
   int remainingAbility = 1;
 
+  SaulGoodman() {
+    name = "ساول گودمن";
+    description =
+        "اگر فردی از گروه مافیا خارج شود ساول می‌تواند جای شلیک شب، معامله و خریداری انجام دهد. ساول گودمن فقط یکبار می‌تواند یکی از شهروندان ساده را به یک مافیای ساده تبدیل کند. با علامت او همان شب گرداننده آن فرد را از نقش جدیدش یعنی مافیای ساده مطلع می‌کند و وی را بیدار می‌کند تا هم تیمی های خود را بشناسد. اگر ساول گودمن شهروند غیرساده یا نوستراداموس را انتخاب کند با ضربدر گرداننده مواجه شده و گرداننده نشانش را بیدار نمی‌کند. توانمندی ساول و شلیک آن شب مافیا نیز از بین می‌رود.";
+    roleSide = RoleSide.mafia;
+    imagePath = "lib/images/roles/saul_goodman.jpg";
+  }
   @override
   bool hasAbility() {
     return remainingAbility > 0;

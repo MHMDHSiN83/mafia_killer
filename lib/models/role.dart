@@ -54,8 +54,16 @@ class Role {
   void setAvailablePlayers() {
     throw UnimplementedError("Mafia Kos");
   }
-  bool hasAbility(){
+
+  bool hasAbility() {
     return true;
   }
 
+  String awakingRoleText() {
+    throw UnimplementedError(name);
+  }
+
+  String sleepRoleText() {
+    return "$name بخوابه";
+  }
 }

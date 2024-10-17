@@ -7,6 +7,15 @@ import 'package:mafia_killer/models/scenarios/godfather/godfather_scenario.dart'
 import 'package:mafia_killer/models/isar_service.dart';
 import 'package:mafia_killer/models/role.dart';
 import 'package:mafia_killer/models/role_side.dart';
+import 'package:mafia_killer/models/scenarios/godfather/roles/citizen.dart';
+import 'package:mafia_killer/models/scenarios/godfather/roles/citizen_kane.dart';
+import 'package:mafia_killer/models/scenarios/godfather/roles/constantine.dart';
+import 'package:mafia_killer/models/scenarios/godfather/roles/doctor_watson.dart';
+import 'package:mafia_killer/models/scenarios/godfather/roles/godfather.dart';
+import 'package:mafia_killer/models/scenarios/godfather/roles/leon.dart';
+import 'package:mafia_killer/models/scenarios/godfather/roles/matador.dart';
+import 'package:mafia_killer/models/scenarios/godfather/roles/nostradamus.dart';
+import 'package:mafia_killer/models/scenarios/godfather/roles/saul_goodman.dart';
 
 part 'scenario.g.dart';
 
@@ -18,7 +27,19 @@ class Scenario {
         await rootBundle.loadString('lib/assets/roles.json');
     // print(jsonDecode(response)[name]);
     List<dynamic> decodedList = (jsonDecode(response)[name]);
-    roles = decodedList.map((item) => Role.fromJson(item)).toList();
+    // roles = decodedList.map((item) => Role.fromJson(item)).toList();
+
+    roles = [
+      Godfather(),
+      SaulGoodman(),
+      Matador(),
+      Nostradamus(),
+      DoctorWatson(),
+      Leon(),
+      Constantine(),
+      CitizenKane(),
+      Citizen()
+    ];
   }
 
   Id id = Isar.autoIncrement;
@@ -78,6 +99,7 @@ class Scenario {
   }
 
   List<Role> getRolesBySide(RoleSide side) {
+    print(roles.whereType<DoctorWatson>().first.awakingRoleText());
     return roles.where((role) => role.roleSide == side).toList();
   }
 

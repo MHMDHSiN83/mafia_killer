@@ -99,7 +99,7 @@ class _RoleDistributionPageState extends State<RoleDistributionPage> {
         rightButtonOnTap: () {
           if (_hasEveryoneSeen()) {
             Player.updateInGamePlayers(players);
-            Navigator.pushNamed(context, '/loading_page');
+            Navigator.pushNamed(context, '/night_page');
           }
         },
         child: Column(
