@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'package:isar/isar.dart';
 import 'package:mafia_killer/databases/game_settings.dart';
+import 'package:mafia_killer/models/scenarios/classic/classic_scenario.dart';
+import 'package:mafia_killer/models/scenarios/godfather/godfather_scenario.dart';
 import 'package:mafia_killer/models/isar_service.dart';
 import 'package:mafia_killer/models/role.dart';
 import 'package:mafia_killer/models/role_side.dart';
@@ -61,8 +63,8 @@ class Scenario {
   }
 
   static Future<void> setDefaultScenarios() async {
-    scenarios.add(Scenario('پدرخوانده'));
-    scenarios.add(Scenario('کلاسیک'));
+    scenarios.add(GodfatherScenario());
+    scenarios.add(ClassicScenario());
     await setRoles();
     final isar = await IsarService.db;
     isar.writeTxnSync(() {

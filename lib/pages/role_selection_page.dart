@@ -35,6 +35,10 @@ class RoleSelectionPage extends StatelessWidget {
         rightButtonIcon: Icons.keyboard_arrow_right,
         leftButtonOnTap: () => Navigator.pop(context),
         rightButtonOnTap: () {
+          if (Player.inGamePlayers.length !=
+              Scenario.currentScenario.inGameRoles.length) {
+            return;
+          }
           Navigator.pushNamed(context, '/role_distribution_page');
         },
         child: ListView(

@@ -32,8 +32,14 @@ const PlayerSchema = CollectionSchema(
       name: r'name',
       type: IsarType.string,
     ),
-    r'role': PropertySchema(
+    r'playerStatus': PropertySchema(
       id: 3,
+      name: r'playerStatus',
+      type: IsarType.int,
+      enumMap: _PlayerplayerStatusEnumValueMap,
+    ),
+    r'role': PropertySchema(
+      id: 4,
       name: r'role',
       type: IsarType.object,
       target: r'Role',
@@ -79,8 +85,9 @@ void _playerSerialize(
   writer.writeBool(offsets[0], object.doesParticipate);
   writer.writeBool(offsets[1], object.hasListeners);
   writer.writeString(offsets[2], object.name);
+  writer.writeInt(offsets[3], object.playerStatus.index);
   writer.writeObject<Role>(
-    offsets[3],
+    offsets[4],
     allOffsets,
     RoleSchema.serialize,
     object.role,
@@ -98,8 +105,11 @@ Player _playerDeserialize(
   );
   object.doesParticipate = reader.readBool(offsets[0]);
   object.id = id;
+  object.playerStatus =
+      _PlayerplayerStatusValueEnumMap[reader.readIntOrNull(offsets[3])] ??
+          PlayerStatus.Active;
   object.role = reader.readObjectOrNull<Role>(
-    offsets[3],
+    offsets[4],
     RoleSchema.deserialize,
     allOffsets,
   );
@@ -120,6 +130,9 @@ P _playerDeserializeProp<P>(
     case 2:
       return (reader.readString(offset)) as P;
     case 3:
+      return (_PlayerplayerStatusValueEnumMap[reader.readIntOrNull(offset)] ??
+          PlayerStatus.Active) as P;
+    case 4:
       return (reader.readObjectOrNull<Role>(
         offset,
         RoleSchema.deserialize,
@@ -129,6 +142,19 @@ P _playerDeserializeProp<P>(
       throw IsarError('Unknown property with id $propertyId');
   }
 }
+
+const _PlayerplayerStatusEnumValueMap = {
+  'Active': 0,
+  'Disable': 1,
+  'Dead': 2,
+  'Removed': 3,
+};
+const _PlayerplayerStatusValueEnumMap = {
+  0: PlayerStatus.Active,
+  1: PlayerStatus.Disable,
+  2: PlayerStatus.Dead,
+  3: PlayerStatus.Removed,
+};
 
 Id _playerGetId(Player object) {
   return object.id;
@@ -419,6 +445,59 @@ extension PlayerQueryFilter on QueryBuilder<Player, Player, QFilterCondition> {
     });
   }
 
+  QueryBuilder<Player, Player, QAfterFilterCondition> playerStatusEqualTo(
+      PlayerStatus value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'playerStatus',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Player, Player, QAfterFilterCondition> playerStatusGreaterThan(
+    PlayerStatus value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'playerStatus',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Player, Player, QAfterFilterCondition> playerStatusLessThan(
+    PlayerStatus value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'playerStatus',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Player, Player, QAfterFilterCondition> playerStatusBetween(
+    PlayerStatus lower,
+    PlayerStatus upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'playerStatus',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
   QueryBuilder<Player, Player, QAfterFilterCondition> roleIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
@@ -483,6 +562,18 @@ extension PlayerQuerySortBy on QueryBuilder<Player, Player, QSortBy> {
       return query.addSortBy(r'name', Sort.desc);
     });
   }
+
+  QueryBuilder<Player, Player, QAfterSortBy> sortByPlayerStatus() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'playerStatus', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Player, Player, QAfterSortBy> sortByPlayerStatusDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'playerStatus', Sort.desc);
+    });
+  }
 }
 
 extension PlayerQuerySortThenBy on QueryBuilder<Player, Player, QSortThenBy> {
@@ -533,6 +624,18 @@ extension PlayerQuerySortThenBy on QueryBuilder<Player, Player, QSortThenBy> {
       return query.addSortBy(r'name', Sort.desc);
     });
   }
+
+  QueryBuilder<Player, Player, QAfterSortBy> thenByPlayerStatus() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'playerStatus', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Player, Player, QAfterSortBy> thenByPlayerStatusDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'playerStatus', Sort.desc);
+    });
+  }
 }
 
 extension PlayerQueryWhereDistinct on QueryBuilder<Player, Player, QDistinct> {
@@ -552,6 +655,12 @@ extension PlayerQueryWhereDistinct on QueryBuilder<Player, Player, QDistinct> {
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'name', caseSensitive: caseSensitive);
+    });
+  }
+
+  QueryBuilder<Player, Player, QDistinct> distinctByPlayerStatus() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'playerStatus');
     });
   }
 }
@@ -578,6 +687,12 @@ extension PlayerQueryProperty on QueryBuilder<Player, Player, QQueryProperty> {
   QueryBuilder<Player, String, QQueryOperations> nameProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'name');
+    });
+  }
+
+  QueryBuilder<Player, PlayerStatus, QQueryOperations> playerStatusProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'playerStatus');
     });
   }
 

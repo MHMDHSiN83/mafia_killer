@@ -90,7 +90,12 @@ class _RoleDistributionPageState extends State<RoleDistributionPage> {
         rightButtonText: "بعدی",
         leftButtonIcon: Icons.keyboard_arrow_left,
         rightButtonIcon: Icons.keyboard_arrow_right,
-        leftButtonOnTap: () => Navigator.pop(context),
+        leftButtonOnTap: () {
+          for (Player player in Player.inGamePlayers) {
+            player.role = null;
+          }
+          Navigator.pop(context);
+        },
         rightButtonOnTap: () {
           if (_hasEveryoneSeen()) {
             Player.updateInGamePlayers(players);
