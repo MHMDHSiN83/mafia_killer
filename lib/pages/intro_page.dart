@@ -64,14 +64,14 @@ class IntroPage extends StatelessWidget {
                       "مافیا",
                       style: TextStyle(
                         color: Theme.of(context).colorScheme.inversePrimary,
-                        fontSize: 110,
+                        fontSize: 100,
                       ),
                     ),
                     const Text(
                       "کش",
                       style: TextStyle(
                         color: AppColors.redColor,
-                        fontSize: 110,
+                        fontSize: 100,
                       ),
                     ),
                   ],

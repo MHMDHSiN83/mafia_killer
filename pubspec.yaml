@@ -90,10 +90,13 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
+    - family: Noto
+      fonts:
+        - asset: 'lib/fonts/NotoSansArabic_Condensed-Black.ttf' 
     - family: Negar
       fonts:
-        # - asset: lib/fonts/Negaar-Regular.ttf
-        - asset: lib/fonts/test.ttf
+        - asset: lib/fonts/Negaar-Regular.ttf
+    
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro

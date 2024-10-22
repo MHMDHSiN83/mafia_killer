@@ -109,6 +109,7 @@ class _GameSettingsPageState extends State<GameSettingsPage> {
               number: newGameSettings['inquiry']!,
               isTimer: false,
               varName: 'inquiry',
+              fontSize: 20,
             ),
             const MyDivider(),
             RowDropdownBox(
