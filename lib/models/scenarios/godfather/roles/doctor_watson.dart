@@ -1,11 +1,15 @@
 import 'package:isar/isar.dart';
+import 'package:json_annotation/json_annotation.dart';
 import 'package:mafia_killer/databases/player.dart';
-import 'package:mafia_killer/models/Player_status.dart';
+import 'package:mafia_killer/models/player_status.dart';
 import 'package:mafia_killer/models/night_event.dart';
 import 'package:mafia_killer/models/role.dart';
 import 'package:mafia_killer/models/role_side.dart';
 import 'package:mafia_killer/models/scenarios/godfather/godfather_scenario.dart';
 
+part 'doctor_watson.g.dart';
+
+@JsonSerializable()
 class DoctorWatson extends Role {
   int selfHeal = 2;
 
@@ -16,6 +20,14 @@ class DoctorWatson extends Role {
     roleSide = RoleSide.citizen;
     imagePath = "lib/images/roles/doctor_watson.jpg";
   }
+
+  factory DoctorWatson.fromJson(Map<String, dynamic> json) =>
+      _$DoctorWatsonFromJson(json);
+
+  // Generated method to convert an object to JSON
+
+  @override
+  Map<String, dynamic> toJson() => _$DoctorWatsonToJson(this);
 
   @override
   void nightAction(Player player) {

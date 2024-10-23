@@ -15,15 +15,14 @@ class PlayersPage extends StatefulWidget {
 
 class _PlayersPageState extends State<PlayersPage> {
   final TextEditingController _controller = TextEditingController();
-
   void addPlayer() {
-    if (_controller.text == "") {
-      return;
-    }
-    // context.read<AppHandler>().addPlayer(_controller.text);
-    // _controller.text = '';
-    Player.addPlayer(_controller.text);
-    _controller.text = '';
+    setState(() {
+      if (_controller.text == "") {
+        return;
+      }
+      Player.addPlayer(_controller.text);
+      _controller.text = '';
+    });
   }
 
   @override
@@ -45,37 +44,48 @@ class _PlayersPageState extends State<PlayersPage> {
           children: [
             Expanded(
               flex: 9,
-              child: StreamBuilder<List<Player>>(
-                  stream: Player.listenToPlayers(),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return Center(
-                        child: SpinKitSpinningLines(
-                          color: Theme.of(context).colorScheme.inversePrimary,
-                          size: 100.0,
-                          lineWidth: 7,
-                        ),
-                      );
-                    } else if (snapshot.hasError) {
-                      return Center(child: Text('Error: ${snapshot.error}'));
-                    } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                      return const Center(child: Text('No players available'));
-                    } else {
-                      final players = snapshot.data!;
-                      return ListView.builder(
-                        padding: const EdgeInsets.symmetric(horizontal: 15),
-                        itemCount: players.length,
-                        itemBuilder: (context, index) {
-                          return Container(
-                            margin: const EdgeInsets.symmetric(vertical: 5),
-                            child: PlayerTile(
-                              player: players[index],
-                            ),
-                          );
-                        },
-                      );
-                    }
+              child: ListView.builder(
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                  itemCount: Player.players.length,
+                  itemBuilder: (context, index) {
+                    return Container(
+                      margin: const EdgeInsets.symmetric(vertical: 5),
+                      child: PlayerTile(
+                        player: Player.players[index],
+                      ),
+                    );
                   }),
+              // child: StreamBuilder<List<Player>>(
+              //     stream: Player.listenToPlayers(),
+              //     builder: (context, snapshot) {
+              //       if (snapshot.connectionState == ConnectionState.waiting) {
+              //         return Center(
+              //           child: SpinKitSpinningLines(
+              //             color: Theme.of(context).colorScheme.inversePrimary,
+              //             size: 100.0,
+              //             lineWidth: 7,
+              //           ),
+              //         );
+              //       } else if (snapshot.hasError) {
+              //         return Center(child: Text('Error: ${snapshot.error}'));
+              //       } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+              //         return const Center(child: Text('No players available'));
+              //       } else {
+              //         final players = snapshot.data!;
+              //         return ListView.builder(
+              //           padding: const EdgeInsets.symmetric(horizontal: 15),
+              //           itemCount: players.length,
+              //           itemBuilder: (context, index) {
+              //             return Container(
+              //               margin: const EdgeInsets.symmetric(vertical: 5),
+              //               child: PlayerTile(
+              //                 player: players[index],
+              //               ),
+              //             );
+              //           },
+              //         );
+              //       }
+              //     }),
             ),
             Expanded(
               flex: 1,

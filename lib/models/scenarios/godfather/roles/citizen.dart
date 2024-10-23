@@ -3,7 +3,10 @@ import 'package:mafia_killer/models/night_event.dart';
 import 'package:mafia_killer/models/role.dart';
 import 'package:mafia_killer/models/role_side.dart';
 import 'package:mafia_killer/models/scenarios/godfather/godfather_scenario.dart';
+import 'package:json_annotation/json_annotation.dart';
+part 'citizen.g.dart';
 
+@JsonSerializable()
 class Citizen extends Role {
   Citizen() {
     name = "شهروند ساده";
@@ -12,4 +15,11 @@ class Citizen extends Role {
     roleSide = RoleSide.citizen;
     imagePath = "lib/images/roles/citizen.jpg";
   }
+    factory Citizen.fromJson(Map<String, dynamic> json) =>
+      _$CitizenFromJson(json);
+
+  // Generated method to convert an object to JSON
+
+  @override
+  Map<String, dynamic> toJson() => _$CitizenToJson(this);
 }

@@ -11,21 +11,21 @@ class LoadingPage extends StatefulWidget {
 }
 
 class _LoadingPageState extends State<LoadingPage> {
-  void getGameSettingsData() async {
-    final isar = await IsarService.db;
-    GameSettings? gameSettings = await isar.gameSettings.get(1);
-    gameSettings!.scenario.loadSync();
-    Map<String, dynamic> newGameSettings = gameSettings.getSettingsInMap();
-    Navigator.pushReplacementNamed(context, '/game_settings_page', arguments: {
-      'newGameSettings': newGameSettings,
-      'gameSettings': gameSettings,
-    });
-  }
+  // void getGameSettingsData() async {
+  //   final isar = await IsarService.db;
+  //   GameSettings? gameSettings = await isar.gameSettings.get(1);
+  //   gameSettings!.scenario.loadSync();
+  //   Map<String, dynamic> newGameSettings = gameSettings.getSettingsInMap();
+  //   Navigator.pushReplacementNamed(context, '/game_settings_page', arguments: {
+  //     'newGameSettings': newGameSettings,
+  //     'gameSettings': gameSettings,
+  //   });
+  // }
 
   @override
   void initState() {
     super.initState();
-    getGameSettingsData();
+    // getGameSettingsData();
   }
 
   @override

@@ -20,7 +20,6 @@ class _GameSettingsPageState extends State<GameSettingsPage> {
   @override
   void initState() {
     newGameSettings = GameSettings.currentGameSettings.getSettingsInMap();
-
     super.initState();
   }
 

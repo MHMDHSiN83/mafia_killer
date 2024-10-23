@@ -1,0 +1,9 @@
+{
+    "introTime": 30,
+    "mainSpeakTime": 120,
+    "inquiry": 2,
+    "narrator": "کامبیز دیرباز",
+    "playMusic": true,
+    "soundEffect": true,
+    "narrators": ["کامبیز دیرباز", "محمدرضا علیمردانی"]
+}

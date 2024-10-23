@@ -1,10 +1,14 @@
 import 'package:mafia_killer/databases/player.dart';
-import 'package:mafia_killer/models/Player_status.dart';
+import 'package:mafia_killer/models/player_status.dart';
 import 'package:mafia_killer/models/night_event.dart';
 import 'package:mafia_killer/models/role.dart';
 import 'package:mafia_killer/models/role_side.dart';
 import 'package:mafia_killer/models/scenarios/godfather/godfather_scenario.dart';
 
+import 'package:json_annotation/json_annotation.dart';
+part 'godfather.g.dart';
+
+@JsonSerializable()
 class Godfather extends Role {
   int remainingAbility = 1;
 
@@ -15,6 +19,14 @@ class Godfather extends Role {
     roleSide = RoleSide.mafia;
     imagePath = "lib/images/roles/godfather.jpg";
   }
+
+  factory Godfather.fromJson(Map<String, dynamic> json) =>
+      _$GodfatherFromJson(json);
+
+  // Generated method to convert an object to JSON
+
+  @override
+  Map<String, dynamic> toJson() => _$GodfatherToJson(this);
   @override
   bool hasAbility() {
     return remainingAbility > 0;

@@ -1,89 +1,112 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:deep_collection/deep_collection.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
 import 'package:isar/isar.dart';
+import 'package:json_annotation/json_annotation.dart';
 import 'package:mafia_killer/databases/scenario.dart';
-import 'package:mafia_killer/models/Player_status.dart';
+import 'package:mafia_killer/models/database.dart';
+import 'package:mafia_killer/models/player_status.dart';
 import 'package:mafia_killer/models/isar_service.dart';
 import 'package:mafia_killer/models/role.dart';
+import 'package:path_provider/path_provider.dart';
 
 // dart run build_runner build
 part 'player.g.dart';
 
-@collection
+@JsonSerializable()
 class Player extends ChangeNotifier {
   Player(this.name);
   Player.static(this.name);
 
-  Id id = Isar.autoIncrement;
+  // Id id = Isar.autoIncrement;
   bool doesParticipate = false;
   String name;
   Role? role;
 
-  @Enumerated(EnumType.ordinal32)
+  // @Enumerated(EnumType.ordinal32)
   late PlayerStatus playerStatus = PlayerStatus.Active;
 
-  @ignore
+  // @ignore
   bool seenRole = false;
 
   static List<Player> players = [];
   static List<Player> inGamePlayers = [];
+  static late String filePath;
+  factory Player.fromJson(Map<String, dynamic> json) => _$PlayerFromJson(json);
+
+  // Generated method to convert an object to JSON
+  Map<String, dynamic> toJson() => _$PlayerToJson(this);
+  static Future<String> getFilePath() async {
+    final directory = await getApplicationDocumentsDirectory();
+    return '${directory.path}/players.json';
+  }
+
+  static Future<void> getPlayersFromDatabase() async {
+    filePath = await getFilePath();
+    print(filePath);
+    final file = File(filePath);
+    if (!(await file.exists())) {
+      String jsonString =
+          await rootBundle.loadString('lib/assets/players.json');
+      List<dynamic> jsonData = jsonDecode(jsonString);
+      players = jsonData.map((player) => Player.fromJson(player)).toList();
+      await file.writeAsString(jsonString);
+      print('Asset copied to $filePath');
+    } else {
+      print('File already exists in internal storage');
+      String jsonString = await file.readAsString();
+      List<dynamic> jsonData = jsonDecode(jsonString);
+      players = jsonData.map((player) => Player.fromJson(player)).toList();
+    }
+  }
+
   // C R E A T E
   static Future<void> addPlayer(String name) async {
-    final newPlayer = Player(name);
-    final isar = await IsarService.db;
-    isar.writeTxnSync(() => isar.players.putSync(newPlayer));
-    fetchPlayers();
+    players.add(Player(name));
+    Database.writePlayersData(players);
   }
 
   // R E A D
-  static Stream<List<Player>> listenToPlayers() async* {
-    fetchPlayers();
-    freePlayers();
-    final isar = await IsarService.db;
-    yield* isar.players.where().watch(fireImmediately: true);
-  }
-
-  static Future<void> fetchPlayers() async {
-    final isar = await IsarService.db;
-    List<Player> fetchedPlayers = isar.players.where().findAllSync();
-    players.clear();
-    players.addAll(fetchedPlayers);
-  }
 
   static Future<void> fetchInGamePlayers() async {
-    final isar = await IsarService.db;
-    List<Player> fetchedPlayers =
-        isar.players.filter().doesParticipateEqualTo(true).findAllSync();
-    inGamePlayers.clear();
-    inGamePlayers.addAll(fetchedPlayers);
+    inGamePlayers = [];
+    for (Player player in players) {
+      if (player.doesParticipate) {
+        inGamePlayers.add(player);
+      }
+    }
   }
 
   // U P D A T E
   static Future<void> editPlayerName(Player player, String newName) async {
-    final isar = await IsarService.db;
-    isar.writeTxnSync(() {
-      player.name = newName;
-      isar.players.putSync(player);
-    });
-    fetchPlayers();
+    for (Player p in players) {
+      if (p.name == player.name) {
+        p.name = newName;
+      }
+    }
+    Database.writePlayersData(players);
   }
 
   static Future<void> changePlayerStatus(Player player) async {
-    final isar = await IsarService.db;
-    isar.writeTxnSync(() {
-      player.doesParticipate = !player.doesParticipate;
-      isar.players.putSync(player);
-    });
-    fetchPlayers();
+    for (Player p in players) {
+      if (p.name == player.name) {
+        p.doesParticipate = !p.doesParticipate;
+      }
+    }
+    Database.writePlayersData(players);
   }
 
   // D E L E T E
   static Future<void> deletePlayer(Player player) async {
-    final isar = await IsarService.db;
-    isar.writeTxnSync(() {
-      isar.players.deleteSync(player.id);
-    });
-    fetchPlayers();
+    for (int i = 0; i < players.length; i++) {
+      if (players[i].name == player.name) {
+        players.removeAt(i);
+      }
+    }
+    Database.writePlayersData(players);
   }
 
   static Future<List<Player>> distributeRoles() async {
@@ -100,19 +123,13 @@ class Player extends ChangeNotifier {
 
   static Future<void> updateInGamePlayers(List<Player> newPlayers) async {
     inGamePlayers = newPlayers;
-    final isar = await IsarService.db;
-    isar.writeTxnSync(() {
-      isar.players.putAllSync(newPlayers);
-    });
+    Database.writePlayersData(players);
   }
 
   static Future<void> freePlayers() async {
-    final isar = await IsarService.db;
-    isar.writeTxnSync(() {
-      for (Player player in players) {
-        player.role = null;
-      }
-      isar.players.putAllSync(players);
-    });
+    for (Player player in players) {
+      player.role = null;
+    }
+    Database.writePlayersData(players);
   }
 }

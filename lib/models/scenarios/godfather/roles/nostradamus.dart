@@ -1,10 +1,13 @@
 import 'package:mafia_killer/databases/player.dart';
-import 'package:mafia_killer/models/Player_status.dart';
+import 'package:mafia_killer/models/player_status.dart';
 import 'package:mafia_killer/models/role.dart';
 import 'package:mafia_killer/models/role_side.dart';
 import 'package:mafia_killer/models/night_event.dart';
 import 'package:mafia_killer/models/scenarios/godfather/godfather_scenario.dart';
+import 'package:json_annotation/json_annotation.dart';
+part 'nostradamus.g.dart';
 
+@JsonSerializable()
 class Nostradamus extends Role {
   Nostradamus() {
     name = "نوستراداموس";
@@ -13,7 +16,13 @@ class Nostradamus extends Role {
     roleSide = RoleSide.independant;
     imagePath = "lib/images/roles/nostradamus.jpg";
   }
+  factory Nostradamus.fromJson(Map<String, dynamic> json) =>
+      _$NostradamusFromJson(json);
 
+  // Generated method to convert an object to JSON
+
+  @override
+  Map<String, dynamic> toJson() => _$NostradamusToJson(this);
   int introNightAction(List<Player> players) {
     int result = 0;
     for (Player player in players) {

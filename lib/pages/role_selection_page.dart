@@ -24,6 +24,7 @@ class RoleSelectionPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(Player.inGamePlayers);
     getRoles();
     return Scaffold(
       resizeToAvoidBottomInset: false,

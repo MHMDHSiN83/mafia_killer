@@ -1,10 +1,13 @@
 import 'package:mafia_killer/databases/player.dart';
-import 'package:mafia_killer/models/Player_status.dart';
+import 'package:mafia_killer/models/player_status.dart';
 import 'package:mafia_killer/models/night_event.dart';
 import 'package:mafia_killer/models/role.dart';
 import 'package:mafia_killer/models/role_side.dart';
 import 'package:mafia_killer/models/scenarios/godfather/godfather_scenario.dart';
+import 'package:json_annotation/json_annotation.dart';
+part 'matador.g.dart';
 
+@JsonSerializable()
 class Matador extends Role {
   Matador() {
     name = "ماتادور";
@@ -13,7 +16,13 @@ class Matador extends Role {
     roleSide = RoleSide.mafia;
     imagePath = "lib/images/roles/matador.jpg";
   }
+  factory Matador.fromJson(Map<String, dynamic> json) =>
+      _$MatadorFromJson(json);
 
+  // Generated method to convert an object to JSON
+
+  @override
+  Map<String, dynamic> toJson() => _$MatadorToJson(this);
   @override
   void nightAction(Player player) {
     GodfatherScenario.nightEvents?[NightEvent.DisabledByMatador] = player;

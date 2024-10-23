@@ -1,0 +1,16 @@
+[
+    {
+        "name": "امین",
+        "role": null,
+        "playerStatus": "Active",
+        "seenRole": false,
+        "doesParticipate": false
+    },
+    {
+        "name": "سروش",
+        "role": null,
+        "playerStatus": "Active",
+        "seenRole": false,
+        "doesParticipate": false
+    }
+]
