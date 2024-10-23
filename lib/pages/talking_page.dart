@@ -59,10 +59,10 @@ class _TalkingPageState extends State<TalkingPage> {
 
   void startTimer() {
     _isRunning = true;
-    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+    _timer = Timer.periodic(const Duration(milliseconds: 100), (timer) {
       if (_start > 0) {
         setState(() {
-          _start -= 1;
+          _start -= 0.1;
         });
       } else {
         setState(() {

@@ -10,4 +10,5 @@ ThemeData darkMode = ThemeData(
     tertiary: Colors.grey.shade700,
     inversePrimary: Colors.grey.shade200,
   ),
+  fontFamily: 'Noto',
 );

@@ -2,14 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:mafia_killer/components/dropdownbox.dart';
 
 class RowDropdownBox extends StatelessWidget {
-  RowDropdownBox({
+  const RowDropdownBox({
     super.key,
     required this.title,
     required this.options,
     required this.onSelect,
     required this.varName,
     required this.selectedItem,
+    this.fontSize,
   });
+  final double? fontSize;
   final String title;
   final List<String> options;
   final String selectedItem;
@@ -26,7 +28,7 @@ class RowDropdownBox extends StatelessWidget {
           style: TextStyle(
             color: Theme.of(context).colorScheme.inversePrimary,
             fontWeight: FontWeight.bold,
-            fontSize: 18,
+            fontSize: fontSize ?? 17,
           ),
         ),
         DropdownBox(
