@@ -9,37 +9,36 @@ class IsarService {
   static late Future<Isar> db;
 
   IsarService() {
-    db = openDB();
-    setInitialValues();
+    // db = openDB();
+    // setInitialValues();
   }
 
-  Future<Isar> openDB() async {
-    final dir = await getApplicationDocumentsDirectory();
-    if (Isar.instanceNames.isEmpty) {
-      final isar = await Isar.open(
-        [PlayerSchema, GameSettingsSchema, ScenarioSchema],
-        inspector: true,
-        directory: dir.path,
-      );
-      return isar;
-    }
-    return Future.value(Isar.getInstance());
-  }
+  // Future<Isar> openDB() async {
+  //   final dir = await getApplicationDocumentsDirectory();
+  //   if (Isar.instanceNames.isEmpty) {
+  //     final isar = await Isar.open(
+  //       [PlayerSchema, GameSettingsSchema, ScenarioSchema],
+  //       inspector: true,
+  //       directory: dir.path,
+  //     );
+  //     return isar;
+  //   }
+  //   return Future.value(Isar.getInstance());
+  // }
 
-  void setInitialValues() async {
-    final isar = await IsarService.db;
-    await Player.freePlayers();
-    int count = await isar.scenarios.count();
-    if (count == 0) {
-      await Scenario.setDefaultScenarios();
-    } else {
-      await Scenario.getScenariosFromDatabase();
-    }
-    count = await isar.gameSettings.count();
-    if (count == 0) {
-      await GameSettings.setDefaultSettings();
-    } else {
-      await GameSettings.getGameSettingsFromDatabase();
-    }
-  }
+  // void setInitialValues() async {
+  //   final isar = await IsarService.db;
+  //   int count = await isar.scenarios.count();
+  //   if (count == 0) {
+  //     await Scenario.setDefaultScenarios();
+  //   } else {
+  //     await Scenario.getScenariosFromDatabase();
+  //   }
+  //   count = await isar.gameSettings.count();
+  //   if (count == 0) {
+  //     await GameSettings.setDefaultSettings();
+  //   } else {
+  //     await GameSettings.getGameSettingsFromDatabase();
+  //   }
+  // }
 }

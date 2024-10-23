@@ -15,11 +15,17 @@ class PlayerTile extends StatefulWidget {
 class _PlayerTileState extends State<PlayerTile> {
   TextEditingController controller = TextEditingController();
   void onChanged(bool? value) async {
-    await Player.changePlayerStatus(widget.player);
+    setState(() {
+      Player.changePlayerStatus(widget.player);
+    });
   }
 
   void removePlayer() {
-    Player.deletePlayer(widget.player);
+    setState(() {
+      
+      Player.deletePlayer(widget.player);
+    });
+
   }
 
   void editPlayerName() {
@@ -27,8 +33,10 @@ class _PlayerTileState extends State<PlayerTile> {
       return;
     }
     // context.read<AppHandler>().editPlayerName(widget.player, controller.text);
-    Player.editPlayerName(widget.player, controller.text);
-    Navigator.of(context).pop();
+    setState(() {
+      Player.editPlayerName(widget.player, controller.text);
+      Navigator.of(context).pop();
+    });
   }
 
   void showEditDialog() {

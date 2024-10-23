@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:mafia_killer/models/database.dart';
 import 'package:mafia_killer/models/isar_service.dart';
+import 'package:mafia_killer/models/role.dart';
+import 'package:mafia_killer/models/scenarios/godfather/roles/doctor_watson.dart';
+import 'package:mafia_killer/models/scenarios/godfather/roles/godfather.dart';
 import 'package:mafia_killer/themes/app_color.dart';
 
 class IntroPage extends StatelessWidget {
@@ -7,7 +11,8 @@ class IntroPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    IsarService();
+    // IsarService();
+    Database();
     return Scaffold(
       body: SafeArea(
         child: Container(
@@ -102,7 +107,7 @@ class IntroPage extends StatelessWidget {
                     child: InkWell(
                       splashColor: Theme.of(context).colorScheme.inversePrimary,
                       onTap: () =>
-                          Navigator.pushNamed(context, '/night_events'),
+                          Navigator.pushNamed(context, '/players_page'),
                       child: Container(
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
