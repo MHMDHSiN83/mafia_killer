@@ -46,7 +46,7 @@ class CitizenKane extends Role {
   }
 
   @override
-  String awakingRoleText() {
+  String awakingRole() {
     return "همشهری کین بیدار شه و استعلام یک نفر رو از من بگیره";
   }
 }

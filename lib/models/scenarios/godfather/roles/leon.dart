@@ -18,8 +18,7 @@ class Leon extends Role {
     roleSide = RoleSide.citizen;
     imagePath = "lib/images/roles/leon.jpg";
   }
-  factory Leon.fromJson(Map<String, dynamic> json) =>
-      _$LeonFromJson(json);
+  factory Leon.fromJson(Map<String, dynamic> json) => _$LeonFromJson(json);
 
   // Generated method to convert an object to JSON
 
@@ -47,7 +46,7 @@ class Leon extends Role {
   }
 
   @override
-  String awakingRoleText() {
+  String awakingRole() {
     return "لئون بیدار شه و به یک نفر شلیک کنه (لئون در کل بازی دو تیر دارد)";
   }
 }

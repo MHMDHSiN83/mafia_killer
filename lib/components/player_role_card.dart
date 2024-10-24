@@ -41,7 +41,6 @@ class _PlayerRoleCardState extends State<PlayerRoleCard> {
 
   @override
   void initState() {
-    widget.player.seenRole = false;
     super.initState();
   }
 
@@ -50,9 +49,6 @@ class _PlayerRoleCardState extends State<PlayerRoleCard> {
     Color color = determineColor();
     return GestureDetector(
       onTap: () {
-        setState(() {
-          widget.player.seenRole = true;
-        });
         showDialog(
             context: context,
             barrierDismissible: false,
@@ -122,6 +118,10 @@ class _PlayerRoleCardState extends State<PlayerRoleCard> {
               );
             }).then((value) {
           widget.onTap;
+          setState(() {
+            widget.player.seenRole = true;
+          });
+          print(widget.player.seenRole);
         });
       },
       child: Visibility(

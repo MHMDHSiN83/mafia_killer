@@ -148,7 +148,7 @@ class Scenario {
   }
 
   List<Role> getRolesBySide(RoleSide side) {
-    print(roles.whereType<DoctorWatson>().first.awakingRoleText());
+    //print(roles.whereType<DoctorWatson>().first.awakingRole());
     return roles.where((role) => role.roleSide == side).toList();
   }
 
@@ -171,8 +171,9 @@ class Scenario {
   static Future<void> addRole(Role newRole) async {
     // currentScenario.inGameRoles.add(Role.copy(newRole));
     // String roleJson = jsonEncode(newRole.toJson());
-    
-    currentScenario.inGameRoles.add(Role.fromJson(jsonDecode(jsonEncode(newRole.toJson()))));
+
+    currentScenario.inGameRoles
+        .add(Role.fromJson(jsonDecode(jsonEncode(newRole.toJson()))));
     Database.writeScenariosData(scenarios);
     // final isar = await IsarService.db;
     // isar.writeTxnSync(() {

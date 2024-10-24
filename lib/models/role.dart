@@ -85,11 +85,7 @@ class Role {
     throw UnimplementedError("Mafia Kos");
   }
 
-  bool hasAbility() {
-    return true;
-  }
-
-  String awakingRoleText() {
+  String awakingRole() {
     throw UnimplementedError(name);
   }
 

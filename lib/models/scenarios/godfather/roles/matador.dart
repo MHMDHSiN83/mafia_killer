@@ -16,6 +16,9 @@ class Matador extends Role {
     roleSide = RoleSide.mafia;
     imagePath = "lib/images/roles/matador.jpg";
   }
+
+  String? lastPlayerName;
+
   factory Matador.fromJson(Map<String, dynamic> json) =>
       _$MatadorFromJson(json);
 
@@ -25,15 +28,30 @@ class Matador extends Role {
   Map<String, dynamic> toJson() => _$MatadorToJson(this);
   @override
   void nightAction(Player player) {
+    player.hasAbility = false;
     GodfatherScenario.nightEvents?[NightEvent.DisabledByMatador] = player;
   }
 
   @override
   void setAvailablePlayers() {
+    // TODO can't disable someone two night in a row
     for (Player player in Player.inGamePlayers) {
-      if (player.role!.roleSide == RoleSide.mafia) {
+      if (player.role!.roleSide == RoleSide.mafia &&
+          lastPlayerName != null &&
+          player.name == lastPlayerName) {
         player.playerStatus = PlayerStatus.Disable;
       }
     }
+  }
+
+  @override
+  String awakingRole() {
+    return "ماتادور توانایی یک نفر رو امشب ازش بگیره";
+  }
+
+  @override
+  String sleepRoleText() {
+    // TODO: implement sleepRoleText
+    return "تیم مافیا بخوابه";
   }
 }

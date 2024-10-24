@@ -83,6 +83,10 @@ class _RoleDistributionPageState extends State<RoleDistributionPage> {
   @override
   Widget build(BuildContext context) {
     padding = calculateSizeOfPadding();
+    // for (int i = 0; i < inGamePlayersNumber; i++) {
+    //   print(
+    //       "${Player.inGamePlayers[i].name} ${Player.inGamePlayers[i].seenRole}");
+    // }
     return Scaffold(
       body: PageFrame(
         pageTitle: "تقسیم نقش ها",
@@ -93,6 +97,7 @@ class _RoleDistributionPageState extends State<RoleDistributionPage> {
         leftButtonOnTap: () {
           for (Player player in Player.inGamePlayers) {
             player.role = null;
+            player.seenRole = false;
           }
           Navigator.pop(context);
         },

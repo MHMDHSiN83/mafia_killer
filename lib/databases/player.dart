@@ -8,9 +8,12 @@ import 'package:isar/isar.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/models/database.dart';
+import 'package:mafia_killer/models/night_event.dart';
 import 'package:mafia_killer/models/player_status.dart';
 import 'package:mafia_killer/models/isar_service.dart';
 import 'package:mafia_killer/models/role.dart';
+import 'package:mafia_killer/models/role_side.dart';
+import 'package:mafia_killer/models/scenarios/godfather/godfather_scenario.dart';
 import 'package:path_provider/path_provider.dart';
 
 // dart run build_runner build
@@ -27,7 +30,9 @@ class Player extends ChangeNotifier {
   Role? role;
 
   // @Enumerated(EnumType.ordinal32)
-  late PlayerStatus playerStatus = PlayerStatus.Active;
+  late PlayerStatus playerStatus = PlayerStatus.Active; // it's for UI
+
+  bool hasAbility = true;
 
   // @ignore
   bool seenRole = false;

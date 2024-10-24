@@ -46,7 +46,7 @@ class Constantine extends Role {
   }
 
   @override
-  String awakingRoleText() {
+  String awakingRole() {
     return "کنستانتین بیدار شه و یک نفر را به بازی برگردونه";
   }
 }

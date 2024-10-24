@@ -47,7 +47,8 @@ class DoctorWatson extends Role {
   }
 
   @override
-  String awakingRoleText() {
+  String awakingRole() {
+    setAvailablePlayers();
     return "دکتر بیدار شه و یک نفر را نجات بده";
   }
 }
