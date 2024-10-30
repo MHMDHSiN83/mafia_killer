@@ -34,9 +34,9 @@ class PageFrame extends StatelessWidget {
   final bool isInGame;
 
   final Map<String, double> titleFontsizes = {
-    "small": 26,
-    "medium": 33,
-    "large": 37
+    "small": 24,
+    "medium": 31,
+    "large": 35
   };
   double determineTitleFontsize() {
     double len = pageTitle.length.toDouble();

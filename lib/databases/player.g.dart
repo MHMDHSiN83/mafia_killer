@@ -13,20 +13,21 @@ Player _$PlayerFromJson(Map<String, dynamic> json) => Player(
       ..role = json['role'] == null
           ? null
           : Role.fromJson(json['role'] as Map<String, dynamic>)
-      ..playerStatus = $enumDecode(_$PlayerStatusEnumMap, json['playerStatus'])
+      ..uiPlayerStatus =
+          $enumDecode(_$PlayerStatusEnumMap, json['playerStatus'])
       ..seenRole = json['seenRole'] as bool;
 
 Map<String, dynamic> _$PlayerToJson(Player instance) => <String, dynamic>{
       'doesParticipate': instance.doesParticipate,
       'name': instance.name,
       'role': instance.role,
-      'playerStatus': _$PlayerStatusEnumMap[instance.playerStatus]!,
+      'playerStatus': _$PlayerStatusEnumMap[instance.uiPlayerStatus]!,
       'seenRole': instance.seenRole,
     };
 
 const _$PlayerStatusEnumMap = {
-  PlayerStatus.Active: 'Active',
-  PlayerStatus.Disable: 'Disable',
-  PlayerStatus.Dead: 'Dead',
-  PlayerStatus.Removed: 'Removed',
+  UIPlayerStatus.Active: 'Active',
+  UIPlayerStatus.Disable: 'Disable',
+  UIPlayerStatus.Dead: 'Dead',
+  UIPlayerStatus.Removed: 'Removed',
 };

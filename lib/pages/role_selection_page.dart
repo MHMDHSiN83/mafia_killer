@@ -29,7 +29,7 @@ class RoleSelectionPage extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: PageFrame(
-        pageTitle: " نفش‌های بازی",
+        pageTitle: " نقش‌های بازی",
         leftButtonText: "قبلی",
         rightButtonText: "بعدی",
         leftButtonIcon: Icons.keyboard_arrow_left,
@@ -53,7 +53,7 @@ class RoleSelectionPage extends StatelessWidget {
                   Shadow(color: AppColors.redColor, offset: Offset(0, -12))
                 ],
                 color: Colors.transparent,
-                decoration: TextDecoration.underline,
+                //decoration: TextDecoration.underline,
                 decorationColor: AppColors.redColor,
                 decorationThickness: 2,
               ),
@@ -88,7 +88,7 @@ class RoleSelectionPage extends StatelessWidget {
                       color: AppColors.darkgreenColor, offset: Offset(0, -12))
                 ],
                 color: Colors.transparent,
-                decoration: TextDecoration.underline,
+                //decoration: TextDecoration.underline,
                 decorationColor: AppColors.darkgreenColor,
                 decorationThickness: 2,
               ),
@@ -122,7 +122,7 @@ class RoleSelectionPage extends StatelessWidget {
                   Shadow(color: Color(0xFFFEE604), offset: Offset(0, -12))
                 ],
                 color: Colors.transparent,
-                decoration: TextDecoration.underline,
+                //decoration: TextDecoration.underline,
                 decorationColor: Color(0xFFFEE604),
                 decorationThickness: 2,
               ),

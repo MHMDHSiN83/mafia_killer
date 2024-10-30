@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mafia_killer/models/database.dart';
 import 'package:mafia_killer/models/isar_service.dart';
+import 'package:mafia_killer/models/night_event.dart';
 import 'package:mafia_killer/models/role.dart';
 import 'package:mafia_killer/models/scenarios/godfather/godfather_scenario.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/doctor_watson.dart';
@@ -12,6 +13,11 @@ class IntroPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Map<NightEvent, String?> map = {NightEvent.ShotByLeon: null};
+    // if (map[NightEvent.ShotByLeon] == null) {
+    //   print("object");
+    // }
+  
     // IsarService();
     Database();
     return Scaffold(

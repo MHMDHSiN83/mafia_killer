@@ -6,7 +6,7 @@ import 'package:mafia_killer/models/scenarios/godfather/roles/godfather.dart';
 
 class NightPage extends StatefulWidget {
   const NightPage({super.key});
-  static late Player targetPlayer;
+  static Player? targetPlayer;
   static late int mafiaTeamChoice;
 
   @override

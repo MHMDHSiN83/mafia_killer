@@ -1,1 +1,1 @@
-enum PlayerStatus {Active , Disable , Dead, Removed}
+enum PlayerStatus { ALIVE, DEAD, REMOVED }

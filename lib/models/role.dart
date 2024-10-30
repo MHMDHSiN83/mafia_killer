@@ -79,7 +79,7 @@ class Role {
     };
   }
 
-  void nightAction(Player player) {}
+  void nightAction(Player? player) {}
 
   void setAvailablePlayers() {
     throw UnimplementedError("Mafia Kos");

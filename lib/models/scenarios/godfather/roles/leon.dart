@@ -1,5 +1,6 @@
 import 'package:mafia_killer/databases/player.dart';
-import 'package:mafia_killer/models/player_status.dart';
+import 'package:mafia_killer/models/ui_player_status.dart';
+import 'package:mafia_killer/models/ui_player_status.dart';
 import 'package:mafia_killer/models/night_event.dart';
 import 'package:mafia_killer/models/role.dart';
 import 'package:mafia_killer/models/role_side.dart';
@@ -10,6 +11,7 @@ part 'leon.g.dart';
 @JsonSerializable()
 class Leon extends Role {
   int remainingAbility = 2;
+  int shield = 1;
 
   Leon() {
     name = "لئون حرفه‌ای";
@@ -31,7 +33,7 @@ class Leon extends Role {
   }
 
   @override
-  void nightAction(Player player) {
+  void nightAction(Player? player) {
     GodfatherScenario.nightEvents?[NightEvent.ShotByLeon] = player;
     remainingAbility--;
   }
@@ -40,7 +42,7 @@ class Leon extends Role {
   void setAvailablePlayers() {
     for (Player player in Player.inGamePlayers) {
       if (player.role!.name == 'لئون حرفه‌ای') {
-        player.playerStatus = PlayerStatus.Disable;
+        player.uiPlayerStatus = UIPlayerStatus.Disable;
       }
     }
   }

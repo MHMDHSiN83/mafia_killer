@@ -1,5 +1,6 @@
 import 'package:mafia_killer/databases/player.dart';
-import 'package:mafia_killer/models/player_status.dart';
+import 'package:mafia_killer/models/ui_player_status.dart';
+import 'package:mafia_killer/models/ui_player_status.dart';
 import 'package:mafia_killer/models/night_event.dart';
 import 'package:mafia_killer/models/role.dart';
 import 'package:mafia_killer/models/role_side.dart';
@@ -31,7 +32,7 @@ class CitizenKane extends Role {
   }
 
   @override
-  void nightAction(Player player) {
+  void nightAction(Player? player) {
     GodfatherScenario.nightEvents?[NightEvent.InquiryByCitizenKane] = player;
     remainingAbility--;
   }
@@ -40,7 +41,7 @@ class CitizenKane extends Role {
   void setAvailablePlayers() {
     for (Player player in Player.inGamePlayers) {
       if (player.role!.name == 'همشهری کین') {
-        player.playerStatus = PlayerStatus.Disable;
+        player.uiPlayerStatus = UIPlayerStatus.Disable;
       }
     }
   }
