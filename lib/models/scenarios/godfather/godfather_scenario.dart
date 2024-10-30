@@ -14,7 +14,7 @@ import 'package:mafia_killer/pages/night_page.dart';
 
 class GodfatherScenario extends Scenario {
   GodfatherScenario() : super("پدرخوانده");
-  static Map<NightEvent, Player>? nightEvents;
+  static Map<NightEvent, Player?> nightEvents = {};
 
   static Iterable<String> callRolesIntroNight(String text) sync* {
     for (int i = 0; i < 2; i++) {
@@ -43,26 +43,27 @@ class GodfatherScenario extends Scenario {
 
     // mafia team action
     yield mafiaTeam[0];
+    NightPage.buttonText = '';
     mafiaChoiceDialogBox();
     yield mafiaTeamAct[NightPage.mafiaTeamChoice];
     switch (NightPage.mafiaTeamChoice) {
       case 0: // shot
-        confirmAction();
-        nightEvents![NightEvent.ShotByMafia] = NightPage.targetPlayer;
+        // confirmAction();
+        nightEvents[NightEvent.ShotByMafia] = NightPage.targetPlayer;
         break;
       case 1: // sixth sense
         Role guessedRole = mafiaSixthSenseAct();
-        if (guessedRole.name == NightPage.targetPlayer.role!.name) {
-          nightEvents![NightEvent.SixthSensedByGodfather] =
+        if (guessedRole.name == NightPage.targetPlayer!.role!.name) {
+          nightEvents[NightEvent.SixthSensedByGodfather] =
               NightPage.targetPlayer;
-          NightPage.targetPlayer.hasAbility = false;
+          NightPage.targetPlayer!.hasAbility = false;
         }
 
         break;
       case 2: // buying
         confirmAction();
-        if (NightPage.targetPlayer.role is Citizen) {
-          nightEvents![NightEvent.BoughtBySaulGoodman] = NightPage.targetPlayer;
+        if (NightPage.targetPlayer!.role is Citizen) {
+          nightEvents[NightEvent.BoughtBySaulGoodman] = NightPage.targetPlayer;
           mafiaBuyAct(true);
         } else {
           mafiaBuyAct(false);
@@ -86,16 +87,27 @@ class GodfatherScenario extends Scenario {
     ];
 
     // handling citizen roles
+    NightPage.buttonText = 'خوابید';
     for (int i = 0; i < citizenRoleOrder.length; i++) {
+      print(citizenRoleOrder[i]);
       for (Player player in Player.inGamePlayers) {
         if (player.hasAbility && (player.role!.name == citizenRoleOrder[i])) {
-          print("salam");
+          if (i <= 1) {
+            NightPage.buttonText = '';
+          } else {
+            NightPage.buttonText = "هیچکس";
+          }
           yield player.role!.awakingRole();
-          player.role!.nightAction(NightPage.targetPlayer);
+          if (NightPage.targetPlayer != null) {
+            player.role!.nightAction(NightPage.targetPlayer!);
+          }
+          NightPage.buttonText = "خوابید";
+
           yield player.role!.sleepRoleText();
           break;
         }
       }
     }
+    print(nightEvents);
   }
 }

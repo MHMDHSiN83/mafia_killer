@@ -40,7 +40,6 @@ class Role {
       case 'پدرخوانده':
         return Godfather.fromJson(json);
       case 'ساول گودمن':
-        print(json);
         return SaulGoodman.fromJson(json);
       case 'ماتادور':
         return Matador.fromJson(json);

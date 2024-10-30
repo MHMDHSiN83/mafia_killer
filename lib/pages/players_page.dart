@@ -29,7 +29,7 @@ class _PlayersPageState extends State<PlayersPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: true,
       body: PageFrame(
         isInGame: false,
         pageTitle: "نام بازیکنان",

@@ -29,7 +29,7 @@ class Matador extends Role {
   @override
   void nightAction(Player player) {
     player.hasAbility = false;
-    GodfatherScenario.nightEvents?[NightEvent.DisabledByMatador] = player;
+    GodfatherScenario.nightEvents[NightEvent.DisabledByMatador] = player;
   }
 
   @override

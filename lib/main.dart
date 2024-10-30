@@ -12,6 +12,7 @@ import 'package:mafia_killer/pages/regular_voting_page.dart';
 import 'package:mafia_killer/pages/role_distribution_page.dart';
 import 'package:mafia_killer/pages/role_selection_page.dart';
 import 'package:mafia_killer/pages/talking_page.dart';
+import 'package:mafia_killer/pages/test.dart';
 import 'package:mafia_killer/themes/dark_mode.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';

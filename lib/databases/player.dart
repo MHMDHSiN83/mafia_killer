@@ -51,7 +51,6 @@ class Player extends ChangeNotifier {
 
   static Future<void> getPlayersFromDatabase() async {
     filePath = await getFilePath();
-    print(filePath);
     final file = File(filePath);
     if (!(await file.exists())) {
       String jsonString =

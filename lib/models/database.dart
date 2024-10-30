@@ -27,7 +27,7 @@ class Database {
     String directoryPath = await getDirectoryPath();
     playersDataFilePath = '$directoryPath/players.json';
     scenariosDataFilePath = '$directoryPath/scenarios.json';
-    Player.freePlayers();
+    // Player.freePlayers();
   }
 
   static Future<void> fetchData(String jsonString, String path) async {
