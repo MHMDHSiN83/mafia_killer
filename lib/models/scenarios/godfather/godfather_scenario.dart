@@ -1,6 +1,7 @@
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/models/player_status.dart';
+import 'package:mafia_killer/models/role.dart';
 import 'package:mafia_killer/models/role_side.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/godfather.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/nostradamus.dart';
@@ -123,15 +124,8 @@ class GodfatherScenario extends Scenario {
   static Iterable<String> otherRolesAction(
     Function noAbilityBox,
   ) sync* {
-    // List<String> constantRoleOrder = [
-    //   "ماتادور",
-    //   "دکتر واتسون",
-    //   "لئون حرفه‌ای",
-    //   "همشهری کین",
-    //   "کنستانتین",
-    // ];
-    List<String> constantRoleOrder = Scenario.currentScenario.getConstantRoleOrder();
-    print(constantRoleOrder);
+    List<String> constantRoleOrder =
+        Scenario.currentScenario.getConstantRoleOrder();
     NightPage.buttonText = 'خوابید';
     for (int i = 0; i < constantRoleOrder.length; i++) {
       for (Player player in Player.inGamePlayers) {
@@ -260,5 +254,38 @@ class GodfatherScenario extends Scenario {
       report += "${revivedByConstantine.name} متولد شد.";
     }
     return report;
+  }
+
+  static bool ableToSixthSense() {
+    Player godfather =
+        Player.inGamePlayers.where((player) => player.role is Godfather).first;
+    if (godfather.playerStatus == PlayerStatus.active &&
+        godfather.hasAbility()) {
+      return true;
+    }
+    return false;
+  }
+
+  static bool ableToBuying() {
+    if (doesSaulGoodmanParticipate()) {
+      Player saulGoodman = Player.inGamePlayers
+          .where((player) => player.role is SaulGoodman)
+          .first;
+      if (saulGoodman.playerStatus == PlayerStatus.active &&
+          saulGoodman.hasAbility()) {
+        return true;
+      }
+      return false;
+    }
+    return false;
+  }
+
+  static bool doesSaulGoodmanParticipate() {
+    for (Role role in Scenario.currentScenario.inGameRoles) {
+      if (role is SaulGoodman) {
+        return true;
+      }
+    }
+    return false;
   }
 }
