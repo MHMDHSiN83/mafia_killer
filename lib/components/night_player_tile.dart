@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/models/ui_player_status.dart';
+import 'package:mafia_killer/pages/night_page.dart';
 import 'package:mafia_killer/themes/app_color.dart';
 
 class NightPlayerTile extends StatelessWidget {
@@ -13,7 +14,7 @@ class NightPlayerTile extends StatelessWidget {
     return Opacity(
       opacity: player.uiPlayerStatus == UIPlayerStatus.targetable ? 1 : 0.6,
       child: GestureDetector(
-        onTap: player.uiPlayerStatus == UIPlayerStatus.targetable
+        onTap: player.uiPlayerStatus == UIPlayerStatus.targetable && NightPage.ableToSelectTile
             ? confirmAction
             : () {},
         child: Container(

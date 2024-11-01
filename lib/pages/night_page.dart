@@ -15,6 +15,7 @@ class NightPage extends StatefulWidget {
   static int mafiaTeamChoice = 0;
   static String buttonText = 'بیدار شدند';
   static int typeOfConfirmation = 0;
+  static bool ableToSelectTile = false;
 
   @override
   State<NightPage> createState() => _NightPageState();

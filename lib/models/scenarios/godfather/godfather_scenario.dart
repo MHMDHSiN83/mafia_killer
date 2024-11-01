@@ -94,6 +94,7 @@ class GodfatherScenario extends Scenario {
     ];
 
     yield "تیم مافیا از خواب بیدار شه";
+    NightPage.ableToSelectTile = true;
     NightPage.buttonText = '';
     mafiaChoiceBox();
     yield mafiaTeamAct[NightPage.mafiaTeamChoice];
@@ -109,6 +110,7 @@ class GodfatherScenario extends Scenario {
         }
         break;
       case 2: // buying
+        NightPage.ableToSelectTile = false;
         NightPage.buttonText = 'اتمام';
         if (NightPage.targetPlayer!.role is Citizen) {
           nightEvents[NightEvent.boughtBySaulGoodman] = NightPage.targetPlayer;
@@ -116,7 +118,6 @@ class GodfatherScenario extends Scenario {
         } else {
           yield 'خریداری موفقیت امیز نبود. کمی راه برو و اتمام رو بزن';
         }
-
         break;
     }
   }
@@ -130,13 +131,14 @@ class GodfatherScenario extends Scenario {
     for (int i = 0; i < constantRoleOrder.length; i++) {
       for (Player player in Player.inGamePlayers) {
         if (player.role!.name == constantRoleOrder[i]) {
+          NightPage.ableToSelectTile = true;
           resetUIPlayerStatus();
           if (player.hasAbility()) {
             NightPage.buttonText = i <= 1 ? '' : "هیچکس";
             player.role!.setAvailablePlayers();
-
             yield player.role!.awakingRole();
             player.role!.nightAction(NightPage.targetPlayer);
+            NightPage.ableToSelectTile = false;
             NightPage.buttonText = "خوابید";
             yield player.role!.sleepRoleText();
           } else {
