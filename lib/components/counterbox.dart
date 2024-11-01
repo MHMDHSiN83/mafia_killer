@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:mafia_killer/models/language.dart';
 import 'package:mafia_killer/themes/app_color.dart';
 
-class CounterBox extends StatefulWidget {
-  CounterBox({
+class CounterBox extends StatelessWidget {
+  const CounterBox({
     super.key,
     required this.increaseNumber,
     required this.decreaseNumber,
@@ -13,21 +13,16 @@ class CounterBox extends StatefulWidget {
   });
   final Function(bool, String) increaseNumber;
   final Function(bool, String) decreaseNumber;
-  bool isTimer;
-  int number;
-  String varName;
+  final bool isTimer;
+  final int number;
+  final String varName;
 
-  @override
-  State<CounterBox> createState() => _CounterBoxState();
-}
-
-class _CounterBoxState extends State<CounterBox> {
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
         GestureDetector(
-          onTap: () => widget.increaseNumber(widget.isTimer, widget.varName),
+          onTap: () => increaseNumber(isTimer, varName),
           child: const Icon(
             Icons.keyboard_arrow_right,
             color: AppColors.greenColor,
@@ -35,16 +30,16 @@ class _CounterBoxState extends State<CounterBox> {
           ),
         ),
         Text(
-          Language.toPersian(widget.isTimer
-              ? Language.formatTime(widget.number)
-              : (widget.number).toString()),
+          Language.toPersian(isTimer
+              ? Language.formatTime(number)
+              : (number).toString()),
           style: TextStyle(
             color: Theme.of(context).colorScheme.inversePrimary,
             fontSize: 30,
           ),
         ),
         GestureDetector(
-          onTap: () => widget.decreaseNumber(widget.isTimer, widget.varName),
+          onTap: () => decreaseNumber(isTimer, varName),
           child: const Icon(
             Icons.keyboard_arrow_left,
             color: AppColors.greenColor,

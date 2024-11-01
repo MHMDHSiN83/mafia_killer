@@ -1,28 +1,23 @@
 import 'package:flutter/material.dart';
 
-class MyCheckBox extends StatefulWidget {
-  bool isChecked;
-  void Function(bool?) onChanged;
-  double scale;
-  MyCheckBox(
+class MyCheckBox extends StatelessWidget {
+  final bool isChecked;
+  final void Function(bool?) onChanged;
+  final double scale;
+  const MyCheckBox(
       {super.key,
       required this.isChecked,
       required this.onChanged,
       required this.scale});
 
   @override
-  State<MyCheckBox> createState() => _MyCheckBoxState();
-}
-
-class _MyCheckBoxState extends State<MyCheckBox> {
-  @override
   Widget build(BuildContext context) {
     return Transform.scale(
-      scale: widget.scale,
+      scale: scale,
       child: Checkbox(
-        value: widget.isChecked,
+        value: isChecked,
         checkColor: Theme.of(context).colorScheme.inversePrimary,
-        onChanged: widget.onChanged,
+        onChanged: onChanged,
         fillColor:
             WidgetStateProperty.resolveWith<Color>((Set<WidgetState> states) {
           if (states.contains(WidgetState.selected)) {

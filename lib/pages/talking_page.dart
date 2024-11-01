@@ -1,15 +1,8 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:mafia_killer/components/page_frame.dart';
-import 'package:mafia_killer/components/player_role_card.dart';
-import 'package:mafia_killer/components/role_selection_tile.dart';
 import 'package:mafia_killer/databases/player.dart';
-import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/models/language.dart';
-import 'package:mafia_killer/models/role.dart';
-import 'package:mafia_killer/models/role_side.dart';
 import 'package:mafia_killer/models/talking_page_screen_arguments.dart';
 import 'package:mafia_killer/themes/app_color.dart';
 

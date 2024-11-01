@@ -12,12 +12,6 @@ class NightEventTile extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Text(
-        //   '•', // Bullet point
-        //   style: TextStyle(
-        //       fontSize: 40,
-        //       color: AppColors.brownColor),
-        // ),
         Container(
           margin: const EdgeInsets.only(top: 9, left: 10),
           child: const Icon(

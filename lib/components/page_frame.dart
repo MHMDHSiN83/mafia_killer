@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mafia_killer/components/my_outlined_button.dart';
 import 'dart:math' as math;
-
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:mafia_killer/models/my_flutter_app_icons.dart';
 import 'package:mafia_killer/themes/app_color.dart';
 
 class PageFrame extends StatelessWidget {

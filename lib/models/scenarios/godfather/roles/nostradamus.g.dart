@@ -9,14 +9,16 @@ part of 'nostradamus.dart';
 Nostradamus _$NostradamusFromJson(Map<String, dynamic> json) => Nostradamus()
   ..name = json['name'] as String
   ..description = json['description'] as String
-  ..imagePath = json['imagePath'] as String
+  ..cardImagePath = json['cardImagePath'] as String
+  ..characterImagePath = json['characterImagePath'] as String
   ..roleSide = $enumDecode(_$RoleSideEnumMap, json['roleSide']);
 
 Map<String, dynamic> _$NostradamusToJson(Nostradamus instance) =>
     <String, dynamic>{
       'name': instance.name,
       'description': instance.description,
-      'imagePath': instance.imagePath,
+      'cardImagePath': instance.cardImagePath,
+      'characterImagePath': instance.characterImagePath,
       'roleSide': _$RoleSideEnumMap[instance.roleSide]!,
     };
 

@@ -1,1 +1,1 @@
-enum UIPlayerStatus { Active, Disable, Dead, Removed }
+enum UIPlayerStatus { targetable, untargetable }

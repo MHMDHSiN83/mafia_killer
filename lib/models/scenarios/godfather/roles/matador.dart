@@ -1,5 +1,5 @@
 import 'package:mafia_killer/databases/player.dart';
-import 'package:mafia_killer/models/ui_player_status.dart';
+import 'package:mafia_killer/models/player_status.dart';
 import 'package:mafia_killer/models/ui_player_status.dart';
 import 'package:mafia_killer/models/night_event.dart';
 import 'package:mafia_killer/models/role.dart';
@@ -15,7 +15,7 @@ class Matador extends Role {
     description =
         "شب ها با تیم مافیا بیدار می‌شود و هر شب از توانایی خود استفاده می‌کند. در شب هر بازیکنی را نشان دهد توانایی شب او را آن شب از وی خواهد گرفت و فرد نشان شده اگر بیدار شود با ضربدر گرداننده مواجه می‌شود اما فردا مجدد می‌تواند از توانایی‌اش استفاده کند. ماتادور دو شب متوالی نمی‌تواند یک بازیکن را نشان کند.";
     roleSide = RoleSide.mafia;
-    imagePath = "lib/images/roles/matador.jpg";
+    cardImagePath = "lib/images/roles/matador.jpg";
   }
 
   String? lastPlayerName;
@@ -23,24 +23,22 @@ class Matador extends Role {
   factory Matador.fromJson(Map<String, dynamic> json) =>
       _$MatadorFromJson(json);
 
-  // Generated method to convert an object to JSON
-
   @override
   Map<String, dynamic> toJson() => _$MatadorToJson(this);
   @override
   void nightAction(Player? player) {
-    player!.hasAbility = false;
-    GodfatherScenario.nightEvents?[NightEvent.DisabledByMatador] = player;
+    GodfatherScenario.nightEvents[NightEvent.disabledByMatador] = player;
+    if (player != null) {
+      player.playerStatus = PlayerStatus.disable;
+    }
   }
 
   @override
   void setAvailablePlayers() {
     // TODO can't disable someone two night in a row
     for (Player player in Player.inGamePlayers) {
-      if (player.role!.roleSide == RoleSide.mafia &&
-          lastPlayerName != null &&
-          player.name == lastPlayerName) {
-        player.uiPlayerStatus = UIPlayerStatus.Disable;
+      if (player.role!.roleSide == RoleSide.mafia) {
+        player.uiPlayerStatus = UIPlayerStatus.untargetable;
       }
     }
   }

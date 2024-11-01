@@ -1,13 +1,9 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:mafia_killer/components/page_frame.dart';
 import 'package:mafia_killer/components/player_role_card.dart';
 import 'package:mafia_killer/databases/player.dart';
-import 'package:mafia_killer/databases/scenario.dart';
-import 'package:mafia_killer/models/role.dart';
-import 'package:mafia_killer/models/talking_page_screen_arguments.dart';
 import 'package:mafia_killer/themes/app_color.dart';
 
 class RoleDistributionPage extends StatefulWidget {
@@ -83,10 +79,6 @@ class _RoleDistributionPageState extends State<RoleDistributionPage> {
   @override
   Widget build(BuildContext context) {
     padding = calculateSizeOfPadding();
-    // for (int i = 0; i < inGamePlayersNumber; i++) {
-    //   print(
-    //       "${Player.inGamePlayers[i].name} ${Player.inGamePlayers[i].seenRole}");
-    // }
     return Scaffold(
       body: PageFrame(
         pageTitle: "تقسیم نقش ها",

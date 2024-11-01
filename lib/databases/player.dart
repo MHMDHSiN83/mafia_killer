@@ -1,21 +1,14 @@
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:deep_collection/deep_collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
-import 'package:isar/isar.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:mafia_killer/databases/scenario.dart';
-import 'package:mafia_killer/models/Player_status.dart';
+import 'package:mafia_killer/models/player_status.dart';
 import 'package:mafia_killer/models/ui_player_status.dart';
 import 'package:mafia_killer/models/database.dart';
-import 'package:mafia_killer/models/night_event.dart';
-import 'package:mafia_killer/models/ui_player_status.dart';
-import 'package:mafia_killer/models/isar_service.dart';
 import 'package:mafia_killer/models/role.dart';
-import 'package:mafia_killer/models/role_side.dart';
-import 'package:mafia_killer/models/scenarios/godfather/godfather_scenario.dart';
 import 'package:path_provider/path_provider.dart';
 
 // dart run build_runner build
@@ -32,11 +25,9 @@ class Player extends ChangeNotifier {
   Role? role;
 
   // @Enumerated(EnumType.ordinal32)
-  late UIPlayerStatus uiPlayerStatus = UIPlayerStatus.Active; // it's for UI
+  UIPlayerStatus uiPlayerStatus = UIPlayerStatus.targetable; // it's for UI
 
-  PlayerStatus playerStatus = PlayerStatus.ALIVE;
-
-  bool hasAbility = true;
+  PlayerStatus playerStatus = PlayerStatus.active;
 
   // @ignore
   bool seenRole = false;
@@ -55,7 +46,6 @@ class Player extends ChangeNotifier {
 
   static Future<void> getPlayersFromDatabase() async {
     filePath = await getFilePath();
-    print(filePath);
     final file = File(filePath);
     if (!(await file.exists())) {
       String jsonString =
@@ -141,5 +131,9 @@ class Player extends ChangeNotifier {
       player.seenRole = false;
     }
     Database.writePlayersData(players);
+  }
+
+  bool hasAbility() {
+    return playerStatus == PlayerStatus.active && role!.hasAbility();
   }
 }

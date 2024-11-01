@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mafia_killer/components/counterbox.dart';
 
 class RowCounterBox extends StatelessWidget {
-  RowCounterBox({
+  const RowCounterBox({
     super.key,
     required this.title,
     required this.increaseNumber,
@@ -16,11 +16,11 @@ class RowCounterBox extends StatelessWidget {
   final double? fontSize;
 
   final String title;
-  int number;
+  final int number;
   final Function(bool, String) increaseNumber;
   final Function(bool, String) decreaseNumber;
-  bool isTimer;
-  String varName;
+  final bool isTimer;
+  final String varName;
   @override
   Widget build(BuildContext context) {
     return Row(

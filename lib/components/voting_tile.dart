@@ -28,64 +28,66 @@ class _VotingTileState extends State<VotingTile> {
           isClicked = !isClicked;
         });
       },
-      child: Stack(children: [
-        Opacity(
-          opacity: opacity,
-          child: Container(
-            width: 150,
-            height: 150,
-            decoration: const BoxDecoration(
-                image: DecorationImage(
-              image: AssetImage('lib/images/backgrounds/signpost.png'),
-              fit: BoxFit.cover,
-            )),
-            child: Column(
-              children: [
-                const SizedBox(
-                  height: 75,
-                ),
-                Text(
-                  widget.player.name,
-                  style: const TextStyle(
-                    fontSize: 25,
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.brownColor,
+      child: Stack(
+        children: [
+          Opacity(
+            opacity: opacity,
+            child: Container(
+              width: 150,
+              height: 150,
+              decoration: const BoxDecoration(
+                  image: DecorationImage(
+                image: AssetImage('lib/images/backgrounds/signpost.png'),
+                fit: BoxFit.cover,
+              )),
+              child: Column(
+                children: [
+                  const SizedBox(
+                    height: 75,
                   ),
-                )
-              ],
+                  Text(
+                    widget.player.name,
+                    style: const TextStyle(
+                      fontSize: 25,
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.brownColor,
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
-        ),
-        Visibility(
-          visible: isClicked,
-          child: Positioned(
-            top: 75,
-            right: 25,
-            child: Transform.rotate(
-              angle: 75,
-              child: Container(
-                width: 100,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(30.0),
-                  border: Border.all(
-                    color: AppColors.redColor,
-                    width: 3.0,
-                  ),
-                ),
-                child: Center(
-                  child: Text(
-                    (widget.isRegularVoting) ? "دفاعیه" : "کشته",
-                    style: const TextStyle(
+          Visibility(
+            visible: isClicked,
+            child: Positioned(
+              top: 75,
+              right: 25,
+              child: Transform.rotate(
+                angle: 75,
+                child: Container(
+                  width: 100,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(30.0),
+                    border: Border.all(
                       color: AppColors.redColor,
-                      fontSize: 20,
+                      width: 3.0,
+                    ),
+                  ),
+                  child: Center(
+                    child: Text(
+                      (widget.isRegularVoting) ? "دفاعیه" : "کشته",
+                      style: const TextStyle(
+                        color: AppColors.redColor,
+                        fontSize: 20,
+                      ),
                     ),
                   ),
                 ),
               ),
             ),
-          ),
-        )
-      ]),
+          )
+        ],
+      ),
     );
   }
 }

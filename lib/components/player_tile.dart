@@ -5,8 +5,8 @@ import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/themes/app_color.dart';
 
 class PlayerTile extends StatefulWidget {
-  Player player;
-  PlayerTile({super.key, required this.player});
+  final Player player;
+  const PlayerTile({super.key, required this.player});
 
   @override
   State<PlayerTile> createState() => _PlayerTileState();
@@ -22,17 +22,14 @@ class _PlayerTileState extends State<PlayerTile> {
 
   void removePlayer() {
     setState(() {
-      
       Player.deletePlayer(widget.player);
     });
-
   }
 
   void editPlayerName() {
     if (controller.text == "") {
       return;
     }
-    // context.read<AppHandler>().editPlayerName(widget.player, controller.text);
     setState(() {
       Player.editPlayerName(widget.player, controller.text);
       Navigator.of(context).pop();
@@ -57,8 +54,6 @@ class _PlayerTileState extends State<PlayerTile> {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          // color: const Color(0xFF382E2E),
-          // border: Border.all(color: Color(0xFF707070), width: 3),
           color: Theme.of(context).colorScheme.primary,
           border: Border.all(
               color: Theme.of(context).colorScheme.secondary, width: 3),

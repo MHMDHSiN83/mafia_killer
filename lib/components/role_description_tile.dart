@@ -1,23 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:mafia_killer/components/checkbox.dart';
-import 'package:mafia_killer/databases/scenario.dart';
-import 'package:mafia_killer/models/language.dart';
 import 'package:mafia_killer/models/role.dart';
 import 'package:mafia_killer/models/role_side.dart';
 import 'package:mafia_killer/themes/app_color.dart';
 
 // ignore: must_be_immutable
-class RoleDescriptionTile extends StatefulWidget {
+class RoleDescriptionTile extends StatelessWidget {
   RoleDescriptionTile({super.key, required this.role});
   Role role;
-  @override
-  State<RoleDescriptionTile> createState() => _RoleDescriptionTileState();
-}
-
-class _RoleDescriptionTileState extends State<RoleDescriptionTile> {
   Color determineColor() {
     Color color;
-    switch (widget.role.roleSide) {
+    switch (role.roleSide) {
       case RoleSide.mafia:
         color = AppColors.redColor;
         break;
@@ -37,37 +29,37 @@ class _RoleDescriptionTileState extends State<RoleDescriptionTile> {
   Widget build(BuildContext context) {
     Color color = determineColor();
     return Container(
-        width: 300,
-        height: 700,
-
-        //margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
-        padding: EdgeInsets.zero,
-        decoration: BoxDecoration(
-            color: Colors.black,
-            borderRadius: BorderRadius.circular(5),
-            border: Border.all(
-              color: color,
-              width: 2.5,
-            )),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Container(
-              margin: const EdgeInsets.symmetric(
-                vertical: 10,
-              ),
-              width: 280,
-              child: Image(
-                image: AssetImage(
-                  widget.role.imagePath,
-                ),
+      width: 300,
+      height: 700,
+      padding: EdgeInsets.zero,
+      decoration: BoxDecoration(
+        color: Colors.black,
+        borderRadius: BorderRadius.circular(5),
+        border: Border.all(
+          color: color,
+          width: 2.5,
+        ),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          Container(
+            margin: const EdgeInsets.symmetric(
+              vertical: 10,
+            ),
+            width: 280,
+            child: Image(
+              image: AssetImage(
+                role.cardImagePath,
               ),
             ),
-            Text(
-              widget.role.description,
-              style: const TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
-            ),
-          ],
-        ));
+          ),
+          Text(
+            role.description,
+            style: const TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+          ),
+        ],
+      ),
+    );
   }
 }

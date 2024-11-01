@@ -195,8 +195,8 @@ class _GameSettingsPageState extends State<GameSettingsPage> {
             ),
             IconButton(
               onPressed: () {
-                GameSettings.updateSettings(
-                    GameSettings.currentGameSettings, newGameSettings);
+                // GameSettings.updateSettings(
+                    // GameSettings.currentGameSettings, newGameSettings);
                 // Navigator.pushNamed(context, '/intro_page');
               },
               icon: const Icon(Icons.plus_one),

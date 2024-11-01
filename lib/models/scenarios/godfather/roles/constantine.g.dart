@@ -9,7 +9,8 @@ part of 'constantine.dart';
 Constantine _$ConstantineFromJson(Map<String, dynamic> json) => Constantine()
   ..name = json['name'] as String
   ..description = json['description'] as String
-  ..imagePath = json['imagePath'] as String
+  ..cardImagePath = json['cardImagePath'] as String
+  ..characterImagePath = json['characterImagePath'] as String
   ..roleSide = $enumDecode(_$RoleSideEnumMap, json['roleSide'])
   ..remainingAbility = (json['remainingAbility'] as num).toInt();
 
@@ -17,7 +18,8 @@ Map<String, dynamic> _$ConstantineToJson(Constantine instance) =>
     <String, dynamic>{
       'name': instance.name,
       'description': instance.description,
-      'imagePath': instance.imagePath,
+      'cardImagePath': instance.cardImagePath,
+      'characterImagePath': instance.characterImagePath,
       'roleSide': _$RoleSideEnumMap[instance.roleSide]!,
       'remainingAbility': instance.remainingAbility,
     };
