@@ -58,6 +58,8 @@ class _RoleSelectionTileState extends State<RoleSelectionTile> {
     Scenario.removeRole(widget.role);
   }
 
+  
+
   @override
   Widget build(BuildContext context) {
     Color color = determineColor();

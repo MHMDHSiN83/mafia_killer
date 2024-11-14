@@ -32,9 +32,9 @@ class MyOutlinedButton extends StatelessWidget {
   final double? horizontalPadding;
 
   final Map<String, double> ButtonFontsizes = {
-    "small": 22,
-    "medium": 26,
-    "large": 30
+    "small": 18,
+    "medium": 22,
+    "large": 26
   };
   double determineButtonFontsize() {
     double len = text.length.toDouble();
@@ -72,7 +72,7 @@ class MyOutlinedButton extends StatelessWidget {
       style: OutlinedButton.styleFrom(
         backgroundColor: backgroundColor ?? Colors.transparent,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        side: BorderSide(width: broderWidth ?? 3, color: color),
+        side: BorderSide(width: broderWidth ?? 4, color: color),
       ),
       icon: Transform.scale(
         scale: 2.8,
