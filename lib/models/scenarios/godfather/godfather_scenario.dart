@@ -21,7 +21,11 @@ class GodfatherScenario extends Scenario {
   static Map<NightEvent, Player?>? nightEvents;
 
   static Iterable<String> callRolesIntroNight() sync* {
-    List<String> awakingTexts = ["تیم مافیا بیدار شن و همدیگه رو بشناسن","پدرخوانده لایک بده","ماتادور لایک بده"];
+    List<String> awakingTexts = [
+      "تیم مافیا بیدار شن و همدیگه رو بشناسن",
+      "پدرخوانده لایک بده",
+      "ماتادور لایک بده"
+    ];
   }
 
   static Iterable<String> callRolesRegularNight(
@@ -109,6 +113,8 @@ class GodfatherScenario extends Scenario {
     Player? shotByMafia = nightEvents![NightEvent.ShotByMafia];
     Player savedByDoctor = nightEvents![NightEvent.SavedByDoctor]!;
     Player? shotByLeon = nightEvents![NightEvent.ShotByLeon];
+    Player? revivedByConstantine =
+        nightEvents![NightEvent.RevivedByConstantine];
     Player? inquiryByCitizenKane =
         nightEvents![NightEvent.InquiryByCitizenKane];
     Player? sixthSensedByGodfather =
@@ -167,6 +173,12 @@ class GodfatherScenario extends Scenario {
         }
         (citizenKane as CitizenKane).remainingAbility--;
       }
+    }
+
+    // constantine reviving
+    if (revivedByConstantine != null) {
+      revivedByConstantine.playerStatus = PlayerStatus.ALIVE;
+      report += "${revivedByConstantine.name} متولد شد.";
     }
 
     return report;
