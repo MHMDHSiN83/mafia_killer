@@ -53,4 +53,9 @@ class Matador extends Role {
     // TODO: implement sleepRoleText
     return "تیم مافیا بخوابه";
   }
+
+  @override
+  String introAwakingRole() {
+    return 'ماتادور لایک نشون بده';
+  }
 }

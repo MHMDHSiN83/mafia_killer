@@ -11,18 +11,36 @@ import 'package:mafia_killer/models/night_event.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/citizen.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/citizen_kane.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/leon.dart';
+import 'package:mafia_killer/pages/intro_night_page.dart';
 import 'package:mafia_killer/pages/night_page.dart';
 
 class GodfatherScenario extends Scenario {
   GodfatherScenario() : super("پدرخوانده");
   static Map<NightEvent, Player?> nightEvents = {};
+  static int nightNumber = 1;
 
   static Iterable<String> callRolesIntroNight() sync* {
-    List<String> awakingTexts = [
-      "تیم مافیا بیدار شن و همدیگه رو بشناسن",
-      "پدرخوانده لایک بده",
-      "ماتادور لایک بده"
-    ];
+    Player nostradamusPlayer = Player.getPlayerByRoleType(Nostradamus);
+    yield nostradamusPlayer.role!.introAwakingRole();
+    
+    yield nostradamusPlayer.role!.introSleepRoleText();
+    List<String> introMafiaTeamAwakingTexts =
+        Scenario.currentScenario.getIntroMafiaTeamAwakingTexts();
+    List<Role> introCitizenTeamRoles =
+        Scenario.currentScenario.getIntroCitizenTeamRoles();
+    int l = introMafiaTeamAwakingTexts.length;
+    for (int i = 0; i < l; i++) {
+      yield introMafiaTeamAwakingTexts[i];
+      if (i == l - 2) {
+        IntroNightPage.buttonText = 'خوابیدند';
+      } else {
+        IntroNightPage.buttonText = 'نشون داد';
+      }
+    }
+    for (int i = 0; i < introCitizenTeamRoles.length; i++) {
+      yield introCitizenTeamRoles[i].introAwakingRole();
+      yield introCitizenTeamRoles[i].introSleepRoleText();
+    }
   }
 
   static void resetUIPlayerStatus() {
@@ -173,8 +191,8 @@ class GodfatherScenario extends Scenario {
     while (otherRolesIterator.moveNext()) {
       yield otherRolesIterator.current;
     }
-    // TODO create method for making this list based on player number
 
+    nightNumber++;
     print(nightEvents);
     print(nightReport());
   }
@@ -289,5 +307,32 @@ class GodfatherScenario extends Scenario {
       }
     }
     return false;
+  }
+
+  static String whatNightIsIt() {
+    switch (nightNumber) {
+      case 1:
+        return 'اول';
+      case 2:
+        return 'دوم';
+      case 3:
+        return 'سوم';
+      case 4:
+        return 'چهارم';
+      case 5:
+        return 'پنجم';
+      case 6:
+        return 'ششم';
+      case 7:
+        return 'هفتم';
+      case 8:
+        return 'هشتم';
+      case 9:
+        return 'نهم';
+      case 10:
+        return 'دهم';
+      default:
+        return 'not enough';
+    }
   }
 }

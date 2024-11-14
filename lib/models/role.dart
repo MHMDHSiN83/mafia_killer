@@ -9,6 +9,8 @@ import 'package:mafia_killer/models/scenarios/godfather/roles/leon.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/matador.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/nostradamus.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/saul_goodman.dart';
+import 'package:mafia_killer/pages/intro_night_page.dart';
+import 'package:mafia_killer/pages/night_page.dart';
 
 class Role {
   late String name;
@@ -82,6 +84,16 @@ class Role {
 
   String awakingRole() {
     throw UnimplementedError(name);
+  }
+
+  String introAwakingRole() {
+    IntroNightPage.buttonText = 'نشون داد';
+    return '$name بیدار شه و لایک نشون بده';
+  }
+
+  String introSleepRoleText() {
+    IntroNightPage.buttonText = 'خوابید';
+    return "$name بخوابه";
   }
 
   String sleepRoleText() {

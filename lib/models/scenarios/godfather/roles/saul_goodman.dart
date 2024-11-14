@@ -45,4 +45,9 @@ class SaulGoodman extends Role {
       }
     }
   }
+
+  @override
+  String introAwakingRole() {
+    return 'ساول گودمن لایک نشون بده';
+  }
 }

@@ -45,7 +45,7 @@ class RoleSelectionPage extends StatelessWidget {
             Player.inGamePlayers[i].role = roles[i];
           }
           
-          Navigator.pushNamed(context, '/night_page');
+          Navigator.pushNamed(context, '/intro_night_page');
         },
         child: ListView(
           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),

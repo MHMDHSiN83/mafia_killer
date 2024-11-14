@@ -136,4 +136,8 @@ class Player extends ChangeNotifier {
   bool hasAbility() {
     return playerStatus == PlayerStatus.active && role!.hasAbility();
   }
+
+  static Player getPlayerByRoleType(Type type) {
+    return inGamePlayers.where((player) => player.role.runtimeType == type).first;
+  }
 }

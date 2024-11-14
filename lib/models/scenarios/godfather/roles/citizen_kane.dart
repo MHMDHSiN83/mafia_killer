@@ -46,4 +46,5 @@ class CitizenKane extends Role {
   String awakingRole() {
     return "همشهری کین بیدار شه و استعلام یک نفر رو از من بگیره";
   }
+
 }

@@ -48,4 +48,9 @@ class Godfather extends Role {
       }
     }
   }
+
+  @override
+  String introAwakingRole() {
+    return 'پدرخوانده لایک نشون بده';
+  }
 }

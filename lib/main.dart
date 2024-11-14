@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/pages/defense_voting_page.dart';
 import 'package:mafia_killer/pages/game_settings_page.dart';
+import 'package:mafia_killer/pages/intro_night_page.dart';
 import 'package:mafia_killer/pages/intro_page.dart';
 import 'package:mafia_killer/pages/loading_page.dart';
 import 'package:mafia_killer/pages/night_events_page.dart';
@@ -61,6 +62,7 @@ class MyApp extends StatelessWidget {
         '/defense_voting_page': (context) => const DefenseVotingPage(),
         '/night_events_page': (context) => const NightEventsPage(),
         '/night_page': (context) => const NightPage(),
+        '/intro_night_page': (context) => const IntroNightPage(),
       },
     );
   }

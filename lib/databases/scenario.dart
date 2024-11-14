@@ -8,8 +8,10 @@ import 'package:mafia_killer/models/role_side.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/citizen_kane.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/constantine.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/doctor_watson.dart';
+import 'package:mafia_killer/models/scenarios/godfather/roles/godfather.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/leon.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/matador.dart';
+import 'package:mafia_killer/models/scenarios/godfather/roles/saul_goodman.dart';
 import 'package:path_provider/path_provider.dart';
 
 part 'scenario.g.dart';
@@ -139,5 +141,63 @@ class Scenario {
       }
     }
     return constantRoleOrder;
+  }
+
+  List<String> getIntroMafiaTeamAwakingTexts() {
+    List<String> introMafiaTeamAwakingTexts = [
+      "تیم مافیا بیدار شن و همدیگه رو بشناسن",
+    ];
+    Role? godfather = getRoleByType(Godfather);
+    Role? matador = getRoleByType(Matador);
+    Role? saulGoodman = getRoleByType(SaulGoodman);
+    if (godfather != null) {
+      introMafiaTeamAwakingTexts.add(godfather.introAwakingRole());
+    }
+    if (matador != null) {
+      introMafiaTeamAwakingTexts.add(matador.introAwakingRole());
+    }
+    if (saulGoodman != null) {
+      introMafiaTeamAwakingTexts.add(saulGoodman.introAwakingRole());
+    }
+    introMafiaTeamAwakingTexts.add("تیم مافیا بخوابه");
+    return introMafiaTeamAwakingTexts;
+  }
+
+  List<Role> getIntroCitizenTeamRoles() {
+    List<Role> citizenRoles = [];
+    for (Role role in inGameRoles) {
+      if (role is DoctorWatson) {
+        citizenRoles.add(role);
+        break;
+      }
+    }
+    for (Role role in inGameRoles) {
+      if (role is Leon) {
+        citizenRoles.add(role);
+        break;
+      }
+    }
+    for (Role role in inGameRoles) {
+      if (role is CitizenKane) {
+        citizenRoles.add(role);
+        break;
+      }
+    }
+    for (Role role in inGameRoles) {
+      if (role is Constantine) {
+        citizenRoles.add(role);
+        break;
+      }
+    }
+    return citizenRoles;
+  }
+
+  Role? getRoleByType(Type type) {
+    for (Role role in inGameRoles) {
+      if (role.runtimeType == type) {
+        return role;
+      }
+    }
+    return null;
   }
 }

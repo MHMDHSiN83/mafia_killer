@@ -3,6 +3,7 @@ import 'package:mafia_killer/models/ui_player_status.dart';
 import 'package:mafia_killer/models/role.dart';
 import 'package:mafia_killer/models/role_side.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:mafia_killer/pages/intro_night_page.dart';
 part 'nostradamus.g.dart';
 
 @JsonSerializable()
@@ -37,5 +38,11 @@ class Nostradamus extends Role {
         player.uiPlayerStatus = UIPlayerStatus.untargetable;
       }
     }
+  }
+
+  @override
+  String introAwakingRole() {
+    IntroNightPage.buttonText = 'تائید';
+    return 'نوستراداموس بیدار شه و سه نفر رو انتخاب کنه';
   }
 }

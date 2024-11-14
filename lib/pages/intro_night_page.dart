@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mafia_killer/components/confirmation_box.dart';
+import 'package:mafia_killer/components/intro_night_player_tile.dart';
 import 'package:mafia_killer/components/mafia_choice_box.dart';
 import 'package:mafia_killer/components/message_box.dart';
 import 'package:mafia_killer/components/night_player_tile.dart';
@@ -9,19 +10,20 @@ import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/models/scenarios/godfather/godfather_scenario.dart';
 import 'package:mafia_killer/themes/app_color.dart';
 
-class NightPage extends StatefulWidget {
-  const NightPage({super.key});
-  static late Player? targetPlayer;
+class IntroNightPage extends StatefulWidget {
+  const IntroNightPage({super.key});
+  static List<Player> targetPlayers = [];
   static int mafiaTeamChoice = 0;
-  static String buttonText = 'بیدار شدند';
+  static String buttonText = 'بیدار شد';
   static int typeOfConfirmation = 0;
-  static bool ableToSelectTile = false;
+  static bool ableToSelectTile = true;
+  static bool isNostradamusSelecting = true;
 
   @override
-  State<NightPage> createState() => _NightPageState();
+  State<IntroNightPage> createState() => _IntroNightPageState();
 }
 
-class _NightPageState extends State<NightPage> {
+class _IntroNightPageState extends State<IntroNightPage> {
   late String text;
 
   late Iterator<String> iterator;
@@ -33,7 +35,7 @@ class _NightPageState extends State<NightPage> {
         return MafiaChoiceBox(
           shot: () {
             setState(() {
-              NightPage.mafiaTeamChoice = 0;
+              IntroNightPage.mafiaTeamChoice = 0;
               GodfatherScenario.setMafiaTeamAvailablePlayers();
               text = GodfatherScenario.setMafiaChoiceText();
               Navigator.of(context).pop();
@@ -41,79 +43,25 @@ class _NightPageState extends State<NightPage> {
           },
           sixthSense: () {
             setState(() {
-              NightPage.mafiaTeamChoice = 1;
+              IntroNightPage.mafiaTeamChoice = 1;
               GodfatherScenario.setMafiaTeamAvailablePlayers();
               text = GodfatherScenario.setMafiaChoiceText();
-              NightPage.typeOfConfirmation = 1;
+              IntroNightPage.typeOfConfirmation = 1;
               Navigator.of(context).pop();
             });
           },
           buying: () {
             setState(() {
-              NightPage.mafiaTeamChoice = 2;
+              IntroNightPage.mafiaTeamChoice = 2;
               GodfatherScenario.setMafiaTeamAvailablePlayers();
               text = GodfatherScenario.setMafiaChoiceText();
-              NightPage.typeOfConfirmation = 2;
+              IntroNightPage.typeOfConfirmation = 2;
               Navigator.of(context).pop();
             });
           },
         );
       },
     );
-  }
-
-  void confirmAction(Player player) {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return ConfirmationBox(
-          onSave: () {
-            NightPage.targetPlayer = player;
-
-            Navigator.of(context).pop();
-            setState(() {
-              if (iterator.moveNext()) {
-                text = iterator.current;
-              }
-            });
-          },
-          onCancel: () => Navigator.of(context).pop(),
-        );
-      },
-    );
-  }
-
-  void sixthSenseAction(Player player) {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return SixthSenseBox(
-          guessedRight: () {
-            NightPage.targetPlayer = player;
-            Navigator.of(context).pop();
-            setState(() {
-              if (iterator.moveNext()) {
-                text = iterator.current;
-              }
-            });
-          },
-          guessedWrong: () {
-            NightPage.targetPlayer = null;
-            Navigator.of(context).pop();
-            setState(() {
-              if (iterator.moveNext()) {
-                text = iterator.current;
-              }
-            });
-          },
-          onCancel: () => Navigator.of(context).pop(),
-        );
-      },
-    );
-  }
-
-  void buyingAction(Player player) {
-    confirmAction(player);
   }
 
   void noAbilityBox(String message) {
@@ -132,9 +80,7 @@ class _NightPageState extends State<NightPage> {
 
   @override
   void initState() {
-    iterator =
-        GodfatherScenario.callRolesRegularNight(mafiaChoicBox, noAbilityBox)
-            .iterator;
+    iterator = GodfatherScenario.callRolesIntroNight().iterator;
     iterator.moveNext();
     text = iterator.current;
     super.initState();
@@ -144,7 +90,7 @@ class _NightPageState extends State<NightPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: PageFrame(
-        pageTitle: 'شب ${GodfatherScenario.whatNightIsIt()}',
+        pageTitle: 'شب معارفه',
         rightButtonText: "بعدی",
         leftButtonText: "قبلی",
         leftButtonOnTap: () => Navigator.pop(context),
@@ -168,23 +114,9 @@ class _NightPageState extends State<NightPage> {
                     ),
                     itemCount: Player.inGamePlayers.length,
                     itemBuilder: (context, index) {
-                      return NightPlayerTile(
+                      return IntroNightPlayerTile(
                         player: Player.inGamePlayers[index],
-                        confirmAction: () {
-                          switch (NightPage.typeOfConfirmation) {
-                            case 0:
-                              confirmAction(Player.inGamePlayers[index]);
-                              break;
-                            case 1:
-                              sixthSenseAction(Player.inGamePlayers[index]);
-                              break;
-                            case 2:
-                              buyingAction(Player.inGamePlayers[index]);
-
-                              break;
-                            default:
-                          }
-                        },
+                        confirmAction: () {},
                       );
                     },
                   ),
@@ -224,7 +156,7 @@ class _NightPageState extends State<NightPage> {
                                     ),
                                   ),
                                 ),
-                                if (NightPage.buttonText != '')
+                                if (IntroNightPage.buttonText != '')
                                   Expanded(
                                     flex: 1,
                                     child: OutlinedButton(
@@ -243,14 +175,18 @@ class _NightPageState extends State<NightPage> {
                                         ),
                                       ),
                                       onPressed: () {
-                                        setState(() {
-                                          if (iterator.moveNext()) {
-                                            text = iterator.current;
-                                            NightPage.targetPlayer = null;
+                                        if (IntroNightPage.targetPlayers.length == 3) {
+                                          if(!IntroNightPage.isNostradamusSelecting) {
+                                            
                                           }
-                                        });
+                                          setState(() {
+                                            if (iterator.moveNext()) {
+                                              text = iterator.current;
+                                            }
+                                          });
+                                        }
                                       },
-                                      child: Text(NightPage.buttonText),
+                                      child: Text(IntroNightPage.buttonText),
                                     ),
                                   ),
                               ],
