@@ -1,22 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:mafia_killer/components/confirmation_box.dart';
 import 'package:mafia_killer/components/intro_night_player_tile.dart';
-import 'package:mafia_killer/components/mafia_choice_box.dart';
-import 'package:mafia_killer/components/message_box.dart';
-import 'package:mafia_killer/components/night_player_tile.dart';
+import 'package:mafia_killer/components/nostradamus_box.dart';
 import 'package:mafia_killer/components/page_frame.dart';
-import 'package:mafia_killer/components/sixth_sense_box.dart';
 import 'package:mafia_killer/databases/player.dart';
+import 'package:mafia_killer/models/role_side.dart';
 import 'package:mafia_killer/models/scenarios/godfather/godfather_scenario.dart';
+import 'package:mafia_killer/models/scenarios/godfather/roles/nostradamus.dart';
 import 'package:mafia_killer/themes/app_color.dart';
 
 class IntroNightPage extends StatefulWidget {
   const IntroNightPage({super.key});
   static List<Player> targetPlayers = [];
-  static int mafiaTeamChoice = 0;
   static String buttonText = 'بیدار شد';
-  static int typeOfConfirmation = 0;
-  static bool ableToSelectTile = true;
   static bool isNostradamusSelecting = true;
 
   @override
@@ -25,53 +20,49 @@ class IntroNightPage extends StatefulWidget {
 
 class _IntroNightPageState extends State<IntroNightPage> {
   late String text;
-
+  Map<Player, bool> playerCheckboxStatus = {};
   late Iterator<String> iterator;
 
-  void mafiaChoicBox() {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return MafiaChoiceBox(
-          shot: () {
-            setState(() {
-              IntroNightPage.mafiaTeamChoice = 0;
-              GodfatherScenario.setMafiaTeamAvailablePlayers();
-              text = GodfatherScenario.setMafiaChoiceText();
-              Navigator.of(context).pop();
-            });
-          },
-          sixthSense: () {
-            setState(() {
-              IntroNightPage.mafiaTeamChoice = 1;
-              GodfatherScenario.setMafiaTeamAvailablePlayers();
-              text = GodfatherScenario.setMafiaChoiceText();
-              IntroNightPage.typeOfConfirmation = 1;
-              Navigator.of(context).pop();
-            });
-          },
-          buying: () {
-            setState(() {
-              IntroNightPage.mafiaTeamChoice = 2;
-              GodfatherScenario.setMafiaTeamAvailablePlayers();
-              text = GodfatherScenario.setMafiaChoiceText();
-              IntroNightPage.typeOfConfirmation = 2;
-              Navigator.of(context).pop();
-            });
-          },
-        );
-      },
-    );
+  bool isCheckBoxDisable(Player player) {
+    bool result = false;
+    if (IntroNightPage.targetPlayers.length == 3) {
+      result = true;
+    }
+    for (Player p in IntroNightPage.targetPlayers) {
+      if (p == player) {
+        result = false;
+      }
+    }
+    return result;
   }
 
-  void noAbilityBox(String message) {
+  void onChanged(Player player) {
+    setState(() {
+      bool selected = !playerCheckboxStatus[player]!;
+      playerCheckboxStatus[player] = selected;
+      if (selected) {
+        IntroNightPage.targetPlayers.add(player);
+      } else {
+        IntroNightPage.targetPlayers.remove(player);
+      }
+    });
+  }
+
+  void nostradamusBox(int mafiaNumber) {
     showDialog(
       context: context,
       builder: (context) {
-        return MessageBox(
-          message: message,
-          onSave: () {
+        return NostradamusBox(
+          mafiaNumber: mafiaNumber,
+          chooseSide: (RoleSide roleSide) {
+            (Player.getPlayerByRoleType(Nostradamus).role as Nostradamus)
+                .setNostradamusRole(roleSide);
+            IntroNightPage.isNostradamusSelecting = false;
             Navigator.of(context).pop();
+            setState(() {
+              iterator.moveNext();
+              text = iterator.current;
+            });
           },
         );
       },
@@ -83,6 +74,9 @@ class _IntroNightPageState extends State<IntroNightPage> {
     iterator = GodfatherScenario.callRolesIntroNight().iterator;
     iterator.moveNext();
     text = iterator.current;
+    for (Player player in Player.inGamePlayers) {
+      playerCheckboxStatus[player] = false;
+    }
     super.initState();
   }
 
@@ -116,7 +110,11 @@ class _IntroNightPageState extends State<IntroNightPage> {
                     itemBuilder: (context, index) {
                       return IntroNightPlayerTile(
                         player: Player.inGamePlayers[index],
-                        confirmAction: () {},
+                        selected:
+                            playerCheckboxStatus[Player.inGamePlayers[index]]!,
+                        isCheckBoxDisable:
+                            isCheckBoxDisable(Player.inGamePlayers[index]),
+                        onChanged: onChanged,
                       );
                     },
                   ),
@@ -175,15 +173,23 @@ class _IntroNightPageState extends State<IntroNightPage> {
                                         ),
                                       ),
                                       onPressed: () {
-                                        if (IntroNightPage.targetPlayers.length == 3) {
-                                          if(!IntroNightPage.isNostradamusSelecting) {
-                                            
+                                        if (IntroNightPage
+                                                .targetPlayers.length ==
+                                            3) {
+                                          //TODO build a function to generate nostradamus choice
+                                          if (IntroNightPage
+                                              .isNostradamusSelecting) {
+                                            nostradamusBox(GodfatherScenario
+                                                .resultOfNostradamusGuess(
+                                                    IntroNightPage
+                                                        .targetPlayers));
+                                          } else {
+                                            setState(() {
+                                              if (iterator.moveNext()) {
+                                                text = iterator.current;
+                                              }
+                                            });
                                           }
-                                          setState(() {
-                                            if (iterator.moveNext()) {
-                                              text = iterator.current;
-                                            }
-                                          });
                                         }
                                       },
                                       child: Text(IntroNightPage.buttonText),

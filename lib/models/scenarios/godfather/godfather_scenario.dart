@@ -22,12 +22,14 @@ class GodfatherScenario extends Scenario {
   static Iterable<String> callRolesIntroNight() sync* {
     Player nostradamusPlayer = Player.getPlayerByRoleType(Nostradamus);
     yield nostradamusPlayer.role!.introAwakingRole();
-    
+    print("object");
     yield nostradamusPlayer.role!.introSleepRoleText();
     List<String> introMafiaTeamAwakingTexts =
         Scenario.currentScenario.getIntroMafiaTeamAwakingTexts();
     List<Role> introCitizenTeamRoles =
         Scenario.currentScenario.getIntroCitizenTeamRoles();
+    IntroNightPage.buttonText = 'بیدار شدند';
+
     int l = introMafiaTeamAwakingTexts.length;
     for (int i = 0; i < l; i++) {
       yield introMafiaTeamAwakingTexts[i];
@@ -334,5 +336,16 @@ class GodfatherScenario extends Scenario {
       default:
         return 'not enough';
     }
+  }
+
+  static int resultOfNostradamusGuess(List<Player> players) {
+    int counter = 0;
+    for (Player player in players) {
+      if (player.role.runtimeType != Godfather &&
+          player.role!.roleSide == RoleSide.mafia) {
+        counter++;
+      }
+    }
+    return counter;
   }
 }

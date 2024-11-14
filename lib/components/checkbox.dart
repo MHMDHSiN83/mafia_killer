@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class MyCheckBox extends StatelessWidget {
   final bool isChecked;
-  final void Function(bool?) onChanged;
+  final void Function(bool?)? onChanged;
   final double scale;
   const MyCheckBox(
       {super.key,

@@ -18,6 +18,9 @@ class Nostradamus extends Role {
   factory Nostradamus.fromJson(Map<String, dynamic> json) =>
       _$NostradamusFromJson(json);
 
+
+  late RoleSide inGameRoleSide;
+
   @override
   Map<String, dynamic> toJson() => _$NostradamusToJson(this);
   int introNightAction(List<Player> players) {
@@ -44,5 +47,9 @@ class Nostradamus extends Role {
   String introAwakingRole() {
     IntroNightPage.buttonText = 'تائید';
     return 'نوستراداموس بیدار شه و سه نفر رو انتخاب کنه';
+  }
+
+  void setNostradamusRole(RoleSide roleSide) {
+    inGameRoleSide = roleSide;
   }
 }
