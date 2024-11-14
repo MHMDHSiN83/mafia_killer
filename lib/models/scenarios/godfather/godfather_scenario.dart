@@ -205,10 +205,11 @@ class GodfatherScenario extends Scenario {
     Player? shotByMafia = nightEvents[NightEvent.shotByMafia];
     Player? savedByDoctor = nightEvents[NightEvent.savedByDoctor]!;
     Player? shotByLeon = nightEvents[NightEvent.shotByLeon];
+    Player? revivedByConstantine =
+        nightEvents[NightEvent.revivedByConstantine];
     Player? inquiryByCitizenKane = nightEvents[NightEvent.inquiryByCitizenKane];
     Player? sixthSensedByGodfather =
         nightEvents[NightEvent.sixthSensedByGodfather];
-    Player? revivedByConstantine = nightEvents[NightEvent.revivedByConstantine];
 
     Player leon =
         Player.inGamePlayers.where((player) => player.role is Leon).first;
