@@ -66,12 +66,14 @@ class _GameSettingsPageState extends State<GameSettingsPage> {
     return Scaffold(
       body: PageFrame(
         pageTitle: "تنظیمات این دست",
-        rightButtonText: "بعدی",
-        leftButtonText: "قبلی",
+        rightButtonText: "انتخاب نقش‌ها",
+        leftButtonText: "بازیکنان",
         leftButtonOnTap: () => Navigator.pop(context),
-        rightButtonOnTap: () =>
-            Navigator.pushNamed(context, '/role_selection_page'),
-        //rightButtonIcon: Icons.keyboard_arrow_down_outlined,
+        rightButtonOnTap: () {
+          GameSettings.updateSettings(
+              GameSettings.currentGameSettings, newGameSettings);
+          Navigator.pushNamed(context, '/role_selection_page');
+        },
         child: ListView(
           padding: const EdgeInsets.only(bottom: 50, left: 20, right: 20),
           children: [
@@ -131,22 +133,23 @@ class _GameSettingsPageState extends State<GameSettingsPage> {
                   ),
                 ),
                 IconButton(
-                    onPressed: () {
-                      setState(() {
-                        newGameSettings['playMusic'] =
-                            !newGameSettings['playMusic'];
-                      });
-                    },
-                    padding: EdgeInsets.zero,
-                    icon: Icon(
-                      newGameSettings['playMusic']
-                          ? Icons.volume_up_rounded
-                          : Icons.volume_off_rounded,
-                      size: 40,
-                      color: newGameSettings['playMusic']
-                          ? AppColors.greenColor
-                          : AppColors.redColor,
-                    )),
+                  onPressed: () {
+                    setState(() {
+                      newGameSettings['playMusic'] =
+                          !newGameSettings['playMusic'];
+                    });
+                  },
+                  padding: EdgeInsets.zero,
+                  icon: Icon(
+                    newGameSettings['playMusic']
+                        ? Icons.volume_up_rounded
+                        : Icons.volume_off_rounded,
+                    size: 40,
+                    color: newGameSettings['playMusic']
+                        ? AppColors.greenColor
+                        : AppColors.redColor,
+                  ),
+                ),
               ],
             ),
             const MyDivider(),
@@ -193,14 +196,6 @@ class _GameSettingsPageState extends State<GameSettingsPage> {
                 ),
               ],
             ),
-            IconButton(
-              onPressed: () {
-                // GameSettings.updateSettings(
-                    // GameSettings.currentGameSettings, newGameSettings);
-                // Navigator.pushNamed(context, '/intro_page');
-              },
-              icon: const Icon(Icons.plus_one),
-            )
           ],
         ),
       ),

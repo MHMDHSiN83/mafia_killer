@@ -82,8 +82,8 @@ class _RoleDistributionPageState extends State<RoleDistributionPage> {
     return Scaffold(
       body: PageFrame(
         pageTitle: "تقسیم نقش ها",
-        leftButtonText: "قبلی",
-        rightButtonText: "بعدی",
+        leftButtonText: "انتخاب نقش‌ها",
+        rightButtonText: "روز معارفه",
         leftButtonIcon: Icons.keyboard_arrow_left,
         rightButtonIcon: Icons.keyboard_arrow_right,
         leftButtonOnTap: () {

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:mafia_killer/components/page_frame.dart';
 import 'package:mafia_killer/databases/player.dart';
+import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/models/language.dart';
 import 'package:mafia_killer/models/talking_page_screen_arguments.dart';
 import 'package:mafia_killer/themes/app_color.dart';
@@ -22,15 +23,6 @@ class _TalkingPageState extends State<TalkingPage> {
   bool _hasFinished = false;
 
   late TalkingPageScreenArguments args;
-
-  // test
-  Player player = Player("محمد امین بهاری");
-  bool isVisible = true;
-
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   void didChangeDependencies() {
@@ -102,15 +94,24 @@ class _TalkingPageState extends State<TalkingPage> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: PageFrame(
-        pageTitle: "صحبت کردن",
-        leftButtonText: "قبلی",
-        rightButtonText: "بعدی",
-        leftButtonIcon: Icons.keyboard_arrow_left,
-        rightButtonIcon: Icons.keyboard_arrow_right,
-        leftButtonOnTap: () => Navigator.pop(context),
-        rightButtonOnTap: () => Navigator.pushNamed(context, args.nextPagePath),
+        pageTitle: 'روز ${Scenario.currentScenario.dayAndNightNumber()}',
+        leftButtonText:
+            'شب ${Scenario.currentScenario.dayAndNightNumber(number: Scenario.currentScenario.nightNumber - 1)}',
+        rightButtonText:
+            'شب ${Scenario.currentScenario.dayAndNightNumber(number: Scenario.currentScenario.nightNumber)}',
+        leftButtonOnTap: () {
+          Scenario.currentScenario.backToLastStage();
+          Navigator.pop(context);
+        },
+        rightButtonOnTap: () {
+          Scenario.currentScenario.goToNextStage();
+          Navigator.pushNamed(context, args.nextPagePath);
+        },
         child: Column(
           children: [
+            SizedBox(
+              height: 100,
+            ),
             SizedBox(
               width: 300,
               height: 300,
@@ -123,7 +124,8 @@ class _TalkingPageState extends State<TalkingPage> {
                     children: [
                       Center(
                         child: Text(
-                          Language.formatTime(_start.toInt()),
+                          Language.toPersian(
+                              Language.formatTime(_start.toInt())),
                           style: const TextStyle(fontSize: 60),
                         ),
                       ),

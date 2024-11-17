@@ -2,10 +2,12 @@ import 'package:deep_collection/deep_collection.dart';
 import 'package:flutter/material.dart';
 import 'package:mafia_killer/components/page_frame.dart';
 import 'package:mafia_killer/components/role_selection_tile.dart';
+import 'package:mafia_killer/databases/game_settings.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/models/role.dart';
 import 'package:mafia_killer/models/role_side.dart';
+import 'package:mafia_killer/models/talking_page_screen_arguments.dart';
 import 'package:mafia_killer/themes/app_color.dart';
 
 class RoleSelectionPage extends StatelessWidget {
@@ -29,10 +31,8 @@ class RoleSelectionPage extends StatelessWidget {
       resizeToAvoidBottomInset: false,
       body: PageFrame(
         pageTitle: " نقش‌های بازی",
-        leftButtonText: "قبلی",
-        rightButtonText: "بعدی",
-        leftButtonIcon: Icons.keyboard_arrow_left,
-        rightButtonIcon: Icons.keyboard_arrow_right,
+        leftButtonText: "تنظیمات بازی",
+        rightButtonText: "توزیع نقش‌ها",
         leftButtonOnTap: () => Navigator.pop(context),
         rightButtonOnTap: () {
           if (Player.inGamePlayers.length !=
@@ -44,8 +44,15 @@ class RoleSelectionPage extends StatelessWidget {
           for (int i = 0; i < Player.inGamePlayers.length; i++) {
             Player.inGamePlayers[i].role = roles[i];
           }
-          
-          Navigator.pushNamed(context, '/intro_night_page');
+
+          Navigator.pushNamed(
+            context,
+            '/talking_page',
+            arguments: TalkingPageScreenArguments(
+              nextPagePath: '/intro_night_page',
+              seconds: GameSettings.currentGameSettings.introTime,
+            ),
+          );
         },
         child: ListView(
           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),

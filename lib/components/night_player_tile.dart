@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mafia_killer/databases/player.dart';
+import 'package:mafia_killer/models/player_status.dart';
 import 'package:mafia_killer/models/ui_player_status.dart';
 import 'package:mafia_killer/pages/night_page.dart';
 import 'package:mafia_killer/themes/app_color.dart';
@@ -9,12 +10,25 @@ class NightPlayerTile extends StatelessWidget {
       {super.key, required this.player, required this.confirmAction});
   final Player player;
   final VoidCallback confirmAction;
+
+  String getTileIconPath() {
+    if (player.uiPlayerStatus == UIPlayerStatus.targetable) {
+      return 'lib/images/icons/target.png';
+    } else if (player.playerStatus == PlayerStatus.active ||
+        player.playerStatus == PlayerStatus.disable) {
+      return 'lib/images/Role Card.png';
+    } else {
+      return 'lib/images/IntroBackgroundImage.png';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Opacity(
       opacity: player.uiPlayerStatus == UIPlayerStatus.targetable ? 1 : 0.6,
       child: GestureDetector(
-        onTap: player.uiPlayerStatus == UIPlayerStatus.targetable && NightPage.ableToSelectTile
+        onTap: player.uiPlayerStatus == UIPlayerStatus.targetable &&
+                NightPage.ableToSelectTile
             ? confirmAction
             : () {},
         child: Container(
@@ -64,9 +78,9 @@ class NightPlayerTile extends StatelessWidget {
                       child: Container(
                         height: 25,
                         margin: const EdgeInsets.only(bottom: 5),
-                        child: const Image(
+                        child: Image(
                           image: AssetImage(
-                            'lib/images/icons/target.png',
+                            getTileIconPath(),
                           ),
                         ),
                       ),

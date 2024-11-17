@@ -5,8 +5,11 @@ import 'package:mafia_killer/components/message_box.dart';
 import 'package:mafia_killer/components/night_player_tile.dart';
 import 'package:mafia_killer/components/page_frame.dart';
 import 'package:mafia_killer/components/sixth_sense_box.dart';
+import 'package:mafia_killer/databases/game_settings.dart';
 import 'package:mafia_killer/databases/player.dart';
+import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/models/scenarios/godfather/godfather_scenario.dart';
+import 'package:mafia_killer/models/talking_page_screen_arguments.dart';
 import 'package:mafia_killer/themes/app_color.dart';
 
 class NightPage extends StatefulWidget {
@@ -16,6 +19,7 @@ class NightPage extends StatefulWidget {
   static String buttonText = 'بیدار شدند';
   static int typeOfConfirmation = 0;
   static bool ableToSelectTile = false;
+  static bool isNightOver = false;
 
   @override
   State<NightPage> createState() => _NightPageState();
@@ -144,12 +148,28 @@ class _NightPageState extends State<NightPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: PageFrame(
-        pageTitle: 'شب ${GodfatherScenario.whatNightIsIt()}',
-        rightButtonText: "بعدی",
-        leftButtonText: "قبلی",
-        leftButtonOnTap: () => Navigator.pop(context),
-        rightButtonOnTap: () =>
-            Navigator.pushNamed(context, '/role_selection_page'),
+        pageTitle: 'شب ${Scenario.currentScenario.dayAndNightNumber()}',
+        rightButtonText:
+            "روز ${Scenario.currentScenario.dayAndNightNumber(number: Scenario.currentScenario.dayNumber)}",
+        leftButtonText:
+            "روز ${Scenario.currentScenario.dayAndNightNumber(number: Scenario.currentScenario.dayNumber - 1)}",
+        leftButtonOnTap: () {
+          Scenario.currentScenario.backToLastStage();
+          Navigator.pop(context);
+        },
+        rightButtonOnTap: () {
+          if (NightPage.isNightOver) {
+          Scenario.currentScenario.goToNextStage();
+          Navigator.pushNamed(
+            context,
+            '/talking_page',
+            arguments: TalkingPageScreenArguments(
+              nextPagePath: '/night_page',
+              seconds: GameSettings.currentGameSettings.mainSpeakTime,
+            ),
+          );
+          }
+        },
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 12),
           child: Column(

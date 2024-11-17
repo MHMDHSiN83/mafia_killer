@@ -10,7 +10,6 @@ import 'package:mafia_killer/models/scenarios/godfather/roles/matador.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/nostradamus.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/saul_goodman.dart';
 import 'package:mafia_killer/pages/intro_night_page.dart';
-import 'package:mafia_killer/pages/night_page.dart';
 
 class Role {
   late String name;

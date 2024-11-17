@@ -85,12 +85,8 @@ class GameSettings {
     // isar.writeTxnSync(() => isar.gameSettings.putSync(currentGameSettings));
   }
 
-  static Future<void> updateSettings() async {}
-  //     GameSettings gameSettings, Map<String, dynamic> newGameSettings) async {
-  //   final isar = await IsarService.db;
-  //   isar.writeTxnSync(() {
-  //     gameSettings.setNewSettings(newGameSettings);
-  //     // isar.gameSettings.putSync(gameSettings);
-  //   });
-  // }
+  static Future<void> updateSettings(GameSettings gameSettings, Map<String, dynamic> newGameSettings) async {
+      gameSettings.setNewSettings(newGameSettings);
+  }
+  
 }
