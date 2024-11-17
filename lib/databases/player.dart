@@ -138,6 +138,8 @@ class Player extends ChangeNotifier {
   }
 
   static Player getPlayerByRoleType(Type type) {
-    return inGamePlayers.where((player) => player.role.runtimeType == type).first;
+    return inGamePlayers
+        .where((player) => player.role.runtimeType == type)
+        .first;
   }
 }
