@@ -14,10 +14,16 @@ Scenario _$ScenarioFromJson(Map<String, dynamic> json) => Scenario(
           .toList()
       ..inGameRoles = (json['inGameRoles'] as List<dynamic>)
           .map((e) => Role.fromJson(e as Map<String, dynamic>))
-          .toList();
+          .toList()
+      ..nightNumber = (json['nightNumber'] as num).toInt()
+      ..dayNumber = (json['dayNumber'] as num).toInt()
+      ..isNight = json['isNight'] as bool;
 
 Map<String, dynamic> _$ScenarioToJson(Scenario instance) => <String, dynamic>{
       'name': instance.name,
       'roles': instance.roles,
       'inGameRoles': instance.inGameRoles,
+      'nightNumber': instance.nightNumber,
+      'dayNumber': instance.dayNumber,
+      'isNight': instance.isNight,
     };
