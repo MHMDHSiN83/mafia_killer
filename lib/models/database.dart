@@ -1,12 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
-
-import 'package:flutter/services.dart';
-import 'package:isar/isar.dart';
 import 'package:mafia_killer/databases/game_settings.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/databases/scenario.dart';
-import 'package:mafia_killer/models/role.dart';
 import 'package:path_provider/path_provider.dart';
 
 class Database {
@@ -27,7 +23,7 @@ class Database {
     String directoryPath = await getDirectoryPath();
     playersDataFilePath = '$directoryPath/players.json';
     scenariosDataFilePath = '$directoryPath/scenarios.json';
-    Player.freePlayers();
+    // Player.freePlayers();
   }
 
   static Future<void> fetchData(String jsonString, String path) async {

@@ -1,25 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:mafia_killer/components/role_description_tile.dart';
-import 'package:mafia_killer/databases/player.dart';
-import 'package:mafia_killer/models/role.dart';
-import 'package:mafia_killer/models/role_side.dart';
 import 'package:mafia_killer/themes/app_color.dart';
-import 'package:mafia_killer/databases/scenario.dart';
 
 class InquiryDialog extends StatelessWidget {
-  InquiryDialog({
+  const InquiryDialog({
     super.key,
     required this.child,
   });
 
-  Widget child;
+  final Widget child;
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
       contentPadding: const EdgeInsets.all(0),
-      // shape: const RoundedRectangleBorder(
-      //     borderRadius: BorderRadius.all(Radius.circular(2))),
       shadowColor: Colors.black,
       content: Container(
         decoration: const BoxDecoration(
@@ -29,7 +22,6 @@ class InquiryDialog extends StatelessWidget {
             end: Alignment.bottomCenter,
             colors: [
               Color(0xFF111111),
-              //Color.fromRGBO(17, 7, 7, 1),
               Color.fromRGBO(40, 7, 7, 1),
               Color.fromARGB(255, 52, 0, 0),
             ],
@@ -114,9 +106,6 @@ class InquiryDialog extends StatelessWidget {
                 ),
               ),
             ),
-            // const Spacer(
-            //   flex: 1,
-            // ),
           ],
         ),
       ),

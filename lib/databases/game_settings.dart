@@ -1,9 +1,6 @@
 import 'dart:convert';
-
 import 'package:flutter/services.dart';
-import 'package:isar/isar.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:mafia_killer/models/isar_service.dart';
 import 'package:mafia_killer/databases/scenario.dart';
 
 part 'game_settings.g.dart';
@@ -33,9 +30,6 @@ class GameSettings {
     final String jsonString =
         await rootBundle.loadString('lib/assets/game_settings.json');
     currentGameSettings = (GameSettings.fromJson(jsonDecode(jsonString)));
-    // print(jsonDecode(response)[name]);
-    // List<dynamic> decodedList = (jsonDecode(response)[name]);
-    // roles = decodedList.map((item) => Role.fromJson(item)).toList();
   }
 
   // static Future<void> getGameSettingsFromDatabase() async {
@@ -71,9 +65,10 @@ class GameSettings {
 
   // Generated method to convert an object to JSON
   Map<String, dynamic> toJson() => _$GameSettingsToJson(this);
-  
+
   void setNewSettings(Map<String, dynamic> newGameSettings) {
-    Scenario.currentScenario = Scenario.getScenarioByName(newGameSettings['scenario'])!;
+    Scenario.currentScenario =
+        Scenario.getScenarioByName(newGameSettings['scenario'])!;
     soundEffect = newGameSettings['soundEffect'];
     introTime = newGameSettings['introTime'];
     mainSpeakTime = newGameSettings['mainSpeakTime'];
@@ -84,18 +79,18 @@ class GameSettings {
   }
 
   static Future<void> setDefaultSettings() async {
-    currentGameSettings = GameSettings();
+    // currentGameSettings = GameSettings();
     // gameSettings.scenario.value!.roles.loadSync();
-    final isar = await IsarService.db;
+    // final isar = await IsarService.db;
     // isar.writeTxnSync(() => isar.gameSettings.putSync(currentGameSettings));
   }
 
-  static Future<void> updateSettings(
-      GameSettings gameSettings, Map<String, dynamic> newGameSettings) async {
-    final isar = await IsarService.db;
-    isar.writeTxnSync(() {
-      gameSettings.setNewSettings(newGameSettings);
-      // isar.gameSettings.putSync(gameSettings);
-    });
-  }
+  static Future<void> updateSettings() async {}
+  //     GameSettings gameSettings, Map<String, dynamic> newGameSettings) async {
+  //   final isar = await IsarService.db;
+  //   isar.writeTxnSync(() {
+  //     gameSettings.setNewSettings(newGameSettings);
+  //     // isar.gameSettings.putSync(gameSettings);
+  //   });
+  // }
 }

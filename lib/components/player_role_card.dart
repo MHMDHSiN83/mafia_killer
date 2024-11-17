@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mafia_killer/components/role_description_tile.dart';
 import 'package:mafia_killer/databases/player.dart';
-import 'package:mafia_killer/models/role.dart';
 import 'package:mafia_killer/models/role_side.dart';
 import 'package:mafia_killer/themes/app_color.dart';
-import 'package:mafia_killer/databases/scenario.dart';
 
 class PlayerRoleCard extends StatefulWidget {
   PlayerRoleCard({
@@ -14,7 +11,7 @@ class PlayerRoleCard extends StatefulWidget {
   });
 
   Player player;
-  VoidCallback onTap;
+  final VoidCallback onTap;
 
   @override
   State<PlayerRoleCard> createState() => _PlayerRoleCardState();
@@ -77,7 +74,7 @@ class _PlayerRoleCardState extends State<PlayerRoleCard> {
                           width: 280,
                           child: Image(
                             image: AssetImage(
-                              widget.player.role!.imagePath,
+                              widget.player.role!.cardImagePath,
                             ),
                           ),
                         ),

@@ -1,1 +1,10 @@
-enum NightEvent {SavedByDoctor, ShotByMafia, SixthSensedByGodfather, ShotByLeon, RevivedByConstantine, InquiryByCitizenKane, BoughtBySaulGoodman, DisabledByMatador}
+enum NightEvent {
+  savedByDoctor,
+  shotByMafia,
+  sixthSensedByGodfather,
+  shotByLeon,
+  revivedByConstantine,
+  inquiryByCitizenKane,
+  boughtBySaulGoodman,
+  disabledByMatador
+}

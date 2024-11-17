@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mafia_killer/components/page_frame.dart';
 import 'package:mafia_killer/components/player_tile.dart';
-import 'package:mafia_killer/components/role_selection_tile.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/themes/app_color.dart';
 
@@ -29,7 +26,7 @@ class _PlayersPageState extends State<PlayersPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: true,
       body: PageFrame(
         isInGame: false,
         pageTitle: "نام بازیکنان",
@@ -47,47 +44,17 @@ class _PlayersPageState extends State<PlayersPage> {
             Expanded(
               flex: 9,
               child: ListView.builder(
-                  padding: const EdgeInsets.symmetric(horizontal: 15),
-                  itemCount: Player.players.length,
-                  itemBuilder: (context, index) {
-                    return Container(
-                      margin: const EdgeInsets.symmetric(vertical: 5),
-                      child: PlayerTile(
-                        player: Player.players[index],
-                      ),
-                    );
-                  }),
-              // child: StreamBuilder<List<Player>>(
-              //     stream: Player.listenToPlayers(),
-              //     builder: (context, snapshot) {
-              //       if (snapshot.connectionState == ConnectionState.waiting) {
-              //         return Center(
-              //           child: SpinKitSpinningLines(
-              //             color: Theme.of(context).colorScheme.inversePrimary,
-              //             size: 100.0,
-              //             lineWidth: 7,
-              //           ),
-              //         );
-              //       } else if (snapshot.hasError) {
-              //         return Center(child: Text('Error: ${snapshot.error}'));
-              //       } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-              //         return const Center(child: Text('No players available'));
-              //       } else {
-              //         final players = snapshot.data!;
-              //         return ListView.builder(
-              //           padding: const EdgeInsets.symmetric(horizontal: 15),
-              //           itemCount: players.length,
-              //           itemBuilder: (context, index) {
-              //             return Container(
-              //               margin: const EdgeInsets.symmetric(vertical: 5),
-              //               child: PlayerTile(
-              //                 player: players[index],
-              //               ),
-              //             );
-              //           },
-              //         );
-              //       }
-              //     }),
+                padding: const EdgeInsets.symmetric(horizontal: 15),
+                itemCount: Player.players.length,
+                itemBuilder: (context, index) {
+                  return Container(
+                    margin: const EdgeInsets.symmetric(vertical: 5),
+                    child: PlayerTile(
+                      player: Player.players[index],
+                    ),
+                  );
+                },
+              ),
             ),
             Expanded(
               flex: 1,
@@ -98,23 +65,25 @@ class _PlayersPageState extends State<PlayersPage> {
                   Expanded(
                     flex: 1,
                     child: Container(
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).colorScheme.inversePrimary,
-                          borderRadius: const BorderRadius.only(
-                            bottomRight: Radius.circular(4),
-                            topRight: Radius.circular(4),
-                          ),
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.inversePrimary,
+                        borderRadius: const BorderRadius.only(
+                          bottomRight: Radius.circular(4),
+                          topRight: Radius.circular(4),
                         ),
-                        child: IconButton(
-                            padding: EdgeInsets.zero,
-                            onPressed: () {
-                              addPlayer();
-                            },
-                            icon: const Icon(
-                              Icons.person_add_outlined,
-                              color: AppColors.greenColor,
-                              size: 50,
-                            ))),
+                      ),
+                      child: IconButton(
+                        padding: EdgeInsets.zero,
+                        onPressed: () {
+                          addPlayer();
+                        },
+                        icon: const Icon(
+                          Icons.person_add_outlined,
+                          color: AppColors.greenColor,
+                          size: 50,
+                        ),
+                      ),
+                    ),
                   ),
                   Expanded(
                     flex: 4,

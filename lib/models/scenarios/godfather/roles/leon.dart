@@ -1,6 +1,5 @@
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/models/ui_player_status.dart';
-import 'package:mafia_killer/models/ui_player_status.dart';
 import 'package:mafia_killer/models/night_event.dart';
 import 'package:mafia_killer/models/role.dart';
 import 'package:mafia_killer/models/role_side.dart';
@@ -18,11 +17,9 @@ class Leon extends Role {
     description =
         "هر شبی که بخواهد می‌تواند به یکی از اعضای تیم مافیا شلیک کند. اما با شلیک اشتباه به شهروندان به مجازات، خودش کشته می‌شود و دکتر نمی‌تواند او را نجات دهد. لئون یک جلیقه دارد که یکبار از تیر نجات پیدا می‌کند. حداکثر دو شلیک دارد.";
     roleSide = RoleSide.citizen;
-    imagePath = "lib/images/roles/leon.jpg";
+    cardImagePath = "lib/images/roles/leon.jpg";
   }
   factory Leon.fromJson(Map<String, dynamic> json) => _$LeonFromJson(json);
-
-  // Generated method to convert an object to JSON
 
   @override
   Map<String, dynamic> toJson() => _$LeonToJson(this);
@@ -34,15 +31,17 @@ class Leon extends Role {
 
   @override
   void nightAction(Player? player) {
-    GodfatherScenario.nightEvents?[NightEvent.ShotByLeon] = player;
-    remainingAbility--;
+    GodfatherScenario.nightEvents[NightEvent.shotByLeon] = player;
+    if (player != null) {
+      remainingAbility--;
+    }
   }
 
   @override
   void setAvailablePlayers() {
     for (Player player in Player.inGamePlayers) {
       if (player.role!.name == 'لئون حرفه‌ای') {
-        player.uiPlayerStatus = UIPlayerStatus.Disable;
+        player.uiPlayerStatus = UIPlayerStatus.untargetable;
       }
     }
   }

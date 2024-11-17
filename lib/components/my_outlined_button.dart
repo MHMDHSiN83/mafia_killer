@@ -31,7 +31,7 @@ class MyOutlinedButton extends StatelessWidget {
   final double? broderWidth;
   final double? horizontalPadding;
 
-  final Map<String, double> ButtonFontsizes = {
+  final Map<String, double> buttonFontsizes = {
     "small": 18,
     "medium": 22,
     "large": 26
@@ -40,12 +40,12 @@ class MyOutlinedButton extends StatelessWidget {
     double len = text.length.toDouble();
     int numberOfWords = text.split(' ').length;
     if (len <= 10 && numberOfWords <= 2) {
-      return ButtonFontsizes["large"]!;
+      return buttonFontsizes["large"]!;
     } else if ((len > 10 && len <= 14 && numberOfWords <= 2) ||
         (len <= 12 && numberOfWords > 2)) {
-      return ButtonFontsizes["medium"]!;
+      return buttonFontsizes["medium"]!;
     } else {
-      return ButtonFontsizes["small"]!;
+      return buttonFontsizes["small"]!;
     }
   }
 

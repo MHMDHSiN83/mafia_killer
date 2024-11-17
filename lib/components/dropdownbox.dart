@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mafia_killer/themes/app_color.dart';
 
-class DropdownBox extends StatefulWidget {
-  DropdownBox({
+class DropdownBox extends StatelessWidget {
+  const DropdownBox({
     super.key,
     required this.options,
     required this.onSelect,
@@ -12,22 +12,17 @@ class DropdownBox extends StatefulWidget {
   final List<String> options;
   final Function(String?, String) onSelect;
   final String varName;
-  String selectedItem;
+  final String selectedItem;
 
-  @override
-  State<DropdownBox> createState() => _DropdownBoxState();
-}
-
-class _DropdownBoxState extends State<DropdownBox> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: 140,
       height: 40,
       child: DropdownButtonFormField<String>(
-        value: widget.selectedItem,
+        value: selectedItem,
         onChanged: (String? selectedItem) =>
-            widget.onSelect(selectedItem, widget.varName),
+            onSelect(selectedItem, varName),
         isExpanded: true,
         dropdownColor: const Color(0xFF382E2E),
         decoration: const InputDecoration(
@@ -44,7 +39,7 @@ class _DropdownBoxState extends State<DropdownBox> {
           color: AppColors.greenColor,
           size: 38,
         ),
-        items: widget.options.map<DropdownMenuItem<String>>((String value) {
+        items: options.map<DropdownMenuItem<String>>((String value) {
           return DropdownMenuItem<String>(
             value: value,
             child: Text(

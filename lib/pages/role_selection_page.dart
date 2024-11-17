@@ -1,3 +1,4 @@
+import 'package:deep_collection/deep_collection.dart';
 import 'package:flutter/material.dart';
 import 'package:mafia_killer/components/page_frame.dart';
 import 'package:mafia_killer/components/role_selection_tile.dart';
@@ -38,7 +39,13 @@ class RoleSelectionPage extends StatelessWidget {
               Scenario.currentScenario.inGameRoles.length) {
             return;
           }
-          Navigator.pushNamed(context, '/role_distribution_page');
+          List<Role> roles = Scenario.currentScenario.inGameRoles.deepCopy();
+          roles.shuffle();
+          for (int i = 0; i < Player.inGamePlayers.length; i++) {
+            Player.inGamePlayers[i].role = roles[i];
+          }
+          
+          Navigator.pushNamed(context, '/intro_night_page');
         },
         child: ListView(
           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),

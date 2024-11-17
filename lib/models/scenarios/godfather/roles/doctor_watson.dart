@@ -1,7 +1,5 @@
-import 'package:isar/isar.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:mafia_killer/databases/player.dart';
-import 'package:mafia_killer/models/ui_player_status.dart';
 import 'package:mafia_killer/models/ui_player_status.dart';
 import 'package:mafia_killer/models/night_event.dart';
 import 'package:mafia_killer/models/role.dart';
@@ -19,30 +17,30 @@ class DoctorWatson extends Role {
     description =
         "هر شب می‌تواند جان یک نفر چه عضو مافیا و چه عضو شهروندی را نجات دهد. جان خودش را یکبار می‌تواند در طول بازی نجات دهد ولی در نجات جان دیگران محدودیتی ندارد.";
     roleSide = RoleSide.citizen;
-    imagePath = "lib/images/roles/doctor_watson.jpg";
+    cardImagePath = "lib/images/roles/doctor_watson.jpg";
   }
 
   factory DoctorWatson.fromJson(Map<String, dynamic> json) =>
       _$DoctorWatsonFromJson(json);
-
-  // Generated method to convert an object to JSON
 
   @override
   Map<String, dynamic> toJson() => _$DoctorWatsonToJson(this);
 
   @override
   void nightAction(Player? player) {
-    if (player!.role!.name == 'دکتر واتسون') {
-      selfHeal--;
+    GodfatherScenario.nightEvents[NightEvent.savedByDoctor] = player;
+    if (player != null) {
+      if (player.role!.name == 'دکتر واتسون') {
+        selfHeal--;
+      }
     }
-    GodfatherScenario.nightEvents?[NightEvent.SavedByDoctor] = player;
   }
 
   @override
   void setAvailablePlayers() {
     for (Player player in Player.inGamePlayers) {
       if (player.role!.name == 'دکتر واتسون' && selfHeal <= 0) {
-        player.uiPlayerStatus = UIPlayerStatus.Disable;
+        player.uiPlayerStatus = UIPlayerStatus.untargetable;
       }
     }
   }

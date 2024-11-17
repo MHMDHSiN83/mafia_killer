@@ -9,14 +9,18 @@ part of 'matador.dart';
 Matador _$MatadorFromJson(Map<String, dynamic> json) => Matador()
   ..name = json['name'] as String
   ..description = json['description'] as String
-  ..imagePath = json['imagePath'] as String
-  ..roleSide = $enumDecode(_$RoleSideEnumMap, json['roleSide']);
+  ..cardImagePath = json['cardImagePath'] as String
+  ..characterImagePath = json['characterImagePath'] as String
+  ..roleSide = $enumDecode(_$RoleSideEnumMap, json['roleSide'])
+  ..lastPlayerName = json['lastPlayerName'] as String?;
 
 Map<String, dynamic> _$MatadorToJson(Matador instance) => <String, dynamic>{
       'name': instance.name,
       'description': instance.description,
-      'imagePath': instance.imagePath,
+      'cardImagePath': instance.cardImagePath,
+      'characterImagePath': instance.characterImagePath,
       'roleSide': _$RoleSideEnumMap[instance.roleSide]!,
+      'lastPlayerName': instance.lastPlayerName,
     };
 
 const _$RoleSideEnumMap = {

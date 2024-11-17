@@ -1,4 +1,3 @@
-import 'package:isar/isar.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/models/role_side.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/citizen.dart';
@@ -10,15 +9,15 @@ import 'package:mafia_killer/models/scenarios/godfather/roles/leon.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/matador.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/nostradamus.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/saul_goodman.dart';
+import 'package:mafia_killer/pages/intro_night_page.dart';
+import 'package:mafia_killer/pages/night_page.dart';
 
-part 'role.g.dart';
-
-@embedded
 class Role {
   late String name;
   late String description;
-  late String imagePath;
-  @Enumerated(EnumType.ordinal32)
+  late String cardImagePath;
+  late String characterImagePath;
+  // @Enumerated(EnumType.ordinal32)
   late RoleSide roleSide;
 
   Role();
@@ -26,21 +25,17 @@ class Role {
     Role newRole = Role();
     newRole.name = role.name;
     newRole.description = role.description;
-    newRole.imagePath = role.imagePath;
+    newRole.cardImagePath = role.cardImagePath;
+    newRole.characterImagePath = role.characterImagePath;
     newRole.roleSide = role.roleSide;
     return newRole;
   }
-  // factory Scenario.fromJson(Map<String, dynamic> json) =>
-  //     _$ScenarioFromJson(json);
 
-  // // Generated method to convert an object to JSON
-  // Map<String, dynamic> toJson() => _$ScenarioToJson(this);
   factory Role.fromJson(Map<String, dynamic> json) {
     switch (json['name']) {
       case 'پدرخوانده':
         return Godfather.fromJson(json);
       case 'ساول گودمن':
-        print(json);
         return SaulGoodman.fromJson(json);
       case 'ماتادور':
         return Matador.fromJson(json);
@@ -66,7 +61,8 @@ class Role {
     role.description = json['description'];
     role.roleSide = RoleSide.values
         .firstWhere((e) => e.toString().split('.').last == json['roleSide']);
-    role.imagePath = json['imagePath'];
+    role.cardImagePath = json['cardImagePath'];
+    role.characterImagePath = json['characterImagePath'];
     return role;
   }
 
@@ -75,7 +71,8 @@ class Role {
       'name': name,
       'description': description,
       'roleSide': roleSide.toString().split('.').last,
-      'imagePath': imagePath,
+      'cardImagePath': cardImagePath,
+      'characterImagePath': characterImagePath,
     };
   }
 
@@ -89,7 +86,33 @@ class Role {
     throw UnimplementedError(name);
   }
 
+  String introAwakingRole() {
+    IntroNightPage.buttonText = 'نشون داد';
+    return '$name بیدار شه و لایک نشون بده';
+  }
+
+  String introSleepRoleText() {
+    IntroNightPage.buttonText = 'خوابید';
+    return "$name بخوابه";
+  }
+
   String sleepRoleText() {
     return "$name بخوابه";
+  }
+
+  bool hasAbility() {
+    return true;
+  }
+
+  String disabledText() {
+    return '${awakingRole()}(به بازیکن نشون بده که تواناییش ازش گرفته شده)';
+  }
+
+  String ranOutOfAbilityText() {
+    return '${awakingRole()}(به بازیکن نشون بده که تواناییش تموم شده)';
+  }
+
+  String deadOrRemovedText() {
+    return '${awakingRole()}(بازیکن از بازی خارج شده کمی راه برو و وانمود کن نقش هنوز تو بازیه)';
   }
 }
