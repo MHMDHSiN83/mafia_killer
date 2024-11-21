@@ -2,6 +2,9 @@
     {
         "name": "پدرخوانده",
         "inGameRoles": [],
+        "nightNumber" : 0,
+        "dayNumber" : 0,
+        "isNight" : false,
         "roles": [
             {
                 "name": "پدرخوانده",
@@ -80,6 +83,9 @@
     {
         "name": "کلاسیک",
         "inGameRoles": [],
+        "nightNumber" : 0,
+        "dayNumber" : 0,
+        "isNight" : false,
         "roles": [
             {
                 "name": "پدرخوانده",

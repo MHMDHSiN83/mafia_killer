@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mafia_killer/components/call_role.dart';
 import 'package:mafia_killer/components/confirmation_box.dart';
 import 'package:mafia_killer/components/mafia_choice_box.dart';
 import 'package:mafia_killer/components/message_box.dart';
@@ -159,15 +160,15 @@ class _NightPageState extends State<NightPage> {
         },
         rightButtonOnTap: () {
           if (NightPage.isNightOver) {
-          Scenario.currentScenario.goToNextStage();
-          Navigator.pushNamed(
-            context,
-            '/talking_page',
-            arguments: TalkingPageScreenArguments(
-              nextPagePath: '/night_page',
-              seconds: GameSettings.currentGameSettings.mainSpeakTime,
-            ),
-          );
+            Scenario.currentScenario.goToNextStage();
+            Navigator.pushNamed(
+              context,
+              '/talking_page',
+              arguments: TalkingPageScreenArguments(
+                nextPagePath: '/night_page',
+                seconds: GameSettings.currentGameSettings.mainSpeakTime,
+              ),
+            );
           }
         },
         child: Padding(
@@ -212,74 +213,16 @@ class _NightPageState extends State<NightPage> {
               ),
               Expanded(
                 flex: 4,
-                child: Container(
-                  margin: const EdgeInsets.only(top: 25),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Stack(
-                        children: [
-                          const Image(
-                            image: AssetImage(
-                              'lib/images/backgrounds/wood-plank.png',
-                            ),
-                          ),
-                          Container(
-                            // margin: const EdgeInsets.only(top: 7),
-                            padding: const EdgeInsets.symmetric(horizontal: 20),
-                            height: 368 * 191 / 1140,
-                            width: 368,
-                            // color: Colors.blue,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Expanded(
-                                  flex: 2,
-                                  child: Text(
-                                    text,
-                                    style: TextStyle(
-                                      color: AppColors.brownColor,
-                                      fontSize: 12,
-                                    ),
-                                  ),
-                                ),
-                                if (NightPage.buttonText != '')
-                                  Expanded(
-                                    flex: 1,
-                                    child: OutlinedButton(
-                                      style: OutlinedButton.styleFrom(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 0, vertical: 10),
-                                        foregroundColor: AppColors.brownColor,
-                                        side: const BorderSide(
-                                          width: 3,
-                                          color: AppColors.brownColor,
-                                        ),
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(
-                                            8,
-                                          ),
-                                        ),
-                                      ),
-                                      onPressed: () {
-                                        setState(() {
-                                          if (iterator.moveNext()) {
-                                            text = iterator.current;
-                                            NightPage.targetPlayer = null;
-                                          }
-                                        });
-                                      },
-                                      child: Text(NightPage.buttonText),
-                                    ),
-                                  ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
+                child: CallRole(
+                  text: text,
+                  onPressed: () {
+                    setState(() {
+                      if (iterator.moveNext()) {
+                        text = iterator.current;
+                        NightPage.targetPlayer = null;
+                      }
+                    });
+                  },
                 ),
               ),
             ],

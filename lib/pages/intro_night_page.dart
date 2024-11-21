@@ -9,7 +9,6 @@ import 'package:mafia_killer/models/role_side.dart';
 import 'package:mafia_killer/models/scenarios/godfather/godfather_scenario.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/nostradamus.dart';
 import 'package:mafia_killer/models/talking_page_screen_arguments.dart';
-import 'package:mafia_killer/pages/night_page.dart';
 import 'package:mafia_killer/themes/app_color.dart';
 
 class IntroNightPage extends StatefulWidget {
@@ -97,6 +96,7 @@ class _IntroNightPageState extends State<IntroNightPage> {
             "روز ${Scenario.currentScenario.dayAndNightNumber(number: Scenario.currentScenario.dayNumber - 1)}",
         leftButtonOnTap: () {
           Scenario.currentScenario.backToLastStage();
+          IntroNightPage.targetPlayers = [];
           Navigator.pop(context);
         },
         rightButtonOnTap: () {

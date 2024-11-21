@@ -16,9 +16,9 @@ class NightPlayerTile extends StatelessWidget {
       return 'lib/images/icons/target.png';
     } else if (player.playerStatus == PlayerStatus.active ||
         player.playerStatus == PlayerStatus.disable) {
-      return 'lib/images/Role Card.png';
+      return 'lib/images/icons/disable.png';
     } else {
-      return 'lib/images/IntroBackgroundImage.png';
+      return 'lib/images/icons/skeleton_head.png';
     }
   }
 
