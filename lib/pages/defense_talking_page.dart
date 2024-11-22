@@ -6,14 +6,14 @@ import 'package:mafia_killer/models/language.dart';
 import 'package:mafia_killer/models/talking_page_screen_arguments.dart';
 import 'package:mafia_killer/themes/app_color.dart';
 
-class TalkingPage extends StatefulWidget {
-  const TalkingPage({super.key});
+class DefenseTalkingPage extends StatefulWidget {
+  const DefenseTalkingPage({super.key});
 
   @override
-  State<TalkingPage> createState() => _TalkingPageState();
+  State<DefenseTalkingPage> createState() => _DefenseTalkingPageState();
 }
 
-class _TalkingPageState extends State<TalkingPage> {
+class _DefenseTalkingPageState extends State<DefenseTalkingPage> {
   late double _start;
   int cnt = 0;
   late Timer _timer;
@@ -90,23 +90,19 @@ class _TalkingPageState extends State<TalkingPage> {
 
   @override
   Widget build(BuildContext context) {
-    print(Scenario.currentScenario.nightNumber);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: PageFrame(
         pageTitle: 'روز ${Scenario.currentScenario.dayAndNightNumber()}',
-        leftButtonText: args.leftButtonText,
-        rightButtonText: args.rightButtonText,
+        leftButtonText:
+            'شب ${Scenario.currentScenario.dayAndNightNumber(number: Scenario.currentScenario.nightNumber - 1)}',
+        rightButtonText: 'رای گیری',
         leftButtonOnTap: () {
-          if (!args.isDefense && !Scenario.currentScenario.isIntroDay()) {
-            Scenario.currentScenario.backToLastStage();
-          }
+          Scenario.currentScenario.backToLastStage();
           Navigator.pop(context);
         },
         rightButtonOnTap: () {
-          if (Scenario.currentScenario.isIntroDay()) {
-            Scenario.currentScenario.goToNextStage();
-          }
+          Scenario.currentScenario.goToNextStage();
           Navigator.pushNamed(context, args.nextPagePath);
         },
         child: Column(

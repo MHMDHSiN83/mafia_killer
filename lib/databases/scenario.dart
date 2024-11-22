@@ -26,6 +26,9 @@ class Scenario {
   late List<Role> inGameRoles = [];
   static late Scenario currentScenario;
   static late String filePath;
+  int nightNumber = 0;
+  int dayNumber = 0;
+  bool isNight = false;
   factory Scenario.fromJson(Map<String, dynamic> json) =>
       _$ScenarioFromJson(json);
 
@@ -199,5 +202,63 @@ class Scenario {
       }
     }
     return null;
+  }
+
+  String dayAndNightNumber({int? number}) {
+    number ??= isNight ? nightNumber : dayNumber;
+    switch (number) {
+      case 0:
+        return 'معارفه';
+      case 1:
+        return 'اول';
+      case 2:
+        return 'دوم';
+      case 3:
+        return 'سوم';
+      case 4:
+        return 'چهارم';
+      case 5:
+        return 'پنجم';
+      case 6:
+        return 'ششم';
+      case 7:
+        return 'هفتم';
+      case 8:
+        return 'هشتم';
+      case 9:
+        return 'نهم';
+      case 10:
+        return 'دهم';
+      default:
+        return 'not enough';
+    }
+  }
+
+  void goToNextStage() {
+    if (isNight) {
+      nightNumber++;
+    } else {
+      dayNumber++;
+    }
+    isNight = !isNight;
+  }
+
+  void backToLastStage() {
+    if (isNight) {
+      dayNumber--;
+    } else {
+      nightNumber--;
+    }
+    isNight = !isNight;
+  }
+
+  void resetDayes() {
+    dayNumber = 0;
+    nightNumber = 0;
+    isNight = false;
+  }
+
+  bool isIntroDay() {
+    return dayNumber == 0;
   }
 }

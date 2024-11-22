@@ -29,10 +29,8 @@ class RoleSelectionPage extends StatelessWidget {
       resizeToAvoidBottomInset: false,
       body: PageFrame(
         pageTitle: " نقش‌های بازی",
-        leftButtonText: "قبلی",
-        rightButtonText: "بعدی",
-        leftButtonIcon: Icons.keyboard_arrow_left,
-        rightButtonIcon: Icons.keyboard_arrow_right,
+        leftButtonText: "تنظیمات بازی",
+        rightButtonText: "توزیع نقش‌ها",
         leftButtonOnTap: () => Navigator.pop(context),
         rightButtonOnTap: () {
           if (Player.inGamePlayers.length !=
@@ -44,8 +42,8 @@ class RoleSelectionPage extends StatelessWidget {
           for (int i = 0; i < Player.inGamePlayers.length; i++) {
             Player.inGamePlayers[i].role = roles[i];
           }
-          
-          Navigator.pushNamed(context, '/intro_night_page');
+          Scenario.currentScenario.resetDayes();
+          Navigator.pushNamed(context, '/regular_voting_page');
         },
         child: ListView(
           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),

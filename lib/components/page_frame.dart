@@ -32,8 +32,8 @@ class PageFrame extends StatelessWidget {
 
   final Map<String, double> titleFontsizes = {
     "small": 21,
-    "medium": 25,
-    "large": 29
+    "medium": 24,
+    "large": 27,
   };
   double determineTitleFontsize() {
     double len = pageTitle.length.toDouble();

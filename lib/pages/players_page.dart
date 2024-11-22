@@ -30,10 +30,8 @@ class _PlayersPageState extends State<PlayersPage> {
       body: PageFrame(
         isInGame: false,
         pageTitle: "نام بازیکنان",
-        leftButtonText: "قبلی",
-        rightButtonText: "بعدی",
-        leftButtonIcon: Icons.keyboard_arrow_left,
-        rightButtonIcon: Icons.keyboard_arrow_right,
+        leftButtonText: "صفحه اصلی",
+        rightButtonText: "تنظیمات بازی",
         leftButtonOnTap: () => Navigator.pop(context),
         rightButtonOnTap: () {
           Player.fetchInGamePlayers();

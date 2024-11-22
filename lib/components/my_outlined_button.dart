@@ -33,8 +33,8 @@ class MyOutlinedButton extends StatelessWidget {
 
   final Map<String, double> buttonFontsizes = {
     "small": 18,
-    "medium": 22,
-    "large": 26
+    "medium": 20,
+    "large": 24
   };
   double determineButtonFontsize() {
     double len = text.length.toDouble();

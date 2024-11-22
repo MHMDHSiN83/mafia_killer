@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:mafia_killer/components/intro_night_player_tile.dart';
 import 'package:mafia_killer/components/nostradamus_box.dart';
 import 'package:mafia_killer/components/page_frame.dart';
+import 'package:mafia_killer/databases/game_settings.dart';
 import 'package:mafia_killer/databases/player.dart';
+import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/models/role_side.dart';
 import 'package:mafia_killer/models/scenarios/godfather/godfather_scenario.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/nostradamus.dart';
+import 'package:mafia_killer/models/talking_page_screen_arguments.dart';
 import 'package:mafia_killer/themes/app_color.dart';
 
 class IntroNightPage extends StatefulWidget {
@@ -13,6 +16,7 @@ class IntroNightPage extends StatefulWidget {
   static List<Player> targetPlayers = [];
   static String buttonText = 'بیدار شد';
   static bool isNostradamusSelecting = true;
+  static bool isNightOver = false;
 
   @override
   State<IntroNightPage> createState() => _IntroNightPageState();
@@ -74,6 +78,7 @@ class _IntroNightPageState extends State<IntroNightPage> {
     iterator = GodfatherScenario.callRolesIntroNight().iterator;
     iterator.moveNext();
     text = iterator.current;
+    print(IntroNightPage.targetPlayers);
     for (Player player in Player.inGamePlayers) {
       playerCheckboxStatus[player] = false;
     }
@@ -85,11 +90,32 @@ class _IntroNightPageState extends State<IntroNightPage> {
     return Scaffold(
       body: PageFrame(
         pageTitle: 'شب معارفه',
-        rightButtonText: "بعدی",
-        leftButtonText: "قبلی",
-        leftButtonOnTap: () => Navigator.pop(context),
-        rightButtonOnTap: () =>
-            Navigator.pushNamed(context, '/role_selection_page'),
+        rightButtonText:
+            "روز ${Scenario.currentScenario.dayAndNightNumber(number: Scenario.currentScenario.dayNumber)}",
+        leftButtonText:
+            "روز ${Scenario.currentScenario.dayAndNightNumber(number: Scenario.currentScenario.dayNumber - 1)}",
+        leftButtonOnTap: () {
+          Scenario.currentScenario.backToLastStage();
+          IntroNightPage.targetPlayers = [];
+          Navigator.pop(context);
+        },
+        rightButtonOnTap: () {
+          if (IntroNightPage.isNightOver) {
+            Scenario.currentScenario.goToNextStage();
+            Navigator.pushNamed(
+              context,
+              '/talking_page',
+              arguments: TalkingPageScreenArguments(
+                nextPagePath: '/regular_voting_page',
+                seconds: GameSettings.currentGameSettings.mainSpeakTime,
+                rightButtonText: 'رای گیری',
+                leftButtonText:
+                    'شب ${Scenario.currentScenario.dayAndNightNumber(number: Scenario.currentScenario.nightNumber - 1)}',
+                    isDefense: false,
+              ),
+            );
+          }
+        },
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 12),
           child: Column(
@@ -135,11 +161,9 @@ class _IntroNightPageState extends State<IntroNightPage> {
                             ),
                           ),
                           Container(
-                            // margin: const EdgeInsets.only(top: 7),
                             padding: const EdgeInsets.symmetric(horizontal: 20),
                             height: 368 * 191 / 1140,
                             width: 368,
-                            // color: Colors.blue,
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               crossAxisAlignment: CrossAxisAlignment.center,
@@ -179,10 +203,12 @@ class _IntroNightPageState extends State<IntroNightPage> {
                                           //TODO build a function to generate nostradamus choice
                                           if (IntroNightPage
                                               .isNostradamusSelecting) {
-                                            nostradamusBox(GodfatherScenario
-                                                .resultOfNostradamusGuess(
-                                                    IntroNightPage
-                                                        .targetPlayers));
+                                            nostradamusBox(
+                                              GodfatherScenario
+                                                  .resultOfNostradamusGuess(
+                                                      IntroNightPage
+                                                          .targetPlayers),
+                                            );
                                           } else {
                                             setState(() {
                                               if (iterator.moveNext()) {

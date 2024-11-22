@@ -17,12 +17,10 @@ import 'package:mafia_killer/pages/night_page.dart';
 class GodfatherScenario extends Scenario {
   GodfatherScenario() : super("پدرخوانده");
   static Map<NightEvent, Player?> nightEvents = {};
-  static int nightNumber = 1;
-
+  static List<Player> defendingPlayers = [];
   static Iterable<String> callRolesIntroNight() sync* {
     Player nostradamusPlayer = Player.getPlayerByRoleType(Nostradamus);
     yield nostradamusPlayer.role!.introAwakingRole();
-    print("object");
     yield nostradamusPlayer.role!.introSleepRoleText();
     List<String> introMafiaTeamAwakingTexts =
         Scenario.currentScenario.getIntroMafiaTeamAwakingTexts();
@@ -43,6 +41,9 @@ class GodfatherScenario extends Scenario {
       yield introCitizenTeamRoles[i].introAwakingRole();
       yield introCitizenTeamRoles[i].introSleepRoleText();
     }
+    IntroNightPage.isNightOver = true;
+    IntroNightPage.buttonText = "";
+    yield "همه بیدار شن";
   }
 
   static void resetUIPlayerStatus() {
@@ -193,8 +194,9 @@ class GodfatherScenario extends Scenario {
     while (otherRolesIterator.moveNext()) {
       yield otherRolesIterator.current;
     }
-
-    nightNumber++;
+    NightPage.isNightOver = true;
+    NightPage.buttonText = "";
+    yield "همه بیدار شن";
     print(nightEvents);
     print(nightReport());
   }
@@ -205,10 +207,10 @@ class GodfatherScenario extends Scenario {
     Player? shotByMafia = nightEvents[NightEvent.shotByMafia];
     Player? savedByDoctor = nightEvents[NightEvent.savedByDoctor]!;
     Player? shotByLeon = nightEvents[NightEvent.shotByLeon];
+    Player? revivedByConstantine = nightEvents[NightEvent.revivedByConstantine];
     Player? inquiryByCitizenKane = nightEvents[NightEvent.inquiryByCitizenKane];
     Player? sixthSensedByGodfather =
         nightEvents[NightEvent.sixthSensedByGodfather];
-    Player? revivedByConstantine = nightEvents[NightEvent.revivedByConstantine];
 
     Player leon =
         Player.inGamePlayers.where((player) => player.role is Leon).first;
@@ -311,33 +313,6 @@ class GodfatherScenario extends Scenario {
     return false;
   }
 
-  static String whatNightIsIt() {
-    switch (nightNumber) {
-      case 1:
-        return 'اول';
-      case 2:
-        return 'دوم';
-      case 3:
-        return 'سوم';
-      case 4:
-        return 'چهارم';
-      case 5:
-        return 'پنجم';
-      case 6:
-        return 'ششم';
-      case 7:
-        return 'هفتم';
-      case 8:
-        return 'هشتم';
-      case 9:
-        return 'نهم';
-      case 10:
-        return 'دهم';
-      default:
-        return 'not enough';
-    }
-  }
-
   static int resultOfNostradamusGuess(List<Player> players) {
     int counter = 0;
     for (Player player in players) {
@@ -347,5 +322,9 @@ class GodfatherScenario extends Scenario {
       }
     }
     return counter;
+  }
+
+  static void storeDefendingPlayers(List<Player> players) {
+    defendingPlayers = players;
   }
 }

@@ -3,27 +3,32 @@ import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/themes/app_color.dart';
 
 class VotingTile extends StatefulWidget {
-  VotingTile({super.key, required this.player, required this.isRegularVoting});
+  VotingTile(
+      {super.key,
+      required this.player,
+      required this.isRegularVoting,
+      required this.addPlayer,
+      required this.removePlayer});
 
   Player player;
   bool isRegularVoting;
-
+  VoidCallback addPlayer;
+  VoidCallback removePlayer;
   @override
   State<VotingTile> createState() => _VotingTileState();
 }
 
 class _VotingTileState extends State<VotingTile> {
-  double opacity = 1.0;
   bool isClicked = false;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
         setState(() {
-          if (opacity == 1) {
-            opacity = 0.3;
+          if (isClicked) {
+            widget.removePlayer();
           } else {
-            opacity = 1.0;
+            widget.addPlayer();
           }
           isClicked = !isClicked;
         });
@@ -31,10 +36,9 @@ class _VotingTileState extends State<VotingTile> {
       child: Stack(
         children: [
           Opacity(
-            opacity: opacity,
+            opacity: isClicked ? 0.3 : 1,
             child: Container(
               width: 150,
-              height: 150,
               decoration: const BoxDecoration(
                   image: DecorationImage(
                 image: AssetImage('lib/images/backgrounds/signpost.png'),
@@ -43,12 +47,12 @@ class _VotingTileState extends State<VotingTile> {
               child: Column(
                 children: [
                   const SizedBox(
-                    height: 75,
+                    height: 65,
                   ),
                   Text(
                     widget.player.name,
                     style: const TextStyle(
-                      fontSize: 25,
+                      fontSize: 20,
                       fontWeight: FontWeight.bold,
                       color: AppColors.brownColor,
                     ),
@@ -60,8 +64,8 @@ class _VotingTileState extends State<VotingTile> {
           Visibility(
             visible: isClicked,
             child: Positioned(
-              top: 75,
-              right: 25,
+              top: 63,
+              right: 15,
               child: Transform.rotate(
                 angle: 75,
                 child: Container(
