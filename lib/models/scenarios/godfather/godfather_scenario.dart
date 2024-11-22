@@ -17,7 +17,7 @@ import 'package:mafia_killer/pages/night_page.dart';
 class GodfatherScenario extends Scenario {
   GodfatherScenario() : super("پدرخوانده");
   static Map<NightEvent, Player?> nightEvents = {};
-
+  static List<Player> defendingPlayers = [];
   static Iterable<String> callRolesIntroNight() sync* {
     Player nostradamusPlayer = Player.getPlayerByRoleType(Nostradamus);
     yield nostradamusPlayer.role!.introAwakingRole();
@@ -322,5 +322,9 @@ class GodfatherScenario extends Scenario {
       }
     }
     return counter;
+  }
+
+  static void storeDefendingPlayers(List<Player> players) {
+    defendingPlayers = players;
   }
 }

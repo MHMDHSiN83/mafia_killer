@@ -11,7 +11,6 @@ import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/models/scenarios/godfather/godfather_scenario.dart';
 import 'package:mafia_killer/models/talking_page_screen_arguments.dart';
-import 'package:mafia_killer/themes/app_color.dart';
 
 class NightPage extends StatefulWidget {
   const NightPage({super.key});
@@ -167,6 +166,10 @@ class _NightPageState extends State<NightPage> {
               arguments: TalkingPageScreenArguments(
                 nextPagePath: '/night_page',
                 seconds: GameSettings.currentGameSettings.mainSpeakTime,
+                leftButtonText:
+                    'شب ${Scenario.currentScenario.dayAndNightNumber(number: Scenario.currentScenario.nightNumber - 1)}',
+                rightButtonText: 'رای گیری',
+                isDefense: false,
               ),
             );
           }

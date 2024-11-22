@@ -251,4 +251,14 @@ class Scenario {
     }
     isNight = !isNight;
   }
+
+  void resetDayes() {
+    dayNumber = 0;
+    nightNumber = 0;
+    isNight = false;
+  }
+
+  bool isIntroDay() {
+    return dayNumber == 0;
+  }
 }
