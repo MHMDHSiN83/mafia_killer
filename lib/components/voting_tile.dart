@@ -3,17 +3,20 @@ import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/themes/app_color.dart';
 
 class VotingTile extends StatefulWidget {
-  VotingTile(
-      {super.key,
-      required this.player,
-      required this.isRegularVoting,
-      required this.addPlayer,
-      required this.removePlayer});
+  VotingTile({
+    super.key,
+    required this.player,
+    required this.isRegularVoting,
+    required this.addPlayer,
+    required this.removePlayer,
+    required this.disable,
+  });
 
   Player player;
   bool isRegularVoting;
   VoidCallback addPlayer;
   VoidCallback removePlayer;
+  Function disable;
   @override
   State<VotingTile> createState() => _VotingTileState();
 }
@@ -24,14 +27,16 @@ class _VotingTileState extends State<VotingTile> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        setState(() {
-          if (isClicked) {
-            widget.removePlayer();
-          } else {
-            widget.addPlayer();
-          }
-          isClicked = !isClicked;
-        });
+        if (!widget.disable()) {
+          setState(() {
+            if (isClicked) {
+              widget.removePlayer();
+            } else {
+              widget.addPlayer();
+            }
+            isClicked = !isClicked;
+          });
+        }
       },
       child: Stack(
         children: [

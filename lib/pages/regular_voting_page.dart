@@ -60,6 +60,7 @@ class RegularVotingPage extends StatelessWidget {
                 removePlayer: () {
                   removePlayer(Player.inGamePlayers[index]);
                 },
+                disable: () => false,
               );
             },
           ),

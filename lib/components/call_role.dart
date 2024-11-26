@@ -4,11 +4,13 @@ import 'package:mafia_killer/themes/app_color.dart';
 
 class CallRole extends StatelessWidget {
   final String text;
+  final String buttonText;
   final VoidCallback onPressed;
   const CallRole({
     super.key,
     required this.text,
     required this.onPressed,
+    required this.buttonText,
   });
 
   @override
@@ -45,7 +47,7 @@ class CallRole extends StatelessWidget {
                         ),
                       ),
                     ),
-                    if (NightPage.buttonText != '')
+                    if (buttonText != '')
                       Expanded(
                         flex: 1,
                         child: OutlinedButton(
@@ -64,7 +66,7 @@ class CallRole extends StatelessWidget {
                             ),
                           ),
                           onPressed: onPressed,
-                          child: Text(NightPage.buttonText),
+                          child: Text(buttonText),
                         ),
                       ),
                   ],

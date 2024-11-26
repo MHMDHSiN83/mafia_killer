@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mafia_killer/components/call_role.dart';
 import 'package:mafia_killer/components/intro_night_player_tile.dart';
 import 'package:mafia_killer/components/nostradamus_box.dart';
 import 'package:mafia_killer/components/page_frame.dart';
@@ -111,7 +112,7 @@ class _IntroNightPageState extends State<IntroNightPage> {
                 rightButtonText: 'رای گیری',
                 leftButtonText:
                     'شب ${Scenario.currentScenario.dayAndNightNumber(number: Scenario.currentScenario.nightNumber - 1)}',
-                    isDefense: false,
+                isDefense: false,
               ),
             );
           }
@@ -148,87 +149,108 @@ class _IntroNightPageState extends State<IntroNightPage> {
               ),
               Expanded(
                 flex: 4,
-                child: Container(
-                  margin: const EdgeInsets.only(top: 25),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Stack(
-                        children: [
-                          const Image(
-                            image: AssetImage(
-                              'lib/images/backgrounds/wood-plank.png',
-                            ),
-                          ),
-                          Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 20),
-                            height: 368 * 191 / 1140,
-                            width: 368,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Expanded(
-                                  flex: 2,
-                                  child: Text(
-                                    text,
-                                    style: TextStyle(
-                                      color: AppColors.brownColor,
-                                      fontSize: 12,
-                                    ),
-                                  ),
-                                ),
-                                if (IntroNightPage.buttonText != '')
-                                  Expanded(
-                                    flex: 1,
-                                    child: OutlinedButton(
-                                      style: OutlinedButton.styleFrom(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 0, vertical: 10),
-                                        foregroundColor: AppColors.brownColor,
-                                        side: const BorderSide(
-                                          width: 3,
-                                          color: AppColors.brownColor,
-                                        ),
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(
-                                            8,
-                                          ),
-                                        ),
-                                      ),
-                                      onPressed: () {
-                                        if (IntroNightPage
-                                                .targetPlayers.length ==
-                                            3) {
-                                          //TODO build a function to generate nostradamus choice
-                                          if (IntroNightPage
-                                              .isNostradamusSelecting) {
-                                            nostradamusBox(
-                                              GodfatherScenario
-                                                  .resultOfNostradamusGuess(
-                                                      IntroNightPage
-                                                          .targetPlayers),
-                                            );
-                                          } else {
-                                            setState(() {
-                                              if (iterator.moveNext()) {
-                                                text = iterator.current;
-                                              }
-                                            });
-                                          }
-                                        }
-                                      },
-                                      child: Text(IntroNightPage.buttonText),
-                                    ),
-                                  ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
+                child: CallRole(
+                  text: text,
+                  onPressed: () {
+                    if (IntroNightPage.targetPlayers.length == 3) {
+                      //TODO build a function to generate nostradamus choice
+                      if (IntroNightPage.isNostradamusSelecting) {
+                        nostradamusBox(
+                          GodfatherScenario.resultOfNostradamusGuess(
+                              IntroNightPage.targetPlayers),
+                        );
+                      } else {
+                        setState(() {
+                          if (iterator.moveNext()) {
+                            text = iterator.current;
+                          }
+                        });
+                      }
+                    }
+                  },
+                  buttonText: IntroNightPage.buttonText,
                 ),
+                // child: Container(
+                //   margin: const EdgeInsets.only(top: 25),
+                //   child: Column(
+                //     mainAxisAlignment: MainAxisAlignment.start,
+                //     children: [
+                //       Stack(
+                //         children: [
+                //           const Image(
+                //             image: AssetImage(
+                //               'lib/images/backgrounds/wood-plank.png',
+                //             ),
+                //           ),
+                //           Container(
+                //             padding: const EdgeInsets.symmetric(horizontal: 20),
+                //             height: 368 * 191 / 1140,
+                //             width: 368,
+                //             child: Row(
+                //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //               crossAxisAlignment: CrossAxisAlignment.center,
+                //               children: [
+                //                 Expanded(
+                //                   flex: 2,
+                //                   child: Text(
+                //                     text,
+                //                     style: TextStyle(
+                //                       color: AppColors.brownColor,
+                //                       fontSize: 12,
+                //                     ),
+                //                   ),
+                //                 ),
+                //                 if (IntroNightPage.buttonText != '')
+                //                   Expanded(
+                //                     flex: 1,
+                //                     child: OutlinedButton(
+                //                       style: OutlinedButton.styleFrom(
+                //                         padding: const EdgeInsets.symmetric(
+                //                             horizontal: 0, vertical: 10),
+                //                         foregroundColor: AppColors.brownColor,
+                //                         side: const BorderSide(
+                //                           width: 3,
+                //                           color: AppColors.brownColor,
+                //                         ),
+                //                         shape: RoundedRectangleBorder(
+                //                           borderRadius: BorderRadius.circular(
+                //                             8,
+                //                           ),
+                //                         ),
+                //                       ),
+                //                       onPressed: () {
+                //                         if (IntroNightPage
+                //                                 .targetPlayers.length ==
+                //                             3) {
+                //                           //TODO build a function to generate nostradamus choice
+                //                           if (IntroNightPage
+                //                               .isNostradamusSelecting) {
+                //                             nostradamusBox(
+                //                               GodfatherScenario
+                //                                   .resultOfNostradamusGuess(
+                //                                       IntroNightPage
+                //                                           .targetPlayers),
+                //                             );
+                //                           } else {
+                //                             setState(() {
+                //                               if (iterator.moveNext()) {
+                //                                 text = iterator.current;
+                //                               }
+                //                             });
+                //                           }
+                //                         }
+                //                       },
+                //                       child: Text(IntroNightPage.buttonText),
+                //                     ),
+                //                   ),
+                //               ],
+                //             ),
+                //           ),
+                //         ],
+                //       ),
+                //     ],
+                //   ),
+                // ),
               ),
             ],
           ),

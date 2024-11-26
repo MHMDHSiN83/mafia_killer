@@ -60,7 +60,7 @@ class MyApp extends StatelessWidget {
         '/talking_page': (context) => const TalkingPage(),
         '/defense_talking_page': (context) => const TalkingPage(),
         '/regular_voting_page': (context) => RegularVotingPage(),
-        '/defense_voting_page': (context) => const DefenseVotingPage(),
+        '/defense_voting_page': (context) => DefenseVotingPage(),
         '/night_events_page': (context) => const NightEventsPage(),
         '/night_page': (context) => const NightPage(),
         '/intro_night_page': (context) => const IntroNightPage(),
