@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:mafia_killer/models/database.dart';
+import 'package:mafia_killer/models/last_move_card.dart';
 import 'package:mafia_killer/models/role.dart';
 import 'package:mafia_killer/models/role_side.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/citizen_kane.dart';
@@ -23,6 +24,7 @@ class Scenario {
   // Id id = Isar.autoIncrement;
   late final String name;
   late List<Role> roles;
+  late List<LastMoveCard> lastMoveCards;
   late List<Role> inGameRoles = [];
   static late Scenario currentScenario;
   static late String filePath;

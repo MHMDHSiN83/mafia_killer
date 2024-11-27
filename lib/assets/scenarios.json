@@ -79,6 +79,7 @@
                 "characterImagePath": "lib/images/roles/role_characters/citizen.png"
             }
         ]
+        
     },
     {
         "name": "کلاسیک",
@@ -112,5 +113,6 @@
                 "characterImagePath": "lib/images/roles/role_characters/citizen.png"
             }
         ]
+       
     }
 ]

@@ -12,6 +12,9 @@ Scenario _$ScenarioFromJson(Map<String, dynamic> json) => Scenario(
       ..roles = (json['roles'] as List<dynamic>)
           .map((e) => Role.fromJson(e as Map<String, dynamic>))
           .toList()
+      ..lastMoveCards = (json['lastMoveCards'] as List<dynamic>)
+          .map((e) => LastMoveCard.fromJson(e as Map<String, dynamic>))
+          .toList()
       ..inGameRoles = (json['inGameRoles'] as List<dynamic>)
           .map((e) => Role.fromJson(e as Map<String, dynamic>))
           .toList()
@@ -22,6 +25,7 @@ Scenario _$ScenarioFromJson(Map<String, dynamic> json) => Scenario(
 Map<String, dynamic> _$ScenarioToJson(Scenario instance) => <String, dynamic>{
       'name': instance.name,
       'roles': instance.roles,
+      'lastMoveCards': instance.lastMoveCards,
       'inGameRoles': instance.inGameRoles,
       'nightNumber': instance.nightNumber,
       'dayNumber': instance.dayNumber,
