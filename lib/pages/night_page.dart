@@ -218,6 +218,7 @@ class _NightPageState extends State<NightPage> {
                 flex: 4,
                 child: CallRole(
                   text: text,
+                  buttonText: NightPage.buttonText,
                   onPressed: () {
                     setState(() {
                       if (iterator.moveNext()) {
