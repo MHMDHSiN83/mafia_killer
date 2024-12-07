@@ -2,10 +2,12 @@ import 'package:deep_collection/deep_collection.dart';
 import 'package:flutter/material.dart';
 import 'package:mafia_killer/components/page_frame.dart';
 import 'package:mafia_killer/components/role_selection_tile.dart';
+import 'package:mafia_killer/databases/game_settings.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/models/role.dart';
 import 'package:mafia_killer/models/role_side.dart';
+import 'package:mafia_killer/models/talking_page_screen_arguments.dart';
 import 'package:mafia_killer/themes/app_color.dart';
 
 class RoleSelectionPage extends StatelessWidget {
@@ -43,7 +45,13 @@ class RoleSelectionPage extends StatelessWidget {
             Player.inGamePlayers[i].role = roles[i];
           }
           Scenario.currentScenario.resetDayes();
-          Navigator.pushNamed(context, '/role_distribution_page');
+          Navigator.pushNamed(context, '/talking_page',
+              arguments: TalkingPageScreenArguments(
+                  nextPagePath: '/intro_night_page',
+                  seconds: GameSettings.currentGameSettings.introTime,
+                  rightButtonText: "شب معارفه",
+                  leftButtonText: "تقسیم نقش",
+                  isDefense: false));
         },
         child: ListView(
           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
