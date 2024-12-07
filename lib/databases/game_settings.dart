@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:mafia_killer/databases/scenario.dart';
+import 'package:mafia_killer/models/scenarios/godfather/godfather_scenario.dart';
 
 part 'game_settings.g.dart';
 
@@ -85,8 +86,11 @@ class GameSettings {
     // isar.writeTxnSync(() => isar.gameSettings.putSync(currentGameSettings));
   }
 
-  static Future<void> updateSettings(GameSettings gameSettings, Map<String, dynamic> newGameSettings) async {
-      gameSettings.setNewSettings(newGameSettings);
+  static Future<void> updateSettings(
+      GameSettings gameSettings, Map<String, dynamic> newGameSettings) async {
+    gameSettings.setNewSettings(newGameSettings);
+    if (newGameSettings['scenario'] == "پدرخوانده") {
+      GodfatherScenario.shuffleLastMoveCards();
+    }
   }
-  
 }

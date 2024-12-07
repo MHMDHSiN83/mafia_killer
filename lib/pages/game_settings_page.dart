@@ -72,7 +72,7 @@ class _GameSettingsPageState extends State<GameSettingsPage> {
         rightButtonOnTap: () {
           GameSettings.updateSettings(
               GameSettings.currentGameSettings, newGameSettings);
-          Navigator.pushNamed(context, '/role_selection_page');
+          Navigator.pushNamed(context, '/last_move_card_page');
         },
         child: ListView(
           padding: const EdgeInsets.only(bottom: 50, left: 20, right: 20),

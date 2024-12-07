@@ -77,6 +77,7 @@ flutter:
     - lib/images/roles/role_cards/
     - lib/images/roles/role_characters/
     - lib/images/icons/
+    - lib/images/last_move_cards/
     - lib/images/
     - lib/images/backgrounds/
     - lib/icons/

@@ -43,7 +43,7 @@ class RoleSelectionPage extends StatelessWidget {
             Player.inGamePlayers[i].role = roles[i];
           }
           Scenario.currentScenario.resetDayes();
-          Navigator.pushNamed(context, '/regular_voting_page');
+          Navigator.pushNamed(context, '/role_distribution_page');
         },
         child: ListView(
           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),

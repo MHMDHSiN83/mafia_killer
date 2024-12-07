@@ -8,6 +8,7 @@ class LastMoveCard {
   late String title;
   late String description;
   late String imagePath;
+  late String flippedImagePath;
 
   LastMoveCard();
 
@@ -32,6 +33,31 @@ class LastMoveCard {
       'title': title,
       'description': description,
       'imagePath': imagePath,
+      'flippedImagePath': flippedImagePath,
     };
+  }
+
+  double titleHorizontalPadding() {
+    throw Exception();
+  }
+
+  double descriptionHorizontalPadding() {
+    throw Exception();
+  }
+
+  double titleVerticalPadding() {
+    return 15;
+  }
+
+  double descriptionVerticalPadding() {
+    return 30;
+  }
+
+  int titleHorizontalRatio() {
+    throw Exception();
+  }
+
+  int descriptionHorizontalRatio() {
+    throw Exception();
   }
 }

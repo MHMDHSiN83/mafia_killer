@@ -26,6 +26,8 @@ class Database {
     // Player.freePlayers();
   }
 
+  
+
   static Future<void> fetchData(String jsonString, String path) async {
     File file = File(path);
     await file.writeAsString(jsonString);
@@ -44,4 +46,6 @@ class Database {
         jsonEncode(scenarios.map((scenario) => scenario.toJson()).toList());
     await file.writeAsString(jsonString);
   }
+
+
 }

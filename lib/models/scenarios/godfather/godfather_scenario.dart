@@ -327,4 +327,9 @@ class GodfatherScenario extends Scenario {
   static void storeDefendingPlayers(List<Player> players) {
     defendingPlayers = players;
   }
+
+  static void shuffleLastMoveCards() {
+    print("shuffled!");
+    Scenario.currentScenario.lastMoveCards.shuffle();
+  }
 }
