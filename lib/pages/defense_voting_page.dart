@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:mafia_killer/components/call_role.dart';
 import 'package:mafia_killer/components/message_box.dart';
@@ -16,6 +18,7 @@ class DefenseVotingPage extends StatefulWidget {
 
 class _DefenseVotingPageState extends State<DefenseVotingPage> {
   bool isDeathLotterySelected = false;
+  bool isCleared = false;
 
   List<Player> selectedPlayers = [];
 
@@ -67,9 +70,22 @@ class _DefenseVotingPageState extends State<DefenseVotingPage> {
         leftButtonOnTap: () => Navigator.pop(context),
         rightButtonOnTap: () {
           Scenario.currentScenario.goToNextStage();
+          switch (selectedPlayers.length) {
+            case 1:
+              GodfatherScenario.killedInDayPlayer = selectedPlayers[0];
+              break;
+            case 2:
+              final random = Random();
+              int randomNumber = random.nextInt(2);
+              GodfatherScenario.killedInDayPlayer =
+                  selectedPlayers[randomNumber];
+              break;
+            default:
+              break;
+          }
           Navigator.pushNamed(
             context,
-            '/night_page',
+            (selectedPlayers.isEmpty) ? '/night_page' : '/last_move_card_page',
           );
         },
         child: Column(

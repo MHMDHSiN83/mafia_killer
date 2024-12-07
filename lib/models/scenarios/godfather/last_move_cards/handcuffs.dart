@@ -14,15 +14,15 @@ class Handcuffs extends LastMoveCard {
   @override
   Map<String, dynamic> toJson() => _$HandcuffsToJson(this);
 
-
-
   @override
   int titleHorizontalRatio() {
     return 4;
   }
 
   @override
-  int descriptionHorizontalRatio() {
-    return 2;
+  int rightSpaceOfTitleHorizontalRatio() {
+    return 6;
   }
+
+
 }

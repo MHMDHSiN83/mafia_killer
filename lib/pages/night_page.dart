@@ -164,7 +164,7 @@ class _NightPageState extends State<NightPage> {
               context,
               '/talking_page',
               arguments: TalkingPageScreenArguments(
-                nextPagePath: '/night_page',
+                nextPagePath: '/regular_voting_page',
                 seconds: GameSettings.currentGameSettings.mainSpeakTime,
                 leftButtonText:
                     'شب ${Scenario.currentScenario.dayAndNightNumber(number: Scenario.currentScenario.nightNumber - 1)}',

@@ -1,0 +1,72 @@
+import 'package:flutter/material.dart';
+import 'package:mafia_killer/components/call_role.dart';
+import 'package:mafia_killer/components/page_frame.dart';
+import 'package:mafia_killer/models/role.dart';
+import 'package:mafia_killer/models/role_side.dart';
+import 'package:mafia_killer/models/scenarios/godfather/godfather_scenario.dart';
+import 'package:mafia_killer/themes/app_color.dart';
+
+class RevealIdentityPage extends StatelessWidget {
+  const RevealIdentityPage({super.key});
+
+  Color determineRoleCardBorderColor() {
+    Role role = GodfatherScenario.killedInDayPlayer!.role!;
+
+    if (role.roleSide == RoleSide.citizen) {
+      return AppColors.darkgreenColor;
+    } else if (role.roleSide == RoleSide.mafia) {
+      return AppColors.redColor;
+    } else {
+      return AppColors.yellowColor;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        resizeToAvoidBottomInset: true,
+        body: PageFrame(
+          pageTitle: "افشای هویت",
+          leftButtonText: "کارت حرکت آخر",
+          rightButtonText: "شب فلان",
+          leftButtonOnTap: () => Navigator.pop(context),
+          rightButtonOnTap: () {
+            Navigator.pushNamed(context, '/night_page');
+          },
+          child: Column(
+            children: [
+              Expanded(
+                  flex: 3,
+                  child: Padding(
+                    padding: const EdgeInsets.all(40),
+                    child: Container(
+                      decoration: BoxDecoration(
+                          color: Colors.black,
+                          borderRadius: BorderRadius.circular(
+                              5), // Circular border radius
+                          border: Border.all(
+                            color:
+                                determineRoleCardBorderColor(), // Optional: Border color
+                            width: 2, // Optional: Border width
+                          ),
+                          image: DecorationImage(
+                              image: AssetImage(GodfatherScenario
+                                  .killedInDayPlayer!.role!.cardImagePath),
+                              fit: BoxFit.contain)),
+                    ),
+                  )),
+              Expanded(
+                  flex: 1,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: CallRole(
+                        text:
+                            "${GodfatherScenario.killedInDayPlayer!.name} ${GodfatherScenario.killedInDayPlayer!.role!.name} بازی است.",
+                        onPressed: () {},
+                        buttonText: ""),
+                  ))
+            ],
+          ),
+        ));
+  }
+}

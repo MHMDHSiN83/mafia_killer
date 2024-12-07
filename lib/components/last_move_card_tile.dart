@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mafia_killer/models/last_move_card.dart';
+import 'package:mafia_killer/pages/last_move_card_page.dart';
 
 class LastMoveCardTile extends StatefulWidget {
   LastMoveCardTile(
@@ -49,76 +50,15 @@ class _LastMoveCardTileState extends State<LastMoveCardTile>
 
   Widget _buildFrontCardForOddIndex() {
     return Transform.scale(
-      scaleX: -1,
-      child: Container(
-        height: LastMoveCardTile.tileHeight,
-        width: LastMoveCardTile.tileWidth,
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage(widget.lastMoveCard.flippedImagePath),
-            fit: BoxFit.cover,
-          ),
-        ),
-        child: Column(
-          children: [
-            SizedBox(
-              height: widget.lastMoveCard.titleVerticalPadding(),
-            ),
-            Row(
-              children: [
-                Spacer(
-                  flex: 1,
-                ),
-                Expanded(
-                  flex: widget.lastMoveCard.titleHorizontalRatio(),
-                  child: Text(
-                    widget.lastMoveCard.title,
-                    style: TextStyle(
-                      fontSize: 25,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: widget.lastMoveCard.titleVerticalPadding(),
-            ),
-            Row(
-              children: [
-                Spacer(
-                  flex: 1,
-                ),
-                Expanded(
-                  flex: 9,
-                  child: Text(
-                    widget.lastMoveCard.description,
-                    style: TextStyle(
-                      fontSize: 8,
-                    ),
-                  ),
-                ),
-                Spacer(
-                  flex: 8,
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildFrontCardForEvenIndex() {
-    return Transform.scale(
-      scaleX: -1,
+      scaleX: (widget.lastMoveCard.isUsed) ? 1 : -1,
       child: Directionality(
-        textDirection: TextDirection.ltr,
+        textDirection: TextDirection.rtl,
         child: Container(
           height: LastMoveCardTile.tileHeight,
           width: LastMoveCardTile.tileWidth,
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: AssetImage(widget.lastMoveCard.imagePath),
+              image: AssetImage(widget.lastMoveCard.flippedImagePath),
               fit: BoxFit.cover,
             ),
           ),
@@ -149,10 +89,10 @@ class _LastMoveCardTileState extends State<LastMoveCardTile>
               Row(
                 children: [
                   Spacer(
-                    flex: 1,
+                    flex: 2,
                   ),
                   Expanded(
-                    flex: 9,
+                    flex: 15,
                     child: Text(
                       widget.lastMoveCard.description,
                       style: TextStyle(
@@ -161,8 +101,73 @@ class _LastMoveCardTileState extends State<LastMoveCardTile>
                     ),
                   ),
                   Spacer(
-                    flex: 8,
+                    flex: 15,
                   ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildFrontCardForEvenIndex() {
+    return Transform.scale(
+      scaleX: (widget.lastMoveCard.isUsed) ? 1 : -1,
+      child: Directionality(
+        textDirection: TextDirection.rtl,
+        child: Container(
+          height: LastMoveCardTile.tileHeight,
+          width: LastMoveCardTile.tileWidth,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage(widget.lastMoveCard.imagePath),
+              fit: BoxFit.cover,
+            ),
+          ),
+          child: Column(
+            children: [
+              SizedBox(
+                height: widget.lastMoveCard.titleVerticalPadding(),
+              ),
+              Row(
+                children: [
+                  Spacer(
+                    flex:
+                        widget.lastMoveCard.rightSpaceOfTitleHorizontalRatio(),
+                  ),
+                  Expanded(
+                    flex: widget.lastMoveCard.titleHorizontalRatio(),
+                    child: Text(
+                      widget.lastMoveCard.title,
+                      style: TextStyle(
+                        fontSize: 25,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: widget.lastMoveCard.titleVerticalPadding(),
+              ),
+              Row(
+                children: [
+                  Spacer(
+                    flex: 15,
+                  ),
+                  Expanded(
+                    flex: 15,
+                    child: Text(
+                      widget.lastMoveCard.description,
+                      style: TextStyle(
+                        fontSize: 8,
+                      ),
+                    ),
+                  ),
+                  Spacer(
+                    flex: 1,
+                  )
                 ],
               ),
             ],
@@ -188,14 +193,28 @@ class _LastMoveCardTileState extends State<LastMoveCardTile>
 
   @override
   Widget build(BuildContext context) {
+    if (widget.lastMoveCard.isUsed) {
+      return Padding(
+        padding: EdgeInsets.symmetric(vertical: 5),
+        child: (widget.index % 2 == 0)
+            ? _buildFrontCardForEvenIndex()
+            : _buildFrontCardForOddIndex(),
+      );
+    }
     return GestureDetector(
-      onTap: _flipCard,
+      onTap: () {
+        if (LastMoveCardPage.canClick) {
+          _flipCard();
+          //LastMoveCardPage.canClick = false;
+          LastMoveCardPage.selectedLastMoveCard = widget.lastMoveCard;
+        }
+      },
       child: AnimatedBuilder(
         animation: _animation,
         builder: (context, child) {
           // Rotate the card
           double angle = _animation.value * 3.14159;
-          bool isFrontVisible = _animation.value > 0.5;
+          bool isFrontVisible = (_animation.value > 0.5);
 
           return Transform(
             transform: Matrix4.rotationY(angle),

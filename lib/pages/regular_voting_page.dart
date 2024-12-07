@@ -28,17 +28,21 @@ class RegularVotingPage extends StatelessWidget {
         leftButtonOnTap: () => Navigator.pop(context),
         rightButtonOnTap: () {
           GodfatherScenario.storeDefendingPlayers(defendingPlayers);
-          Navigator.pushNamed(
-            context,
-            '/talking_page',
-            arguments: TalkingPageScreenArguments(
-              nextPagePath: '/defense_voting_page',
-              seconds: GameSettings.currentGameSettings.mainSpeakTime,
-              leftButtonText: 'رای گیری',
-              rightButtonText: 'رای گیری دفاعیه',
-              isDefense: true,
-            ),
-          );
+          if (GodfatherScenario.defendingPlayers.isNotEmpty) {
+            Navigator.pushNamed(
+              context,
+              '/talking_page',
+              arguments: TalkingPageScreenArguments(
+                nextPagePath: '/defense_voting_page',
+                seconds: GameSettings.currentGameSettings.mainSpeakTime,
+                leftButtonText: 'رای گیری',
+                rightButtonText: 'رای گیری دفاعیه',
+                isDefense: true,
+              ),
+            );
+          } else {
+            Navigator.pushNamed(context, '/night_page');
+          }
         },
         child: Directionality(
           textDirection: TextDirection.ltr,

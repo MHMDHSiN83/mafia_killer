@@ -14,10 +14,13 @@ class FaceOff extends LastMoveCard {
   @override
   Map<String, dynamic> toJson() => _$FaceOffToJson(this);
 
-
-
   @override
   int titleHorizontalRatio() {
-    return 12;
+    return 8;
+  }
+
+  @override
+  int rightSpaceOfTitleHorizontalRatio() {
+    return 11;
   }
 }

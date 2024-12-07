@@ -14,15 +14,15 @@ class SilenceOfTheLambs extends LastMoveCard {
   @override
   Map<String, dynamic> toJson() => _$SilenceOfTheLambsToJson(this);
 
-
   @override
   int titleHorizontalRatio() {
     return 20;
   }
 
   @override
-  int descriptionHorizontalRatio() {
-    return 2;
+  int rightSpaceOfTitleHorizontalRatio() {
+    return 30;
   }
 
+ 
 }

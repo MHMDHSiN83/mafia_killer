@@ -13,9 +13,13 @@ class RevealIdentity extends LastMoveCard {
   @override
   Map<String, dynamic> toJson() => _$RevealIdentityToJson(this);
 
-
   @override
   int titleHorizontalRatio() {
     return 10;
+  }
+
+  @override
+  int rightSpaceOfTitleHorizontalRatio() {
+    return 12;
   }
 }

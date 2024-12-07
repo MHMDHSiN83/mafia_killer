@@ -14,9 +14,13 @@ class BeautifulMind extends LastMoveCard {
   @override
   Map<String, dynamic> toJson() => _$BeautifulMindToJson(this);
 
-
   @override
   int titleHorizontalRatio() {
     return 5;
+  }
+
+  @override
+  int rightSpaceOfTitleHorizontalRatio() {
+    return 7;
   }
 }

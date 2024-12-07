@@ -3,14 +3,13 @@ import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/themes/app_color.dart';
 
 class VotingTile extends StatefulWidget {
-  VotingTile({
-    super.key,
-    required this.player,
-    required this.isRegularVoting,
-    required this.addPlayer,
-    required this.removePlayer,
-    required this.disable,
-  });
+  VotingTile(
+      {super.key,
+      required this.player,
+      required this.isRegularVoting,
+      required this.addPlayer,
+      required this.removePlayer,
+      required this.disable,});
 
   Player player;
   bool isRegularVoting;
