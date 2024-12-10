@@ -3,6 +3,7 @@ import 'package:mafia_killer/components/page_frame.dart';
 import 'package:mafia_killer/components/voting_tile.dart';
 import 'package:mafia_killer/databases/game_settings.dart';
 import 'package:mafia_killer/databases/player.dart';
+import 'package:mafia_killer/models/player_status.dart';
 import 'package:mafia_killer/models/scenarios/godfather/godfather_scenario.dart';
 import 'package:mafia_killer/models/talking_page_screen_arguments.dart';
 
@@ -53,16 +54,28 @@ class RegularVotingPage extends StatelessWidget {
               mainAxisSpacing: 0,
               crossAxisSpacing: 0,
             ),
-            itemCount: Player.inGamePlayers.length,
+            itemCount: Player.inGamePlayers
+                .where((player) => player.playerStatus == PlayerStatus.active)
+                .toList()
+                .length,
             itemBuilder: (context, index) {
               return VotingTile(
-                player: Player.inGamePlayers[index],
+                player: Player.inGamePlayers
+                    .where(
+                        (player) => player.playerStatus == PlayerStatus.active)
+                    .toList()[index],
                 isRegularVoting: true,
                 addPlayer: () {
-                  addPlayer(Player.inGamePlayers[index]);
+                  addPlayer(Player.inGamePlayers
+                      .where((player) =>
+                          player.playerStatus == PlayerStatus.active)
+                      .toList()[index]);
                 },
                 removePlayer: () {
-                  removePlayer(Player.inGamePlayers[index]);
+                  removePlayer(Player.inGamePlayers
+                      .where((player) =>
+                          player.playerStatus == PlayerStatus.active)
+                      .toList()[index]);
                 },
                 disable: () => false,
               );

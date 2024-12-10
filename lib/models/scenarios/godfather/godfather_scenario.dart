@@ -20,8 +20,8 @@ class GodfatherScenario extends Scenario {
   static Map<NightEvent, Player?> nightEvents = {};
   static List<Player> defendingPlayers = [];
   static Player? killedInDayPlayer;
-  
-  
+  static List<Player> silencedPlayerDuringDay = [];
+
   static Iterable<String> callRolesIntroNight() sync* {
     Player nostradamusPlayer = Player.getPlayerByRoleType(Nostradamus);
     yield nostradamusPlayer.role!.introAwakingRole();

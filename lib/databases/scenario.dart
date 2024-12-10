@@ -73,6 +73,7 @@ class Scenario {
     } else {
       print('scenario already exists in internal storage');
       String jsonString = await file.readAsString();
+
       List<dynamic> jsonData = jsonDecode(jsonString);
       scenarios = jsonData.map((player) => Scenario.fromJson(player)).toList();
     }

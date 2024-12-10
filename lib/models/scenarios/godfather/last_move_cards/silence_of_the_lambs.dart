@@ -1,6 +1,8 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:mafia_killer/components/last_move_card_tile.dart';
+import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/models/last_move_card.dart';
+import 'package:mafia_killer/models/scenarios/godfather/godfather_scenario.dart';
 
 part 'silence_of_the_lambs.g.dart';
 
@@ -24,5 +26,12 @@ class SilenceOfTheLambs extends LastMoveCard {
     return 30;
   }
 
- 
+  @override
+  void lastMoveCardAction(List<Player> players, bool succeed) {
+    if (succeed) {
+      for (int i = 0; i < players.length; i++) {
+        GodfatherScenario.silencedPlayerDuringDay.add(players[i]);
+      }
+    }
+  }
 }

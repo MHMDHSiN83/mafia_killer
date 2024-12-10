@@ -205,6 +205,7 @@ class _LastMoveCardTileState extends State<LastMoveCardTile>
       onTap: () {
         if (LastMoveCardPage.canClick) {
           _flipCard();
+          
           //LastMoveCardPage.canClick = false;
           LastMoveCardPage.selectedLastMoveCard = widget.lastMoveCard;
         }

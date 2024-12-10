@@ -1,3 +1,4 @@
+import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/models/scenarios/godfather/last_move_cards/beautiful_mind.dart';
 import 'package:mafia_killer/models/scenarios/godfather/last_move_cards/face_off.dart';
 import 'package:mafia_killer/models/scenarios/godfather/last_move_cards/handcuffs.dart';
@@ -35,6 +36,7 @@ class LastMoveCard {
       'description': description,
       'imagePath': imagePath,
       'flippedImagePath': flippedImagePath,
+      'isUsed' : isUsed,
     };
   }
 
@@ -58,5 +60,9 @@ class LastMoveCard {
 
   int descriptionHorizontalRatio() {
     throw Exception();
+  }
+
+  void lastMoveCardAction(List<Player> players, bool succeed) {
+    throw Exception("no action defined for last move card!");
   }
 }

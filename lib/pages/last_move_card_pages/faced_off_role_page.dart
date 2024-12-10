@@ -6,10 +6,11 @@ import 'package:mafia_killer/models/role.dart';
 import 'package:mafia_killer/models/role_side.dart';
 import 'package:mafia_killer/models/scenarios/godfather/godfather_scenario.dart';
 import 'package:mafia_killer/pages/last_move_card_page.dart';
+import 'package:mafia_killer/pages/last_move_card_pages/face_off_page.dart';
 import 'package:mafia_killer/themes/app_color.dart';
 
-class RevealIdentityPage extends StatelessWidget {
-  const RevealIdentityPage({super.key});
+class FacedOffRolePage extends StatelessWidget {
+  const FacedOffRolePage({super.key});
 
   Color determineRoleCardBorderColor() {
     Role role = GodfatherScenario.killedInDayPlayer!.role!;
@@ -34,9 +35,12 @@ class RevealIdentityPage extends StatelessWidget {
               'شب ${Scenario.currentScenario.dayAndNightNumber(number: Scenario.currentScenario.nightNumber)}',
           leftButtonOnTap: () => Navigator.pop(context),
           rightButtonOnTap: () {
-            LastMoveCardPage.selectedLastMoveCard!.lastMoveCardAction(
-                [GodfatherScenario.killedInDayPlayer!], true);
+            LastMoveCardPage.selectedLastMoveCard!.lastMoveCardAction([
+              GodfatherScenario.killedInDayPlayer!,
+              FaceOffPage.selectedPlayers[0]
+            ], true);
             Navigator.pushNamed(context, '/night_page');
+            
           },
           child: Column(
             children: [
@@ -66,7 +70,7 @@ class RevealIdentityPage extends StatelessWidget {
                     padding: const EdgeInsets.all(8.0),
                     child: CallRole(
                         text:
-                            "${GodfatherScenario.killedInDayPlayer!.name} یکیو انتخاب کن که نقشتو باهاش عوض کنی و بعد به شب برو",
+                            "${FaceOffPage.selectedPlayers[0].name} را بیدار کن و نقش جدیدشو بهش نشون بده",
                         onPressed: () {},
                         buttonText: ""),
                   ))

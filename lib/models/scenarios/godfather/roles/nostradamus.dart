@@ -15,14 +15,18 @@ class Nostradamus extends Role {
     roleSide = RoleSide.independant;
     cardImagePath = "lib/images/roles/nostradamus.jpg";
   }
-  factory Nostradamus.fromJson(Map<String, dynamic> json) =>
-      _$NostradamusFromJson(json);
-
+  
 
   late RoleSide inGameRoleSide;
+  bool shield = true;
 
+
+  factory Nostradamus.fromJson(Map<String, dynamic> json) =>
+      _$NostradamusFromJson(json);
   @override
   Map<String, dynamic> toJson() => _$NostradamusToJson(this);
+
+  
   int introNightAction(List<Player> players) {
     int result = 0;
     for (Player player in players) {
