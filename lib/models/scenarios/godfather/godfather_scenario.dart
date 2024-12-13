@@ -1,9 +1,12 @@
+import 'dart:convert';
+
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/models/player_status.dart';
 import 'package:mafia_killer/models/role.dart';
 import 'package:mafia_killer/models/role_side.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/godfather.dart';
+import 'package:mafia_killer/models/scenarios/godfather/roles/mafia.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/nostradamus.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/saul_goodman.dart';
 import 'package:mafia_killer/models/ui_player_status.dart';
@@ -143,6 +146,7 @@ class GodfatherScenario extends Scenario {
         saulGoodmanPlayer.role!.nightAction(NightPage.targetPlayer);
         if (NightPage.targetPlayer!.role is Citizen) {
           // nightEvents[NightEvent.boughtBySaulGoodman] = NightPage.targetPlayer;
+          NightPage.targetPlayer!.role = Role.fromJson(jsonDecode(jsonEncode(Scenario.currentScenario.getRoleByType(Mafia, searchInGmaeRoles: false)!.toJson())));
           yield 'خریداری موفقیت آمیز بود. فرد خریداری شده رو بیدار کن تا هم تیمیاشو ببینه';
         } else {
           yield 'خریداری موفقیت امیز نبود. کمی راه برو و اتمام رو بزن';
@@ -205,6 +209,7 @@ class GodfatherScenario extends Scenario {
     NightPage.isNightOver = true;
     NightPage.buttonText = "";
     yield "همه بیدار شن";
+    print("objectsssssssssssssssssssssssssss");
     print(nightEvents);
     print(nightReport());
   }
@@ -213,7 +218,7 @@ class GodfatherScenario extends Scenario {
     String report = "";
 
     Player? shotByMafia = nightEvents[NightEvent.shotByMafia];
-    Player? savedByDoctor = nightEvents[NightEvent.savedByDoctor]!;
+    Player? savedByDoctor = nightEvents[NightEvent.savedByDoctor];
     Player? shotByLeon = nightEvents[NightEvent.shotByLeon];
     Player? revivedByConstantine = nightEvents[NightEvent.revivedByConstantine];
     Player? inquiryByCitizenKane = nightEvents[NightEvent.inquiryByCitizenKane];
@@ -228,7 +233,7 @@ class GodfatherScenario extends Scenario {
 
     // mafia shot process -> Done
     if (shotByMafia != null) {
-      if (savedByDoctor.name != shotByMafia.name &&
+      if (savedByDoctor?.name != shotByMafia.name &&
           (shotByMafia.role is! Leon ||
               (shotByMafia.role is Leon &&
                   (shotByMafia.role as Leon).shield <= 0)) &&
@@ -244,6 +249,7 @@ class GodfatherScenario extends Scenario {
     // mafia sixth sense -> Done
     if (sixthSensedByGodfather != null) {
       // if it isn't null it means it succeeded
+      sixthSensedByGodfather.playerStatus = PlayerStatus.removed;
       report +=
           "${sixthSensedByGodfather.name} سلاخی شد و از بازی به طور کامل خارج میشود\n";
     }
@@ -257,7 +263,7 @@ class GodfatherScenario extends Scenario {
           (shotByLeon.role is! Godfather ||
               (shotByLeon.role is Godfather &&
                   (shotByLeon.role as Godfather).shield <= 0)) &&
-          shotByLeon.name != savedByDoctor.name) {
+          shotByLeon.name != savedByDoctor?.name) {
         shotByLeon.playerStatus = PlayerStatus.dead;
         report += "${shotByLeon.name} کشته شد.\n";
       } else if (shotByLeon.role is Godfather &&
@@ -339,5 +345,17 @@ class GodfatherScenario extends Scenario {
   static void shuffleLastMoveCards() {
     print("shuffled!");
     Scenario.currentScenario.lastMoveCards.shuffle();
+  }
+
+  static void resetDataBeforeNight() {
+    nightEvents = {};
+    defendingPlayers = [];
+    killedInDayPlayer = null;
+    silencedPlayerDuringDay = [];
+    for (Player player in Player.inGamePlayers) {
+      if (player.playerStatus == PlayerStatus.disable) {
+        player.playerStatus = PlayerStatus.active;
+      }
+    }
   }
 }

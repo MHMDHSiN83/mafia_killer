@@ -169,6 +169,7 @@ class _NightPageState extends State<NightPage> {
             .iterator;
     iterator.moveNext();
     text = iterator.current;
+    GodfatherScenario.resetDataBeforeNight();
     super.initState();
   }
 
@@ -187,8 +188,10 @@ class _NightPageState extends State<NightPage> {
         },
         rightButtonOnTap: () {
           if (NightPage.isNightOver) {
+            iterator.moveNext();
             Scenario.currentScenario.goToNextStage();
             resetNight();
+
             Navigator.pushNamed(
               context,
               '/talking_page',

@@ -6,6 +6,7 @@ import 'package:mafia_killer/models/scenarios/godfather/roles/constantine.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/doctor_watson.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/godfather.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/leon.dart';
+import 'package:mafia_killer/models/scenarios/godfather/roles/mafia.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/matador.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/nostradamus.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/saul_goodman.dart';
@@ -38,6 +39,8 @@ class Role {
         return SaulGoodman.fromJson(json);
       case 'ماتادور':
         return Matador.fromJson(json);
+      case 'مافیا ساده':
+      return Mafia.fromJson(json);
       case 'نوستراداموس':
         return Nostradamus.fromJson(json);
       case 'دکتر واتسون':

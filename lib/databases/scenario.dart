@@ -11,6 +11,7 @@ import 'package:mafia_killer/models/scenarios/godfather/roles/constantine.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/doctor_watson.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/godfather.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/leon.dart';
+import 'package:mafia_killer/models/scenarios/godfather/roles/mafia.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/matador.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/saul_goodman.dart';
 import 'package:path_provider/path_provider.dart';
@@ -81,7 +82,9 @@ class Scenario {
   }
 
   List<Role> getRolesBySide(RoleSide side) {
-    return roles.where((role) => role.roleSide == side).toList();
+    return roles
+        .where((role) => role.roleSide == side && role is! Mafia)
+        .toList();
   }
 
   static Future<void> addRole(Role newRole) async {
@@ -198,13 +201,22 @@ class Scenario {
     return citizenRoles;
   }
 
-  Role? getRoleByType(Type type) {
-    for (Role role in inGameRoles) {
-      if (role.runtimeType == type) {
-        return role;
+  Role? getRoleByType(Type type, {searchInGmaeRoles = true}) {
+    if (searchInGmaeRoles) {
+      for (Role role in inGameRoles) {
+        if (role.runtimeType == type) {
+          return role;
+        }
       }
+      return null;
+    } else {
+      for (Role role in roles) {
+        if (role.runtimeType == type) {
+          return role;
+        }
+      }
+      return null;
     }
-    return null;
   }
 
   String dayAndNightNumber({int? number}) {
