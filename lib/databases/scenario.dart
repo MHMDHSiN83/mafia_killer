@@ -276,4 +276,5 @@ class Scenario {
   bool isIntroDay() {
     return dayNumber == 0;
   }
+
 }

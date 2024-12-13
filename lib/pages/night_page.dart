@@ -191,19 +191,7 @@ class _NightPageState extends State<NightPage> {
             iterator.moveNext();
             Scenario.currentScenario.goToNextStage();
             resetNight();
-
-            Navigator.pushNamed(
-              context,
-              '/talking_page',
-              arguments: TalkingPageScreenArguments(
-                nextPagePath: '/regular_voting_page',
-                seconds: GameSettings.currentGameSettings.mainSpeakTime,
-                leftButtonText:
-                    'شب ${Scenario.currentScenario.dayAndNightNumber(number: Scenario.currentScenario.nightNumber - 1)}',
-                rightButtonText: 'رای گیری',
-                isDefense: false,
-              ),
-            );
+            Navigator.pushNamed(context, '/night_events_page');
           }
         },
         child: Padding(

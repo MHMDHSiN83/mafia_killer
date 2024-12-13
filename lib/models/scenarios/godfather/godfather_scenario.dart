@@ -24,6 +24,7 @@ class GodfatherScenario extends Scenario {
   static List<Player> defendingPlayers = [];
   static Player? killedInDayPlayer;
   static List<Player> silencedPlayerDuringDay = [];
+  static List<String> report = [];
 
   static Iterable<String> callRolesIntroNight() sync* {
     Player nostradamusPlayer = Player.getPlayerByRoleType(Nostradamus);
@@ -146,7 +147,10 @@ class GodfatherScenario extends Scenario {
         saulGoodmanPlayer.role!.nightAction(NightPage.targetPlayer);
         if (NightPage.targetPlayer!.role is Citizen) {
           // nightEvents[NightEvent.boughtBySaulGoodman] = NightPage.targetPlayer;
-          NightPage.targetPlayer!.role = Role.fromJson(jsonDecode(jsonEncode(Scenario.currentScenario.getRoleByType(Mafia, searchInGmaeRoles: false)!.toJson())));
+          NightPage.targetPlayer!.role = Role.fromJson(jsonDecode(jsonEncode(
+              Scenario.currentScenario
+                  .getRoleByType(Mafia, searchInGmaeRoles: false)!
+                  .toJson())));
           yield 'خریداری موفقیت آمیز بود. فرد خریداری شده رو بیدار کن تا هم تیمیاشو ببینه';
         } else {
           yield 'خریداری موفقیت امیز نبود. کمی راه برو و اتمام رو بزن';
@@ -211,12 +215,10 @@ class GodfatherScenario extends Scenario {
     yield "همه بیدار شن";
     print("objectsssssssssssssssssssssssssss");
     print(nightEvents);
-    print(nightReport());
+    nightReport();
   }
 
-  static String nightReport() {
-    String report = "";
-
+  static void nightReport() {
     Player? shotByMafia = nightEvents[NightEvent.shotByMafia];
     Player? savedByDoctor = nightEvents[NightEvent.savedByDoctor];
     Player? shotByLeon = nightEvents[NightEvent.shotByLeon];
@@ -239,7 +241,7 @@ class GodfatherScenario extends Scenario {
                   (shotByMafia.role as Leon).shield <= 0)) &&
           shotByMafia.role is! Nostradamus) {
         shotByMafia.playerStatus = PlayerStatus.dead;
-        report += "${shotByMafia.name} کشته شد.\n";
+        report.add("${shotByMafia.name} کشته شد.");
       } else if (shotByMafia.role is Leon &&
           (shotByMafia.role as Leon).shield == 1) {
         (shotByMafia.role as Leon).shield--;
@@ -250,22 +252,22 @@ class GodfatherScenario extends Scenario {
     if (sixthSensedByGodfather != null) {
       // if it isn't null it means it succeeded
       sixthSensedByGodfather.playerStatus = PlayerStatus.removed;
-      report +=
-          "${sixthSensedByGodfather.name} سلاخی شد و از بازی به طور کامل خارج میشود\n";
+      report.add(
+          "${sixthSensedByGodfather.name} سلاخی شد و از بازی به طور کامل خارج میشود");
     }
 
     // leon shot process -> Done
     if (shotByLeon != null) {
       if (shotByLeon.role!.roleSide == RoleSide.citizen) {
         leon.playerStatus = PlayerStatus.dead;
-        report += "${leon.name} کشته شد.\n";
+        report.add("${leon.name} کشته شد.");
       } else if (shotByLeon.role is! Nostradamus &&
           (shotByLeon.role is! Godfather ||
               (shotByLeon.role is Godfather &&
                   (shotByLeon.role as Godfather).shield <= 0)) &&
           shotByLeon.name != savedByDoctor?.name) {
         shotByLeon.playerStatus = PlayerStatus.dead;
-        report += "${shotByLeon.name} کشته شد.\n";
+        report.add("${shotByLeon.name} کشته شد.)");
       } else if (shotByLeon.role is Godfather &&
           (shotByLeon.role as Godfather).shield == 1) {
         (shotByLeon.role as Godfather).shield--;
@@ -275,13 +277,13 @@ class GodfatherScenario extends Scenario {
     // citizen kane inquiry -> player has to die the next day
     if ((citizenKane.role as CitizenKane).remainingAbility == 0) {
       citizenKane.playerStatus = PlayerStatus.dead;
-      report += "${citizenKane.name} کشته شد.\n";
+      report.add("${citizenKane.name} کشته شد.)");
     }
     if (inquiryByCitizenKane != null) {
       if (citizenKane.playerStatus == PlayerStatus.active &&
           inquiryByCitizenKane.playerStatus == PlayerStatus.active) {
         if (inquiryByCitizenKane.role!.roleSide == RoleSide.mafia) {
-          report += "${inquiryByCitizenKane.name} مافیای بازی است\n";
+          report.add("${inquiryByCitizenKane.name} مافیای بازی است");
         }
         (citizenKane.role as CitizenKane).remainingAbility--;
       }
@@ -289,9 +291,8 @@ class GodfatherScenario extends Scenario {
     // constantine reviving
     if (revivedByConstantine != null) {
       revivedByConstantine.playerStatus = PlayerStatus.active;
-      report += "${revivedByConstantine.name} متولد شد.";
+      report.add("${revivedByConstantine.name} متولد شد.");
     }
-    return report;
   }
 
   static bool ableToSixthSense() {
@@ -343,7 +344,6 @@ class GodfatherScenario extends Scenario {
   }
 
   static void shuffleLastMoveCards() {
-    print("shuffled!");
     Scenario.currentScenario.lastMoveCards.shuffle();
   }
 
@@ -352,10 +352,25 @@ class GodfatherScenario extends Scenario {
     defendingPlayers = [];
     killedInDayPlayer = null;
     silencedPlayerDuringDay = [];
+    report = [];
+
     for (Player player in Player.inGamePlayers) {
       if (player.playerStatus == PlayerStatus.disable) {
         player.playerStatus = PlayerStatus.active;
       }
     }
+  }
+
+  // @override
+  static int numberOfDeadPlayersBySide(RoleSide roleSide) {
+    int counter = 0;
+    for (Player player in Player.inGamePlayers) {
+      if ((player.playerStatus == PlayerStatus.dead ||
+              player.playerStatus == PlayerStatus.removed) &&
+          player.role!.roleSide == roleSide) {
+        counter++;
+      }
+    }
+    return counter;
   }
 }

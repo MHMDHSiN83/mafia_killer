@@ -2,6 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:mafia_killer/components/inquiry_dialog.dart';
 import 'package:mafia_killer/components/night_event_tile.dart';
 import 'package:mafia_killer/components/page_frame.dart';
+import 'package:mafia_killer/databases/game_settings.dart';
+import 'package:mafia_killer/databases/scenario.dart';
+import 'package:mafia_killer/models/role_side.dart';
+import 'package:mafia_killer/models/scenarios/godfather/godfather_scenario.dart';
+import 'package:mafia_killer/models/scenarios/godfather/roles/godfather.dart';
+import 'package:mafia_killer/models/talking_page_screen_arguments.dart';
 import 'package:mafia_killer/themes/app_color.dart';
 
 class NightEventsPage extends StatefulWidget {
@@ -28,7 +34,7 @@ class _PlayersPageState extends State<NightEventsPage> {
           child: Column(
             children: [
               Text(
-                '۲ شهروند',
+                '${GodfatherScenario.numberOfDeadPlayersBySide(RoleSide.citizen)} شهروند',
                 style: TextStyle(
                   fontSize: 20,
                   color: Theme.of(context).colorScheme.inversePrimary,
@@ -39,7 +45,7 @@ class _PlayersPageState extends State<NightEventsPage> {
                 height: 10,
               ),
               Text(
-                '۱ مافیا',
+                '${GodfatherScenario.numberOfDeadPlayersBySide(RoleSide.mafia)} مافیا',
                 style: TextStyle(
                   fontSize: 20,
                   color: Theme.of(context).colorScheme.inversePrimary,
@@ -50,7 +56,7 @@ class _PlayersPageState extends State<NightEventsPage> {
                 height: 10,
               ),
               Text(
-                '۱ نوستراداموس',
+                '${GodfatherScenario.numberOfDeadPlayersBySide(RoleSide.independant)} نوستراداموس',
                 style: TextStyle(
                   fontSize: 20,
                   color: Theme.of(context).colorScheme.inversePrimary,
@@ -85,7 +91,20 @@ class _PlayersPageState extends State<NightEventsPage> {
         leftButtonText: "قبلی",
         rightButtonText: "رای گیری",
         leftButtonOnTap: () => Navigator.pop(context),
-        rightButtonOnTap: () => Navigator.pushNamed(context, '/'),
+        rightButtonOnTap: () {
+          Navigator.pushNamed(
+            context,
+            '/talking_page',
+            arguments: TalkingPageScreenArguments(
+              nextPagePath: '/regular_voting_page',
+              seconds: GameSettings.currentGameSettings.mainSpeakTime,
+              leftButtonText:
+                  'شب ${Scenario.currentScenario.dayAndNightNumber(number: Scenario.currentScenario.nightNumber - 1)}',
+              rightButtonText: 'رای گیری',
+              isDefense: false,
+            ),
+          );
+        },
         child: Container(
           padding: const EdgeInsets.only(bottom: 30),
           child: Center(
@@ -111,11 +130,13 @@ class _PlayersPageState extends State<NightEventsPage> {
                           Expanded(
                             flex: 12,
                             child: ListView.builder(
-                              itemCount: 3,
+                              itemCount: GodfatherScenario.report.length,
                               physics: const NeverScrollableScrollPhysics(),
-                              itemBuilder: (context, index) =>
-                                  const NightEventTile(
-                                text: "محمد و مهدی کشته های شب !!!",
+                              itemBuilder: (context, index) => Container(
+                                margin: EdgeInsets.symmetric(vertical: 10),
+                                child: NightEventTile(
+                                  text: GodfatherScenario.report[index],
+                                ),
                               ),
                             ),
                           ),
@@ -136,7 +157,7 @@ class _PlayersPageState extends State<NightEventsPage> {
                                   'استعلام وضعیت',
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
-                                    fontSize: 20,
+                                    fontSize: 18,
                                     color: Theme.of(context)
                                         .colorScheme
                                         .inversePrimary,

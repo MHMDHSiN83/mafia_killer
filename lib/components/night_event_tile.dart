@@ -17,7 +17,7 @@ class NightEventTile extends StatelessWidget {
           child: const Icon(
             Icons.circle,
             color: AppColors.brownColor,
-            size: 18,
+            size: 16,
           ),
         ),
         Flexible(
@@ -25,7 +25,7 @@ class NightEventTile extends StatelessWidget {
             text,
             style: const TextStyle(
               color: AppColors.brownColor,
-              fontSize: 22,
+              fontSize: 20,
               fontWeight: FontWeight.w900,
             ),
           ),
