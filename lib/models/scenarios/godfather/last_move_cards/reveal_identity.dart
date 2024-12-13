@@ -1,6 +1,8 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:mafia_killer/components/last_move_card_tile.dart';
+import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/models/last_move_card.dart';
+import 'package:mafia_killer/models/player_status.dart';
 
 part 'reveal_identity.g.dart';
 
@@ -21,5 +23,10 @@ class RevealIdentity extends LastMoveCard {
   @override
   int rightSpaceOfTitleHorizontalRatio() {
     return 12;
+  }
+
+  @override
+  void lastMoveCardAction(List<Player> players, bool succeed) {
+    players[0].playerStatus = PlayerStatus.removed;
   }
 }

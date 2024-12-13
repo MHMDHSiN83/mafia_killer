@@ -3,19 +3,23 @@ import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/themes/app_color.dart';
 
 class VotingTile extends StatefulWidget {
-  VotingTile(
-      {super.key,
-      required this.player,
-      required this.isRegularVoting,
-      required this.addPlayer,
-      required this.removePlayer,
-      required this.disable,});
+  VotingTile({
+    super.key,
+    required this.player,
+    required this.isRegularVoting,
+    required this.addPlayer,
+    required this.removePlayer,
+    required this.disable,
+    this.stamp,
+  });
 
   Player player;
   bool isRegularVoting;
   VoidCallback addPlayer;
   VoidCallback removePlayer;
   Function disable;
+  String? stamp;
+
   @override
   State<VotingTile> createState() => _VotingTileState();
 }
@@ -83,7 +87,11 @@ class _VotingTileState extends State<VotingTile> {
                   ),
                   child: Center(
                     child: Text(
-                      (widget.isRegularVoting) ? "دفاعیه" : "کشته",
+                      (widget.stamp != null)
+                          ? widget.stamp!
+                          : (widget.isRegularVoting)
+                              ? "دفاعیه"
+                              : "کشته",
                       style: const TextStyle(
                         color: AppColors.redColor,
                         fontSize: 20,

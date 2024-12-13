@@ -5,7 +5,11 @@ import 'package:mafia_killer/pages/game_settings_page.dart';
 import 'package:mafia_killer/pages/intro_night_page.dart';
 import 'package:mafia_killer/pages/intro_page.dart';
 import 'package:mafia_killer/pages/last_move_card_page.dart';
+import 'package:mafia_killer/pages/last_move_card_pages/face_off_page.dart';
+import 'package:mafia_killer/pages/last_move_card_pages/faced_off_role_page.dart';
+import 'package:mafia_killer/pages/last_move_card_pages/handcuffs_page.dart';
 import 'package:mafia_killer/pages/last_move_card_pages/reveal_identity_page.dart';
+import 'package:mafia_killer/pages/last_move_card_pages/silence_of_the_lambs_page.dart';
 import 'package:mafia_killer/pages/loading_page.dart';
 import 'package:mafia_killer/pages/night_events_page.dart';
 import 'package:mafia_killer/pages/night_page.dart';
@@ -70,6 +74,10 @@ class MyApp extends StatelessWidget {
         '/last_move_card_page': (context) => LastMoveCardPage(),
         '/reveal_identity_page': (context) => RevealIdentityPage(),
         '/test': (context) => StackNavigator(),
+        '/face_off_page' : (context) => FaceOffPage(),
+        '/faced_off_role_page' : (context) => FacedOffRolePage(),
+        '/handcuffs_page' : (context) => HandcuffsPage(),
+        '/silence_of_the_lambs_page' : (context) => SilenceOfTheLambsPage(),
       },
     );
   }

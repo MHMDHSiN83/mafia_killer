@@ -5,7 +5,10 @@ import 'package:mafia_killer/components/page_frame.dart';
 import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/models/last_move_card.dart';
 import 'package:mafia_killer/models/scenarios/godfather/godfather_scenario.dart';
+import 'package:mafia_killer/models/scenarios/godfather/last_move_cards/face_off.dart';
+import 'package:mafia_killer/models/scenarios/godfather/last_move_cards/handcuffs.dart';
 import 'package:mafia_killer/models/scenarios/godfather/last_move_cards/reveal_identity.dart';
+import 'package:mafia_killer/models/scenarios/godfather/last_move_cards/silence_of_the_lambs.dart';
 
 class LastMoveCardPage extends StatefulWidget {
   const LastMoveCardPage({super.key});
@@ -37,11 +40,16 @@ class _LastMoveCardPageState extends State<LastMoveCardPage> {
           LastMoveCardPage.selectedLastMoveCard!.isUsed = true;
           if (LastMoveCardPage.selectedLastMoveCard is RevealIdentity) {
             Navigator.pushNamed(context, '/reveal_identity_page');
-          }
-          else{
+          } else if (LastMoveCardPage.selectedLastMoveCard is FaceOff) {
+            Navigator.pushNamed(context, '/face_off_page');
+          } else if (LastMoveCardPage.selectedLastMoveCard is Handcuffs) {
+            Navigator.pushNamed(context, '/handcuffs_page');
+          } else if (LastMoveCardPage.selectedLastMoveCard
+              is SilenceOfTheLambs) {
+            Navigator.pushNamed(context, '/silence_of_the_lambs_page');
+          } else {
             Navigator.pushNamed(context, '/night_page');
           }
-          
         },
         isInGame: true,
         child: Column(

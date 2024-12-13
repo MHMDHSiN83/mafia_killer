@@ -10,11 +10,13 @@ Handcuffs _$HandcuffsFromJson(Map<String, dynamic> json) => Handcuffs()
   ..title = json['title'] as String
   ..description = json['description'] as String
   ..imagePath = json['imagePath'] as String
-  ..flippedImagePath = json['flippedImagePath'] as String;
+  ..flippedImagePath = json['flippedImagePath'] as String
+  ..isUsed = json['isUsed'] as bool;
 
 Map<String, dynamic> _$HandcuffsToJson(Handcuffs instance) => <String, dynamic>{
       'title': instance.title,
       'description': instance.description,
       'imagePath': instance.imagePath,
       'flippedImagePath': instance.flippedImagePath,
+      'isUsed': instance.isUsed,
     };
