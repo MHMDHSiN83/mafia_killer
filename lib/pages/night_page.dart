@@ -9,8 +9,10 @@ import 'package:mafia_killer/components/sixth_sense_box.dart';
 import 'package:mafia_killer/databases/game_settings.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/databases/scenario.dart';
+import 'package:mafia_killer/models/player_status.dart';
 import 'package:mafia_killer/models/scenarios/godfather/godfather_scenario.dart';
 import 'package:mafia_killer/models/talking_page_screen_arguments.dart';
+import 'package:mafia_killer/models/ui_player_status.dart';
 
 class NightPage extends StatefulWidget {
   const NightPage({super.key});
@@ -134,6 +136,32 @@ class _NightPageState extends State<NightPage> {
     );
   }
 
+  void resetNight() {
+    iterator =
+        GodfatherScenario.callRolesRegularNight(mafiaChoicBox, noAbilityBox)
+            .iterator;
+    iterator.moveNext();
+    text = iterator.current;
+    NightPage.targetPlayer = null;
+    NightPage.mafiaTeamChoice = 0;
+    NightPage.buttonText = 'بیدار شدند';
+    NightPage.typeOfConfirmation = 0;
+    NightPage.ableToSelectTile = false;
+    NightPage.isNightOver = false;
+    GodfatherScenario.nightEvents = {};
+    resetTiles();
+  }
+
+  void resetTiles() {
+    for (Player player in Player.inGamePlayers) {
+      if(player.playerStatus == PlayerStatus.removed || player.playerStatus == PlayerStatus.dead) {
+        player.uiPlayerStatus = UIPlayerStatus.untargetable;
+      } else {
+        player.uiPlayerStatus = UIPlayerStatus.targetable;
+      }
+    }
+  }
+
   @override
   void initState() {
     iterator =
@@ -160,6 +188,7 @@ class _NightPageState extends State<NightPage> {
         rightButtonOnTap: () {
           if (NightPage.isNightOver) {
             Scenario.currentScenario.goToNextStage();
+            resetNight();
             Navigator.pushNamed(
               context,
               '/talking_page',
@@ -178,6 +207,16 @@ class _NightPageState extends State<NightPage> {
           padding: const EdgeInsets.symmetric(horizontal: 12),
           child: Column(
             children: [
+              Expanded(
+                child: GestureDetector(
+                  child: Text('data'),
+                  onTap: () {
+                    setState(() {
+                      resetNight();
+                    });
+                  },
+                ),
+              ),
               Expanded(
                 flex: 15,
                 child: Directionality(

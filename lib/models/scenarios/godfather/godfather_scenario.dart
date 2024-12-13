@@ -20,8 +20,7 @@ class GodfatherScenario extends Scenario {
   static Map<NightEvent, Player?> nightEvents = {};
   static List<Player> defendingPlayers = [];
   static Player? killedInDayPlayer;
-  
-  
+
   static Iterable<String> callRolesIntroNight() sync* {
     Player nostradamusPlayer = Player.getPlayerByRoleType(Nostradamus);
     yield nostradamusPlayer.role!.introAwakingRole();
@@ -124,12 +123,15 @@ class GodfatherScenario extends Scenario {
     mafiaChoiceBox();
     yield mafiaTeamAct[NightPage.mafiaTeamChoice];
     NightPage.typeOfConfirmation = 0;
+    Player? godfatherPlayer = Player.getPlayerByRoleType(Godfather);
+    Player? saulGoodmanPlayer = Player.getPlayerByRoleType(SaulGoodman);
     switch (NightPage.mafiaTeamChoice) {
       case 0: // shot
         nightEvents[NightEvent.shotByMafia] = NightPage.targetPlayer;
         break;
       case 1:
-        nightEvents[NightEvent.sixthSensedByGodfather] = NightPage.targetPlayer;
+        godfatherPlayer.role!.nightAction(NightPage.targetPlayer);
+        // nightEvents[NightEvent.sixthSensedByGodfather] = NightPage.targetPlayer;
         if (NightPage.targetPlayer != null) {
           NightPage.targetPlayer!.playerStatus = PlayerStatus.disable;
         }
@@ -137,8 +139,9 @@ class GodfatherScenario extends Scenario {
       case 2: // buying
         NightPage.ableToSelectTile = false;
         NightPage.buttonText = 'اتمام';
+        saulGoodmanPlayer.role!.nightAction(NightPage.targetPlayer);
         if (NightPage.targetPlayer!.role is Citizen) {
-          nightEvents[NightEvent.boughtBySaulGoodman] = NightPage.targetPlayer;
+          // nightEvents[NightEvent.boughtBySaulGoodman] = NightPage.targetPlayer;
           yield 'خریداری موفقیت آمیز بود. فرد خریداری شده رو بیدار کن تا هم تیمیاشو ببینه';
         } else {
           yield 'خریداری موفقیت امیز نبود. کمی راه برو و اتمام رو بزن';

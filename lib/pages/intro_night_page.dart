@@ -10,7 +10,6 @@ import 'package:mafia_killer/models/role_side.dart';
 import 'package:mafia_killer/models/scenarios/godfather/godfather_scenario.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/nostradamus.dart';
 import 'package:mafia_killer/models/talking_page_screen_arguments.dart';
-import 'package:mafia_killer/themes/app_color.dart';
 
 class IntroNightPage extends StatefulWidget {
   const IntroNightPage({super.key});
@@ -74,12 +73,24 @@ class _IntroNightPageState extends State<IntroNightPage> {
     );
   }
 
+  void resetNight() {
+    IntroNightPage.targetPlayers = [];
+    IntroNightPage.buttonText = 'بیدار شد';
+    IntroNightPage.isNostradamusSelecting = true;
+    IntroNightPage.isNightOver = false;
+    iterator = GodfatherScenario.callRolesIntroNight().iterator;
+    iterator.moveNext();
+    text = iterator.current;
+    for (Player player in Player.inGamePlayers) {
+      playerCheckboxStatus[player] = false;
+    }
+  }
+
   @override
   void initState() {
     iterator = GodfatherScenario.callRolesIntroNight().iterator;
     iterator.moveNext();
     text = iterator.current;
-    print(IntroNightPage.targetPlayers);
     for (Player player in Player.inGamePlayers) {
       playerCheckboxStatus[player] = false;
     }
@@ -103,6 +114,7 @@ class _IntroNightPageState extends State<IntroNightPage> {
         rightButtonOnTap: () {
           if (IntroNightPage.isNightOver) {
             Scenario.currentScenario.goToNextStage();
+            resetNight();
             Navigator.pushNamed(
               context,
               '/talking_page',
