@@ -15,11 +15,18 @@ class _PlayersPageState extends State<PlayersPage> {
   final TextEditingController _controller = TextEditingController();
   void addPlayer() {
     setState(() {
-      if (_controller.text == "") {
+      String text = _controller.text.trim();
+      if (text == "" || text.length > 12 || Player.doesNameExist(text)) {
         return;
       }
-      Player.addPlayer(_controller.text);
+      Player.addPlayer(text);
       _controller.text = '';
+    });
+  }
+
+  void removePlayer(Player player) {
+    setState(() {
+      Player.deletePlayer(player);
     });
   }
 
@@ -49,6 +56,7 @@ class _PlayersPageState extends State<PlayersPage> {
                     margin: const EdgeInsets.symmetric(vertical: 5),
                     child: PlayerTile(
                       player: Player.players[index],
+                      removePlayer: () => removePlayer(Player.players[index]),
                     ),
                   );
                 },
@@ -88,9 +96,10 @@ class _PlayersPageState extends State<PlayersPage> {
                     child: TextField(
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                          color: Theme.of(context).colorScheme.primary,
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold),
+                        color: Theme.of(context).colorScheme.primary,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
                       decoration: InputDecoration(
                         contentPadding: const EdgeInsets.symmetric(
                             vertical: 10, horizontal: 5),

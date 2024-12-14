@@ -6,7 +6,8 @@ import 'package:mafia_killer/themes/app_color.dart';
 
 class PlayerTile extends StatefulWidget {
   final Player player;
-  const PlayerTile({super.key, required this.player});
+  final VoidCallback removePlayer;
+  const PlayerTile({super.key, required this.player, required this.removePlayer});
 
   @override
   State<PlayerTile> createState() => _PlayerTileState();
@@ -20,18 +21,15 @@ class _PlayerTileState extends State<PlayerTile> {
     });
   }
 
-  void removePlayer() {
-    setState(() {
-      Player.deletePlayer(widget.player);
-    });
-  }
+
 
   void editPlayerName() {
-    if (controller.text == "") {
+    String text = controller.text.trim();
+    if (text == "" || text.length > 12 || Player.doesNameExist(text)) {
       return;
     }
     setState(() {
-      Player.editPlayerName(widget.player, controller.text);
+      Player.editPlayerName(widget.player, text);
       Navigator.of(context).pop();
     });
   }
@@ -76,7 +74,7 @@ class _PlayerTileState extends State<PlayerTile> {
                     widget.player.name,
                     style: TextStyle(
                       color: Theme.of(context).colorScheme.inversePrimary,
-                      fontSize: 27,
+                      fontSize: 24,
                     ),
                   ),
                 ),
@@ -99,7 +97,7 @@ class _PlayerTileState extends State<PlayerTile> {
                 ),
                 IconButton(
                   padding: EdgeInsets.zero,
-                  onPressed: removePlayer,
+                  onPressed: widget.removePlayer,
                   icon: const Icon(
                     Icons.delete,
                     size: 35,
