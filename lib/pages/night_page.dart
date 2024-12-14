@@ -154,7 +154,8 @@ class _NightPageState extends State<NightPage> {
 
   void resetTiles() {
     for (Player player in Player.inGamePlayers) {
-      if(player.playerStatus == PlayerStatus.removed || player.playerStatus == PlayerStatus.dead) {
+      if (player.playerStatus == PlayerStatus.removed ||
+          player.playerStatus == PlayerStatus.dead) {
         player.uiPlayerStatus = UIPlayerStatus.untargetable;
       } else {
         player.uiPlayerStatus = UIPlayerStatus.targetable;
@@ -178,8 +179,7 @@ class _NightPageState extends State<NightPage> {
     return Scaffold(
       body: PageFrame(
         pageTitle: 'شب ${Scenario.currentScenario.dayAndNightNumber()}',
-        rightButtonText:
-            "روز ${Scenario.currentScenario.dayAndNightNumber(number: Scenario.currentScenario.dayNumber)}",
+        rightButtonText: 'اتفاقات شب',
         leftButtonText:
             "روز ${Scenario.currentScenario.dayAndNightNumber(number: Scenario.currentScenario.dayNumber - 1)}",
         leftButtonOnTap: () {
