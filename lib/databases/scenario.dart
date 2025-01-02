@@ -25,8 +25,9 @@ class Scenario {
   // Id id = Isar.autoIncrement;
   late final String name;
   late List<Role> roles;
-  late List<LastMoveCard> lastMoveCards;
-  late List<Role> inGameRoles = [];
+  List<LastMoveCard> lastMoveCards = [];
+  List<LastMoveCard> inGameLastMoveCards = [];
+  List<Role> inGameRoles = [];
   static late Scenario currentScenario;
   static late String filePath;
   int nightNumber = 0;
@@ -100,7 +101,25 @@ class Scenario {
         break;
       }
     }
+    Database.writeScenariosData(scenarios);
   }
+
+  static Future<void> addLastMoveCard(LastMoveCard newLastMoveCard) async {
+    currentScenario.inGameLastMoveCards
+        .add(LastMoveCard.fromJson(jsonDecode(jsonEncode(newLastMoveCard.toJson()))));
+    Database.writeScenariosData(scenarios);
+  }
+
+  static Future<void> removeLastMoveCard(LastMoveCard lastMoveCard) async {
+    for (LastMoveCard l in currentScenario.inGameLastMoveCards) {
+      if (l.title == lastMoveCard.title) {
+        currentScenario.inGameLastMoveCards.remove(l);
+        break;
+      }
+    }
+    Database.writeScenariosData(scenarios);
+  }
+
 
   int numberOfRoles(Role role) {
     int counter = 0;
@@ -112,6 +131,16 @@ class Scenario {
     return counter;
   }
 
+
+  int numberOfLastMoveCards(LastMoveCard lastMoveCard) {
+    int counter = 0;
+    for (LastMoveCard l in inGameLastMoveCards) {
+      if (l.title == lastMoveCard.title) {
+        counter++;
+      }
+    }
+    return counter;
+  }
   // get a specific role by its name in current scenario
   Role? getRoleByName(String name) {
     return roles.where((role) => role.name == name).firstOrNull;

@@ -344,7 +344,7 @@ class GodfatherScenario extends Scenario {
   }
 
   static void shuffleLastMoveCards() {
-    Scenario.currentScenario.lastMoveCards.shuffle();
+    Scenario.currentScenario.inGameLastMoveCards.shuffle();
   }
 
   static void resetDataBeforeNight() {

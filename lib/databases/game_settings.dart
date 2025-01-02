@@ -89,8 +89,5 @@ class GameSettings {
   static Future<void> updateSettings(
       GameSettings gameSettings, Map<String, dynamic> newGameSettings) async {
     gameSettings.setNewSettings(newGameSettings);
-    if (newGameSettings['scenario'] == "پدرخوانده") {
-      GodfatherScenario.shuffleLastMoveCards();
-    }
   }
 }

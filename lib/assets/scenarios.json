@@ -2,6 +2,7 @@
     {
         "name": "پدرخوانده",
         "inGameRoles": [],
+        "inGameLastMoveCards": [],
         "nightNumber" : 0,
         "dayNumber" : 0,
         "isNight" : false,
@@ -129,6 +130,7 @@
     {
         "name": "کلاسیک",
         "inGameRoles": [],
+        "inGameLastMoveCards": [],
         "nightNumber" : 0,
         "dayNumber" : 0,
         "isNight" : false,

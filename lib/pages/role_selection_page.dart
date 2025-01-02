@@ -1,5 +1,6 @@
 import 'package:deep_collection/deep_collection.dart';
 import 'package:flutter/material.dart';
+import 'package:mafia_killer/components/last_move_card_selection_tile.dart';
 import 'package:mafia_killer/components/page_frame.dart';
 import 'package:mafia_killer/components/role_selection_tile.dart';
 import 'package:mafia_killer/databases/game_settings.dart';
@@ -7,6 +8,7 @@ import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/models/role.dart';
 import 'package:mafia_killer/models/role_side.dart';
+import 'package:mafia_killer/models/scenarios/godfather/godfather_scenario.dart';
 import 'package:mafia_killer/models/talking_page_screen_arguments.dart';
 import 'package:mafia_killer/themes/app_color.dart';
 
@@ -39,6 +41,7 @@ class RoleSelectionPage extends StatelessWidget {
               Scenario.currentScenario.inGameRoles.length) {
             return;
           }
+          GodfatherScenario.shuffleLastMoveCards();
           List<Role> roles = Scenario.currentScenario.inGameRoles.deepCopy();
           roles.shuffle();
           for (int i = 0; i < Player.inGamePlayers.length; i++) {
@@ -155,6 +158,46 @@ class RoleSelectionPage extends StatelessWidget {
                   );
                 },
               ),
+            ),
+            const SizedBox(
+              height: 30,
+            ),
+            Text(
+              "کارت حرکت آخر",
+              style: TextStyle(
+                fontSize: 38,
+                shadows: [
+                  Shadow(
+                    color: Theme.of(context).colorScheme.inversePrimary,
+                    offset: Offset(0, -12),
+                  )
+                ],
+                color: Colors.transparent,
+                //decoration: TextDecoration.underline,
+                decorationColor: Theme.of(context).colorScheme.inversePrimary,
+                decorationThickness: 2,
+              ),
+            ),
+            SizedBox(
+              height: 160,
+              child: ListView.builder(
+                itemCount: Scenario.currentScenario.lastMoveCards.length,
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: LastMoveCardSelectionTile(
+                      lastMoveCard:
+                          Scenario.currentScenario.lastMoveCards[index],
+                      counter: Scenario.currentScenario.numberOfLastMoveCards(
+                          Scenario.currentScenario.lastMoveCards[index]),
+                    ),
+                  );
+                },
+              ),
+            ),
+            SizedBox(
+              height: 30,
             ),
           ],
         ),

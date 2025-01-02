@@ -58,11 +58,12 @@ class _LastMoveCardPageState extends State<LastMoveCardPage> {
               flex: 4,
               child: ListView.builder(
                   padding: EdgeInsets.symmetric(vertical: 10),
-                  itemCount: 5,
+                  itemCount:
+                      Scenario.currentScenario.inGameLastMoveCards.length,
                   itemBuilder: (context, index) {
                     return LastMoveCardTile(
                       lastMoveCard:
-                          Scenario.currentScenario.lastMoveCards[index],
+                          Scenario.currentScenario.inGameLastMoveCards[index],
                       index: index,
                     );
                   }),
