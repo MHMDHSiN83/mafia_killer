@@ -5,6 +5,7 @@ import 'package:mafia_killer/components/page_frame.dart';
 import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/models/last_move_card.dart';
 import 'package:mafia_killer/models/scenarios/godfather/godfather_scenario.dart';
+import 'package:mafia_killer/models/scenarios/godfather/last_move_cards/beautiful_mind.dart';
 import 'package:mafia_killer/models/scenarios/godfather/last_move_cards/face_off.dart';
 import 'package:mafia_killer/models/scenarios/godfather/last_move_cards/handcuffs.dart';
 import 'package:mafia_killer/models/scenarios/godfather/last_move_cards/reveal_identity.dart';
@@ -47,8 +48,9 @@ class _LastMoveCardPageState extends State<LastMoveCardPage> {
           } else if (LastMoveCardPage.selectedLastMoveCard
               is SilenceOfTheLambs) {
             Navigator.pushNamed(context, '/silence_of_the_lambs_page');
-          } else {
-            Navigator.pushNamed(context, '/night_page');
+          } else if (LastMoveCardPage.selectedLastMoveCard is BeautifulMind) {
+            Navigator.pushNamed(
+                context, '/beautiful_mind_choose_nostradamus_page');
           }
         },
         isInGame: true,
