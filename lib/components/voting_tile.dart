@@ -92,9 +92,12 @@ class _VotingTileState extends State<VotingTile> {
                           : (widget.isRegularVoting)
                               ? "دفاعیه"
                               : "کشته",
-                      style: const TextStyle(
+                      style: TextStyle(
                         color: AppColors.redColor,
-                        fontSize: 20,
+                        fontSize:
+                            (widget.stamp != null && widget.stamp!.length >= 11)
+                                ? 13
+                                : 20,
                       ),
                     ),
                   ),

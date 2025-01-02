@@ -239,7 +239,9 @@ class GodfatherScenario extends Scenario {
           (shotByMafia.role is! Leon ||
               (shotByMafia.role is Leon &&
                   (shotByMafia.role as Leon).shield <= 0)) &&
-          shotByMafia.role is! Nostradamus) {
+          (shotByMafia.role is! Nostradamus ||
+              (shotByMafia.role is Nostradamus &&
+                  !(shotByMafia as Nostradamus).shield))) {
         shotByMafia.playerStatus = PlayerStatus.dead;
         report.add("${shotByMafia.name} کشته شد.");
       } else if (shotByMafia.role is Leon &&
