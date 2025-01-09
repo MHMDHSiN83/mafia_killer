@@ -25,7 +25,7 @@ class RevealIdentity extends LastMoveCard {
   }
 
   @override
-  void lastMoveCardAction(List<Player> players, bool succeed) {
+  void lastMoveCardAction(List<Player> players) {
     players[0].playerStatus = PlayerStatus.removed;
   }
 }

@@ -40,7 +40,8 @@ class _FaceOffPageState extends State<FaceOffPage> {
     return result;
   }
 
-  List<Player> alivePlayers = Player.getAlivePlayers();
+  Player killedInDayPlayer = Scenario.currentScenario.killedInDayPlayer!;
+  List<Player> alivePlayers = Player.getAlivePlayersExcept(Scenario.currentScenario.killedInDayPlayer!);
 
   @override
   Widget build(BuildContext context) {
@@ -93,7 +94,7 @@ class _FaceOffPageState extends State<FaceOffPage> {
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: CallRole(
                   text:
-                      "${Scenario.currentScenario.killedInDayPlayer!.name} یک نفرو انتخاب کنه و نقششو باهاش عوض کنه.",
+                      "${killedInDayPlayer.name} یک نفرو انتخاب کنه و نقششو باهاش عوض کنه.",
                   buttonText: "",
                   onPressed: () {},
                 ),

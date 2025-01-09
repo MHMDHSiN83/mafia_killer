@@ -37,7 +37,7 @@ class FacedOffRolePage extends StatelessWidget {
             LastMoveCardPage.selectedLastMoveCard!.lastMoveCardAction([
               Scenario.currentScenario.killedInDayPlayer!,
               FaceOffPage.selectedPlayers[0]
-            ], true);
+            ]);
             Navigator.pushNamed(context, '/night_page');
             
           },

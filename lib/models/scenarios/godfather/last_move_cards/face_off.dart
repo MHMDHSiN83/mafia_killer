@@ -27,7 +27,7 @@ class FaceOff extends LastMoveCard {
   }
 
   @override
-  void lastMoveCardAction(List<Player> players, bool succeed) {
+  void lastMoveCardAction(List<Player> players) {
     // the first element of the players list is the player that is going out of the game
     players[0].playerStatus = PlayerStatus.removed;
     Role tmp = players[1].role!;

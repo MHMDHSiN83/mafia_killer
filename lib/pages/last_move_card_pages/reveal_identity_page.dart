@@ -34,7 +34,7 @@ class RevealIdentityPage extends StatelessWidget {
           leftButtonOnTap: () => Navigator.pop(context),
           rightButtonOnTap: () {
             LastMoveCardPage.selectedLastMoveCard!.lastMoveCardAction(
-                [Scenario.currentScenario.killedInDayPlayer!], true);
+                [Scenario.currentScenario.killedInDayPlayer!]);
             Navigator.pushNamed(context, '/night_page');
           },
           child: Column(

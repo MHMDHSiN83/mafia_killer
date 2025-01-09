@@ -62,7 +62,8 @@ class LastMoveCard {
     throw Exception();
   }
 
-  void lastMoveCardAction(List<Player> players, bool succeed) {
+  void lastMoveCardAction(List<Player> players) {
     throw Exception("no action defined for last move card!");
   }
+
 }

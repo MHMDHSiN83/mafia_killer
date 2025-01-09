@@ -40,7 +40,8 @@ class _HandcuffsPageState extends State<HandcuffsPage> {
     return result;
   }
 
-  List<Player> alivePlayers = Player.getAlivePlayers();
+  Player killedInDayPlayer = Scenario.currentScenario.killedInDayPlayer!;
+  List<Player> alivePlayers = Player.getAlivePlayersExcept(Scenario.currentScenario.killedInDayPlayer!);
 
   @override
   Widget build(BuildContext context) {
@@ -59,9 +60,9 @@ class _HandcuffsPageState extends State<HandcuffsPage> {
         rightButtonOnTap: () {
           if (widget.selectedPlayers.length == 1) {
             widget.selectedPlayers
-                .insert(0, Scenario.currentScenario.killedInDayPlayer!);
+                .insert(0, killedInDayPlayer);
             LastMoveCardPage.selectedLastMoveCard!
-                .lastMoveCardAction(widget.selectedPlayers, true);
+                .lastMoveCardAction(widget.selectedPlayers);
             Navigator.pushNamed(context, '/night_page');
           }
         },
@@ -102,7 +103,7 @@ class _HandcuffsPageState extends State<HandcuffsPage> {
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: CallRole(
                   text:
-                      "${Scenario.currentScenario.killedInDayPlayer!.name} توانایی یک نفر رو در شب بگیر.",
+                      "${killedInDayPlayer.name} توانایی یک نفر رو در شب بگیر.",
                   buttonText: "",
                   onPressed: () {},
                 ),

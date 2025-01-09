@@ -39,8 +39,8 @@ class _SilenceOfTheLambsPageState extends State<SilenceOfTheLambsPage> {
     });
     return result;
   }
-
-  List<Player> alivePlayers = Player.getAlivePlayers();
+  Player killedInDayPlayer = Scenario.currentScenario.killedInDayPlayer!;
+  List<Player> alivePlayers = Player.getAlivePlayersExcept(Scenario.currentScenario.killedInDayPlayer!);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,9 +53,9 @@ class _SilenceOfTheLambsPageState extends State<SilenceOfTheLambsPage> {
         rightButtonOnTap: () {
           if (widget.selectedPlayers.length == 2) {
             widget.selectedPlayers
-                .insert(0, Scenario.currentScenario.killedInDayPlayer!);
+                .insert(0, killedInDayPlayer);
             LastMoveCardPage.selectedLastMoveCard!.lastMoveCardAction(
-                widget.selectedPlayers, true);
+                widget.selectedPlayers);
             Navigator.pushNamed(context, '/night_page');
           }
         },
@@ -96,7 +96,7 @@ class _SilenceOfTheLambsPageState extends State<SilenceOfTheLambsPage> {
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: CallRole(
                   text:
-                      "${Scenario.currentScenario.killedInDayPlayer!.name} دو نفرو انتخاب کن که فردا صبح ساکت باشن.",
+                      "${killedInDayPlayer.name} دو نفرو انتخاب کن که فردا صبح ساکت باشن.",
                   buttonText: "",
                   onPressed: () {},
                 ),

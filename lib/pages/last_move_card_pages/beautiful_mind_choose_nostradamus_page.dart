@@ -6,11 +6,13 @@ import 'package:mafia_killer/components/voting_tile.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/models/player_status.dart';
-import 'package:mafia_killer/models/scenarios/godfather/roles/nostradamus.dart';
+import 'package:mafia_killer/models/scenarios/godfather/last_move_cards/beautiful_mind.dart';
 import 'package:mafia_killer/pages/last_move_card_page.dart';
 
 class BeautifulMindChooseNostradamusPage extends StatefulWidget {
   const BeautifulMindChooseNostradamusPage({super.key});
+  static String message = "";
+
   @override
   State<BeautifulMindChooseNostradamusPage> createState() =>
       _BeautifulMindChooseNostradamusPageState();
@@ -52,6 +54,10 @@ class _BeautifulMindChooseNostradamusPageState
 
   @override
   Widget build(BuildContext context) {
+    for (var p in selectedPlayers) {
+      print(p.name);
+    }
+    print(isConfirmed);
     return Scaffold(
       body: PageFrame(
         pageTitle: "ذهن زیبا",
@@ -60,10 +66,14 @@ class _BeautifulMindChooseNostradamusPageState
             'شب ${Scenario.currentScenario.dayAndNightNumber(number: Scenario.currentScenario.nightNumber)}',
         leftButtonOnTap: () => Navigator.pop(context),
         rightButtonOnTap: () {
-          // LastMoveCardPage.selectedLastMoveCard!.lastMoveCardAction(
-          //     [Scenario.currentScenario.killedInDayPlayer!, selectedPlayers[0]],
-          //     true);
           if (isConfirmed && selectedPlayers.length == 1) {
+            print("testtt");
+            selectedPlayers.insert(
+                0, Scenario.currentScenario.killedInDayPlayer!);
+            LastMoveCardPage.selectedLastMoveCard!
+                .lastMoveCardAction(selectedPlayers);
+            print("testtt2");
+
             Navigator.pushNamed(context, '/night_page');
           }
         },
@@ -107,43 +117,23 @@ class _BeautifulMindChooseNostradamusPageState
                       "${Scenario.currentScenario.killedInDayPlayer!.name} اگر نوستراداموس بازی رو درست حدس بزنی در بازی میمونی",
                   buttonText: "انتخاب کردم",
                   onPressed: () {
-                    if (selectedPlayers.isNotEmpty) {
+                    if (selectedPlayers.length == 1) {
+                      selectedPlayers.insert(
+                          0, Scenario.currentScenario.killedInDayPlayer!);
                       showDialog(
                           context: context,
                           builder: (context) {
-                            String message = "";
-                            // killed player in day be nostradamus
-                            if (Scenario.currentScenario.killedInDayPlayer!
-                                        .name ==
-                                    selectedPlayers[0].name &&
-                                Scenario.currentScenario.killedInDayPlayer!
-                                    .role! is Nostradamus) {
-                              message =
-                                  "${Scenario.currentScenario.killedInDayPlayer!.name} خودش نوستراداموس بازی است و به بازی میگردد ولی شیلدش می افتد.";
-                              (Scenario.currentScenario.killedInDayPlayer!.role!
-                                      as Nostradamus)
-                                  .shield = false;
-                            }
-                            // guess the nostradamus correctly
-                            else if (selectedPlayers[0].role! is Nostradamus) {
-                              message =
-                                  "${selectedPlayers[0].name} نوستراداموس است و از بازی به طور کامل خارج شده و ${Scenario.currentScenario.killedInDayPlayer!.name} در بازی می‌ماند";
-                              selectedPlayers[0].playerStatus =
-                                  PlayerStatus.removed;
-                            }
-                            // guess the nostradamus wrong
-                            else {
-                              message =
-                                  "${selectedPlayers[0].name} نوستراداموس بازی نیست پس ${Scenario.currentScenario.killedInDayPlayer!.name} از بازی خارج میشود.";
-                              Scenario.currentScenario.killedInDayPlayer!
-                                  .playerStatus = PlayerStatus.dead;
-                            }
+                            (LastMoveCardPage.selectedLastMoveCard!
+                                    as BeautifulMind)
+                                .lastMoveCardMessage(selectedPlayers);
+                            isConfirmed = true;
+                            selectedPlayers.removeAt(0);
                             return MessageBox(
                                 onSave: () {
-                                  isConfirmed = true;
                                   Navigator.pop(context);
                                 },
-                                message: message);
+                                message:
+                                    BeautifulMindChooseNostradamusPage.message);
                           });
                     }
                   },

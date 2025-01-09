@@ -321,6 +321,6 @@ class GodfatherScenario extends Scenario {
   }
 
   void shuffleLastMoveCards() {
-    Scenario.currentScenario.inGameLastMoveCards.shuffle();
+    // Scenario.currentScenario.inGameLastMoveCards.shuffle();
   }
 }

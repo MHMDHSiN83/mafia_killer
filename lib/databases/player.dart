@@ -142,19 +142,19 @@ class Player extends ChangeNotifier {
         .where((player) => player.role.runtimeType == type)
         .first;
   }
-  
+
   static bool doesNameExist(String name) {
     for (Player player in players) {
-      if(name == player.name) {
+      if (name == player.name) {
         return true;
       }
     }
     return false;
   }
 
-  static List<Player> getAlivePlayers() {
+  static List<Player> getAlivePlayersExcept(Player player) {
     return Player.inGamePlayers
-      .where((player) => (player.playerStatus == PlayerStatus.active))
-      .toList();
+        .where((p) => (p.playerStatus == PlayerStatus.active && player.name != p.name))
+        .toList();
   }
 }

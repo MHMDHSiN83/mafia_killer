@@ -28,7 +28,7 @@ class SilenceOfTheLambs extends LastMoveCard {
   }
 
   @override
-  void lastMoveCardAction(List<Player> players, bool succeed) {
+  void lastMoveCardAction(List<Player> players) {
     for (int i = 0; i < players.length; i++) {
       (Scenario.currentScenario as GodfatherScenario)
           .silencedPlayerDuringDay
