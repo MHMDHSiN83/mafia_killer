@@ -3,9 +3,13 @@
         "name": "پدرخوانده",
         "inGameRoles": [],
         "inGameLastMoveCards": [],
-        "nightNumber" : 0,
-        "dayNumber" : 0,
-        "isNight" : false,
+        "nightNumber": 0,
+        "dayNumber": 0,
+        "isNight": false,
+        "nightEvents": {},
+        "defendingPlayers": [],
+        "silencedPlayerDuringDay": [],
+        "report": [],
         "roles": [
             {
                 "name": "پدرخوانده",
@@ -45,7 +49,7 @@
                 "cardImagePath": "lib/images/roles/role_cards/nostradamus.jpg",
                 "characterImagePath": "lib/images/roles/role_characters/nostradamus.png",
                 "inGameRoleSide": "independant",
-                "shield" : true
+                "shield": true
             },
             {
                 "name": "دکتر واتسون",
@@ -88,52 +92,55 @@
                 "characterImagePath": "lib/images/roles/role_characters/citizen.png"
             }
         ],
-        "lastMoveCards" : [
+        "lastMoveCards": [
             {
-                "title" : "دستبند",
-                "description" : "بازیکن اخراجی با کارت دستبند هرکس را نشان کند، توانمندی‌های آن شب را از وی می‌گیرد. توانایی شلیک مختص به تیم مافیا است و این کارت مانع آن نمی‌شود.",
-                "imagePath" : "lib/images/last_move_cards/Handcuffs-LastMoveCard.png",
-                "flippedImagePath" : "lib/images/last_move_cards/Handcuffs-LastMoveCard-Flipped.png",
-                "isUsed" : false
+                "title": "دستبند",
+                "description": "بازیکن اخراجی با کارت دستبند هرکس را نشان کند، توانمندی‌های آن شب را از وی می‌گیرد. توانایی شلیک مختص به تیم مافیا است و این کارت مانع آن نمی‌شود.",
+                "imagePath": "lib/images/last_move_cards/Handcuffs-LastMoveCard.png",
+                "flippedImagePath": "lib/images/last_move_cards/Handcuffs-LastMoveCard-Flipped.png",
+                "isUsed": false
             },
             {
-                "title" : "افشای هویت",
-                "description" : " گرداننده بدون نیاز به استعلام جمعی نقش دقیق بازیکن اخراجی  را فاش می‌کند و او از بازی بیرون می‌رود. در این حالت امکان بازگشت به بازی توسط کنستانتین را ندارد.",
-                "imagePath" : "lib/images/last_move_cards/RevealIdentity-LastMoveCard.png",
+                "title": "افشای هویت",
+                "description": " گرداننده بدون نیاز به استعلام جمعی نقش دقیق بازیکن اخراجی  را فاش می‌کند و او از بازی بیرون می‌رود. در این حالت امکان بازگشت به بازی توسط کنستانتین را ندارد.",
+                "imagePath": "lib/images/last_move_cards/RevealIdentity-LastMoveCard.png",
                 "flippedImagePath": "lib/images/last_move_cards/RevealIdentity-LastMoveCard-Flipped.png",
-                "isUsed" : false
+                "isUsed": false
             },
             {
-                "title" : "تغییر چهره",
-                "description" : "بازیکن قبل از خروج کارت نقش خود را با یکی از بازیکنان عوض می‌کند.",
-                "imagePath" : "lib/images/last_move_cards/FaceOff-LastMoveCard.png",
-                "flippedImagePath" :"lib/images/last_move_cards/FaceOff-LastMoveCard-Flipped.png",
-                "isUsed" : false
+                "title": "تغییر چهره",
+                "description": "بازیکن قبل از خروج کارت نقش خود را با یکی از بازیکنان عوض می‌کند.",
+                "imagePath": "lib/images/last_move_cards/FaceOff-LastMoveCard.png",
+                "flippedImagePath": "lib/images/last_move_cards/FaceOff-LastMoveCard-Flipped.png",
+                "isUsed": false
             },
             {
-                "title" : "ذهن زیبا",
-                "description" : "اگر صاحب کارت بتواند نوستراداموس را در بازی شناسایی کند، به بازی برمی‌گردد و نوستراداموس از بازی خارج می‌شود. اگر نوستراداموس این کارت را انتخاب کند، او به بازی برمی‌گردد ولی سپرش از بین می‌رود.",
-                "imagePath" : "lib/images/last_move_cards/BeautifulMind-LastMoveCard.png",
-                "flippedImagePath":"lib/images/last_move_cards/BeautifulMind-LastMoveCard-Flipped.png",
-                "isUsed" : false
+                "title": "ذهن زیبا",
+                "description": "اگر صاحب کارت بتواند نوستراداموس را در بازی شناسایی کند، به بازی برمی‌گردد و نوستراداموس از بازی خارج می‌شود. اگر نوستراداموس این کارت را انتخاب کند، او به بازی برمی‌گردد ولی سپرش از بین می‌رود.",
+                "imagePath": "lib/images/last_move_cards/BeautifulMind-LastMoveCard.png",
+                "flippedImagePath": "lib/images/last_move_cards/BeautifulMind-LastMoveCard-Flipped.png",
+                "isUsed": false
             },
             {
-                "title" : "سکوت بره‌ها",
-                "description" : "بازیکن اخراجی با کارت دستبند هرکس را نشان کند، توانمندی‌های آن شب را از وی می‌گیرد. توانایی شلیک مختص به تیم مافیا است و این کارت مانع آن نمی‌شود.",
-                "imagePath" : "lib/images/last_move_cards/SilenceOfTheLambs-LastMoveCard.png",
-                "flippedImagePath":"lib/images/last_move_cards/SilenceOfTheLambs-LastMoveCard-Flipped.png",
-                "isUsed" : false
+                "title": "سکوت بره‌ها",
+                "description": "بازیکن اخراجی با کارت دستبند هرکس را نشان کند، توانمندی‌های آن شب را از وی می‌گیرد. توانایی شلیک مختص به تیم مافیا است و این کارت مانع آن نمی‌شود.",
+                "imagePath": "lib/images/last_move_cards/SilenceOfTheLambs-LastMoveCard.png",
+                "flippedImagePath": "lib/images/last_move_cards/SilenceOfTheLambs-LastMoveCard-Flipped.png",
+                "isUsed": false
             }
         ]
-        
     },
     {
         "name": "کلاسیک",
         "inGameRoles": [],
         "inGameLastMoveCards": [],
-        "nightNumber" : 0,
-        "dayNumber" : 0,
-        "isNight" : false,
+        "nightNumber": 0,
+        "dayNumber": 0,
+        "isNight": false,
+        "nightEvents": {},
+        "defendingPlayers": [],
+        "silencedPlayerDuringDay": [],
+        "report": [],
         "roles": [
             {
                 "name": "پدرخوانده",
@@ -161,6 +168,5 @@
             }
         ],
         "lastMoveCards": []
-       
     }
 ]

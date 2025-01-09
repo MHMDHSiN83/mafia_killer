@@ -1,9 +1,9 @@
 import 'package:mafia_killer/databases/player.dart';
+import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/models/ui_player_status.dart';
 import 'package:mafia_killer/models/night_event.dart';
 import 'package:mafia_killer/models/role.dart';
 import 'package:mafia_killer/models/role_side.dart';
-import 'package:mafia_killer/models/scenarios/godfather/godfather_scenario.dart';
 
 import 'package:json_annotation/json_annotation.dart';
 part 'godfather.g.dart';
@@ -33,7 +33,7 @@ class Godfather extends Role {
 
   @override
   void nightAction(Player? player) {
-    GodfatherScenario.nightEvents[NightEvent.sixthSensedByGodfather] = player;
+    Scenario.currentScenario.nightEvents[NightEvent.sixthSensedByGodfather] = player;
     if (player != null) {
       remainingAbility--;
     }

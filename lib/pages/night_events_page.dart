@@ -6,7 +6,6 @@ import 'package:mafia_killer/databases/game_settings.dart';
 import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/models/language.dart';
 import 'package:mafia_killer/models/role_side.dart';
-import 'package:mafia_killer/models/scenarios/godfather/godfather_scenario.dart';
 import 'package:mafia_killer/models/talking_page_screen_arguments.dart';
 import 'package:mafia_killer/themes/app_color.dart';
 
@@ -43,7 +42,7 @@ class _NightEventsPage extends State<NightEventsPage> {
             child: Column(
               children: [
                 Text(
-                  '${GodfatherScenario.numberOfDeadPlayersBySide(RoleSide.citizen)} شهروند',
+                  '${Scenario.currentScenario.numberOfDeadPlayersBySide(RoleSide.citizen)} شهروند',
                   style: TextStyle(
                     fontSize: 20,
                     color: Theme.of(context).colorScheme.inversePrimary,
@@ -54,7 +53,7 @@ class _NightEventsPage extends State<NightEventsPage> {
                   height: 10,
                 ),
                 Text(
-                  '${GodfatherScenario.numberOfDeadPlayersBySide(RoleSide.mafia)} مافیا',
+                  '${Scenario.currentScenario.numberOfDeadPlayersBySide(RoleSide.mafia)} مافیا',
                   style: TextStyle(
                     fontSize: 20,
                     color: Theme.of(context).colorScheme.inversePrimary,
@@ -65,7 +64,7 @@ class _NightEventsPage extends State<NightEventsPage> {
                   height: 10,
                 ),
                 Text(
-                  '${GodfatherScenario.numberOfDeadPlayersBySide(RoleSide.independant)} نوستراداموس',
+                  '${Scenario.currentScenario.numberOfDeadPlayersBySide(RoleSide.independant)} نوستراداموس',
                   style: TextStyle(
                     fontSize: 20,
                     color: Theme.of(context).colorScheme.inversePrimary,
@@ -104,6 +103,7 @@ class _NightEventsPage extends State<NightEventsPage> {
             "روز ${Scenario.currentScenario.dayAndNightNumber(number: Scenario.currentScenario.dayNumber)}",
         leftButtonOnTap: () => Navigator.pop(context),
         rightButtonOnTap: () {
+          Scenario.currentScenario.resetDataAfterNight();
           Navigator.pushNamed(
             context,
             '/talking_page',
@@ -152,14 +152,14 @@ class _NightEventsPage extends State<NightEventsPage> {
                                 Expanded(
                                   flex: 12,
                                   child: ListView.builder(
-                                    itemCount: GodfatherScenario.report.length,
+                                    itemCount: Scenario.currentScenario.report.length,
                                     physics:
                                         const NeverScrollableScrollPhysics(),
                                     itemBuilder: (context, index) => Container(
                                       margin:
                                           EdgeInsets.symmetric(vertical: 10),
                                       child: NightEventTile(
-                                        text: GodfatherScenario.report[index],
+                                        text: Scenario.currentScenario.report[index],
                                       ),
                                     ),
                                   ),

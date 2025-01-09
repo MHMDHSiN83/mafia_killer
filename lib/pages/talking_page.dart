@@ -219,14 +219,14 @@ class _TalkingPageState extends State<TalkingPage> {
                 ],
               ),
             ),
-            if (GodfatherScenario.silencedPlayerDuringDay.isNotEmpty)
+            if (Scenario.currentScenario.silencedPlayerDuringDay.isNotEmpty)
               Expanded(
                 flex: 1,
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: CallRole(
                     text:
-                        "${GodfatherScenario.silencedPlayerDuringDay[0].name} و ${GodfatherScenario.silencedPlayerDuringDay[1].name} امروز نمیتوانند صحبت کنند!",
+                        "${Scenario.currentScenario.silencedPlayerDuringDay[0].name} و ${Scenario.currentScenario.silencedPlayerDuringDay[1].name} امروز نمیتوانند صحبت کنند!",
                     buttonText: "",
                     onPressed: () {},
                   ),

@@ -1,10 +1,10 @@
 import 'package:mafia_killer/databases/player.dart';
+import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/citizen.dart';
 import 'package:mafia_killer/models/ui_player_status.dart';
 import 'package:mafia_killer/models/night_event.dart';
 import 'package:mafia_killer/models/role.dart';
 import 'package:mafia_killer/models/role_side.dart';
-import 'package:mafia_killer/models/scenarios/godfather/godfather_scenario.dart';
 import 'package:json_annotation/json_annotation.dart';
 part 'saul_goodman.g.dart';
 
@@ -33,7 +33,7 @@ class SaulGoodman extends Role {
   @override
   void nightAction(Player? player) {
     if (player!.role is Citizen) {
-      GodfatherScenario.nightEvents[NightEvent.boughtBySaulGoodman] = player;
+      Scenario.currentScenario.nightEvents[NightEvent.boughtBySaulGoodman] = player;
     }
     remainingAbility--;
   }

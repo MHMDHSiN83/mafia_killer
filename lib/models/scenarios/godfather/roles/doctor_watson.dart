@@ -1,10 +1,10 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:mafia_killer/databases/player.dart';
+import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/models/ui_player_status.dart';
 import 'package:mafia_killer/models/night_event.dart';
 import 'package:mafia_killer/models/role.dart';
 import 'package:mafia_killer/models/role_side.dart';
-import 'package:mafia_killer/models/scenarios/godfather/godfather_scenario.dart';
 
 part 'doctor_watson.g.dart';
 
@@ -28,7 +28,7 @@ class DoctorWatson extends Role {
 
   @override
   void nightAction(Player? player) {
-    GodfatherScenario.nightEvents[NightEvent.savedByDoctor] = player;
+    Scenario.currentScenario.nightEvents[NightEvent.savedByDoctor] = player;
     if (player != null) {
       if (player.role!.name == 'دکتر واتسون') {
         selfHeal--;

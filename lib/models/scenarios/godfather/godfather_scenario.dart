@@ -1,7 +1,9 @@
 import 'dart:convert';
 
+import 'package:json_annotation/json_annotation.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/databases/scenario.dart';
+import 'package:mafia_killer/models/last_move_card.dart';
 import 'package:mafia_killer/models/player_status.dart';
 import 'package:mafia_killer/models/role.dart';
 import 'package:mafia_killer/models/role_side.dart';
@@ -17,16 +19,20 @@ import 'package:mafia_killer/models/scenarios/godfather/roles/leon.dart';
 import 'package:mafia_killer/pages/intro_night_page.dart';
 import 'package:mafia_killer/pages/night_page.dart';
 
+part 'godfather_scenario.g.dart';
+
+@JsonSerializable()
 class GodfatherScenario extends Scenario {
-  GodfatherScenario() : super("پدرخوانده");
+  GodfatherScenario() : super();
 
-  static Map<NightEvent, Player?> nightEvents = {};
-  static List<Player> defendingPlayers = [];
-  static Player? killedInDayPlayer;
-  static List<Player> silencedPlayerDuringDay = [];
-  static List<String> report = [];
+  factory GodfatherScenario.fromJson(Map<String, dynamic> json) =>
+      _$GodfatherScenarioFromJson(json);
 
-  static Iterable<String> callRolesIntroNight() sync* {
+  @override
+  Map<String, dynamic> toJson() => _$GodfatherScenarioToJson(this);
+
+  @override
+  Iterable<String> callRolesIntroNight() sync* {
     Player nostradamusPlayer = Player.getPlayerByRoleType(Nostradamus);
     yield nostradamusPlayer.role!.introAwakingRole();
     yield nostradamusPlayer.role!.introSleepRoleText();
@@ -54,32 +60,8 @@ class GodfatherScenario extends Scenario {
     yield "همه بیدار شن";
   }
 
-  static void resetUIPlayerStatus() {
-    for (Player player in Player.inGamePlayers) {
-      if (player.playerStatus == PlayerStatus.active ||
-          player.playerStatus == PlayerStatus.disable) {
-        player.uiPlayerStatus = UIPlayerStatus.targetable;
-      } else {
-        player.uiPlayerStatus = UIPlayerStatus.untargetable;
-      }
-    }
-  }
-
-  static void resetPlayerStatus() {
-    for (Player player in Player.inGamePlayers) {
-      if (player.playerStatus == PlayerStatus.disable) {
-        player.playerStatus = PlayerStatus.active;
-      }
-    }
-  }
-
-  static void setPlayersToUntargetable() {
-    for (Player player in Player.inGamePlayers) {
-      player.uiPlayerStatus = UIPlayerStatus.untargetable;
-    }
-  }
-
-  static void setMafiaTeamAvailablePlayers() {
+  @override
+  void setMafiaTeamAvailablePlayers() {
     resetUIPlayerStatus();
     switch (NightPage.mafiaTeamChoice) {
       case 0:
@@ -104,7 +86,7 @@ class GodfatherScenario extends Scenario {
     }
   }
 
-  static String setMafiaChoiceText() {
+  String setMafiaChoiceText() {
     List<String> mafiaTeamAct = [
       "تیم مافیا به یک نفر شلیک کنه",
       "پدرخوانده کسی که میخواد امشب سلاخی کنه رو نشون بده و نقششو حدس بزنه",
@@ -113,9 +95,8 @@ class GodfatherScenario extends Scenario {
     return mafiaTeamAct[NightPage.mafiaTeamChoice];
   }
 
-  static Iterable<String> mafiaTeamAction(
-    Function mafiaChoiceBox,
-  ) sync* {
+  @override
+  Iterable<String> mafiaTeamAction({Function? mafiaChoiceBox}) sync* {
     List<String> mafiaTeamAct = [
       "تیم مافیا به یک نفر شلیک کنه",
       "پدرخوانده کسی که میخواد امشب سلاخی کنه رو نشون بده و نقششو حدس بزنه",
@@ -125,7 +106,7 @@ class GodfatherScenario extends Scenario {
     yield "تیم مافیا از خواب بیدار شه";
     NightPage.ableToSelectTile = true;
     NightPage.buttonText = '';
-    mafiaChoiceBox();
+    mafiaChoiceBox!();
     yield mafiaTeamAct[NightPage.mafiaTeamChoice];
     NightPage.typeOfConfirmation = 0;
     Player? godfatherPlayer = Player.getPlayerByRoleType(Godfather);
@@ -159,9 +140,8 @@ class GodfatherScenario extends Scenario {
     }
   }
 
-  static Iterable<String> otherRolesAction(
-    Function noAbilityBox,
-  ) sync* {
+  @override
+  Iterable<String> otherRolesAction({Function? noAbilityBox}) sync* {
     List<String> constantRoleOrder =
         Scenario.currentScenario.getConstantRoleOrder();
     NightPage.buttonText = 'خوابید';
@@ -181,11 +161,11 @@ class GodfatherScenario extends Scenario {
           } else {
             setPlayersToUntargetable();
             if (player.playerStatus == PlayerStatus.disable) {
-              noAbilityBox(player.role!.disabledText());
+              noAbilityBox!(player.role!.disabledText());
             } else if (!player.role!.hasAbility()) {
-              noAbilityBox(player.role!.ranOutOfAbilityText());
+              noAbilityBox!(player.role!.ranOutOfAbilityText());
             } else {
-              noAbilityBox(player.role!.deadOrRemovedText());
+              noAbilityBox!(player.role!.deadOrRemovedText());
             }
             yield player.role!.sleepRoleText();
           }
@@ -195,17 +175,17 @@ class GodfatherScenario extends Scenario {
     }
   }
 
-  static Iterable<String> callRolesRegularNight(
-    Function mafiaChoiceBox,
-    Function noAbilityBox,
-  ) sync* {
-    final iterator = mafiaTeamAction(mafiaChoiceBox).iterator;
+  @override
+  Iterable<String> callRolesRegularNight(
+      {Function? mafiaChoiceBox, Function? noAbilityBox}) sync* {
+    final iterator = mafiaTeamAction(mafiaChoiceBox: mafiaChoiceBox!).iterator;
 
     while (iterator.moveNext()) {
       yield iterator.current;
     }
 
-    final otherRolesIterator = otherRolesAction(noAbilityBox).iterator;
+    final otherRolesIterator =
+        otherRolesAction(noAbilityBox: noAbilityBox!).iterator;
 
     while (otherRolesIterator.moveNext()) {
       yield otherRolesIterator.current;
@@ -213,12 +193,11 @@ class GodfatherScenario extends Scenario {
     NightPage.isNightOver = true;
     NightPage.buttonText = "";
     yield "همه بیدار شن";
-    print("objectsssssssssssssssssssssssssss");
-    print(nightEvents);
     nightReport();
   }
 
-  static void nightReport() {
+  @override
+  void nightReport() {
     Player? shotByMafia = nightEvents[NightEvent.shotByMafia];
     Player? savedByDoctor = nightEvents[NightEvent.savedByDoctor];
     Player? shotByLeon = nightEvents[NightEvent.shotByLeon];
@@ -241,7 +220,7 @@ class GodfatherScenario extends Scenario {
                   (shotByMafia.role as Leon).shield <= 0)) &&
           (shotByMafia.role is! Nostradamus ||
               (shotByMafia.role is Nostradamus &&
-                  !(shotByMafia as Nostradamus).shield))) {
+                  !(shotByMafia.role as Nostradamus).shield))) {
         shotByMafia.playerStatus = PlayerStatus.dead;
         report.add("${shotByMafia.name} کشته شد.");
       } else if (shotByMafia.role is Leon &&
@@ -297,7 +276,7 @@ class GodfatherScenario extends Scenario {
     }
   }
 
-  static bool ableToSixthSense() {
+  bool ableToSixthSense() {
     Player godfather =
         Player.inGamePlayers.where((player) => player.role is Godfather).first;
     if (godfather.playerStatus == PlayerStatus.active &&
@@ -307,7 +286,7 @@ class GodfatherScenario extends Scenario {
     return false;
   }
 
-  static bool ableToBuying() {
+  bool ableToBuying() {
     if (doesSaulGoodmanParticipate()) {
       Player saulGoodman = Player.inGamePlayers
           .where((player) => player.role is SaulGoodman)
@@ -321,7 +300,7 @@ class GodfatherScenario extends Scenario {
     return false;
   }
 
-  static bool doesSaulGoodmanParticipate() {
+  bool doesSaulGoodmanParticipate() {
     for (Role role in Scenario.currentScenario.inGameRoles) {
       if (role is SaulGoodman) {
         return true;
@@ -330,7 +309,7 @@ class GodfatherScenario extends Scenario {
     return false;
   }
 
-  static int resultOfNostradamusGuess(List<Player> players) {
+  int resultOfNostradamusGuess(List<Player> players) {
     int counter = 0;
     for (Player player in players) {
       if (player.role.runtimeType != Godfather &&
@@ -341,38 +320,7 @@ class GodfatherScenario extends Scenario {
     return counter;
   }
 
-  static void storeDefendingPlayers(List<Player> players) {
-    defendingPlayers = players;
-  }
-
-  static void shuffleLastMoveCards() {
+  void shuffleLastMoveCards() {
     Scenario.currentScenario.inGameLastMoveCards.shuffle();
-  }
-
-  static void resetDataBeforeNight() {
-    nightEvents = {};
-    defendingPlayers = [];
-    killedInDayPlayer = null;
-    silencedPlayerDuringDay = [];
-    report = [];
-
-    for (Player player in Player.inGamePlayers) {
-      if (player.playerStatus == PlayerStatus.disable) {
-        player.playerStatus = PlayerStatus.active;
-      }
-    }
-  }
-
-  // @override
-  static int numberOfDeadPlayersBySide(RoleSide roleSide) {
-    int counter = 0;
-    for (Player player in Player.inGamePlayers) {
-      if ((player.playerStatus == PlayerStatus.dead ||
-              player.playerStatus == PlayerStatus.removed) &&
-          player.role!.roleSide == roleSide) {
-        counter++;
-      }
-    }
-    return counter;
   }
 }

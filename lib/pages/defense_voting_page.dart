@@ -7,7 +7,6 @@ import 'package:mafia_killer/components/page_frame.dart';
 import 'package:mafia_killer/components/voting_tile.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/databases/scenario.dart';
-import 'package:mafia_killer/models/scenarios/godfather/godfather_scenario.dart';
 
 class DefenseVotingPage extends StatefulWidget {
   const DefenseVotingPage({super.key});
@@ -53,7 +52,7 @@ class _DefenseVotingPageState extends State<DefenseVotingPage> {
 
   @override
   void initState() {
-    for (Player player in GodfatherScenario.defendingPlayers) {
+    for (Player player in Scenario.currentScenario.defendingPlayers) {
       playerBoxStatus[player] = false;
     }
     super.initState();
@@ -72,12 +71,12 @@ class _DefenseVotingPageState extends State<DefenseVotingPage> {
           Scenario.currentScenario.goToNextStage();
           switch (selectedPlayers.length) {
             case 1:
-              GodfatherScenario.killedInDayPlayer = selectedPlayers[0];
+              Scenario.currentScenario.killedInDayPlayer = selectedPlayers[0];
               break;
             case 2:
               final random = Random();
               int randomNumber = random.nextInt(2);
-              GodfatherScenario.killedInDayPlayer =
+              Scenario.currentScenario.killedInDayPlayer =
                   selectedPlayers[randomNumber];
               break;
             default:
@@ -101,19 +100,19 @@ class _DefenseVotingPageState extends State<DefenseVotingPage> {
                     mainAxisSpacing: 0,
                     crossAxisSpacing: 0,
                   ),
-                  itemCount: GodfatherScenario.defendingPlayers.length,
+                  itemCount: Scenario.currentScenario.defendingPlayers.length,
                   itemBuilder: (context, index) {
                     return VotingTile(
-                      player: GodfatherScenario.defendingPlayers[index],
+                      player: Scenario.currentScenario.defendingPlayers[index],
                       isRegularVoting: false,
                       addPlayer: () {
-                        addPlayer(GodfatherScenario.defendingPlayers[index]);
+                        addPlayer(Scenario.currentScenario.defendingPlayers[index]);
                       },
                       removePlayer: () {
-                        removePlayer(GodfatherScenario.defendingPlayers[index]);
+                        removePlayer(Scenario.currentScenario.defendingPlayers[index]);
                       },
                       disable: () =>
-                          isDisable(GodfatherScenario.defendingPlayers[index]),
+                          isDisable(Scenario.currentScenario.defendingPlayers[index]),
                     );
                   },
                 ),

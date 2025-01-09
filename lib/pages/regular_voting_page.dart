@@ -3,8 +3,8 @@ import 'package:mafia_killer/components/page_frame.dart';
 import 'package:mafia_killer/components/voting_tile.dart';
 import 'package:mafia_killer/databases/game_settings.dart';
 import 'package:mafia_killer/databases/player.dart';
+import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/models/player_status.dart';
-import 'package:mafia_killer/models/scenarios/godfather/godfather_scenario.dart';
 import 'package:mafia_killer/models/talking_page_screen_arguments.dart';
 
 class RegularVotingPage extends StatelessWidget {
@@ -21,6 +21,10 @@ class RegularVotingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    for (var i in Player.inGamePlayers) {
+      print(i.name);
+      print(i.role!.name);
+    }
     return Scaffold(
       body: PageFrame(
         pageTitle: "بازیکنان داخل دفاع",
@@ -28,8 +32,8 @@ class RegularVotingPage extends StatelessWidget {
         rightButtonText: "صحبت دفاعیه",
         leftButtonOnTap: () => Navigator.pop(context),
         rightButtonOnTap: () {
-          GodfatherScenario.storeDefendingPlayers(defendingPlayers);
-          if (GodfatherScenario.defendingPlayers.isNotEmpty) {
+          Scenario.currentScenario.storeDefendingPlayers(defendingPlayers);
+          if (Scenario.currentScenario.defendingPlayers.isNotEmpty) {
             Navigator.pushNamed(
               context,
               '/talking_page',

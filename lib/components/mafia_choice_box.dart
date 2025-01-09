@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/models/scenarios/godfather/godfather_scenario.dart';
 import 'package:mafia_killer/themes/app_color.dart';
 
@@ -15,8 +16,8 @@ class MafiaChoiceBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool ableToSixthSense = GodfatherScenario.ableToSixthSense();
-    bool ableToBuying = GodfatherScenario.ableToBuying();
+    bool ableToSixthSense = (Scenario.currentScenario as GodfatherScenario).ableToSixthSense();
+    bool ableToBuying = (Scenario.currentScenario as GodfatherScenario).ableToBuying();
     print(ableToBuying);
     return AlertDialog(
       backgroundColor: Theme.of(context).colorScheme.primary,
@@ -52,7 +53,7 @@ class MafiaChoiceBox extends StatelessWidget {
                 ),
               ),
             ),
-            if (GodfatherScenario.doesSaulGoodmanParticipate())
+            if ((Scenario.currentScenario as GodfatherScenario).doesSaulGoodmanParticipate())
               Opacity(
                 opacity: ableToBuying ? 1 : 0.6,
                 child: MaterialButton(

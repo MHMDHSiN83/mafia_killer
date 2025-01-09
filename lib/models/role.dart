@@ -17,7 +17,6 @@ class Role {
   late String description;
   late String cardImagePath;
   late String characterImagePath;
-  // @Enumerated(EnumType.ordinal32)
   late RoleSide roleSide;
 
   Role();

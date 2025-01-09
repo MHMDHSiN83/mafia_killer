@@ -35,9 +35,16 @@ class _LastMoveCardPageState extends State<LastMoveCardPage> {
         leftButtonText: "قبلی",
         rightButtonText: "بعدی",
         leftButtonOnTap: () {
+          LastMoveCardPage.selectedLastMoveCard?.isUsed = false;
+          if (Scenario.currentScenario is GodfatherScenario) {
+            Scenario.currentScenario.inGameLastMoveCards.shuffle();
+          }
           Navigator.pop(context);
         },
         rightButtonOnTap: () {
+          if(LastMoveCardPage.selectedLastMoveCard == null) {
+            return;
+          }
           LastMoveCardPage.selectedLastMoveCard!.isUsed = true;
           if (LastMoveCardPage.selectedLastMoveCard is RevealIdentity) {
             Navigator.pushNamed(context, '/reveal_identity_page');
@@ -76,7 +83,7 @@ class _LastMoveCardPageState extends State<LastMoveCardPage> {
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: CallRole(
                   text:
-                      "${GodfatherScenario.killedInDayPlayer!.name} کشته امروز است و باید کارت حرکت آخر انتخاب کند",
+                      "${Scenario.currentScenario.killedInDayPlayer!.name} کشته امروز است و باید کارت حرکت آخر انتخاب کند",
                   buttonText: "",
                   onPressed: () {},
                 ),

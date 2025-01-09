@@ -4,7 +4,6 @@ import 'package:mafia_killer/components/page_frame.dart';
 import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/models/role.dart';
 import 'package:mafia_killer/models/role_side.dart';
-import 'package:mafia_killer/models/scenarios/godfather/godfather_scenario.dart';
 import 'package:mafia_killer/pages/last_move_card_page.dart';
 import 'package:mafia_killer/themes/app_color.dart';
 
@@ -12,7 +11,7 @@ class RevealIdentityPage extends StatelessWidget {
   const RevealIdentityPage({super.key});
 
   Color determineRoleCardBorderColor() {
-    Role role = GodfatherScenario.killedInDayPlayer!.role!;
+    Role role = Scenario.currentScenario.killedInDayPlayer!.role!;
 
     if (role.roleSide == RoleSide.citizen) {
       return AppColors.darkgreenColor;
@@ -35,7 +34,7 @@ class RevealIdentityPage extends StatelessWidget {
           leftButtonOnTap: () => Navigator.pop(context),
           rightButtonOnTap: () {
             LastMoveCardPage.selectedLastMoveCard!.lastMoveCardAction(
-                [GodfatherScenario.killedInDayPlayer!], true);
+                [Scenario.currentScenario.killedInDayPlayer!], true);
             Navigator.pushNamed(context, '/night_page');
           },
           child: Column(
@@ -55,7 +54,7 @@ class RevealIdentityPage extends StatelessWidget {
                             width: 2, // Optional: Border width
                           ),
                           image: DecorationImage(
-                              image: AssetImage(GodfatherScenario
+                              image: AssetImage(Scenario.currentScenario
                                   .killedInDayPlayer!.role!.cardImagePath),
                               fit: BoxFit.contain)),
                     ),
@@ -66,7 +65,7 @@ class RevealIdentityPage extends StatelessWidget {
                     padding: const EdgeInsets.all(8.0),
                     child: CallRole(
                         text:
-                            "${GodfatherScenario.killedInDayPlayer!.name} یکیو انتخاب کن که نقشتو باهاش عوض کنی و بعد به شب برو",
+                            "${Scenario.currentScenario.killedInDayPlayer!.name} یکیو انتخاب کن که نقشتو باهاش عوض کنی و بعد به شب برو",
                         onPressed: () {},
                         buttonText: ""),
                   ))

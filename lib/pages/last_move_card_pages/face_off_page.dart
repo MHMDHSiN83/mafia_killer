@@ -1,14 +1,10 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:mafia_killer/components/call_role.dart';
-import 'package:mafia_killer/components/message_box.dart';
 import 'package:mafia_killer/components/page_frame.dart';
 import 'package:mafia_killer/components/voting_tile.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/models/player_status.dart';
-import 'package:mafia_killer/models/scenarios/godfather/godfather_scenario.dart';
 
 //  ----- FIRST PAGE OF FACE-OFF LAST MOVE CARD ------
 class FaceOffPage extends StatefulWidget {
@@ -44,9 +40,7 @@ class _FaceOffPageState extends State<FaceOffPage> {
     return result;
   }
 
-  List<Player> alivePlayers = Player.players
-      .where((player) => (player.playerStatus == PlayerStatus.active))
-      .toList();
+  List<Player> alivePlayers = Player.getAlivePlayers();
 
   @override
   Widget build(BuildContext context) {
@@ -99,7 +93,7 @@ class _FaceOffPageState extends State<FaceOffPage> {
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: CallRole(
                   text:
-                      "${GodfatherScenario.killedInDayPlayer!.name} یک نفرو انتخاب کنه و نقششو باهاش عوض کنه.",
+                      "${Scenario.currentScenario.killedInDayPlayer!.name} یک نفرو انتخاب کنه و نقششو باهاش عوض کنه.",
                   buttonText: "",
                   onPressed: () {},
                 ),

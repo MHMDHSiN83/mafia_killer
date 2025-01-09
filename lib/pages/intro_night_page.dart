@@ -78,7 +78,7 @@ class _IntroNightPageState extends State<IntroNightPage> {
     IntroNightPage.buttonText = 'بیدار شد';
     IntroNightPage.isNostradamusSelecting = true;
     IntroNightPage.isNightOver = false;
-    iterator = GodfatherScenario.callRolesIntroNight().iterator;
+    iterator = Scenario.currentScenario.callRolesIntroNight().iterator;
     iterator.moveNext();
     text = iterator.current;
     for (Player player in Player.inGamePlayers) {
@@ -88,7 +88,7 @@ class _IntroNightPageState extends State<IntroNightPage> {
 
   @override
   void initState() {
-    iterator = GodfatherScenario.callRolesIntroNight().iterator;
+    iterator = Scenario.currentScenario.callRolesIntroNight().iterator;
     iterator.moveNext();
     text = iterator.current;
     for (Player player in Player.inGamePlayers) {
@@ -168,7 +168,7 @@ class _IntroNightPageState extends State<IntroNightPage> {
                       //TODO build a function to generate nostradamus choice
                       if (IntroNightPage.isNostradamusSelecting) {
                         nostradamusBox(
-                          GodfatherScenario.resultOfNostradamusGuess(
+                          (Scenario.currentScenario as GodfatherScenario).resultOfNostradamusGuess(
                               IntroNightPage.targetPlayers),
                         );
                       } else {

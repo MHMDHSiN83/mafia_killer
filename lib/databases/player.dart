@@ -151,4 +151,10 @@ class Player extends ChangeNotifier {
     }
     return false;
   }
+
+  static List<Player> getAlivePlayers() {
+    return Player.inGamePlayers
+      .where((player) => (player.playerStatus == PlayerStatus.active))
+      .toList();
+  }
 }

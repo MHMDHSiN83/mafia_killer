@@ -4,7 +4,6 @@ import 'package:mafia_killer/components/page_frame.dart';
 import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/models/role.dart';
 import 'package:mafia_killer/models/role_side.dart';
-import 'package:mafia_killer/models/scenarios/godfather/godfather_scenario.dart';
 import 'package:mafia_killer/pages/last_move_card_page.dart';
 import 'package:mafia_killer/pages/last_move_card_pages/face_off_page.dart';
 import 'package:mafia_killer/themes/app_color.dart';
@@ -13,7 +12,7 @@ class FacedOffRolePage extends StatelessWidget {
   const FacedOffRolePage({super.key});
 
   Color determineRoleCardBorderColor() {
-    Role role = GodfatherScenario.killedInDayPlayer!.role!;
+    Role role = Scenario.currentScenario.killedInDayPlayer!.role!;
 
     if (role.roleSide == RoleSide.citizen) {
       return AppColors.darkgreenColor;
@@ -36,7 +35,7 @@ class FacedOffRolePage extends StatelessWidget {
           leftButtonOnTap: () => Navigator.pop(context),
           rightButtonOnTap: () {
             LastMoveCardPage.selectedLastMoveCard!.lastMoveCardAction([
-              GodfatherScenario.killedInDayPlayer!,
+              Scenario.currentScenario.killedInDayPlayer!,
               FaceOffPage.selectedPlayers[0]
             ], true);
             Navigator.pushNamed(context, '/night_page');
@@ -59,7 +58,7 @@ class FacedOffRolePage extends StatelessWidget {
                             width: 2, // Optional: Border width
                           ),
                           image: DecorationImage(
-                              image: AssetImage(GodfatherScenario
+                              image: AssetImage(Scenario.currentScenario
                                   .killedInDayPlayer!.role!.cardImagePath),
                               fit: BoxFit.contain)),
                     ),

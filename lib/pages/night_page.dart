@@ -6,12 +6,10 @@ import 'package:mafia_killer/components/message_box.dart';
 import 'package:mafia_killer/components/night_player_tile.dart';
 import 'package:mafia_killer/components/page_frame.dart';
 import 'package:mafia_killer/components/sixth_sense_box.dart';
-import 'package:mafia_killer/databases/game_settings.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/models/player_status.dart';
 import 'package:mafia_killer/models/scenarios/godfather/godfather_scenario.dart';
-import 'package:mafia_killer/models/talking_page_screen_arguments.dart';
 import 'package:mafia_killer/models/ui_player_status.dart';
 
 class NightPage extends StatefulWidget {
@@ -40,16 +38,20 @@ class _NightPageState extends State<NightPage> {
           shot: () {
             setState(() {
               NightPage.mafiaTeamChoice = 0;
-              GodfatherScenario.setMafiaTeamAvailablePlayers();
-              text = GodfatherScenario.setMafiaChoiceText();
+              (Scenario.currentScenario as GodfatherScenario)
+                  .setMafiaTeamAvailablePlayers();
+              text = (Scenario.currentScenario as GodfatherScenario)
+                  .setMafiaChoiceText();
               Navigator.of(context).pop();
             });
           },
           sixthSense: () {
             setState(() {
               NightPage.mafiaTeamChoice = 1;
-              GodfatherScenario.setMafiaTeamAvailablePlayers();
-              text = GodfatherScenario.setMafiaChoiceText();
+              (Scenario.currentScenario as GodfatherScenario)
+                  .setMafiaTeamAvailablePlayers();
+              text = (Scenario.currentScenario as GodfatherScenario)
+                  .setMafiaChoiceText();
               NightPage.typeOfConfirmation = 1;
               Navigator.of(context).pop();
             });
@@ -57,8 +59,10 @@ class _NightPageState extends State<NightPage> {
           buying: () {
             setState(() {
               NightPage.mafiaTeamChoice = 2;
-              GodfatherScenario.setMafiaTeamAvailablePlayers();
-              text = GodfatherScenario.setMafiaChoiceText();
+              (Scenario.currentScenario as GodfatherScenario)
+                  .setMafiaTeamAvailablePlayers();
+              text = (Scenario.currentScenario as GodfatherScenario)
+                  .setMafiaChoiceText();
               NightPage.typeOfConfirmation = 2;
               Navigator.of(context).pop();
             });
@@ -137,9 +141,14 @@ class _NightPageState extends State<NightPage> {
   }
 
   void resetNight() {
-    iterator =
-        GodfatherScenario.callRolesRegularNight(mafiaChoicBox, noAbilityBox)
-            .iterator;
+    if (Scenario.currentScenario is GodfatherScenario) {
+      iterator = Scenario.currentScenario
+          .callRolesRegularNight(
+              mafiaChoiceBox: mafiaChoicBox, noAbilityBox: noAbilityBox)
+          .iterator;
+    } else {
+      UnimplementedError("error");
+    }
     iterator.moveNext();
     text = iterator.current;
     NightPage.targetPlayer = null;
@@ -148,7 +157,7 @@ class _NightPageState extends State<NightPage> {
     NightPage.typeOfConfirmation = 0;
     NightPage.ableToSelectTile = false;
     NightPage.isNightOver = false;
-    GodfatherScenario.nightEvents = {};
+    Scenario.currentScenario.nightEvents = {};
     resetTiles();
   }
 
@@ -165,12 +174,16 @@ class _NightPageState extends State<NightPage> {
 
   @override
   void initState() {
-    iterator =
-        GodfatherScenario.callRolesRegularNight(mafiaChoicBox, noAbilityBox)
-            .iterator;
+    if (Scenario.currentScenario is GodfatherScenario) {
+      iterator = Scenario.currentScenario
+          .callRolesRegularNight(
+              mafiaChoiceBox: mafiaChoicBox, noAbilityBox: noAbilityBox)
+          .iterator;
+    } else {
+      UnimplementedError("error");
+    }
     iterator.moveNext();
     text = iterator.current;
-    GodfatherScenario.resetDataBeforeNight();
     super.initState();
   }
 

@@ -6,8 +6,8 @@ import 'package:mafia_killer/components/voting_tile.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/models/player_status.dart';
-import 'package:mafia_killer/models/scenarios/godfather/godfather_scenario.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/nostradamus.dart';
+import 'package:mafia_killer/pages/last_move_card_page.dart';
 
 class BeautifulMindChooseNostradamusPage extends StatefulWidget {
   const BeautifulMindChooseNostradamusPage({super.key});
@@ -60,6 +60,9 @@ class _BeautifulMindChooseNostradamusPageState
             'شب ${Scenario.currentScenario.dayAndNightNumber(number: Scenario.currentScenario.nightNumber)}',
         leftButtonOnTap: () => Navigator.pop(context),
         rightButtonOnTap: () {
+          // LastMoveCardPage.selectedLastMoveCard!.lastMoveCardAction(
+          //     [Scenario.currentScenario.killedInDayPlayer!, selectedPlayers[0]],
+          //     true);
           if (isConfirmed && selectedPlayers.length == 1) {
             Navigator.pushNamed(context, '/night_page');
           }
@@ -101,7 +104,7 @@ class _BeautifulMindChooseNostradamusPageState
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: CallRole(
                   text:
-                      "${GodfatherScenario.killedInDayPlayer!.name} اگر نوستراداموس بازی رو درست حدس بزنی در بازی میمونی",
+                      "${Scenario.currentScenario.killedInDayPlayer!.name} اگر نوستراداموس بازی رو درست حدس بزنی در بازی میمونی",
                   buttonText: "انتخاب کردم",
                   onPressed: () {
                     if (selectedPlayers.isNotEmpty) {
@@ -110,28 +113,29 @@ class _BeautifulMindChooseNostradamusPageState
                           builder: (context) {
                             String message = "";
                             // killed player in day be nostradamus
-                            if (GodfatherScenario.killedInDayPlayer!.name ==
+                            if (Scenario.currentScenario.killedInDayPlayer!
+                                        .name ==
                                     selectedPlayers[0].name &&
-                                GodfatherScenario.killedInDayPlayer!.role!
-                                    is Nostradamus) {
+                                Scenario.currentScenario.killedInDayPlayer!
+                                    .role! is Nostradamus) {
                               message =
-                                  "${GodfatherScenario.killedInDayPlayer!.name} خودش نوستراداموس بازی است و به بازی میگردد ولی شیلدش می افتد.";
-                              (GodfatherScenario.killedInDayPlayer!.role!
+                                  "${Scenario.currentScenario.killedInDayPlayer!.name} خودش نوستراداموس بازی است و به بازی میگردد ولی شیلدش می افتد.";
+                              (Scenario.currentScenario.killedInDayPlayer!.role!
                                       as Nostradamus)
                                   .shield = false;
                             }
                             // guess the nostradamus correctly
                             else if (selectedPlayers[0].role! is Nostradamus) {
                               message =
-                                  "${selectedPlayers[0].name} نوستراداموس است و از بازی به طور کامل خارج شده و ${GodfatherScenario.killedInDayPlayer!.name} در بازی می‌ماند";
+                                  "${selectedPlayers[0].name} نوستراداموس است و از بازی به طور کامل خارج شده و ${Scenario.currentScenario.killedInDayPlayer!.name} در بازی می‌ماند";
                               selectedPlayers[0].playerStatus =
                                   PlayerStatus.removed;
                             }
                             // guess the nostradamus wrong
                             else {
                               message =
-                                  "${selectedPlayers[0].name} نوستراداموس بازی نیست پس ${GodfatherScenario.killedInDayPlayer!.name} از بازی خارج میشود.";
-                              GodfatherScenario.killedInDayPlayer!
+                                  "${selectedPlayers[0].name} نوستراداموس بازی نیست پس ${Scenario.currentScenario.killedInDayPlayer!.name} از بازی خارج میشود.";
+                              Scenario.currentScenario.killedInDayPlayer!
                                   .playerStatus = PlayerStatus.dead;
                             }
                             return MessageBox(

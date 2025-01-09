@@ -1,10 +1,10 @@
 import 'package:mafia_killer/databases/player.dart';
+import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/models/player_status.dart';
 import 'package:mafia_killer/models/ui_player_status.dart';
 import 'package:mafia_killer/models/night_event.dart';
 import 'package:mafia_killer/models/role.dart';
 import 'package:mafia_killer/models/role_side.dart';
-import 'package:mafia_killer/models/scenarios/godfather/godfather_scenario.dart';
 import 'package:json_annotation/json_annotation.dart';
 part 'matador.g.dart';
 
@@ -27,7 +27,7 @@ class Matador extends Role {
   Map<String, dynamic> toJson() => _$MatadorToJson(this);
   @override
   void nightAction(Player? player) {
-    GodfatherScenario.nightEvents[NightEvent.disabledByMatador] = player;
+    Scenario.currentScenario.nightEvents[NightEvent.disabledByMatador] = player;
     if (player != null) {
       player.playerStatus = PlayerStatus.disable;
     }

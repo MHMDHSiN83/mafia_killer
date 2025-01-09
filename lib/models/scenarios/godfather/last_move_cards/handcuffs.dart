@@ -1,5 +1,4 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:mafia_killer/components/last_move_card_tile.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/models/last_move_card.dart';
 import 'package:mafia_killer/models/player_status.dart';
@@ -28,10 +27,10 @@ class Handcuffs extends LastMoveCard {
 
   @override
   void lastMoveCardAction(List<Player> players, bool succeed) {
-    if (succeed) {
-      for (int i = 0; i < players.length; i++) {
-        players[i].playerStatus = PlayerStatus.disable;
-      }
+    for (int i = 0; i < players.length; i++) {
+      players[i].playerStatus = PlayerStatus.disable;
     }
+    players[0].playerStatus = PlayerStatus.dead;
+    
   }
 }

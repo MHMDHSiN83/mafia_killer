@@ -1,10 +1,8 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:mafia_killer/components/last_move_card_tile.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/models/last_move_card.dart';
 import 'package:mafia_killer/models/player_status.dart';
 import 'package:mafia_killer/models/role.dart';
-import 'package:mafia_killer/models/scenarios/godfather/roles/nostradamus.dart';
 
 part 'face_off.g.dart';
 
@@ -31,11 +29,9 @@ class FaceOff extends LastMoveCard {
   @override
   void lastMoveCardAction(List<Player> players, bool succeed) {
     // the first element of the players list is the player that is going out of the game
-    if (succeed) {
-      players[0].playerStatus = PlayerStatus.removed;
-      Role tmp = players[1].role!;
-      players[1].role = players[0].role!;
-      players[0].role = tmp;
-    }
+    players[0].playerStatus = PlayerStatus.removed;
+    Role tmp = players[1].role!;
+    players[1].role = players[0].role!;
+    players[0].role = tmp;
   }
 }

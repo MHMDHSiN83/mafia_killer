@@ -1,67 +1,67 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:mafia_killer/components/call_role.dart';
-import 'package:mafia_killer/components/message_box.dart';
 import 'package:mafia_killer/components/page_frame.dart';
 import 'package:mafia_killer/components/voting_tile.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/databases/scenario.dart';
-import 'package:mafia_killer/models/last_move_card.dart';
 import 'package:mafia_killer/models/player_status.dart';
-import 'package:mafia_killer/models/scenarios/godfather/godfather_scenario.dart';
 import 'package:mafia_killer/pages/last_move_card_page.dart';
 
 class HandcuffsPage extends StatefulWidget {
-  const HandcuffsPage({super.key});
-  static List<Player> selectedPlayers = [];
+  HandcuffsPage({super.key});
+  List<Player> selectedPlayers = [];
   @override
   State<HandcuffsPage> createState() => _HandcuffsPageState();
 }
 
 class _HandcuffsPageState extends State<HandcuffsPage> {
   void addPlayer(Player player) {
-    if (HandcuffsPage.selectedPlayers.isEmpty) {
-      HandcuffsPage.selectedPlayers.add(player);
+    if (widget.selectedPlayers.isEmpty) {
+      widget.selectedPlayers.add(player);
     }
   }
 
   void removePlayer(Player player) {
-    if (HandcuffsPage.selectedPlayers.contains(player)) {
-      HandcuffsPage.selectedPlayers.remove(player);
+    if (widget.selectedPlayers.contains(player)) {
+      widget.selectedPlayers.remove(player);
     }
   }
 
   bool isDisable(Player player) {
     bool result = true;
     setState(() {
-      if (HandcuffsPage.selectedPlayers.isEmpty) {
+      if (widget.selectedPlayers.isEmpty) {
         result = false;
       }
-      if (HandcuffsPage.selectedPlayers.contains(player)) {
+      if (widget.selectedPlayers.contains(player)) {
         result = false;
       }
     });
     return result;
   }
 
-  List<Player> alivePlayers = Player.players
-      .where((player) => (player.playerStatus == PlayerStatus.active))
-      .toList();
+  List<Player> alivePlayers = Player.getAlivePlayers();
 
   @override
   Widget build(BuildContext context) {
+    for (var p in widget.selectedPlayers) {
+      print(p.name);
+    }
     return Scaffold(
       body: PageFrame(
         pageTitle: "دستبند",
         leftButtonText: "کارت حرکت آخر",
         rightButtonText:
             'شب ${Scenario.currentScenario.dayAndNightNumber(number: Scenario.currentScenario.nightNumber)}',
-        leftButtonOnTap: () => Navigator.pop(context),
+        leftButtonOnTap: () {
+          Navigator.pop(context);
+        },
         rightButtonOnTap: () {
-          if (HandcuffsPage.selectedPlayers.length == 1) {
+          if (widget.selectedPlayers.length == 1) {
+            widget.selectedPlayers
+                .insert(0, Scenario.currentScenario.killedInDayPlayer!);
             LastMoveCardPage.selectedLastMoveCard!
-                .lastMoveCardAction(HandcuffsPage.selectedPlayers, true);
+                .lastMoveCardAction(widget.selectedPlayers, true);
             Navigator.pushNamed(context, '/night_page');
           }
         },
@@ -102,7 +102,7 @@ class _HandcuffsPageState extends State<HandcuffsPage> {
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: CallRole(
                   text:
-                      "${GodfatherScenario.killedInDayPlayer!.name} توانایی یک نفر رو در شب بگیر.",
+                      "${Scenario.currentScenario.killedInDayPlayer!.name} توانایی یک نفر رو در شب بگیر.",
                   buttonText: "",
                   onPressed: () {},
                 ),

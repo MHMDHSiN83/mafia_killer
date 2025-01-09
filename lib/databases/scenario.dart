@@ -2,10 +2,15 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:mafia_killer/databases/player.dart';
+import 'package:mafia_killer/models/player_status.dart';
 import 'package:mafia_killer/models/database.dart';
 import 'package:mafia_killer/models/last_move_card.dart';
+import 'package:mafia_killer/models/night_event.dart';
 import 'package:mafia_killer/models/role.dart';
 import 'package:mafia_killer/models/role_side.dart';
+import 'package:mafia_killer/models/scenarios/classic/classic_scenario.dart';
+import 'package:mafia_killer/models/scenarios/godfather/godfather_scenario.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/citizen_kane.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/constantine.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/doctor_watson.dart';
@@ -14,32 +19,48 @@ import 'package:mafia_killer/models/scenarios/godfather/roles/leon.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/mafia.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/matador.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/saul_goodman.dart';
+import 'package:mafia_killer/models/ui_player_status.dart';
 import 'package:path_provider/path_provider.dart';
 
-part 'scenario.g.dart';
-
-@JsonSerializable()
 class Scenario {
-  Scenario(this.name);
+  Scenario();
 
   // Id id = Isar.autoIncrement;
-  late final String name;
+  late String name;
   late List<Role> roles;
   List<LastMoveCard> lastMoveCards = [];
   List<LastMoveCard> inGameLastMoveCards = [];
   List<Role> inGameRoles = [];
+  static List<Scenario> scenarios = [];
   static late Scenario currentScenario;
   static late String filePath;
   int nightNumber = 0;
   int dayNumber = 0;
   bool isNight = false;
-  factory Scenario.fromJson(Map<String, dynamic> json) =>
-      _$ScenarioFromJson(json);
+
+  Map<NightEvent, Player?> nightEvents = {};
+  List<Player> defendingPlayers = [];
+  Player? killedInDayPlayer;
+  List<Player> silencedPlayerDuringDay = [];
+  List<String> report = [];
+
+  factory Scenario.fromJson(Map<String, dynamic> json) {
+    switch (json['name']) {
+      case 'پدرخوانده':
+        return GodfatherScenario.fromJson(json);
+      case 'کلاسیک':
+        return ClassicScenario.fromJson(json);
+      default:
+        UnimplementedError('error');
+        return Scenario();
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    return {};
+  }
 
   // Generated method to convert an object to JSON
-  Map<String, dynamic> toJson() => _$ScenarioToJson(this);
-
-  static List<Scenario> scenarios = [];
   static Future<String> getFilePath() async {
     final directory = await getApplicationDocumentsDirectory();
     return '${directory.path}/scenarios.json';
@@ -105,8 +126,8 @@ class Scenario {
   }
 
   static Future<void> addLastMoveCard(LastMoveCard newLastMoveCard) async {
-    currentScenario.inGameLastMoveCards
-        .add(LastMoveCard.fromJson(jsonDecode(jsonEncode(newLastMoveCard.toJson()))));
+    currentScenario.inGameLastMoveCards.add(LastMoveCard.fromJson(
+        jsonDecode(jsonEncode(newLastMoveCard.toJson()))));
     Database.writeScenariosData(scenarios);
   }
 
@@ -120,7 +141,6 @@ class Scenario {
     Database.writeScenariosData(scenarios);
   }
 
-
   int numberOfRoles(Role role) {
     int counter = 0;
     for (Role r in inGameRoles) {
@@ -131,7 +151,6 @@ class Scenario {
     return counter;
   }
 
-
   int numberOfLastMoveCards(LastMoveCard lastMoveCard) {
     int counter = 0;
     for (LastMoveCard l in inGameLastMoveCards) {
@@ -141,6 +160,7 @@ class Scenario {
     }
     return counter;
   }
+
   // get a specific role by its name in current scenario
   Role? getRoleByName(String name) {
     return roles.where((role) => role.name == name).firstOrNull;
@@ -306,4 +326,63 @@ class Scenario {
     return dayNumber == 0;
   }
 
+  Iterable<String> callRolesIntroNight() sync* {}
+
+  void resetUIPlayerStatus() {
+    for (Player player in Player.inGamePlayers) {
+      if (player.playerStatus == PlayerStatus.active ||
+          player.playerStatus == PlayerStatus.disable) {
+        player.uiPlayerStatus = UIPlayerStatus.targetable;
+      } else {
+        player.uiPlayerStatus = UIPlayerStatus.untargetable;
+      }
+    }
+  }
+
+  void setPlayersToUntargetable() {
+    for (Player player in Player.inGamePlayers) {
+      player.uiPlayerStatus = UIPlayerStatus.untargetable;
+    }
+  }
+
+  void setMafiaTeamAvailablePlayers() {}
+
+  Iterable<String> mafiaTeamAction({Function? mafiaChoiceBox}) sync* {}
+
+  Iterable<String> otherRolesAction({Function? noAbilityBox}) sync* {}
+
+  Iterable<String> callRolesRegularNight(
+      {Function? mafiaChoiceBox, Function? noAbilityBox}) sync* {}
+
+  void nightReport() {}
+
+  void storeDefendingPlayers(List<Player> players) {
+    defendingPlayers = players;
+  }
+
+  void resetDataAfterNight() {
+    nightEvents = {};
+    defendingPlayers = [];
+    killedInDayPlayer = null;
+    silencedPlayerDuringDay = [];
+    report = [];
+
+    for (Player player in Player.inGamePlayers) {
+      if (player.playerStatus == PlayerStatus.disable) {
+        player.playerStatus = PlayerStatus.active;
+      }
+    }
+  }
+
+  int numberOfDeadPlayersBySide(RoleSide roleSide) {
+    int counter = 0;
+    for (Player player in Player.inGamePlayers) {
+      if ((player.playerStatus == PlayerStatus.dead ||
+              player.playerStatus == PlayerStatus.removed) &&
+          player.role!.roleSide == roleSide) {
+        counter++;
+      }
+    }
+    return counter;
+  }
 }
