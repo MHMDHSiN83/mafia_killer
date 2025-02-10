@@ -1,9 +1,9 @@
 {
-    "/intro_page": "salam",
-    "/players_page": "salam",
-    "/game_settings_page": "salam",
-    "/loading_page": "salam",
-    "/role_selection_page": "salam",
+    "/intro_page": "salam intro",
+    "/players_page": "salam players",
+    "/game_settings_page": "salam game settings",
+    "/loading_page": "salam salam salamsalamsalamsalam salam salam salam salam salam salam",
+    "/role_selection_page": "salam salam salamsalamsalamsalam salam salam salam salam salam salam",
     "/role_distribution_page": "salam",
     "/talking_page": "salam",
     "/defense_talking_page": "salam",
@@ -15,9 +15,9 @@
     "/last_move_card_page": "salam",
     "/reveal_identity_page": "salam",
     "/test": "salam",
-    "/face_off_page" : "salam",
-    "/faced_off_role_page" : "salam",
-    "/handcuffs_page" : "salam",
-    "/silence_of_the_lambs_page" : "salam",
-    "/beautiful_mind_choose_nostradamus_page" : "salam"
+    "/face_off_page": "salam",
+    "/faced_off_role_page": "salam",
+    "/handcuffs_page": "salam",
+    "/silence_of_the_lambs_page": "salam",
+    "/beautiful_mind_choose_nostradamus_page": "salam"
 }

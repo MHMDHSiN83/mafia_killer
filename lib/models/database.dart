@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:mafia_killer/databases/game_settings.dart';
+import 'package:mafia_killer/databases/page_guide.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/databases/scenario.dart';
 import 'package:path_provider/path_provider.dart';
@@ -21,6 +22,7 @@ class Database {
     await Scenario.getScenariosFromDatabase();
     await GameSettings.getGameSettingsFromDatabase();
     await Player.getPlayersFromDatabase();
+    await PageGuide.getGuidesFromDatabase();
     String directoryPath = await getDirectoryPath();
     playersDataFilePath = '$directoryPath/players.json';
     scenariosDataFilePath = '$directoryPath/scenarios.json';
@@ -49,10 +51,4 @@ class Database {
     await file.writeAsString(jsonString);
   }
 
-  static Future<void> writeGuidesData(List<Scenario> scenarios) async {
-    File file = File(scenariosDataFilePath);
-    String jsonString =
-        jsonEncode(scenarios.map((scenario) => scenario.toJson()).toList());
-    await file.writeAsString(jsonString);
-  }
 }

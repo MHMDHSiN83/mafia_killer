@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mafia_killer/components/confirmation_box.dart';
 import 'package:mafia_killer/components/guide_box.dart';
-import 'package:mafia_killer/components/guide_boxx.dart';
+import 'package:mafia_killer/components/guide_box.dart';
 import 'package:mafia_killer/components/my_outlined_button.dart';
+import 'package:mafia_killer/databases/page_guide.dart';
 import 'dart:math' as math;
 import 'package:mafia_killer/themes/app_color.dart';
 
@@ -229,21 +230,6 @@ class _PageFrameState extends State<PageFrame> {
             ),
           ),
         ),
-        // Positioned(
-        //   top: 85,
-        //   left: 20,
-        //   right: 20,
-        //   child: AnimatedOpacity(
-        //     duration: Duration(milliseconds: 500),
-        //     curve: Curves.easeInOut,
-        //     opacity: _showBubble ? 1.0 : 0.0,
-        //     // opacity: 0.0,
-        //     child: ComicSpeechBubble(
-        //       text: "test test test  testtest testtestvS",
-        //     ),
-        //   ),
-        // ),
-        // Positioned(child: child)
       ],
     );
   }
@@ -252,8 +238,8 @@ class _PageFrameState extends State<PageFrame> {
     showDialog(
       context: context,
       builder: (context) {
-        return GuideBoxx(
-          text: widget.label,
+        return GuideBox(
+          text: PageGuide.pageGuides![widget.label]!,
         );
       },
     );

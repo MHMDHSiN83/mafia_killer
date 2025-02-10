@@ -6,7 +6,7 @@ class PageGuide {
 
   static Map<String, String>? pageGuides;
 
-  static Future<void> getGameSettingsFromDatabase() async {
+  static Future<void> getGuidesFromDatabase() async {
     final String response =
         await rootBundle.loadString('lib/assets/guide.json');
 
