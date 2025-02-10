@@ -40,7 +40,7 @@ class Role {
       case 'ماتادور':
         return Matador.fromJson(json);
       case 'مافیا ساده':
-      return Mafia.fromJson(json);
+        return Mafia.fromJson(json);
       case 'نوستراداموس':
         return Nostradamus.fromJson(json);
       case 'دکتر واتسون':
@@ -116,5 +116,9 @@ class Role {
 
   String deadOrRemovedText() {
     return '${awakingRole()}(بازیکن از بازی خارج شده کمی راه برو و وانمود کن نقش هنوز تو بازیه)';
+  }
+
+  List<String> roleDetails() {
+    return [""];
   }
 }

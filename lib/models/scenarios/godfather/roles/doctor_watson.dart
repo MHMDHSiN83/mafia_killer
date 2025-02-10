@@ -50,4 +50,9 @@ class DoctorWatson extends Role {
     setAvailablePlayers();
     return "دکتر بیدار شه و یک نفر را نجات بده";
   }
+
+  @override
+  List<String> roleDetails() {
+    return ["نجات خود: $selfHeal"];
+  }
 }

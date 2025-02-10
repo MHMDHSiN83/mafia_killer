@@ -30,14 +30,15 @@ class Matador extends Role {
     GodfatherScenario.nightEvents[NightEvent.disabledByMatador] = player;
     if (player != null) {
       player.playerStatus = PlayerStatus.disable;
+      lastPlayerName = player.name;
     }
   }
 
   @override
   void setAvailablePlayers() {
-    // TODO can't disable someone two night in a row
     for (Player player in Player.inGamePlayers) {
-      if (player.role!.roleSide == RoleSide.mafia) {
+      if (player.role!.roleSide == RoleSide.mafia ||
+          (lastPlayerName != null && lastPlayerName == player.name)) {
         player.uiPlayerStatus = UIPlayerStatus.untargetable;
       }
     }
@@ -57,5 +58,10 @@ class Matador extends Role {
   @override
   String introAwakingRole() {
     return 'ماتادور لایک نشون بده';
+  }
+
+  @override
+  List<String> roleDetails() {
+    return (lastPlayerName == null) ? [] : ["بازیکن قبلی: \n $lastPlayerName"];
   }
 }

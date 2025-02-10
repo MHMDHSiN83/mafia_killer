@@ -47,4 +47,8 @@ class CitizenKane extends Role {
     return "همشهری کین بیدار شه و استعلام یک نفر رو از من بگیره";
   }
 
+  @override
+  List<String> roleDetails() {
+    return ["استعلام: $remainingAbility"];
+  }
 }

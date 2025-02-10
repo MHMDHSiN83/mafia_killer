@@ -15,18 +15,15 @@ class Nostradamus extends Role {
     roleSide = RoleSide.independant;
     cardImagePath = "lib/images/roles/nostradamus.jpg";
   }
-  
 
   late RoleSide inGameRoleSide;
   bool shield = true;
-
 
   factory Nostradamus.fromJson(Map<String, dynamic> json) =>
       _$NostradamusFromJson(json);
   @override
   Map<String, dynamic> toJson() => _$NostradamusToJson(this);
 
-  
   int introNightAction(List<Player> players) {
     int result = 0;
     for (Player player in players) {
@@ -55,5 +52,16 @@ class Nostradamus extends Role {
 
   void setNostradamusRole(RoleSide roleSide) {
     inGameRoleSide = roleSide;
+  }
+
+  @override
+  List<String> roleDetails() {
+    String tmp = (shield) ? "دارد" : "ندارد";
+    String side = (inGameRoleSide == RoleSide.independant)
+        ? "مستقل"
+        : (inGameRoleSide == RoleSide.mafia)
+            ? "مافیا"
+            : "شهروند";
+    return ["محافظ $tmp", "ساید: $side"];
   }
 }

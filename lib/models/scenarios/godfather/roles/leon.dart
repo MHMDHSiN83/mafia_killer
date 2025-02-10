@@ -50,4 +50,9 @@ class Leon extends Role {
   String awakingRole() {
     return "لئون بیدار شه و به یک نفر شلیک کنه (لئون در کل بازی دو تیر دارد)";
   }
+
+  @override
+  List<String> roleDetails() {
+    return ["زره در شب: $shield", "تیر: $remainingAbility"];
+  }
 }

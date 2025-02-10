@@ -34,9 +34,7 @@ class _RemovePlayerDialogboxState extends State<RemovePlayerDialogbox> {
                 },
                 child: Text(
                   "انجام شد",
-                  style: TextStyle(
-                    color: AppColors.redColor,
-                  ),
+                  style: TextStyle(color: AppColors.redColor, fontSize: 17),
                 )),
           )
         ],

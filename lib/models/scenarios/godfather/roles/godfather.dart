@@ -53,4 +53,9 @@ class Godfather extends Role {
   String introAwakingRole() {
     return 'پدرخوانده لایک نشون بده';
   }
+
+  @override
+  List<String> roleDetails() {
+    return ["حس ششم: $remainingAbility", "زره در شب: $shield"];
+  }
 }
