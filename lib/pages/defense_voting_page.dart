@@ -64,6 +64,9 @@ class _DefenseVotingPageState extends State<DefenseVotingPage> {
       body: PageFrame(
         label: ModalRoute.of(context)!.settings.name!,
         pageTitle: "کشته روز",
+        reloadContentOfPage: (){
+          setState(() {});
+        },
         leftButtonText: "صحبت دفاعیه",
         rightButtonText:
             'شب ${Scenario.currentScenario.dayAndNightNumber(number: Scenario.currentScenario.nightNumber)}',

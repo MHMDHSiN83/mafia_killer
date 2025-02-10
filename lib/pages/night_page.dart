@@ -193,6 +193,9 @@ class _NightPageState extends State<NightPage> {
       body: PageFrame(
         label: ModalRoute.of(context)!.settings.name!,
         pageTitle: 'شب ${Scenario.currentScenario.dayAndNightNumber()}',
+        reloadContentOfPage: (){
+          setState(() {});
+        },
         rightButtonText: 'اتفاقات شب',
         leftButtonText:
             "روز ${Scenario.currentScenario.dayAndNightNumber(number: Scenario.currentScenario.dayNumber - 1)}",

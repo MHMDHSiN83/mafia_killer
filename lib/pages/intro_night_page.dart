@@ -103,6 +103,9 @@ class _IntroNightPageState extends State<IntroNightPage> {
       body: PageFrame(
         label: ModalRoute.of(context)!.settings.name!,
         pageTitle: 'شب معارفه',
+        reloadContentOfPage: (){
+          setState(() {});
+        },
         rightButtonText:
             "روز ${Scenario.currentScenario.dayAndNightNumber(number: Scenario.currentScenario.dayNumber)}",
         leftButtonText:

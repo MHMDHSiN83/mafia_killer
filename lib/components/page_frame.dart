@@ -4,6 +4,8 @@ import 'package:mafia_killer/components/confirmation_box.dart';
 import 'package:mafia_killer/components/guide_box.dart';
 import 'package:mafia_killer/components/guide_box.dart';
 import 'package:mafia_killer/components/my_outlined_button.dart';
+import 'package:mafia_killer/components/remove_player_dialogbox.dart';
+import 'package:mafia_killer/pages/regular_voting_page.dart';
 import 'package:mafia_killer/databases/page_guide.dart';
 import 'dart:math' as math;
 import 'package:mafia_killer/themes/app_color.dart';
@@ -22,6 +24,7 @@ class PageFrame extends StatefulWidget {
     this.rightButtonIcon,
     this.questionOnTap,
     this.child,
+    this.reloadContentOfPage,
   });
   final String label;
   final String pageTitle;
@@ -34,10 +37,13 @@ class PageFrame extends StatefulWidget {
   final IconData? rightButtonIcon;
   final Widget? child;
   final bool isInGame;
+  final Function? reloadContentOfPage;
 
   @override
   State<PageFrame> createState() => _PageFrameState();
 }
+
+
 
 class _PageFrameState extends State<PageFrame> {
   bool _showBubble = false;
@@ -46,6 +52,7 @@ class _PageFrameState extends State<PageFrame> {
     "medium": 24,
     "large": 27,
   };
+
 
   double determineTitleFontsize() {
     double len = widget.pageTitle.length.toDouble();
@@ -308,7 +315,18 @@ class _PageFrameState extends State<PageFrame> {
                 hasIcon: true,
                 text: "حذف بازیکن",
                 fontSize: 15,
-                onTap: () {},
+                onTap: () {
+                  showDialog(
+                      barrierDismissible: false,
+                      context: context,
+                      builder: (context) {
+                        return RemovePlayerDialogbox(
+                          reloadPage: widget.reloadContentOfPage == null
+                              ? () {}
+                              : widget.reloadContentOfPage!,
+                        );
+                      });
+                },
                 icon: FontAwesomeIcons.gun,
                 iconSize: 6,
                 isIconRight: true,
