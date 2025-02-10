@@ -96,6 +96,7 @@ class _NightEventsPage extends State<NightEventsPage> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: PageFrame(
+        label: ModalRoute.of(context)!.settings.name!,
         pageTitle: "اتفاقات شب",
         leftButtonText:
             "شب ${Scenario.currentScenario.dayAndNightNumber(number: Scenario.currentScenario.nightNumber)}",

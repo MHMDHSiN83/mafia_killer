@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mafia_killer/models/database.dart';
 import 'package:mafia_killer/themes/app_color.dart';
+
 class IntroPage extends StatelessWidget {
   const IntroPage({super.key});
 

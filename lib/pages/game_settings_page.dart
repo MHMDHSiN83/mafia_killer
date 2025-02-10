@@ -65,6 +65,7 @@ class _GameSettingsPageState extends State<GameSettingsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: PageFrame(
+        label: ModalRoute.of(context)!.settings.name!,
         pageTitle: "تنظیمات این دست",
         rightButtonText: "انتخاب نقش‌ها",
         leftButtonText: "بازیکنان",

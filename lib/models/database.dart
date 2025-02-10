@@ -8,6 +8,7 @@ import 'package:path_provider/path_provider.dart';
 class Database {
   static late String playersDataFilePath;
   static late String scenariosDataFilePath;
+  static late String guideDataFilePath;
   Database() {
     setInitialValues();
   }
@@ -23,6 +24,9 @@ class Database {
     String directoryPath = await getDirectoryPath();
     playersDataFilePath = '$directoryPath/players.json';
     scenariosDataFilePath = '$directoryPath/scenarios.json';
+    guideDataFilePath = '$directoryPath/guide.json';
+    
+
     Player.freePlayers();
   }
 
@@ -39,6 +43,13 @@ class Database {
   }
 
   static Future<void> writeScenariosData(List<Scenario> scenarios) async {
+    File file = File(scenariosDataFilePath);
+    String jsonString =
+        jsonEncode(scenarios.map((scenario) => scenario.toJson()).toList());
+    await file.writeAsString(jsonString);
+  }
+
+  static Future<void> writeGuidesData(List<Scenario> scenarios) async {
     File file = File(scenariosDataFilePath);
     String jsonString =
         jsonEncode(scenarios.map((scenario) => scenario.toJson()).toList());

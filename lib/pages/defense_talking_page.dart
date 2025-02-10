@@ -93,6 +93,7 @@ class _DefenseTalkingPageState extends State<DefenseTalkingPage> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: PageFrame(
+        label: ModalRoute.of(context)!.settings.name!,
         pageTitle: 'روز ${Scenario.currentScenario.dayAndNightNumber()}',
         leftButtonText:
             'شب ${Scenario.currentScenario.dayAndNightNumber(number: Scenario.currentScenario.nightNumber - 1)}',

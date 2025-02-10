@@ -96,6 +96,7 @@ class _TalkingPageState extends State<TalkingPage> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: PageFrame(
+        label: ModalRoute.of(context)!.settings.name!,
         pageTitle: 'روز ${Scenario.currentScenario.dayAndNightNumber()}',
         leftButtonText: args.leftButtonText,
         rightButtonText: args.rightButtonText,

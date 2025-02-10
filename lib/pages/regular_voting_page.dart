@@ -27,6 +27,7 @@ class RegularVotingPage extends StatelessWidget {
     }
     return Scaffold(
       body: PageFrame(
+        label: ModalRoute.of(context)!.settings.name!,
         pageTitle: "بازیکنان داخل دفاع",
         leftButtonText: "صحبت روز",
         rightButtonText: "صحبت دفاعیه",

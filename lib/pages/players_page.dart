@@ -35,6 +35,7 @@ class _PlayersPageState extends State<PlayersPage> {
     return Scaffold(
       resizeToAvoidBottomInset: true,
       body: PageFrame(
+        label: ModalRoute.of(context)!.settings.name!,
         isInGame: false,
         pageTitle: "نام بازیکنان",
         leftButtonText: "صفحه اصلی",

@@ -62,6 +62,7 @@ class _DefenseVotingPageState extends State<DefenseVotingPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: PageFrame(
+        label: ModalRoute.of(context)!.settings.name!,
         pageTitle: "کشته روز",
         leftButtonText: "صحبت دفاعیه",
         rightButtonText:

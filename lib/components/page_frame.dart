@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:mafia_killer/components/confirmation_box.dart';
+import 'package:mafia_killer/components/guide_box.dart';
+import 'package:mafia_killer/components/guide_boxx.dart';
 import 'package:mafia_killer/components/my_outlined_button.dart';
 import 'dart:math' as math;
 import 'package:mafia_killer/themes/app_color.dart';
 
-class PageFrame extends StatelessWidget {
-  PageFrame({
+class PageFrame extends StatefulWidget {
+  const PageFrame({
     super.key,
+    required this.label,
     required this.pageTitle,
     required this.leftButtonText,
     required this.rightButtonText,
@@ -18,7 +22,7 @@ class PageFrame extends StatelessWidget {
     this.questionOnTap,
     this.child,
   });
-
+  final String label;
   final String pageTitle;
   final String leftButtonText;
   final String rightButtonText;
@@ -30,14 +34,21 @@ class PageFrame extends StatelessWidget {
   final Widget? child;
   final bool isInGame;
 
+  @override
+  State<PageFrame> createState() => _PageFrameState();
+}
+
+class _PageFrameState extends State<PageFrame> {
+  bool _showBubble = false;
   final Map<String, double> titleFontsizes = {
     "small": 21,
     "medium": 24,
     "large": 27,
   };
+
   double determineTitleFontsize() {
-    double len = pageTitle.length.toDouble();
-    int numberOfWords = pageTitle.split(' ').length;
+    double len = widget.pageTitle.length.toDouble();
+    int numberOfWords = widget.pageTitle.split(' ').length;
     if (len <= 12 && numberOfWords <= 2) {
       return titleFontsizes["large"]!;
     } else if ((len > 12 && len <= 14 && numberOfWords <= 2) ||
@@ -83,10 +94,10 @@ class PageFrame extends StatelessWidget {
                                     Border.all(color: Colors.white, width: 5),
                                 borderRadius: BorderRadius.circular(10),
                               ),
-                              child: child,
+                              child: widget.child,
                             ),
                           ),
-                          if (isInGame)
+                          if (widget.isInGame)
                             const Spacer(
                               flex: 1,
                             )
@@ -97,7 +108,8 @@ class PageFrame extends StatelessWidget {
                     pageTitleWidget(),
 
                     // remove player and see status buttons
-                    if (isInGame) removePlayerAndStatusButtonWidget(context),
+                    if (widget.isInGame)
+                      removePlayerAndStatusButtonWidget(context),
                   ],
                 ),
               ),
@@ -114,102 +126,136 @@ class PageFrame extends StatelessWidget {
   }
 
   Widget pageTitleWidget() {
-    return Positioned(
-      top: -3,
-      left: 0,
-      right: 0,
-      child: SizedBox(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            // question mark button on the left
-            Expanded(
-              flex: 1,
-              child: Container(
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  border: Border.all(
-                    color: Colors.white,
-                    width: 3,
-                  ),
-                ),
-                child: CircleAvatar(
-                  backgroundColor: const Color(0xFF111111),
-                  radius: 25,
-                  child: IconButton(
-                    icon: const Icon(
-                      Icons.settings_outlined,
-                      size: 35,
+    return Stack(
+      clipBehavior: Clip.none,
+      children: [
+        Positioned(
+          top: -3,
+          left: 0,
+          right: 0,
+          child: SizedBox(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                // question mark button on the left
+                Expanded(
+                  flex: 1,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        color: Colors.white,
+                        width: 3,
+                      ),
                     ),
-                    color: const Color(0xFFE01357),
-                    onPressed: () {
-                      print('Icon Button Pressed');
-                    },
-                  ),
-                ),
-              ),
-            ),
-            Expanded(
-              flex: 3,
-              child: Container(
-                height: 65,
-                decoration: BoxDecoration(
-                  color: const Color(0xFF111111),
-                  borderRadius: BorderRadius.circular(40),
-                  border: Border.all(
-                    color: Colors.white,
-                    width: 3.0,
-                  ),
-                ),
-                child: Center(
-                  child: Text(
-                    pageTitle,
-                    style: TextStyle(
-                      fontSize: determineTitleFontsize(),
-                      fontWeight: FontWeight.bold,
-                      color: const Color(0xFFE01357),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            // setting button on the right
-            Expanded(
-              flex: 1,
-              child: Container(
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  border: Border.all(
-                    color: Colors.white,
-                    width: 3,
-                  ),
-                ),
-                child: CircleAvatar(
-                  backgroundColor: const Color(0xFF111111),
-                  radius: 25,
-                  child: Center(
-                    child: IconButton(
-                      icon: Transform(
-                        alignment: Alignment.center,
-                        transform: Matrix4.rotationY(math.pi),
-                        child: const Icon(
-                          Icons.question_mark,
+                    child: CircleAvatar(
+                      backgroundColor: const Color(0xFF111111),
+                      radius: 25,
+                      child: IconButton(
+                        icon: const Icon(
+                          Icons.settings_outlined,
                           size: 35,
-                          opticalSize: 100,
+                        ),
+                        color: const Color(0xFFE01357),
+                        onPressed: () {
+                          print('Icon Button Pressed');
+                        },
+                      ),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  flex: 3,
+                  child: Container(
+                    height: 65,
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF111111),
+                      borderRadius: BorderRadius.circular(40),
+                      border: Border.all(
+                        color: Colors.white,
+                        width: 3.0,
+                      ),
+                    ),
+                    child: Center(
+                      child: Text(
+                        widget.pageTitle,
+                        style: TextStyle(
+                          fontSize: determineTitleFontsize(),
+                          fontWeight: FontWeight.bold,
+                          color: const Color(0xFFE01357),
                         ),
                       ),
-                      color: const Color(0xFFE01357),
-                      onPressed: () {
-                        print('Icon Button Pressed');
-                      },
                     ),
                   ),
                 ),
-              ),
+                // setting button on the right
+                Expanded(
+                  flex: 1,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        color: Colors.white,
+                        width: 3,
+                      ),
+                    ),
+                    child: CircleAvatar(
+                      backgroundColor: const Color(0xFF111111),
+                      radius: 25,
+                      child: Center(
+                        child: IconButton(
+                          icon: Transform(
+                            alignment: Alignment.center,
+                            transform: Matrix4.rotationY(math.pi),
+                            child: const Icon(
+                              Icons.question_mark,
+                              size: 35,
+                              opticalSize: 100,
+                            ),
+                          ),
+                          color: const Color(0xFFE01357),
+                          onPressed: () {
+                            showGuideDialog();
+                            setState(() {
+                              _showBubble = !_showBubble;
+                            });
+                          },
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
-      ),
+        // Positioned(
+        //   top: 85,
+        //   left: 20,
+        //   right: 20,
+        //   child: AnimatedOpacity(
+        //     duration: Duration(milliseconds: 500),
+        //     curve: Curves.easeInOut,
+        //     opacity: _showBubble ? 1.0 : 0.0,
+        //     // opacity: 0.0,
+        //     child: ComicSpeechBubble(
+        //       text: "test test test  testtest testtestvS",
+        //     ),
+        //   ),
+        // ),
+        // Positioned(child: child)
+      ],
+    );
+  }
+
+  void showGuideDialog() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return GuideBoxx(
+          text: widget.label,
+        );
+      },
     );
   }
 
@@ -223,12 +269,12 @@ class PageFrame extends StatelessWidget {
         Expanded(
           flex: 40,
           child: MyOutlinedButton(
-            text: rightButtonText,
+            text: widget.rightButtonText,
             color: AppColors.greenColor,
             hasIcon: true,
             isIconRight: true,
-            onTap: rightButtonOnTap,
-            icon: rightButtonIcon,
+            onTap: widget.rightButtonOnTap,
+            icon: widget.rightButtonIcon,
           ),
         ),
         const Spacer(
@@ -237,12 +283,12 @@ class PageFrame extends StatelessWidget {
         Expanded(
           flex: 40,
           child: MyOutlinedButton(
-            text: leftButtonText,
+            text: widget.leftButtonText,
             hasIcon: true,
             color: AppColors.redColor,
-            onTap: leftButtonOnTap,
+            onTap: widget.leftButtonOnTap,
             isIconRight: false,
-            icon: leftButtonIcon,
+            icon: widget.leftButtonIcon,
           ),
         ),
         const Spacer(

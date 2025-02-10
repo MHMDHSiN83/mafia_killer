@@ -74,7 +74,7 @@ class MyApp extends StatelessWidget {
         '/intro_night_page': (context) => const IntroNightPage(),
         '/last_move_card_page': (context) => LastMoveCardPage(),
         '/reveal_identity_page': (context) => RevealIdentityPage(),
-        '/test': (context) => StackNavigator(),
+        '/test': (context) => ComicSpeechBubblePage(),
         '/face_off_page' : (context) => FaceOffPage(),
         '/faced_off_role_page' : (context) => FacedOffRolePage(),
         '/handcuffs_page' : (context) => HandcuffsPage(),

@@ -50,6 +50,7 @@ class _HandcuffsPageState extends State<HandcuffsPage> {
     }
     return Scaffold(
       body: PageFrame(
+        label: ModalRoute.of(context)!.settings.name!,
         pageTitle: "دستبند",
         leftButtonText: "کارت حرکت آخر",
         rightButtonText:

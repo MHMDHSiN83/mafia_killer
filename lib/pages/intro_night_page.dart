@@ -101,6 +101,7 @@ class _IntroNightPageState extends State<IntroNightPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: PageFrame(
+        label: ModalRoute.of(context)!.settings.name!,
         pageTitle: 'شب معارفه',
         rightButtonText:
             "روز ${Scenario.currentScenario.dayAndNightNumber(number: Scenario.currentScenario.dayNumber)}",

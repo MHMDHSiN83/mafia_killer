@@ -81,6 +81,7 @@ class _RoleDistributionPageState extends State<RoleDistributionPage> {
     padding = calculateSizeOfPadding();
     return Scaffold(
       body: PageFrame(
+        label: ModalRoute.of(context)!.settings.name!,
         pageTitle: "تقسیم نقش ها",
         leftButtonText: "انتخاب نقش‌ها",
         rightButtonText: "روز معارفه",

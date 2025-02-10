@@ -1,62 +1,5 @@
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: ComicSpeechBubblePage(),
-    );
-  }
-}
-
-class ComicSpeechBubblePage extends StatefulWidget {
-  const ComicSpeechBubblePage({super.key});
-
-  @override
-  _ComicSpeechBubblePageState createState() => _ComicSpeechBubblePageState();
-}
-
-class _ComicSpeechBubblePageState extends State<ComicSpeechBubblePage> {
-  bool _showBubble = false;
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text('Comic Speech Bubble')),
-      backgroundColor: Colors.grey.shade100,
-      body: Stack(
-        children: [
-          AnimatedPositioned(
-            duration: Duration(seconds: 1),
-            curve: Curves.easeInOut, // Smooth animation
-            top: _showBubble ? 200 : -100, // Start from top, animate to 200px
-            left: 50,
-            right: 50,
-            child: ComicSpeechBubble(
-              text: "test test test  testtest testtestvS",
-            ),
-          ),
-        ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          setState(() {
-            _showBubble = !_showBubble;
-          });
-        },
-        child: Icon(Icons.add),
-      ),
-    );
-  }
-}
-
 class ComicSpeechBubble extends StatelessWidget {
   final String text;
 
@@ -128,13 +71,18 @@ class SpeechBubblePainter extends CustomPainter {
 
     double radius = 20.0;
     double tailSize = 30.0;
-    double tailX = size.width * 0.1;
+    double tailX = size.width * 0.03;
 
     // Start at the top-left rounded corner
     path.moveTo(radius, 0);
     path.lineTo(radius + tailX, 0);
-    path.lineTo(radius + tailX + tailSize, -tailSize);
-    path.lineTo(radius + tailX + tailSize + tailSize, 0);
+
+    // path.lineTo(radius + tailX + tailSize, -tailSize);
+    // path.lineTo(radius + tailX + tailSize + tailSize, 0);
+
+    path.lineTo(radius + tailX - 10, -30);
+    path.lineTo(radius + tailX + 20, 0);
+
     path.lineTo(size.width - radius, 0);
     path.quadraticBezierTo(size.width, 0, size.width, radius);
     path.lineTo(size.width, size.height - radius);

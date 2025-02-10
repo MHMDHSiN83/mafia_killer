@@ -47,6 +47,7 @@ class _FaceOffPageState extends State<FaceOffPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: PageFrame(
+        label: ModalRoute.of(context)!.settings.name!,
         pageTitle: "تغییر چهره",
         leftButtonText: "کارت حرکت آخر",
         rightButtonText:

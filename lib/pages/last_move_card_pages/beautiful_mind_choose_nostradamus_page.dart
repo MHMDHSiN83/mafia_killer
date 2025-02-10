@@ -60,6 +60,7 @@ class _BeautifulMindChooseNostradamusPageState
     print(isConfirmed);
     return Scaffold(
       body: PageFrame(
+        label: ModalRoute.of(context)!.settings.name!,
         pageTitle: "ذهن زیبا",
         leftButtonText: "کارت حرکت آخر",
         rightButtonText:
