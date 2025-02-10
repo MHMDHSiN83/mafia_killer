@@ -79,6 +79,17 @@ class Player extends ChangeNotifier {
     }
   }
 
+  static List<Player> getAliveInGamePlayers() {
+    List<Player> aliveInGamePlayers = [];
+    for (Player player in inGamePlayers) {
+      if (player.playerStatus != PlayerStatus.dead &&
+          player.playerStatus != PlayerStatus.removed) {
+        aliveInGamePlayers.add(player);
+      }
+    }
+    return aliveInGamePlayers;
+  }
+
   // U P D A T E
   static Future<void> editPlayerName(Player player, String newName) async {
     for (Player p in players) {
@@ -142,10 +153,10 @@ class Player extends ChangeNotifier {
         .where((player) => player.role.runtimeType == type)
         .first;
   }
-  
+
   static bool doesNameExist(String name) {
     for (Player player in players) {
-      if(name == player.name) {
+      if (name == player.name) {
         return true;
       }
     }

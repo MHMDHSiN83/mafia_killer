@@ -179,6 +179,9 @@ class _NightPageState extends State<NightPage> {
     return Scaffold(
       body: PageFrame(
         pageTitle: 'شب ${Scenario.currentScenario.dayAndNightNumber()}',
+        reloadContentOfPage: (){
+          setState(() {});
+        },
         rightButtonText: 'اتفاقات شب',
         leftButtonText:
             "روز ${Scenario.currentScenario.dayAndNightNumber(number: Scenario.currentScenario.dayNumber - 1)}",

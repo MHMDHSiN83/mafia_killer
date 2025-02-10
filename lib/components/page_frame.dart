@@ -1,23 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mafia_killer/components/my_outlined_button.dart';
+import 'package:mafia_killer/components/remove_player_dialogbox.dart';
+import 'package:mafia_killer/pages/regular_voting_page.dart';
 import 'dart:math' as math;
 import 'package:mafia_killer/themes/app_color.dart';
 
-class PageFrame extends StatelessWidget {
-  PageFrame({
-    super.key,
-    required this.pageTitle,
-    required this.leftButtonText,
-    required this.rightButtonText,
-    required this.leftButtonOnTap,
-    required this.rightButtonOnTap,
-    this.isInGame = true,
-    this.leftButtonIcon,
-    this.rightButtonIcon,
-    this.questionOnTap,
-    this.child,
-  });
+class PageFrame extends StatefulWidget {
+  const PageFrame(
+      {super.key,
+      required this.pageTitle,
+      required this.leftButtonText,
+      required this.rightButtonText,
+      required this.leftButtonOnTap,
+      required this.rightButtonOnTap,
+      this.isInGame = true,
+      this.leftButtonIcon,
+      this.rightButtonIcon,
+      this.questionOnTap,
+      this.child,
+      this.reloadContentOfPage});
 
   final String pageTitle;
   final String leftButtonText;
@@ -29,15 +31,22 @@ class PageFrame extends StatelessWidget {
   final IconData? rightButtonIcon;
   final Widget? child;
   final bool isInGame;
+  final Function? reloadContentOfPage;
 
+  @override
+  State<PageFrame> createState() => _PageFrameState();
+}
+
+class _PageFrameState extends State<PageFrame> {
   final Map<String, double> titleFontsizes = {
     "small": 21,
     "medium": 24,
     "large": 27,
   };
+
   double determineTitleFontsize() {
-    double len = pageTitle.length.toDouble();
-    int numberOfWords = pageTitle.split(' ').length;
+    double len = widget.pageTitle.length.toDouble();
+    int numberOfWords = widget.pageTitle.split(' ').length;
     if (len <= 12 && numberOfWords <= 2) {
       return titleFontsizes["large"]!;
     } else if ((len > 12 && len <= 14 && numberOfWords <= 2) ||
@@ -83,10 +92,10 @@ class PageFrame extends StatelessWidget {
                                     Border.all(color: Colors.white, width: 5),
                                 borderRadius: BorderRadius.circular(10),
                               ),
-                              child: child,
+                              child: widget.child,
                             ),
                           ),
-                          if (isInGame)
+                          if (widget.isInGame)
                             const Spacer(
                               flex: 1,
                             )
@@ -97,7 +106,8 @@ class PageFrame extends StatelessWidget {
                     pageTitleWidget(),
 
                     // remove player and see status buttons
-                    if (isInGame) removePlayerAndStatusButtonWidget(context),
+                    if (widget.isInGame)
+                      removePlayerAndStatusButtonWidget(context),
                   ],
                 ),
               ),
@@ -163,7 +173,7 @@ class PageFrame extends StatelessWidget {
                 ),
                 child: Center(
                   child: Text(
-                    pageTitle,
+                    widget.pageTitle,
                     style: TextStyle(
                       fontSize: determineTitleFontsize(),
                       fontWeight: FontWeight.bold,
@@ -223,12 +233,12 @@ class PageFrame extends StatelessWidget {
         Expanded(
           flex: 40,
           child: MyOutlinedButton(
-            text: rightButtonText,
+            text: widget.rightButtonText,
             color: AppColors.greenColor,
             hasIcon: true,
             isIconRight: true,
-            onTap: rightButtonOnTap,
-            icon: rightButtonIcon,
+            onTap: widget.rightButtonOnTap,
+            icon: widget.rightButtonIcon,
           ),
         ),
         const Spacer(
@@ -237,12 +247,12 @@ class PageFrame extends StatelessWidget {
         Expanded(
           flex: 40,
           child: MyOutlinedButton(
-            text: leftButtonText,
+            text: widget.leftButtonText,
             hasIcon: true,
             color: AppColors.redColor,
-            onTap: leftButtonOnTap,
+            onTap: widget.leftButtonOnTap,
             isIconRight: false,
-            icon: leftButtonIcon,
+            icon: widget.leftButtonIcon,
           ),
         ),
         const Spacer(
@@ -276,7 +286,18 @@ class PageFrame extends StatelessWidget {
                 hasIcon: true,
                 text: "حذف بازیکن",
                 fontSize: 15,
-                onTap: () {},
+                onTap: () {
+                  showDialog(
+                      barrierDismissible: false,
+                      context: context,
+                      builder: (context) {
+                        return RemovePlayerDialogbox(
+                          reloadPage: widget.reloadContentOfPage == null
+                              ? () {}
+                              : widget.reloadContentOfPage!,
+                        );
+                      });
+                },
                 icon: FontAwesomeIcons.gun,
                 iconSize: 6,
                 isIconRight: true,

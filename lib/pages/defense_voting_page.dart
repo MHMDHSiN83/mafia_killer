@@ -64,6 +64,9 @@ class _DefenseVotingPageState extends State<DefenseVotingPage> {
     return Scaffold(
       body: PageFrame(
         pageTitle: "کشته روز",
+        reloadContentOfPage: (){
+          setState(() {});
+        },
         leftButtonText: "صحبت دفاعیه",
         rightButtonText:
             'شب ${Scenario.currentScenario.dayAndNightNumber(number: Scenario.currentScenario.nightNumber)}',

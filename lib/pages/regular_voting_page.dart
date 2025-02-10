@@ -7,10 +7,16 @@ import 'package:mafia_killer/models/player_status.dart';
 import 'package:mafia_killer/models/scenarios/godfather/godfather_scenario.dart';
 import 'package:mafia_killer/models/talking_page_screen_arguments.dart';
 
-class RegularVotingPage extends StatelessWidget {
-  RegularVotingPage({super.key});
+class RegularVotingPage extends StatefulWidget {
+  const RegularVotingPage({super.key});
 
+  @override
+  State<RegularVotingPage> createState() => _RegularVotingPageState();
+}
+
+class _RegularVotingPageState extends State<RegularVotingPage> {
   List<Player> defendingPlayers = [];
+
   void addPlayer(Player player) {
     defendingPlayers.add(player);
   }
@@ -24,6 +30,9 @@ class RegularVotingPage extends StatelessWidget {
     return Scaffold(
       body: PageFrame(
         pageTitle: "بازیکنان داخل دفاع",
+        reloadContentOfPage: () {
+          setState(() {});
+        },
         leftButtonText: "صحبت روز",
         rightButtonText: "صحبت دفاعیه",
         leftButtonOnTap: () => Navigator.pop(context),
