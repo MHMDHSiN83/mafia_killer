@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:mafia_killer/components/confirmation_box.dart';
-import 'package:mafia_killer/components/guide_box.dart';
 import 'package:mafia_killer/components/guide_box.dart';
 import 'package:mafia_killer/components/my_outlined_button.dart';
 import 'package:mafia_killer/components/remove_player_dialogbox.dart';
-import 'package:mafia_killer/pages/regular_voting_page.dart';
 import 'package:mafia_killer/databases/page_guide.dart';
 import 'dart:math' as math;
 import 'package:mafia_killer/themes/app_color.dart';
