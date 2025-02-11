@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:mafia_killer/databases/game_settings.dart';
 import 'package:mafia_killer/databases/page_guide.dart';
 import 'package:mafia_killer/databases/player.dart';
+import 'package:mafia_killer/databases/recommended_scenario.dart';
 import 'package:mafia_killer/databases/scenario.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -23,12 +24,12 @@ class Database {
     await GameSettings.getGameSettingsFromDatabase();
     await Player.getPlayersFromDatabase();
     await PageGuide.getGuidesFromDatabase();
+    await RecommendedScenario.getRecommendedScenariosFromDatabase();
+    // print(RecommendedScenario.recommendedScenario);
     String directoryPath = await getDirectoryPath();
     playersDataFilePath = '$directoryPath/players.json';
     scenariosDataFilePath = '$directoryPath/scenarios.json';
-    guideDataFilePath = '$directoryPath/guide.json';
     
-
     Player.freePlayers();
   }
 

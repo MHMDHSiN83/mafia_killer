@@ -1,0 +1,44 @@
+[
+    {
+        "name": "godfather",
+        "roles": [
+            "godfather",
+            "saul_goodman",
+            "matador",
+            "mafia",
+            "nostradamus",
+            "doctor_watson",
+            "leon",
+            "citizen_kane",
+            "constantine",
+            "citizen"
+        ],
+        "last_move_cards": [
+            "beautiful_mind",
+            "face_off",
+            "handcuffs",
+            "reveal_identity",
+            "silence_of_the_lambs"
+        ],
+        "role_distributions": {
+            "5": [1, 0, 0, 0, 1, 1, 0, 0, 0, 2],
+            "6": [1, 0, 0, 0, 1, 1, 0, 0, 0, 3],
+            "7": [1, 0, 0, 0, 1, 1, 0, 0, 0, 4],
+            "8": [1, 0, 0, 0, 1, 1, 0, 0, 0, 5],
+            "9": [1, 0, 0, 0, 1, 1, 0, 0, 0, 6],
+            "10": [1, 0, 0, 0, 1, 1, 0, 0, 0, 7],
+            "11": [1, 1, 1, 0, 1, 1, 1, 1, 1, 3],
+            "12": [1, 1, 1, 0, 1, 1, 1, 1, 1, 4]
+        },
+        "last_move_card_distributions": {
+            "5": [1, 1, 1, 1, 1],
+            "6": [1, 1, 1, 1, 1],
+            "7": [1, 1, 1, 1, 1],
+            "8": [1, 1, 1, 1, 1],
+            "9": [1, 1, 1, 1, 1],
+            "10": [1, 1, 1, 1, 1],
+            "11": [1, 1, 1, 1, 1],
+            "12": [1, 1, 1, 1, 1]
+        }
+    }
+]
