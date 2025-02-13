@@ -7,9 +7,9 @@ import 'package:mafia_killer/models/last_move_card.dart';
 import 'package:mafia_killer/models/player_status.dart';
 import 'package:mafia_killer/models/role.dart';
 import 'package:mafia_killer/models/role_side.dart';
+import 'package:mafia_killer/models/scenarios/godfather/last_move_cards/beautiful_mind.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/godfather.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/mafia.dart';
-import 'package:mafia_killer/models/scenarios/godfather/roles/matador.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/nostradamus.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/saul_goodman.dart';
 import 'package:mafia_killer/models/ui_player_status.dart';
@@ -31,6 +31,15 @@ class GodfatherScenario extends Scenario {
 
   @override
   Map<String, dynamic> toJson() => _$GodfatherScenarioToJson(this);
+
+  void nostradamusRevealed() {
+    for (LastMoveCard lastMoveCard
+        in Scenario.currentScenario.inGameLastMoveCards) {
+      if (lastMoveCard is BeautifulMind) {
+        lastMoveCard.isUsed = true;
+      }
+    }
+  }
 
   @override
   Iterable<String> callRolesIntroNight() sync* {

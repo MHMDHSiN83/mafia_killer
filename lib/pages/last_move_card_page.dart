@@ -10,6 +10,7 @@ import 'package:mafia_killer/models/scenarios/godfather/last_move_cards/face_off
 import 'package:mafia_killer/models/scenarios/godfather/last_move_cards/handcuffs.dart';
 import 'package:mafia_killer/models/scenarios/godfather/last_move_cards/reveal_identity.dart';
 import 'package:mafia_killer/models/scenarios/godfather/last_move_cards/silence_of_the_lambs.dart';
+import 'package:mafia_killer/models/scenarios/godfather/roles/nostradamus.dart';
 
 class LastMoveCardPage extends StatefulWidget {
   const LastMoveCardPage({super.key});
@@ -43,11 +44,16 @@ class _LastMoveCardPageState extends State<LastMoveCardPage> {
           Navigator.pop(context);
         },
         rightButtonOnTap: () {
-          if(LastMoveCardPage.selectedLastMoveCard == null) {
+          if (LastMoveCardPage.selectedLastMoveCard == null) {
             return;
           }
           LastMoveCardPage.selectedLastMoveCard!.isUsed = true;
           if (LastMoveCardPage.selectedLastMoveCard is RevealIdentity) {
+            if (Scenario.currentScenario.killedInDayPlayer!.role!
+                is Nostradamus) {
+              (Scenario.currentScenario as GodfatherScenario)
+                  .nostradamusRevealed();
+            }
             Navigator.pushNamed(context, '/reveal_identity_page');
           } else if (LastMoveCardPage.selectedLastMoveCard is FaceOff) {
             Navigator.pushNamed(context, '/face_off_page');

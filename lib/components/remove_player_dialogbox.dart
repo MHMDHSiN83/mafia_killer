@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mafia_killer/components/confirmation_box.dart';
-import 'package:mafia_killer/components/night_player_tile.dart';
 import 'package:mafia_killer/components/remove_player_tile.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/models/player_status.dart';

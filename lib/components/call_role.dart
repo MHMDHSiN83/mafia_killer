@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mafia_killer/pages/night_page.dart';
 import 'package:mafia_killer/themes/app_color.dart';
 
 class CallRole extends StatelessWidget {

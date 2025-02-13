@@ -27,7 +27,7 @@ class RevealIdentityPage extends StatelessWidget {
     return Scaffold(
         resizeToAvoidBottomInset: true,
         body: PageFrame(
-        label: ModalRoute.of(context)!.settings.name!,
+          label: ModalRoute.of(context)!.settings.name!,
           pageTitle: "افشای هویت",
           leftButtonText: "کارت حرکت آخر",
           rightButtonText:
@@ -66,7 +66,7 @@ class RevealIdentityPage extends StatelessWidget {
                     padding: const EdgeInsets.all(8.0),
                     child: CallRole(
                         text:
-                            "${Scenario.currentScenario.killedInDayPlayer!.name} یکیو انتخاب کن که نقشتو باهاش عوض کنی و بعد به شب برو",
+                            "${Scenario.currentScenario.killedInDayPlayer!.name} ${Scenario.currentScenario.killedInDayPlayer!.role!.name} بود.",
                         onPressed: () {},
                         buttonText: ""),
                   ))

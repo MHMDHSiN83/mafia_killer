@@ -29,7 +29,7 @@ class FacedOffRolePage extends StatelessWidget {
         resizeToAvoidBottomInset: true,
         body: PageFrame(
         label: ModalRoute.of(context)!.settings.name!,
-          pageTitle: "افشای هویت",
+          pageTitle: "نقش جدید",
           leftButtonText: "کارت حرکت آخر",
           rightButtonText:
               'شب ${Scenario.currentScenario.dayAndNightNumber(number: Scenario.currentScenario.nightNumber)}',

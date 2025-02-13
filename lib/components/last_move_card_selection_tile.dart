@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mafia_killer/components/last_move_card_description_tile.dart';
-import 'package:mafia_killer/components/role_description_tile.dart';
-import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/models/language.dart';
 import 'package:mafia_killer/models/last_move_card.dart';
-import 'package:mafia_killer/models/role.dart';
-import 'package:mafia_killer/models/role_side.dart';
 import 'package:mafia_killer/themes/app_color.dart';
 
 class LastMoveCardSelectionTile extends StatefulWidget {
