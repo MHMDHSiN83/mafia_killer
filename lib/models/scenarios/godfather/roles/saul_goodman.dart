@@ -51,4 +51,9 @@ class SaulGoodman extends Role {
   String introAwakingRole() {
     return 'ساول گودمن لایک نشون بده';
   }
+
+  @override
+  List<String> roleDetails() {
+    return ["خریداری: $remainingAbility"];
+  }
 }

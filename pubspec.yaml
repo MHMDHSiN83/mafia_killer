@@ -101,6 +101,9 @@ flutter:
     - family: Negar
       fonts:
         - asset: lib/fonts/Negaar-Regular.ttf
+    - family: DigiGaf
+      fonts:
+        - asset: 'lib/fonts/Digi Ghaf Bold.ttf'
     
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic

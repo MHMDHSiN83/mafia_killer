@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mafia_killer/components/guide_box.dart';
 import 'package:mafia_killer/components/my_outlined_button.dart';
+import 'package:mafia_killer/components/player_status_dialogbox.dart';
 import 'package:mafia_killer/components/remove_player_dialogbox.dart';
 import 'package:mafia_killer/databases/page_guide.dart';
 import 'dart:math' as math;
@@ -344,7 +345,18 @@ class _PageFrameState extends State<PageFrame> {
                 hasIcon: true,
                 text: "مشاهده وضعیت",
                 fontSize: 15,
-                onTap: () {},
+                onTap: () {
+                  showDialog(
+                      barrierDismissible: false,
+                      context: context,
+                      builder: (context) {
+                        return PlayerStatusDialogbox(
+                          reloadPage: widget.reloadContentOfPage == null
+                              ? () {}
+                              : widget.reloadContentOfPage!,
+                        );
+                      });
+                },
                 icon: FontAwesomeIcons.gun,
                 iconSize: 6,
                 isIconRight: false,

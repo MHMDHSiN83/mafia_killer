@@ -4,7 +4,6 @@ import 'package:mafia_killer/components/page_frame.dart';
 import 'package:mafia_killer/components/voting_tile.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/databases/scenario.dart';
-import 'package:mafia_killer/models/player_status.dart';
 import 'package:mafia_killer/pages/last_move_card_page.dart';
 
 class SilenceOfTheLambsPage extends StatefulWidget {

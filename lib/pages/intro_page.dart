@@ -9,20 +9,24 @@ class IntroPage extends StatelessWidget {
   Widget build(BuildContext context) {
     Database();
     return Scaffold(
-      body: SafeArea(
-        child: Container(
-          decoration: const BoxDecoration(
-              gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Color(0xFF111111),
-              Color.fromRGBO(40, 7, 7, 1),
-              Color.fromARGB(255, 52, 0, 0),
-              Color.fromRGBO(40, 7, 7, 1),
-              Color(0xFF111111),
-            ],
-          )),
+      body: Container(
+        decoration: const BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage(
+                    "lib/images/backgrounds/background-image-edited.png"),
+                fit: BoxFit.cover),
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                Color(0xFF111111),
+                Color.fromRGBO(40, 7, 7, 1),
+                Color.fromARGB(255, 52, 0, 0),
+                Color.fromRGBO(40, 7, 7, 1),
+                Color(0xFF111111),
+              ],
+            )),
+        child: SafeArea(
           child: Column(
             children: [
               Expanded(
@@ -63,36 +67,19 @@ class IntroPage extends StatelessWidget {
                     Text(
                       "مافیا",
                       style: TextStyle(
-                        color: Theme.of(context).colorScheme.inversePrimary,
-                        fontSize: 100,
-                      ),
+                          color: Theme.of(context).colorScheme.inversePrimary,
+                          fontSize: 120,
+                          fontFamily: 'DigiGaf'),
                     ),
                     const Text(
                       "کش",
                       style: TextStyle(
-                        color: AppColors.redColor,
-                        fontSize: 100,
-                      ),
+                          color: AppColors.redColor,
+                          fontSize: 120,
+                          fontFamily: 'DigiGaf'),
                     ),
                   ],
                 ),
-              ),
-              Expanded(
-                flex: 32,
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 40),
-                  child: Transform.scale(
-                    scale: 1.35,
-                    child: const Image(
-                      image: AssetImage(
-                        'lib/images/IntroBackgroundImage.png',
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              const Spacer(
-                flex: 3,
               ),
               Expanded(
                 flex: 22,
@@ -108,12 +95,12 @@ class IntroPage extends StatelessWidget {
                           shape: BoxShape.circle,
                           border: Border.all(
                             color: Theme.of(context).colorScheme.inversePrimary,
-                            width: 12,
+                            width: 15,
                           ),
                         ),
                         child: const Icon(
                           Icons.play_arrow_rounded,
-                          size: 190,
+                          size: 210,
                         ),
                       ),
                     ),

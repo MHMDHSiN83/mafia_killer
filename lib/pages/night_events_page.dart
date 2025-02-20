@@ -6,6 +6,7 @@ import 'package:mafia_killer/databases/game_settings.dart';
 import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/models/language.dart';
 import 'package:mafia_killer/models/role_side.dart';
+import 'package:mafia_killer/models/scenarios/godfather/godfather_scenario.dart';
 import 'package:mafia_killer/models/talking_page_screen_arguments.dart';
 import 'package:mafia_killer/themes/app_color.dart';
 
@@ -26,9 +27,18 @@ class _NightEventsPage extends State<NightEventsPage> {
   }
 
   void showInquiryDialog(context) {
-    if(GameSettings.currentGameSettings.inquiry == 0 && !doesPressInquiry) {
+    if (GameSettings.currentGameSettings.inquiry == 0 && !doesPressInquiry) {
       return;
     }
+
+    // if nostradamus is out of the game then the beautiful mind should be shown
+
+    if (Scenario.currentScenario
+            .numberOfDeadPlayersBySide(RoleSide.independant) >
+        0) {
+      (Scenario.currentScenario as GodfatherScenario).nostradamusRevealed();
+    }
+
     setState(() {
       if (!doesPressInquiry) {
         GameSettings.currentGameSettings.inquiry--;
@@ -153,14 +163,16 @@ class _NightEventsPage extends State<NightEventsPage> {
                                 Expanded(
                                   flex: 12,
                                   child: ListView.builder(
-                                    itemCount: Scenario.currentScenario.report.length,
+                                    itemCount:
+                                        Scenario.currentScenario.report.length,
                                     physics:
                                         const NeverScrollableScrollPhysics(),
                                     itemBuilder: (context, index) => Container(
                                       margin:
                                           EdgeInsets.symmetric(vertical: 10),
                                       child: NightEventTile(
-                                        text: Scenario.currentScenario.report[index],
+                                        text: Scenario
+                                            .currentScenario.report[index],
                                       ),
                                     ),
                                   ),

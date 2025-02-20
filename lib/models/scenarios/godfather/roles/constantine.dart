@@ -52,4 +52,9 @@ class Constantine extends Role {
   String awakingRole() {
     return "کنستانتین بیدار شه و یک نفر را به بازی برگردونه";
   }
+
+  @override
+  List<String> roleDetails() {
+    return ["زنده کردن: $remainingAbility"];
+  }
 }

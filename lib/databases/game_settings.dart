@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:mafia_killer/databases/scenario.dart';
-import 'package:mafia_killer/models/scenarios/godfather/godfather_scenario.dart';
 
 part 'game_settings.g.dart';
 
