@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:mafia_killer/databases/player.dart';
+import 'package:mafia_killer/databases/recommended_scenario.dart';
 import 'package:mafia_killer/models/player_status.dart';
 import 'package:mafia_killer/models/database.dart';
 import 'package:mafia_killer/models/last_move_card.dart';
@@ -11,6 +12,12 @@ import 'package:mafia_killer/models/role.dart';
 import 'package:mafia_killer/models/role_side.dart';
 import 'package:mafia_killer/models/scenarios/classic/classic_scenario.dart';
 import 'package:mafia_killer/models/scenarios/godfather/godfather_scenario.dart';
+import 'package:mafia_killer/models/scenarios/godfather/last_move_cards/beautiful_mind.dart';
+import 'package:mafia_killer/models/scenarios/godfather/last_move_cards/face_off.dart';
+import 'package:mafia_killer/models/scenarios/godfather/last_move_cards/handcuffs.dart';
+import 'package:mafia_killer/models/scenarios/godfather/last_move_cards/reveal_identity.dart';
+import 'package:mafia_killer/models/scenarios/godfather/last_move_cards/silence_of_the_lambs.dart';
+import 'package:mafia_killer/models/scenarios/godfather/roles/citizen.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/citizen_kane.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/constantine.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/doctor_watson.dart';
@@ -18,6 +25,7 @@ import 'package:mafia_killer/models/scenarios/godfather/roles/godfather.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/leon.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/mafia.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/matador.dart';
+import 'package:mafia_killer/models/scenarios/godfather/roles/nostradamus.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/saul_goodman.dart';
 import 'package:mafia_killer/models/ui_player_status.dart';
 import 'package:path_provider/path_provider.dart';
@@ -109,7 +117,10 @@ class Scenario {
         .toList();
   }
 
-  static Future<void> addRole(Role newRole) async {
+  static Future<void> addRole(Role? newRole) async {
+    if (newRole == null) {
+      return;
+    }
     currentScenario.inGameRoles
         .add(Role.fromJson(jsonDecode(jsonEncode(newRole.toJson()))));
     Database.writeScenariosData(scenarios);
@@ -125,7 +136,10 @@ class Scenario {
     Database.writeScenariosData(scenarios);
   }
 
-  static Future<void> addLastMoveCard(LastMoveCard newLastMoveCard) async {
+  static Future<void> addLastMoveCard(LastMoveCard? newLastMoveCard) async {
+    if (newLastMoveCard == null) {
+      return;
+    }
     currentScenario.inGameLastMoveCards.add(LastMoveCard.fromJson(
         jsonDecode(jsonEncode(newLastMoveCard.toJson()))));
     Database.writeScenariosData(scenarios);
@@ -268,6 +282,15 @@ class Scenario {
     }
   }
 
+  LastMoveCard? getLastMoveCardByType(Type type) {
+    for (LastMoveCard lastMoveCard in lastMoveCards) {
+      if (lastMoveCard.runtimeType == type) {
+        return lastMoveCard;
+      }
+    }
+    return null;
+  }
+
   String dayAndNightNumber({int? number}) {
     number ??= isNight ? nightNumber : dayNumber;
     switch (number) {
@@ -384,5 +407,70 @@ class Scenario {
       }
     }
     return counter;
+  }
+
+  void getRecommendedScenario() {
+    inGameRoles = [];
+    inGameLastMoveCards = [];
+    Map<String, int> recommendedScenario =
+        RecommendedScenario.getRecommendedScenario();
+    // print(recommendedScenario);
+    recommendedScenario.forEach((key, value) {
+      Role? role;
+      LastMoveCard? lastMoveCard;
+      switch (key) {
+        case 'godfather':
+          role = getRoleByType(Godfather, searchInGmaeRoles: false)!;
+          break;
+        case 'saul_goodman':
+          role = getRoleByType(SaulGoodman, searchInGmaeRoles: false)!;
+          break;
+        case 'matador':
+          role = getRoleByType(Matador, searchInGmaeRoles: false)!;
+          break;
+        case 'mafia':
+          role = getRoleByType(Mafia, searchInGmaeRoles: false)!;
+          break;
+        case 'nostradamus':
+          role = getRoleByType(Nostradamus, searchInGmaeRoles: false)!;
+          break;
+        case 'doctor_watson':
+          role = getRoleByType(DoctorWatson, searchInGmaeRoles: false)!;
+          break;
+        case 'leon':
+          role = getRoleByType(Leon, searchInGmaeRoles: false)!;
+          break;
+        case 'citizen_kane':
+          role = getRoleByType(CitizenKane, searchInGmaeRoles: false)!;
+          break;
+        case 'constantine':
+          role = getRoleByType(Constantine, searchInGmaeRoles: false)!;
+          break;
+        case 'citizen':
+          role = getRoleByType(Citizen, searchInGmaeRoles: false)!;
+          break;
+        case 'beautiful_mind':
+          lastMoveCard = getLastMoveCardByType(BeautifulMind);
+          break;
+        case 'face_off':
+          lastMoveCard = getLastMoveCardByType(FaceOff);
+          break;
+        case 'handcuffs':
+          lastMoveCard = getLastMoveCardByType(Handcuffs);
+          break;
+        case 'reveal_identity':
+          lastMoveCard = getLastMoveCardByType(RevealIdentity);
+          break;
+        case 'silence_of_the_lambs':
+          lastMoveCard = getLastMoveCardByType(SilenceOfTheLambs);
+          break;
+      }
+      for (int i = 0; i < value; i++) {
+        addRole(role);
+      }
+      for (int i = 0; i < value; i++) {
+        addLastMoveCard(lastMoveCard);
+      }
+    });
   }
 }

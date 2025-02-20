@@ -73,6 +73,7 @@ class _GameSettingsPageState extends State<GameSettingsPage> {
         rightButtonOnTap: () {
           GameSettings.updateSettings(
               GameSettings.currentGameSettings, newGameSettings);
+          Scenario.currentScenario.getRecommendedScenario();
           Navigator.pushNamed(context, '/role_selection_page');
         },
         child: ListView(
