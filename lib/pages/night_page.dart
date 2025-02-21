@@ -182,6 +182,7 @@ class _NightPageState extends State<NightPage> {
     } else {
       UnimplementedError("error");
     }
+    resetTiles();
     iterator.moveNext();
     text = iterator.current;
     super.initState();
