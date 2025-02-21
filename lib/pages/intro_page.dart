@@ -30,7 +30,7 @@ class IntroPage extends StatelessWidget {
           child: Column(
             children: [
               Expanded(
-                flex: 9,
+                flex: 6,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -60,7 +60,7 @@ class IntroPage extends StatelessWidget {
                 ),
               ),
               Expanded(
-                flex: 14,
+                flex: 15,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -82,7 +82,7 @@ class IntroPage extends StatelessWidget {
                 ),
               ),
               Expanded(
-                flex: 22,
+                flex: 14,
                 child: ClipOval(
                   child: Material(
                     color: Colors.transparent,
@@ -100,7 +100,7 @@ class IntroPage extends StatelessWidget {
                         ),
                         child: const Icon(
                           Icons.play_arrow_rounded,
-                          size: 210,
+                          size: 240,
                         ),
                       ),
                     ),
