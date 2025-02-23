@@ -413,7 +413,6 @@ class Scenario {
     inGameLastMoveCards = [];
     Map<String, int> recommendedScenario =
         RecommendedScenario.getRecommendedScenario();
-    // print(recommendedScenario);
     recommendedScenario.forEach((key, value) {
       Role? role;
       LastMoveCard? lastMoveCard;

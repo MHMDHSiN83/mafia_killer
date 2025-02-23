@@ -27,10 +27,6 @@ class _RegularVotingPageState extends State<RegularVotingPage> {
 
   @override
   Widget build(BuildContext context) {
-    for (var i in Player.inGamePlayers) {
-      print(i.name);
-      print(i.role!.name);
-    }
     return Scaffold(
       body: PageFrame(
         label: ModalRoute.of(context)!.settings.name!,
@@ -56,6 +52,8 @@ class _RegularVotingPageState extends State<RegularVotingPage> {
               ),
             );
           } else {
+            Scenario.currentScenario.goToNextStage();
+
             Navigator.pushNamed(context, '/night_page');
           }
         },

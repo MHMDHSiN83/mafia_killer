@@ -44,9 +44,6 @@ class _HandcuffsPageState extends State<HandcuffsPage> {
 
   @override
   Widget build(BuildContext context) {
-    for (var p in widget.selectedPlayers) {
-      print(p.name);
-    }
     return Scaffold(
       body: PageFrame(
         label: ModalRoute.of(context)!.settings.name!,

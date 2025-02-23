@@ -118,7 +118,6 @@ class _PlayerRoleCardState extends State<PlayerRoleCard> {
           setState(() {
             widget.player.seenRole = true;
           });
-          print(widget.player.seenRole);
         });
       },
       child: Visibility(

@@ -54,10 +54,6 @@ class _BeautifulMindChooseNostradamusPageState
 
   @override
   Widget build(BuildContext context) {
-    for (var p in selectedPlayers) {
-      print(p.name);
-    }
-    print(isConfirmed);
     return Scaffold(
       body: PageFrame(
         label: ModalRoute.of(context)!.settings.name!,
@@ -68,13 +64,10 @@ class _BeautifulMindChooseNostradamusPageState
         leftButtonOnTap: () => Navigator.pop(context),
         rightButtonOnTap: () {
           if (isConfirmed && selectedPlayers.length == 1) {
-            print("testtt");
             selectedPlayers.insert(
                 0, Scenario.currentScenario.killedInDayPlayer!);
             LastMoveCardPage.selectedLastMoveCard!
                 .lastMoveCardAction(selectedPlayers);
-            print("testtt2");
-
             Navigator.pushNamed(context, '/night_page');
           }
         },

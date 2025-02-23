@@ -194,7 +194,7 @@ class _NightPageState extends State<NightPage> {
       body: PageFrame(
         label: ModalRoute.of(context)!.settings.name!,
         pageTitle: 'شب ${Scenario.currentScenario.dayAndNightNumber()}',
-        reloadContentOfPage: (){
+        reloadContentOfPage: () {
           setState(() {});
         },
         rightButtonText: 'اتفاقات شب',
@@ -217,12 +217,25 @@ class _NightPageState extends State<NightPage> {
           child: Column(
             children: [
               Expanded(
-                child: GestureDetector(
-                  child: Text('data'),
-                  onTap: () {
-                    setState(() {
-                      resetNight();
-                    });
+                flex: 2,
+                child: IconButton(
+                  icon: const Icon(
+                    Icons.refresh,
+                    size: 35,
+                  ),
+                  color: const Color(0xFFE01357),
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) => ConfirmationBox(onSave: () {
+                        setState(() {
+                          resetNight();
+                        });
+                        Navigator.pop(context);
+                      }, onCancel: () {
+                        Navigator.pop(context);
+                      }),
+                    );
                   },
                 ),
               ),

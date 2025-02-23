@@ -66,7 +66,6 @@ class ComicSpeechBubble extends StatelessWidget {
   Widget build(BuildContext context) {
     // Measure text height including padding
     final textHeight = _getTextHeight(context, text);
-    print("Calculated Text Height: $textHeight");
 
     return CustomPaint(
       painter: SpeechBubblePainter(),

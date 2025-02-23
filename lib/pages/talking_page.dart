@@ -91,7 +91,6 @@ class _TalkingPageState extends State<TalkingPage> {
 
   @override
   Widget build(BuildContext context) {
-    print(Scenario.currentScenario.nightNumber);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: PageFrame(

@@ -42,8 +42,6 @@ class RoleSelectionPage extends StatelessWidget {
               Scenario.currentScenario.inGameRoles.length) {
             return;
           }
-          print('ssssssssssss');
-          print((Scenario.currentScenario).runtimeType);
           (Scenario.currentScenario as GodfatherScenario)
               .shuffleLastMoveCards();
           List<Role> roles = Scenario.currentScenario.inGameRoles.deepCopy();

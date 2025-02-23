@@ -20,7 +20,7 @@ class NostradamusBox extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Text(
-                'به نوستراداموس عدد$mafiaNumberنشان بده و ازش بپرس با کدوم ساید می‌خواد بازی کنه'),
+                'به نوستراداموس عدد $mafiaNumber رو نشون بده و ازش بپرس با کدوم ساید می‌خواد بازی کنه'),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [

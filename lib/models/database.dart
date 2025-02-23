@@ -25,7 +25,6 @@ class Database {
     await Player.getPlayersFromDatabase();
     await PageGuide.getGuidesFromDatabase();
     await RecommendedScenario.getRecommendedScenariosFromDatabase();
-    // print(RecommendedScenario.recommendedScenario);
     String directoryPath = await getDirectoryPath();
     playersDataFilePath = '$directoryPath/players.json';
     scenariosDataFilePath = '$directoryPath/scenarios.json';

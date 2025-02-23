@@ -18,7 +18,6 @@ class MafiaChoiceBox extends StatelessWidget {
   Widget build(BuildContext context) {
     bool ableToSixthSense = (Scenario.currentScenario as GodfatherScenario).ableToSixthSense();
     bool ableToBuying = (Scenario.currentScenario as GodfatherScenario).ableToBuying();
-    print(ableToBuying);
     return AlertDialog(
       backgroundColor: Theme.of(context).colorScheme.primary,
       elevation: 10,
