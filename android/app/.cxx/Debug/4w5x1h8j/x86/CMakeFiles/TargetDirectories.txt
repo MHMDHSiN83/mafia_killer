@@ -1,0 +1,2 @@
+C:/Users/CR7/AndroidStudioProjects/mafia/mafia_killer/android/app/.cxx/Debug/4w5x1h8j/x86/CMakeFiles/edit_cache.dir
+C:/Users/CR7/AndroidStudioProjects/mafia/mafia_killer/android/app/.cxx/Debug/4w5x1h8j/x86/CMakeFiles/rebuild_cache.dir

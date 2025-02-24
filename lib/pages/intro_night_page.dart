@@ -10,6 +10,8 @@ import 'package:mafia_killer/models/role_side.dart';
 import 'package:mafia_killer/models/scenarios/godfather/godfather_scenario.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/nostradamus.dart';
 import 'package:mafia_killer/models/talking_page_screen_arguments.dart';
+import 'package:audioplayers/audioplayers.dart';
+
 
 class IntroNightPage extends StatefulWidget {
   const IntroNightPage({super.key});
@@ -94,6 +96,17 @@ class _IntroNightPageState extends State<IntroNightPage> {
     for (Player player in Player.inGamePlayers) {
       playerCheckboxStatus[player] = false;
     }
+late AudioPlayer pp = AudioPlayer();
+    pp = AudioPlayer();
+
+    // Set the release mode to keep the source after playback has completed.
+    pp.setReleaseMode(ReleaseMode.stop);
+
+    // Start the pp as soon as the app is displayed.
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await pp.setSource(AssetSource('audios/Dark-Legacy.mp3'));
+      await pp.resume();
+    });
     super.initState();
   }
 

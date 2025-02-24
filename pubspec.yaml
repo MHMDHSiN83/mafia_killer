@@ -45,6 +45,7 @@ dependencies:
   font_awesome_flutter: ^10.7.0
   deep_collection: ^1.0.2
   json_annotation: ^4.8.0
+  audioplayers: ^6.2.0
 
 dev_dependencies:
   flutter_test:
@@ -81,6 +82,7 @@ flutter:
     - lib/images/
     - lib/images/backgrounds/
     - lib/icons/
+    - assets/audios/
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
