@@ -22,28 +22,20 @@ class _BeautifulMindChooseNostradamusPageState
     extends State<BeautifulMindChooseNostradamusPage> {
   List<Player> selectedPlayers = [];
   void addPlayer(Player player) {
-    if (selectedPlayers.isEmpty) {
+    setState(() {
       selectedPlayers.add(player);
-    }
+      if (selectedPlayers.length == 2) {
+        selectedPlayers.removeAt(0);
+      }
+    });
   }
 
   void removePlayer(Player player) {
-    if (selectedPlayers.contains(player)) {
-      selectedPlayers.remove(player);
-    }
-  }
-
-  bool isDisable(Player player) {
-    bool result = true;
     setState(() {
-      if (selectedPlayers.isEmpty) {
-        result = false;
-      }
       if (selectedPlayers.contains(player)) {
-        result = false;
+        selectedPlayers.remove(player);
       }
     });
-    return result;
   }
 
   List<Player> alivePlayers = Player.players
@@ -89,14 +81,13 @@ class _BeautifulMindChooseNostradamusPageState
                     return VotingTile(
                       stamp: "نوستراداموس",
                       player: alivePlayers[index],
-                      isRegularVoting: false,
                       addPlayer: () {
                         addPlayer(alivePlayers[index]);
                       },
                       removePlayer: () {
                         removePlayer(alivePlayers[index]);
                       },
-                      disable: () => isDisable(alivePlayers[index]),
+                      isClicked: selectedPlayers.contains(alivePlayers[index]),
                     );
                   },
                 ),

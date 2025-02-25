@@ -16,32 +16,25 @@ class FaceOffPage extends StatefulWidget {
 
 class _FaceOffPageState extends State<FaceOffPage> {
   void addPlayer(Player player) {
-    if (FaceOffPage.selectedPlayers.isEmpty) {
+    setState(() {
       FaceOffPage.selectedPlayers.add(player);
-    }
+      if (FaceOffPage.selectedPlayers.length == 2) {
+        FaceOffPage.selectedPlayers.removeAt(0);
+      }
+    });
   }
 
   void removePlayer(Player player) {
-    if (FaceOffPage.selectedPlayers.contains(player)) {
-      FaceOffPage.selectedPlayers.remove(player);
-    }
-  }
-
-  bool isDisable(Player player) {
-    bool result = true;
     setState(() {
-      if (FaceOffPage.selectedPlayers.isEmpty) {
-        result = false;
-      }
       if (FaceOffPage.selectedPlayers.contains(player)) {
-        result = false;
+        FaceOffPage.selectedPlayers.remove(player);
       }
     });
-    return result;
   }
 
   Player killedInDayPlayer = Scenario.currentScenario.killedInDayPlayer!;
-  List<Player> alivePlayers = Player.getAlivePlayersExcept(Scenario.currentScenario.killedInDayPlayer!);
+  List<Player> alivePlayers =
+      Player.getAlivePlayersExcept(Scenario.currentScenario.killedInDayPlayer!);
 
   @override
   Widget build(BuildContext context) {
@@ -76,14 +69,14 @@ class _FaceOffPageState extends State<FaceOffPage> {
                     return VotingTile(
                       stamp: "تغییر چهره",
                       player: alivePlayers[index],
-                      isRegularVoting: false,
                       addPlayer: () {
                         addPlayer(alivePlayers[index]);
                       },
                       removePlayer: () {
                         removePlayer(alivePlayers[index]);
                       },
-                      disable: () => isDisable(alivePlayers[index]),
+                      isClicked: FaceOffPage.selectedPlayers
+                          .contains(alivePlayers[index]),
                     );
                   },
                 ),

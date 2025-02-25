@@ -15,31 +15,25 @@ class SilenceOfTheLambsPage extends StatefulWidget {
 
 class _SilenceOfTheLambsPageState extends State<SilenceOfTheLambsPage> {
   void addPlayer(Player player) {
-    if (widget.selectedPlayers.length < 2) {
+    setState(() {
       widget.selectedPlayers.add(player);
-    }
+      if (widget.selectedPlayers.length == 3) {
+        widget.selectedPlayers.removeAt(0);
+      }
+    });
   }
 
   void removePlayer(Player player) {
-    if (widget.selectedPlayers.contains(player)) {
-      widget.selectedPlayers.remove(player);
-    }
-  }
-
-  bool isDisable(Player player) {
-    bool result = false;
     setState(() {
-      if (widget.selectedPlayers.length == 2) {
-        result = true;
-      }
       if (widget.selectedPlayers.contains(player)) {
-        result = false;
+        widget.selectedPlayers.remove(player);
       }
     });
-    return result;
   }
+
   Player killedInDayPlayer = Scenario.currentScenario.killedInDayPlayer!;
-  List<Player> alivePlayers = Player.getAlivePlayersExcept(Scenario.currentScenario.killedInDayPlayer!);
+  List<Player> alivePlayers =
+      Player.getAlivePlayersExcept(Scenario.currentScenario.killedInDayPlayer!);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,10 +46,9 @@ class _SilenceOfTheLambsPageState extends State<SilenceOfTheLambsPage> {
         leftButtonOnTap: () => Navigator.pop(context),
         rightButtonOnTap: () {
           if (widget.selectedPlayers.length == 2) {
-            widget.selectedPlayers
-                .insert(0, killedInDayPlayer);
-            LastMoveCardPage.selectedLastMoveCard!.lastMoveCardAction(
-                widget.selectedPlayers);
+            widget.selectedPlayers.insert(0, killedInDayPlayer);
+            LastMoveCardPage.selectedLastMoveCard!
+                .lastMoveCardAction(widget.selectedPlayers);
             Navigator.pushNamed(context, '/night_page');
           }
         },
@@ -77,14 +70,14 @@ class _SilenceOfTheLambsPageState extends State<SilenceOfTheLambsPage> {
                     return VotingTile(
                       stamp: "سکوت",
                       player: alivePlayers[index],
-                      isRegularVoting: false,
                       addPlayer: () {
                         addPlayer(alivePlayers[index]);
                       },
                       removePlayer: () {
                         removePlayer(alivePlayers[index]);
                       },
-                      disable: () => isDisable(alivePlayers[index]),
+                      isClicked:
+                          widget.selectedPlayers.contains(alivePlayers[index]),
                     );
                   },
                 ),

@@ -24,30 +24,25 @@ class _DefenseVotingPageState extends State<DefenseVotingPage> {
   Map<Player, bool> playerBoxStatus = {};
 
   void addPlayer(Player player) {
-    if ((selectedPlayers.isEmpty && !isDeathLotterySelected) ||
-        (selectedPlayers.length < 2 && isDeathLotterySelected)) {
+    // if ((selectedPlayers.isEmpty && !isDeathLotterySelected) ||
+    //     (selectedPlayers.length < 2 && isDeathLotterySelected)) {
+    //   selectedPlayers.add(player);
+    // }
+    setState(() {
       selectedPlayers.add(player);
-    }
+      if ((selectedPlayers.length == 2 && !isDeathLotterySelected) ||
+          selectedPlayers.length == 3) {
+        selectedPlayers.removeAt(0);
+      }
+    });
   }
 
   void removePlayer(Player player) {
-    if (selectedPlayers.contains(player)) {
-      selectedPlayers.remove(player);
-    }
-  }
-
-  bool isDisable(Player player) {
-    bool result = false;
     setState(() {
-      if ((selectedPlayers.isNotEmpty && !isDeathLotterySelected) ||
-          (selectedPlayers.length == 2 && isDeathLotterySelected)) {
-        result = true;
-      }
       if (selectedPlayers.contains(player)) {
-        result = false;
+        selectedPlayers.remove(player);
       }
     });
-    return result;
   }
 
   @override
@@ -64,7 +59,7 @@ class _DefenseVotingPageState extends State<DefenseVotingPage> {
       body: PageFrame(
         label: ModalRoute.of(context)!.settings.name!,
         pageTitle: "کشته روز",
-        reloadContentOfPage: (){
+        reloadContentOfPage: () {
           setState(() {});
         },
         leftButtonText: "صحبت دفاعیه",
@@ -108,15 +103,18 @@ class _DefenseVotingPageState extends State<DefenseVotingPage> {
                   itemBuilder: (context, index) {
                     return VotingTile(
                       player: Scenario.currentScenario.defendingPlayers[index],
-                      isRegularVoting: false,
                       addPlayer: () {
-                        addPlayer(Scenario.currentScenario.defendingPlayers[index]);
+                        addPlayer(
+                            Scenario.currentScenario.defendingPlayers[index]);
                       },
                       removePlayer: () {
-                        removePlayer(Scenario.currentScenario.defendingPlayers[index]);
+                        removePlayer(
+                            Scenario.currentScenario.defendingPlayers[index]);
                       },
-                      disable: () =>
-                          isDisable(Scenario.currentScenario.defendingPlayers[index]),
+                      isClicked: selectedPlayers.contains(
+                          Scenario.currentScenario.defendingPlayers[index]),
+                      stamp: 'کشته',
+                      // isDisable(Scenario.currentScenario.defendingPlayers[index]),
                     );
                   },
                 ),

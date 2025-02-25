@@ -12,7 +12,6 @@ import 'package:mafia_killer/models/scenarios/godfather/roles/nostradamus.dart';
 import 'package:mafia_killer/models/talking_page_screen_arguments.dart';
 import 'package:audioplayers/audioplayers.dart';
 
-
 class IntroNightPage extends StatefulWidget {
   const IntroNightPage({super.key});
   static List<Player> targetPlayers = [];
@@ -28,6 +27,7 @@ class _IntroNightPageState extends State<IntroNightPage> {
   late String text;
   Map<Player, bool> playerCheckboxStatus = {};
   late Iterator<String> iterator;
+  AudioPlayer music = AudioPlayer();
 
   bool isCheckBoxDisable(Player player) {
     bool result = false;
@@ -96,18 +96,24 @@ class _IntroNightPageState extends State<IntroNightPage> {
     for (Player player in Player.inGamePlayers) {
       playerCheckboxStatus[player] = false;
     }
-late AudioPlayer pp = AudioPlayer();
-    pp = AudioPlayer();
+    music = AudioPlayer();
 
     // Set the release mode to keep the source after playback has completed.
-    pp.setReleaseMode(ReleaseMode.stop);
+    music.setReleaseMode(ReleaseMode.stop);
 
-    // Start the pp as soon as the app is displayed.
+    // Start the music as soon as the amusic is displayed.
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      await pp.setSource(AssetSource('audios/Dark-Legacy.mp3'));
-      await pp.resume();
+      await music.setSource(AssetSource('audios/Dark-Legacy.mp3'));
+      await music.resume();
     });
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    music.stop();
+    music.dispose();
+    super.dispose();
   }
 
   @override
@@ -116,7 +122,7 @@ late AudioPlayer pp = AudioPlayer();
       body: PageFrame(
         label: ModalRoute.of(context)!.settings.name!,
         pageTitle: 'شب معارفه',
-        reloadContentOfPage: (){
+        reloadContentOfPage: () {
           setState(() {});
         },
         rightButtonText:
@@ -130,6 +136,8 @@ late AudioPlayer pp = AudioPlayer();
         },
         rightButtonOnTap: () {
           if (IntroNightPage.isNightOver) {
+            music.stop();
+            music.dispose();
             Scenario.currentScenario.goToNextStage();
             resetNight();
             Navigator.pushNamed(
@@ -185,8 +193,9 @@ late AudioPlayer pp = AudioPlayer();
                       //TODO build a function to generate nostradamus choice
                       if (IntroNightPage.isNostradamusSelecting) {
                         nostradamusBox(
-                          (Scenario.currentScenario as GodfatherScenario).resultOfNostradamusGuess(
-                              IntroNightPage.targetPlayers),
+                          (Scenario.currentScenario as GodfatherScenario)
+                              .resultOfNostradamusGuess(
+                                  IntroNightPage.targetPlayers),
                         );
                       } else {
                         setState(() {

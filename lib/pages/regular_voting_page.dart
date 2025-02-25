@@ -18,11 +18,15 @@ class _RegularVotingPageState extends State<RegularVotingPage> {
   List<Player> defendingPlayers = [];
 
   void addPlayer(Player player) {
-    defendingPlayers.add(player);
+    setState(() {
+      defendingPlayers.add(player);
+    });
   }
 
   void removePlayer(Player player) {
-    defendingPlayers.remove(player);
+    setState(() {
+      defendingPlayers.remove(player);
+    });
   }
 
   @override
@@ -76,7 +80,6 @@ class _RegularVotingPageState extends State<RegularVotingPage> {
                     .where(
                         (player) => player.playerStatus == PlayerStatus.active)
                     .toList()[index],
-                isRegularVoting: true,
                 addPlayer: () {
                   addPlayer(Player.inGamePlayers
                       .where((player) =>
@@ -89,7 +92,12 @@ class _RegularVotingPageState extends State<RegularVotingPage> {
                           player.playerStatus == PlayerStatus.active)
                       .toList()[index]);
                 },
-                disable: () => false,
+                isClicked: defendingPlayers
+                    .contains(Player.inGamePlayers
+                      .where((player) =>
+                          player.playerStatus == PlayerStatus.active)
+                      .toList()[index]),
+                stamp: 'دفاعیه',
               );
             },
           ),

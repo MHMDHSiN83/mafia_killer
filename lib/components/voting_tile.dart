@@ -6,45 +6,41 @@ class VotingTile extends StatefulWidget {
   VotingTile({
     super.key,
     required this.player,
-    required this.isRegularVoting,
     required this.addPlayer,
     required this.removePlayer,
-    required this.disable,
-    this.stamp,
+    required this.stamp,
+    this.isClicked,
   });
 
   Player player;
-  bool isRegularVoting;
   VoidCallback addPlayer;
   VoidCallback removePlayer;
-  Function disable;
-  String? stamp;
+  String stamp;
+  bool? isClicked;
 
   @override
   State<VotingTile> createState() => _VotingTileState();
 }
 
 class _VotingTileState extends State<VotingTile> {
-  bool isClicked = false;
   @override
   Widget build(BuildContext context) {
+    if (widget.isClicked == null) {
+      widget.isClicked = false;
+    }
     return GestureDetector(
       onTap: () {
-        if (!widget.disable()) {
-          setState(() {
-            if (isClicked) {
-              widget.removePlayer();
-            } else {
-              widget.addPlayer();
-            }
-            isClicked = !isClicked;
-          });
+        if (widget.isClicked!) {
+          widget.removePlayer();
+        } else {
+          widget.addPlayer();
         }
+        widget.isClicked = !widget.isClicked!;
       },
       child: Stack(
         children: [
           Opacity(
-            opacity: isClicked ? 0.3 : 1,
+            opacity: widget.isClicked! ? 0.3 : 1,
             child: Container(
               width: 150,
               decoration: const BoxDecoration(
@@ -70,7 +66,7 @@ class _VotingTileState extends State<VotingTile> {
             ),
           ),
           Visibility(
-            visible: isClicked,
+            visible: widget.isClicked!,
             child: Positioned(
               top: 63,
               right: 15,
@@ -87,17 +83,10 @@ class _VotingTileState extends State<VotingTile> {
                   ),
                   child: Center(
                     child: Text(
-                      (widget.stamp != null)
-                          ? widget.stamp!
-                          : (widget.isRegularVoting)
-                              ? "دفاعیه"
-                              : "کشته",
+                      widget.stamp,
                       style: TextStyle(
                         color: AppColors.redColor,
-                        fontSize:
-                            (widget.stamp != null && widget.stamp!.length >= 11)
-                                ? 13
-                                : 20,
+                        fontSize: (widget.stamp.length >= 11) ? 13 : 20,
                       ),
                     ),
                   ),
