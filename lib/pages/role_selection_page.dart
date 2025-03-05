@@ -33,6 +33,7 @@ class RoleSelectionPage extends StatelessWidget {
       resizeToAvoidBottomInset: false,
       body: PageFrame(
         label: ModalRoute.of(context)!.settings.name!,
+        isInGame: false,
         pageTitle: " نقش‌های بازی",
         leftButtonText: "تنظیمات بازی",
         rightButtonText: "توزیع نقش‌ها",

@@ -3,11 +3,13 @@ import 'package:mafia_killer/components/checkbox.dart';
 import 'package:mafia_killer/components/dialogbox.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/themes/app_color.dart';
+import 'package:mafia_killer/utils/custom_snackbar.dart';
 
 class PlayerTile extends StatefulWidget {
   final Player player;
   final VoidCallback removePlayer;
-  const PlayerTile({super.key, required this.player, required this.removePlayer});
+  const PlayerTile(
+      {super.key, required this.player, required this.removePlayer});
 
   @override
   State<PlayerTile> createState() => _PlayerTileState();
@@ -21,15 +23,19 @@ class _PlayerTileState extends State<PlayerTile> {
     });
   }
 
-
-
   void editPlayerName() {
-    String text = controller.text.trim();
-    if (text == "" || text.length > 12 || Player.doesNameExist(text)) {
-      return;
-    }
     setState(() {
-      Player.editPlayerName(widget.player, text);
+      String text = controller.text.trim();
+      if (text == "") {
+        customSnackBar(context, 'اسم وارد شده نمی‌تونه خالی باشه');
+      } else if (text.length > 12) {
+        customSnackBar(
+            context, 'اسم وارد شده نمی‌تونه بیشتر از ۱۲ کاراکتر باشه');
+      } else if (Player.doesNameExist(text)) {
+        customSnackBar(context, 'اسم وارد شده نمی‌تونه تکراری باشه');
+      } else {
+        Player.editPlayerName(widget.player, text);
+      }
       Navigator.of(context).pop();
     });
   }
