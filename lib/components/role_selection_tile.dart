@@ -23,7 +23,7 @@ class _RoleSelectionTileState extends State<RoleSelectionTile> {
         color = AppColors.redColor;
         break;
       case RoleSide.citizen:
-        color = AppColors.darkgreenColor;
+        color = AppColors.blueColor;
 
         break;
       case RoleSide.independant:
@@ -54,8 +54,6 @@ class _RoleSelectionTileState extends State<RoleSelectionTile> {
     });
     Scenario.removeRole(widget.role);
   }
-
-  
 
   @override
   Widget build(BuildContext context) {

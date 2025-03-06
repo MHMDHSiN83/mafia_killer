@@ -14,7 +14,7 @@ class RoleDescriptionTile extends StatelessWidget {
         color = AppColors.redColor;
         break;
       case RoleSide.citizen:
-        color = AppColors.darkgreenColor;
+        color = AppColors.blueColor;
 
         break;
       case RoleSide.independant:
@@ -29,8 +29,8 @@ class RoleDescriptionTile extends StatelessWidget {
   Widget build(BuildContext context) {
     Color color = determineColor();
     return Container(
-      width: 300,
-      height: 700,
+      width: 320,
+      height: 600,
       padding: EdgeInsets.zero,
       decoration: BoxDecoration(
         color: Colors.black,
@@ -54,9 +54,48 @@ class RoleDescriptionTile extends StatelessWidget {
               ),
             ),
           ),
-          Text(
-            role.description,
-            style: const TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+          Container(
+            height: 120,
+            margin: EdgeInsets.fromLTRB(20, 0, 20.0, 0),
+            child: Directionality(
+              textDirection: TextDirection.ltr,
+              child: Scrollbar(
+                child: ListView(children: [
+                  Directionality(
+                    textDirection: TextDirection.rtl,
+                    child: Text(
+                      role.description,
+                      style: const TextStyle(fontSize: 15),
+                      textAlign: TextAlign.justify,
+                    ),
+                  ),
+                ]),
+              ),
+            ),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: (role.roleSide == RoleSide.mafia)
+                  ? AppColors.redColor
+                  : (role.roleSide == RoleSide.citizen)
+                      ? AppColors.blueColor
+                      : AppColors.darkYellowColor,
+              elevation: 12.0,
+            ),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+              child: Text(
+                'متوجه شدم',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                  color: Theme.of(context).colorScheme.inversePrimary,
+                ),
+              ),
+            ),
           ),
         ],
       ),
