@@ -5,6 +5,7 @@ import 'package:mafia_killer/components/page_frame.dart';
 import 'package:mafia_killer/components/player_role_card.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/themes/app_color.dart';
+import 'package:mafia_killer/utils/custom_snackbar.dart';
 
 class RoleDistributionPage extends StatefulWidget {
   const RoleDistributionPage({super.key});
@@ -98,6 +99,8 @@ class _RoleDistributionPageState extends State<RoleDistributionPage> {
           if (_hasEveryoneSeen()) {
             Player.updateInGamePlayers(players);
             Navigator.pushNamed(context, '/night_page');
+          } else {
+            customSnackBar(context, "هنوز تمام بازیکن ها نقششون رو ندیدند.");
           }
         },
         child: Column(
