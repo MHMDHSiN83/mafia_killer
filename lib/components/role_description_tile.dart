@@ -54,10 +54,16 @@ class RoleDescriptionTile extends StatelessWidget {
               ),
             ),
           ),
-          Text(
-            role.description,
-            style: const TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
-          ),
+          ListView(children: [
+            SizedBox(
+              height: 50,
+              child: Text(
+                role.description,
+                style:
+                    const TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+              ),
+            ),
+          ]),
         ],
       ),
     );
