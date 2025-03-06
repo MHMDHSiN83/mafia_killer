@@ -73,16 +73,17 @@ class RoleSelectionPage extends StatelessWidget {
             Player.inGamePlayers[i].role = roles[i];
           }
           Scenario.currentScenario.resetDayes();
-          Navigator.pushNamed(
-            context,
-            '/talking_page',
-            arguments: TalkingPageScreenArguments(
-                nextPagePath: '/intro_night_page',
-                seconds: GameSettings.currentGameSettings.introTime,
-                rightButtonText: "شب معارفه",
-                leftButtonText: "تقسیم نقش",
-                isDefense: false),
-          );
+          Navigator.pushNamed(context, '/role_distribution_page');
+          // Navigator.pushNamed(
+          //   context,
+          //   '/talking_page',
+          //   arguments: TalkingPageScreenArguments(
+          //       nextPagePath: '/intro_night_page',
+          //       seconds: GameSettings.currentGameSettings.introTime,
+          //       rightButtonText: "شب معارفه",
+          //       leftButtonText: "تقسیم نقش",
+          //       isDefense: false),
+          // );
         },
         child: ListView(
           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
@@ -127,11 +128,11 @@ class RoleSelectionPage extends StatelessWidget {
                 fontSize: 38,
                 shadows: [
                   Shadow(
-                      color: AppColors.darkgreenColor, offset: Offset(0, -12))
+                      color: AppColors.blueColor, offset: Offset(0, -12))
                 ],
                 color: Colors.transparent,
                 //decoration: TextDecoration.underline,
-                decorationColor: AppColors.darkgreenColor,
+                decorationColor: AppColors.blueColor,
                 decorationThickness: 2,
               ),
             ),
