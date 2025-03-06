@@ -11,6 +11,7 @@ import 'package:mafia_killer/models/scenarios/godfather/godfather_scenario.dart'
 import 'package:mafia_killer/models/scenarios/godfather/roles/nostradamus.dart';
 import 'package:mafia_killer/models/talking_page_screen_arguments.dart';
 import 'package:audioplayers/audioplayers.dart';
+import 'package:mafia_killer/utils/custom_snackbar.dart';
 
 class IntroNightPage extends StatefulWidget {
   const IntroNightPage({super.key});
@@ -103,8 +104,8 @@ class _IntroNightPageState extends State<IntroNightPage> {
 
     // Start the music as soon as the amusic is displayed.
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      await music.setSource(AssetSource('audios/Dark-Legacy.mp3'));
-      await music.resume();
+      // await music.setSource(AssetSource('audios/Dark-Legacy.mp3'));
+      // await music.resume();
     });
     super.initState();
   }
@@ -152,6 +153,8 @@ class _IntroNightPageState extends State<IntroNightPage> {
                 isDefense: false,
               ),
             );
+          } else {
+            customSnackBar(context, 'تمام اکت‌های شب باید انجام بشه');
           }
         },
         child: Padding(

@@ -3,6 +3,7 @@ import 'package:mafia_killer/components/page_frame.dart';
 import 'package:mafia_killer/components/player_tile.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/themes/app_color.dart';
+import 'package:mafia_killer/utils/custom_snackbar.dart';
 
 class PlayersPage extends StatefulWidget {
   const PlayersPage({super.key});
@@ -16,11 +17,16 @@ class _PlayersPageState extends State<PlayersPage> {
   void addPlayer() {
     setState(() {
       String text = _controller.text.trim();
-      if (text == "" || text.length > 12 || Player.doesNameExist(text)) {
-        return;
+      if (text == "") {
+        customSnackBar(context, 'اسم وارد شده نمی‌تونه خالی باشه');
+      } else if (text.length > 12) {
+        customSnackBar(context, 'اسم وارد شده نمی‌تونه بیشتر از ۱۲ کاراکتر باشه');
+      } else if (Player.doesNameExist(text)) {
+        customSnackBar(context, 'اسم وارد شده نمی‌تونه تکراری باشه');
+      } else {
+        Player.addPlayer(text);
+        _controller.text = '';
       }
-      Player.addPlayer(text);
-      _controller.text = '';
     });
   }
 

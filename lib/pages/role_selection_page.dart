@@ -11,6 +11,7 @@ import 'package:mafia_killer/models/role_side.dart';
 import 'package:mafia_killer/models/scenarios/godfather/godfather_scenario.dart';
 import 'package:mafia_killer/models/talking_page_screen_arguments.dart';
 import 'package:mafia_killer/themes/app_color.dart';
+import 'package:mafia_killer/utils/custom_snackbar.dart';
 
 class RoleSelectionPage extends StatelessWidget {
   RoleSelectionPage({super.key});
@@ -33,6 +34,7 @@ class RoleSelectionPage extends StatelessWidget {
       resizeToAvoidBottomInset: false,
       body: PageFrame(
         label: ModalRoute.of(context)!.settings.name!,
+        isInGame: false,
         pageTitle: " نقش‌های بازی",
         leftButtonText: "تنظیمات بازی",
         rightButtonText: "توزیع نقش‌ها",
@@ -40,7 +42,28 @@ class RoleSelectionPage extends StatelessWidget {
         rightButtonOnTap: () {
           if (Player.inGamePlayers.length !=
               Scenario.currentScenario.inGameRoles.length) {
+            customSnackBar(
+                context, 'تعداد نقش‌ها با تعداد بازیکن‌ها برابر نیست');
             return;
+          } else {
+            int mafiaCount =
+                Scenario.currentScenario.getNumberOfRoleBySide(RoleSide.mafia);
+            int citizenCount = Scenario.currentScenario
+                .getNumberOfRoleBySide(RoleSide.citizen);
+            int independantCount = Scenario.currentScenario
+                .getNumberOfRoleBySide(RoleSide.independant);
+            if (mafiaCount == 0) {
+              customSnackBar(context, 'تعداد مافیا ها نمی‌تونه صفر باشه');
+              return;
+            } else if (citizenCount + independantCount <= mafiaCount) {
+              customSnackBar(context,
+                  'تعداد مافیاها باید از مجموع شهروندها و نوستراداموس کمتر باشه');
+              return;
+            } else if (Scenario.currentScenario.inGameRoles.length < 5) {
+              customSnackBar(
+                  context, 'تعداد بازیکن‌ها نمی‌تونه از پنج کمتر باشه');
+              return;
+            }
           }
           (Scenario.currentScenario as GodfatherScenario)
               .shuffleLastMoveCards();

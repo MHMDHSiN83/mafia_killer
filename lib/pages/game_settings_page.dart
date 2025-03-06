@@ -6,6 +6,7 @@ import 'package:mafia_killer/components/row_dropdownbox.dart';
 import 'package:mafia_killer/databases/game_settings.dart';
 import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/themes/app_color.dart';
+import 'package:mafia_killer/utils/custom_snackbar.dart';
 
 class GameSettingsPage extends StatefulWidget {
   const GameSettingsPage({super.key});
@@ -49,11 +50,13 @@ class _GameSettingsPageState extends State<GameSettingsPage> {
     setState(() {
       if (isTimer) {
         if (newGameSettings[varName] <= 10) {
+          customSnackBar(context, 'فرصت صحبت نمی‌تونه کمتر از ۱۰ ثانیه باشه');
           return;
         }
         newGameSettings[varName] -= 10;
       } else {
         if (newGameSettings[varName] == 1) {
+          customSnackBar(context, 'تعداد استعلام‌ها نمی‌تونه صفر باشه');
           return;
         }
         newGameSettings[varName]--;
@@ -66,6 +69,7 @@ class _GameSettingsPageState extends State<GameSettingsPage> {
     return Scaffold(
       body: PageFrame(
         label: ModalRoute.of(context)!.settings.name!,
+        isInGame: false,
         pageTitle: "تنظیمات این دست",
         rightButtonText: "انتخاب نقش‌ها",
         leftButtonText: "بازیکنان",

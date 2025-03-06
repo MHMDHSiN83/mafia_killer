@@ -5,7 +5,9 @@ import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/models/language.dart';
 import 'package:mafia_killer/models/role.dart';
 import 'package:mafia_killer/models/role_side.dart';
+import 'package:mafia_killer/models/scenarios/godfather/roles/citizen.dart';
 import 'package:mafia_killer/themes/app_color.dart';
+import 'package:mafia_killer/utils/custom_snackbar.dart';
 
 class RoleSelectionTile extends StatefulWidget {
   RoleSelectionTile({super.key, required this.role, required this.counter});
@@ -37,16 +39,25 @@ class _RoleSelectionTileState extends State<RoleSelectionTile> {
   void increaseNumber() {
     if (Player.inGamePlayers.length <=
         Scenario.currentScenario.inGameRoles.length) {
+      customSnackBar(
+          context, 'تعداد نقش‌ها نمی‌تونه از تعداد بازیکن‌ها بیشتر باشه');
       return;
     }
-    setState(() {
-      widget.counter++;
-    });
-    Scenario.addRole(widget.role);
+    if (widget.counter == 0 || widget.role is Citizen) {
+      setState(() {
+        widget.counter++;
+      });
+
+      Scenario.addRole(widget.role);
+    } else {
+      customSnackBar(context,
+          'بیشتر از یک ${widget.role.name} نمی‌تواند در بازی وجود داشته باشد');
+    }
   }
 
   void decreaseNumber() {
     if (widget.counter == 0) {
+      customSnackBar(context, 'تعداد یک نقش نمی‌تونه از صفر کمتر باشه');
       return;
     }
     setState(() {
@@ -54,8 +65,6 @@ class _RoleSelectionTileState extends State<RoleSelectionTile> {
     });
     Scenario.removeRole(widget.role);
   }
-
-  
 
   @override
   Widget build(BuildContext context) {

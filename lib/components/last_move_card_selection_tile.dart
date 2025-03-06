@@ -4,6 +4,7 @@ import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/models/language.dart';
 import 'package:mafia_killer/models/last_move_card.dart';
 import 'package:mafia_killer/themes/app_color.dart';
+import 'package:mafia_killer/utils/custom_snackbar.dart';
 
 class LastMoveCardSelectionTile extends StatefulWidget {
   LastMoveCardSelectionTile(
@@ -48,6 +49,7 @@ class _LastMoveCardSelectionTileState extends State<LastMoveCardSelectionTile> {
 
   void decreaseNumber() {
     if (widget.counter == 0) {
+      customSnackBar(context, 'تعداد کارت حرکت آخر نمی‌تونه از صفر کمتر باشه');
       return;
     }
     setState(() {
@@ -66,7 +68,8 @@ class _LastMoveCardSelectionTileState extends State<LastMoveCardSelectionTile> {
             context: context,
             builder: (context) {
               return Dialog(
-                child: LastMoveCardsDescriptionTile(lastMoveCard: widget.lastMoveCard),
+                child: LastMoveCardsDescriptionTile(
+                    lastMoveCard: widget.lastMoveCard),
               );
             });
       },
