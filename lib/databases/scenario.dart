@@ -116,6 +116,10 @@ class Scenario {
         .toList();
   }
 
+  int getNumberOfRoleBySide(RoleSide side) {
+    return inGameRoles.where((role) => role.roleSide == side).toList().length;
+  }
+
   static Future<void> addRole(Role? newRole) async {
     if (newRole == null) {
       return;
