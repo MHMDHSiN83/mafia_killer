@@ -98,7 +98,7 @@ class _RoleDistributionPageState extends State<RoleDistributionPage> {
         rightButtonOnTap: () {
           if (_hasEveryoneSeen()) {
             Player.updateInGamePlayers(players);
-            Navigator.pushNamed(context, '/night_page');
+            Navigator.pushNamed(context, '/intro_page');
           } else {
             customSnackBar(context, "هنوز تمام بازیکن ها نقششون رو ندیدند.");
           }

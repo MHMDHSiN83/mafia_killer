@@ -74,16 +74,7 @@ class RoleSelectionPage extends StatelessWidget {
           }
           Scenario.currentScenario.resetDayes();
           //Navigator.pushNamed(context, '/role_distribution_page');
-          Navigator.pushNamed(
-            context,
-            '/talking_page',
-            arguments: TalkingPageScreenArguments(
-                nextPagePath: '/intro_night_page',
-                seconds: GameSettings.currentGameSettings.introTime,
-                rightButtonText: "شب معارفه",
-                leftButtonText: "تقسیم نقش",
-                isDefense: false),
-          );
+          Navigator.pushNamed(context, '/role_distribution_page');
         },
         child: ListView(
           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
