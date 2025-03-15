@@ -6,6 +6,7 @@ import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/models/language.dart';
 import 'package:mafia_killer/models/talking_page_screen_arguments.dart';
 import 'package:mafia_killer/themes/app_color.dart';
+import 'package:mafia_killer/utils/audio_manager.dart';
 
 class TalkingPage extends StatefulWidget {
   const TalkingPage({super.key});
@@ -108,6 +109,7 @@ class _TalkingPageState extends State<TalkingPage> {
           if (Scenario.currentScenario.isIntroDay()) {
             Scenario.currentScenario.goToNextStage();
           }
+          AudioManager().playNextPageEffect();
           Navigator.pushNamed(context, args.nextPagePath);
         },
         child: Column(

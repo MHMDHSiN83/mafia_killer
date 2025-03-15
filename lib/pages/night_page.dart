@@ -11,6 +11,7 @@ import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/models/player_status.dart';
 import 'package:mafia_killer/models/scenarios/godfather/godfather_scenario.dart';
 import 'package:mafia_killer/models/ui_player_status.dart';
+import 'package:mafia_killer/utils/audio_manager.dart';
 import 'package:mafia_killer/utils/custom_snackbar.dart';
 
 class NightPage extends StatefulWidget {
@@ -210,6 +211,7 @@ class _NightPageState extends State<NightPage> {
             iterator.moveNext();
             Scenario.currentScenario.goToNextStage();
             resetNight();
+            AudioManager().playNextPageEffect();
             Navigator.pushNamed(context, '/night_events_page');
           } else {
             customSnackBar(context, 'تمام اکت‌های شب باید انجام بشه');

@@ -7,6 +7,7 @@ import 'package:mafia_killer/models/role_side.dart';
 import 'package:mafia_killer/pages/last_move_card_page.dart';
 import 'package:mafia_killer/pages/last_move_card_pages/face_off_page.dart';
 import 'package:mafia_killer/themes/app_color.dart';
+import 'package:mafia_killer/utils/audio_manager.dart';
 
 class FacedOffRolePage extends StatelessWidget {
   const FacedOffRolePage({super.key});
@@ -28,7 +29,7 @@ class FacedOffRolePage extends StatelessWidget {
     return Scaffold(
         resizeToAvoidBottomInset: true,
         body: PageFrame(
-        label: ModalRoute.of(context)!.settings.name!,
+          label: ModalRoute.of(context)!.settings.name!,
           pageTitle: "نقش جدید",
           leftButtonText: "کارت حرکت آخر",
           rightButtonText:
@@ -39,8 +40,8 @@ class FacedOffRolePage extends StatelessWidget {
               Scenario.currentScenario.killedInDayPlayer!,
               FaceOffPage.selectedPlayers[0]
             ]);
+            AudioManager().playNextPageEffect();
             Navigator.pushNamed(context, '/night_page');
-            
           },
           child: Column(
             children: [

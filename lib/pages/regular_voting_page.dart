@@ -6,6 +6,7 @@ import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/models/player_status.dart';
 import 'package:mafia_killer/models/talking_page_screen_arguments.dart';
+import 'package:mafia_killer/utils/audio_manager.dart';
 
 class RegularVotingPage extends StatefulWidget {
   const RegularVotingPage({super.key});
@@ -43,6 +44,7 @@ class _RegularVotingPageState extends State<RegularVotingPage> {
         leftButtonOnTap: () => Navigator.pop(context),
         rightButtonOnTap: () {
           Scenario.currentScenario.storeDefendingPlayers(defendingPlayers);
+          AudioManager().playNextPageEffect();
           if (Scenario.currentScenario.defendingPlayers.isNotEmpty) {
             Navigator.pushNamed(
               context,
@@ -92,11 +94,10 @@ class _RegularVotingPageState extends State<RegularVotingPage> {
                           player.playerStatus == PlayerStatus.active)
                       .toList()[index]);
                 },
-                isClicked: defendingPlayers
-                    .contains(Player.inGamePlayers
-                      .where((player) =>
-                          player.playerStatus == PlayerStatus.active)
-                      .toList()[index]),
+                isClicked: defendingPlayers.contains(Player.inGamePlayers
+                    .where(
+                        (player) => player.playerStatus == PlayerStatus.active)
+                    .toList()[index]),
                 stamp: 'دفاعیه',
               );
             },

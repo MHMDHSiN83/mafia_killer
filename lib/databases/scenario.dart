@@ -103,8 +103,14 @@ class Scenario {
     } else {
       print('scenario already exists in internal storage');
       String jsonString = await file.readAsString();
-
-      List<dynamic> jsonData = jsonDecode(jsonString);
+      List<dynamic> jsonData;
+      try {
+        jsonData = jsonDecode(jsonString);
+      } catch (e) {
+        String jsonString =
+            await rootBundle.loadString('lib/assets/scenarios.json');
+        jsonData = jsonDecode(jsonString);
+      }
       scenarios = jsonData.map((player) => Scenario.fromJson(player)).toList();
     }
     currentScenario = scenarios[0];

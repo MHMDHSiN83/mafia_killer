@@ -11,6 +11,7 @@ import 'package:mafia_killer/models/scenarios/godfather/godfather_scenario.dart'
 import 'package:mafia_killer/models/scenarios/godfather/roles/nostradamus.dart';
 import 'package:mafia_killer/models/talking_page_screen_arguments.dart';
 import 'package:audioplayers/audioplayers.dart';
+import 'package:mafia_killer/utils/audio_manager.dart';
 import 'package:mafia_killer/utils/custom_snackbar.dart';
 
 class IntroNightPage extends StatefulWidget {
@@ -97,23 +98,13 @@ class _IntroNightPageState extends State<IntroNightPage> {
     for (Player player in Player.inGamePlayers) {
       playerCheckboxStatus[player] = false;
     }
-    music = AudioPlayer();
-
-    // Set the release mode to keep the source after playback has completed.
-    music.setReleaseMode(ReleaseMode.stop);
-
-    // Start the music as soon as the amusic is displayed.
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      // await music.setSource(AssetSource('audios/Dark-Legacy.mp3'));
-      // await music.resume();
-    });
+    AudioManager().playMusic('audios/Dark-Legacy.mp3');
     super.initState();
   }
 
   @override
   void dispose() {
-    music.stop();
-    music.dispose();
+    AudioManager().stopMusic();
     super.dispose();
   }
 
@@ -141,6 +132,7 @@ class _IntroNightPageState extends State<IntroNightPage> {
             music.dispose();
             Scenario.currentScenario.goToNextStage();
             resetNight();
+            AudioManager().playNextPageEffect();
             Navigator.pushNamed(
               context,
               '/talking_page',

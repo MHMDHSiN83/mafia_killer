@@ -5,6 +5,7 @@ import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/models/language.dart';
 import 'package:mafia_killer/models/talking_page_screen_arguments.dart';
 import 'package:mafia_killer/themes/app_color.dart';
+import 'package:mafia_killer/utils/audio_manager.dart';
 
 class DefenseTalkingPage extends StatefulWidget {
   const DefenseTalkingPage({super.key});
@@ -103,6 +104,7 @@ class _DefenseTalkingPageState extends State<DefenseTalkingPage> {
           Navigator.pop(context);
         },
         rightButtonOnTap: () {
+          AudioManager().playNextPageEffect();
           Scenario.currentScenario.goToNextStage();
           Navigator.pushNamed(context, args.nextPagePath);
         },

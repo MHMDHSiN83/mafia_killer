@@ -11,6 +11,7 @@ import 'package:mafia_killer/models/role_side.dart';
 import 'package:mafia_killer/models/scenarios/godfather/godfather_scenario.dart';
 import 'package:mafia_killer/models/talking_page_screen_arguments.dart';
 import 'package:mafia_killer/themes/app_color.dart';
+import 'package:mafia_killer/utils/audio_manager.dart';
 import 'package:mafia_killer/utils/custom_snackbar.dart';
 
 class RoleSelectionPage extends StatelessWidget {
@@ -72,6 +73,7 @@ class RoleSelectionPage extends StatelessWidget {
           for (int i = 0; i < Player.inGamePlayers.length; i++) {
             Player.inGamePlayers[i].role = roles[i];
           }
+          AudioManager().playNextPageEffect();
           Scenario.currentScenario.resetDayes();
           //Navigator.pushNamed(context, '/role_distribution_page');
           Navigator.pushNamed(

@@ -7,6 +7,7 @@ import 'package:mafia_killer/components/page_frame.dart';
 import 'package:mafia_killer/components/voting_tile.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/databases/scenario.dart';
+import 'package:mafia_killer/utils/audio_manager.dart';
 
 class DefenseVotingPage extends StatefulWidget {
   const DefenseVotingPage({super.key});
@@ -81,6 +82,7 @@ class _DefenseVotingPageState extends State<DefenseVotingPage> {
             default:
               break;
           }
+          AudioManager().playNextPageEffect();
           Navigator.pushNamed(
             context,
             (selectedPlayers.isEmpty) ? '/night_page' : '/last_move_card_page',

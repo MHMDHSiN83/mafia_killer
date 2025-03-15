@@ -6,6 +6,7 @@ import 'package:mafia_killer/components/row_dropdownbox.dart';
 import 'package:mafia_killer/databases/game_settings.dart';
 import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/themes/app_color.dart';
+import 'package:mafia_killer/utils/audio_manager.dart';
 import 'package:mafia_killer/utils/custom_snackbar.dart';
 
 class GameSettingsPage extends StatefulWidget {
@@ -32,6 +33,7 @@ class _GameSettingsPageState extends State<GameSettingsPage> {
 
   void _increaseNumber(bool isTimer, String varName) {
     setState(() {
+      AudioManager().playUpCounterEffect();
       if (isTimer) {
         if (newGameSettings[varName] >= 590) {
           return;
@@ -48,6 +50,7 @@ class _GameSettingsPageState extends State<GameSettingsPage> {
 
   void _decreaseNumber(bool isTimer, String varName) {
     setState(() {
+      AudioManager().playDownCounterMusic();
       if (isTimer) {
         if (newGameSettings[varName] <= 10) {
           customSnackBar(context, 'فرصت صحبت نمی‌تونه کمتر از ۱۰ ثانیه باشه');
@@ -78,6 +81,7 @@ class _GameSettingsPageState extends State<GameSettingsPage> {
           GameSettings.updateSettings(
               GameSettings.currentGameSettings, newGameSettings);
           Scenario.currentScenario.getRecommendedScenario();
+          AudioManager().playNextPageEffect();
           Navigator.pushNamed(context, '/role_selection_page');
         },
         child: ListView(
