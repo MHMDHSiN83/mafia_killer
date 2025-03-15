@@ -11,6 +11,7 @@ import 'package:mafia_killer/models/scenarios/godfather/last_move_cards/handcuff
 import 'package:mafia_killer/models/scenarios/godfather/last_move_cards/reveal_identity.dart';
 import 'package:mafia_killer/models/scenarios/godfather/last_move_cards/silence_of_the_lambs.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/nostradamus.dart';
+import 'package:mafia_killer/utils/custom_snackbar.dart';
 
 class LastMoveCardPage extends StatefulWidget {
   const LastMoveCardPage({super.key});
@@ -45,7 +46,7 @@ class _LastMoveCardPageState extends State<LastMoveCardPage> {
         },
         rightButtonOnTap: () {
           if (LastMoveCardPage.selectedLastMoveCard == null) {
-            return;
+            customSnackBar(context, "یک کارت باید انتخاب بشه.");
           }
           LastMoveCardPage.selectedLastMoveCard!.isUsed = true;
           if (LastMoveCardPage.selectedLastMoveCard is RevealIdentity) {
