@@ -390,7 +390,6 @@ class Scenario {
     nightEvents = {};
     defendingPlayers = [];
     killedInDayPlayer = null;
-    silencedPlayerDuringDay = [];
     report = [];
 
     for (Player player in Player.inGamePlayers) {

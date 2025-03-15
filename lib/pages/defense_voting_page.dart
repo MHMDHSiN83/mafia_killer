@@ -7,6 +7,7 @@ import 'package:mafia_killer/components/page_frame.dart';
 import 'package:mafia_killer/components/voting_tile.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/databases/scenario.dart';
+import 'package:mafia_killer/models/scenarios/godfather/godfather_scenario.dart';
 
 class DefenseVotingPage extends StatefulWidget {
   const DefenseVotingPage({super.key});
@@ -80,6 +81,11 @@ class _DefenseVotingPageState extends State<DefenseVotingPage> {
               break;
             default:
               break;
+          }
+
+          if (Scenario.currentScenario is GodfatherScenario) {
+            (Scenario.currentScenario as GodfatherScenario)
+                .resetSilencedPlayersBeforeLastMoveCardPage();
           }
           Navigator.pushNamed(
             context,
