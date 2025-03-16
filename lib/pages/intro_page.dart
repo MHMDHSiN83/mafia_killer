@@ -72,7 +72,7 @@ class IntroPage extends StatelessWidget {
                           fontFamily: 'DigiGaf'),
                     ),
                     const Text(
-                      "کش",
+                      "کُش",
                       style: TextStyle(
                           color: AppColors.redColor,
                           fontSize: 120,
