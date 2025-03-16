@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mafia_killer/components/call_role.dart';
 import 'package:mafia_killer/components/page_frame.dart';
 import 'package:mafia_killer/components/player_tile.dart';
 import 'package:mafia_killer/databases/player.dart';
@@ -169,15 +170,20 @@ class _PlayersPageState extends State<PlayersPage>
                   itemCount: Player.players.length,
                   itemBuilder: (context, index) {
                     return Container(
-                      margin: const EdgeInsets.symmetric(vertical: 5),
+                      margin: const EdgeInsets.fromLTRB(0, 10, 0, 0),
                       child: PlayerTile(
-                        player: Player.players[index],
-                        removePlayer: () => removePlayer(Player.players[index]),
+                        player: Player.players.reversed.toList()[index],
+                        removePlayer: () => removePlayer(
+                            Player.players.reversed.toList()[index]),
                       ),
                     );
                   },
                 ),
               ),
+              Expanded(
+                flex: 1,
+                child: CallRole(text: "text", onPressed: () {}, buttonText: ""),
+              )
             ],
           ),
         ),
