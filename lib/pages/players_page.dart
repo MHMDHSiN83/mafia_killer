@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:mafia_killer/components/call_role.dart';
+import 'package:mafia_killer/components/confirmation_box.dart';
+import 'package:mafia_killer/components/dialogbox.dart';
+import 'package:mafia_killer/components/information_dialogbox.dart';
 import 'package:mafia_killer/components/page_frame.dart';
 import 'package:mafia_killer/components/player_tile.dart';
 import 'package:mafia_killer/databases/player.dart';
+import 'package:mafia_killer/models/language.dart';
 import 'package:mafia_killer/themes/app_color.dart';
 import 'package:mafia_killer/utils/audio_manager.dart';
 import 'package:mafia_killer/utils/custom_snackbar.dart';
@@ -41,19 +45,12 @@ class _PlayersPageState extends State<PlayersPage>
   }
 
   late AnimationController _textFieldController;
-  late Animation _animation;
   final FocusNode _focusNode = FocusNode();
   bool isTextFieldFocused = false;
 
   @override
   void initState() {
     super.initState();
-    _textFieldController =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 300));
-    _animation = Tween(begin: 11.0, end: 11.0).animate(_textFieldController)
-      ..addListener(() {
-        setState(() {});
-      });
 
     _focusNode.addListener(() {
       setState(() {
@@ -73,10 +70,15 @@ class _PlayersPageState extends State<PlayersPage>
 
   @override
   Widget build(BuildContext context) {
+    int numberOfInGamePlayers =
+        Player.players.where((x) => x.doesParticipate).length;
+    int numberOfPlayers = Player.players.length;
+
+    List<Player> reversedPlayersList = Player.players.reversed.toList();
+
     return GestureDetector(
       onTap: () {
-        FocusScope.of(context)
-            .unfocus(); // Hides the keyboard when tapping outside
+        _focusNode.unfocus();
       },
       child: Scaffold(
         resizeToAvoidBottomInset: false,
@@ -165,8 +167,8 @@ class _PlayersPageState extends State<PlayersPage>
                   ]),
                 ),
               ),
-              Expanded(
-                flex: 9,
+              SizedBox(
+                height: 500,
                 child: ListView.builder(
                   padding: const EdgeInsets.symmetric(horizontal: 15),
                   itemCount: Player.players.length,
@@ -174,14 +176,45 @@ class _PlayersPageState extends State<PlayersPage>
                     return Container(
                       margin: const EdgeInsets.fromLTRB(0, 10, 0, 0),
                       child: PlayerTile(
-                        player: Player.players.reversed.toList()[index],
-                        removePlayer: () => removePlayer(
-                            Player.players.reversed.toList()[index]),
+                        player: reversedPlayersList[index],
+                        removePlayer: () =>
+                            removePlayer(reversedPlayersList[index]),
+                        updateInGame: () {
+                          setState(() {});
+                        },
                       ),
                     );
                   },
                 ),
               ),
+              Expanded(
+                flex: 2,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: CallRole(
+                      text: "تعداد بازیکنان",
+                      onPressed: () {
+                        FocusScope.of(context).unfocus();
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return InformationDialogbox(
+                                  text:
+                                      "از ${Language.toPersian(numberOfPlayers.toString())} بازیکن ثبت شده ${Language.toPersian(numberOfInGamePlayers.toString())} نفر در بازی شرکت می‌کنند.",
+                                  onSave: () {
+                                    _focusNode.unfocus();
+
+                                    Navigator.of(context).pop();
+                                  });
+                            }).then((_) {
+                          print("dialog dismissed!");
+                          _focusNode.unfocus();
+                        });
+                      },
+                      buttonText:
+                          "${Language.toPersian(numberOfInGamePlayers.toString())} / ${Language.toPersian(numberOfPlayers.toString())}"),
+                ),
+              )
             ],
           ),
         ),
