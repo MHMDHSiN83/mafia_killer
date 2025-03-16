@@ -8,8 +8,12 @@ import 'package:mafia_killer/utils/custom_snackbar.dart';
 class PlayerTile extends StatefulWidget {
   final Player player;
   final VoidCallback removePlayer;
+  final VoidCallback updateInGame;
   const PlayerTile(
-      {super.key, required this.player, required this.removePlayer});
+      {super.key,
+      required this.player,
+      required this.removePlayer,
+      required this.updateInGame});
 
   @override
   State<PlayerTile> createState() => _PlayerTileState();
@@ -21,6 +25,7 @@ class _PlayerTileState extends State<PlayerTile> {
     setState(() {
       Player.changePlayerStatus(widget.player);
     });
+    widget.updateInGame();
   }
 
   void editPlayerName() {
