@@ -101,7 +101,7 @@ class _RoleDistributionPageState extends State<RoleDistributionPage> {
             Player.updateInGamePlayers(players);
             AudioManager().playNextPageEffect();
 
-            Navigator.pushNamed(context, '/night_page');
+            Navigator.pushNamed(context, '/intro_page');
           } else {
             customSnackBar(context, "هنوز تمام بازیکن ها نقششون رو ندیدند.");
           }

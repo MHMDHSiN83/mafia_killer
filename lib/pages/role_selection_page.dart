@@ -76,6 +76,7 @@ class RoleSelectionPage extends StatelessWidget {
           AudioManager().playNextPageEffect();
           Scenario.currentScenario.resetDayes();
           //Navigator.pushNamed(context, '/role_distribution_page');
+          //Navigator.pushNamed(context, '/role_distribution_page');
           Navigator.pushNamed(
             context,
             '/talking_page',
