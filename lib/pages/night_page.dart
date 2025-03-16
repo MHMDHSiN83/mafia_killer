@@ -38,6 +38,7 @@ class _NightPageState extends State<NightPage> {
       builder: (context) {
         return MafiaChoiceBox(
           shot: () {
+            AudioManager().playClickEffect();
             setState(() {
               NightPage.mafiaTeamChoice = 0;
               (Scenario.currentScenario as GodfatherScenario)
@@ -48,6 +49,7 @@ class _NightPageState extends State<NightPage> {
             });
           },
           sixthSense: () {
+            AudioManager().playClickEffect();
             setState(() {
               NightPage.mafiaTeamChoice = 1;
               (Scenario.currentScenario as GodfatherScenario)
@@ -59,6 +61,7 @@ class _NightPageState extends State<NightPage> {
             });
           },
           buying: () {
+            AudioManager().playClickEffect();
             setState(() {
               NightPage.mafiaTeamChoice = 2;
               (Scenario.currentScenario as GodfatherScenario)
@@ -80,6 +83,7 @@ class _NightPageState extends State<NightPage> {
       builder: (context) {
         return ConfirmationBox(
           onSave: () {
+            AudioManager().playClickEffect();
             NightPage.targetPlayer = player;
 
             Navigator.of(context).pop();
@@ -89,7 +93,10 @@ class _NightPageState extends State<NightPage> {
               }
             });
           },
-          onCancel: () => Navigator.of(context).pop(),
+          onCancel: () {
+            AudioManager().playClickEffect();
+            Navigator.of(context).pop();
+          },
         );
       },
     );
@@ -232,14 +239,19 @@ class _NightPageState extends State<NightPage> {
                   onPressed: () {
                     showDialog(
                       context: context,
-                      builder: (context) => ConfirmationBox(onSave: () {
-                        setState(() {
-                          resetNight();
-                        });
-                        Navigator.pop(context);
-                      }, onCancel: () {
-                        Navigator.pop(context);
-                      }),
+                      builder: (context) => ConfirmationBox(
+                        onSave: () {
+                          AudioManager().playClickEffect();
+                          setState(() {
+                            resetNight();
+                          });
+                          Navigator.pop(context);
+                        },
+                        onCancel: () {
+                          AudioManager().playClickEffect();
+                          Navigator.pop(context);
+                        },
+                      ),
                     );
                   },
                 ),
@@ -286,6 +298,7 @@ class _NightPageState extends State<NightPage> {
                   text: text,
                   buttonText: NightPage.buttonText,
                   onPressed: () {
+                    AudioManager().playClickEffect();
                     setState(() {
                       if (iterator.moveNext()) {
                         text = iterator.current;

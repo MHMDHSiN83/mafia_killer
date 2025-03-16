@@ -98,7 +98,7 @@ class _IntroNightPageState extends State<IntroNightPage> {
     for (Player player in Player.inGamePlayers) {
       playerCheckboxStatus[player] = false;
     }
-    AudioManager().playMusic('audios/Dark-Legacy.mp3');
+    // AudioManager().playMusic('audios/Dark-Legacy.mp3');
     super.initState();
   }
 
@@ -184,6 +184,7 @@ class _IntroNightPageState extends State<IntroNightPage> {
                 child: CallRole(
                   text: text,
                   onPressed: () {
+                    AudioManager().playClickEffect();
                     if (IntroNightPage.targetPlayers.length == 3) {
                       //TODO build a function to generate nostradamus choice
                       if (IntroNightPage.isNostradamusSelecting) {
@@ -203,87 +204,6 @@ class _IntroNightPageState extends State<IntroNightPage> {
                   },
                   buttonText: IntroNightPage.buttonText,
                 ),
-                // child: Container(
-                //   margin: const EdgeInsets.only(top: 25),
-                //   child: Column(
-                //     mainAxisAlignment: MainAxisAlignment.start,
-                //     children: [
-                //       Stack(
-                //         children: [
-                //           const Image(
-                //             image: AssetImage(
-                //               'lib/images/backgrounds/wood-plank.png',
-                //             ),
-                //           ),
-                //           Container(
-                //             padding: const EdgeInsets.symmetric(horizontal: 20),
-                //             height: 368 * 191 / 1140,
-                //             width: 368,
-                //             child: Row(
-                //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //               crossAxisAlignment: CrossAxisAlignment.center,
-                //               children: [
-                //                 Expanded(
-                //                   flex: 2,
-                //                   child: Text(
-                //                     text,
-                //                     style: TextStyle(
-                //                       color: AppColors.brownColor,
-                //                       fontSize: 12,
-                //                     ),
-                //                   ),
-                //                 ),
-                //                 if (IntroNightPage.buttonText != '')
-                //                   Expanded(
-                //                     flex: 1,
-                //                     child: OutlinedButton(
-                //                       style: OutlinedButton.styleFrom(
-                //                         padding: const EdgeInsets.symmetric(
-                //                             horizontal: 0, vertical: 10),
-                //                         foregroundColor: AppColors.brownColor,
-                //                         side: const BorderSide(
-                //                           width: 3,
-                //                           color: AppColors.brownColor,
-                //                         ),
-                //                         shape: RoundedRectangleBorder(
-                //                           borderRadius: BorderRadius.circular(
-                //                             8,
-                //                           ),
-                //                         ),
-                //                       ),
-                //                       onPressed: () {
-                //                         if (IntroNightPage
-                //                                 .targetPlayers.length ==
-                //                             3) {
-                //                           //TODO build a function to generate nostradamus choice
-                //                           if (IntroNightPage
-                //                               .isNostradamusSelecting) {
-                //                             nostradamusBox(
-                //                               GodfatherScenario
-                //                                   .resultOfNostradamusGuess(
-                //                                       IntroNightPage
-                //                                           .targetPlayers),
-                //                             );
-                //                           } else {
-                //                             setState(() {
-                //                               if (iterator.moveNext()) {
-                //                                 text = iterator.current;
-                //                               }
-                //                             });
-                //                           }
-                //                         }
-                //                       },
-                //                       child: Text(IntroNightPage.buttonText),
-                //                     ),
-                //                   ),
-                //               ],
-                //             ),
-                //           ),
-                //         ],
-                //       ),
-                //     ],
-                //   ),
-                // ),
               ),
             ],
           ),

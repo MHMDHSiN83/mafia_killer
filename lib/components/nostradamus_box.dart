@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mafia_killer/models/role_side.dart';
 import 'package:mafia_killer/themes/app_color.dart';
+import 'package:mafia_killer/utils/audio_manager.dart';
 
 class NostradamusBox extends StatelessWidget {
   const NostradamusBox(
@@ -26,6 +27,7 @@ class NostradamusBox extends StatelessWidget {
               children: [
                 MaterialButton(
                   onPressed: () {
+                    AudioManager().playClickEffect();
                     Navigator.of(context).pop();
                   },
                   color: AppColors.darkgreenColor,
@@ -39,6 +41,7 @@ class NostradamusBox extends StatelessWidget {
                 ),
                 MaterialButton(
                   onPressed: () {
+                    AudioManager().playClickEffect();
                     chooseSide(RoleSide.mafia);
                   },
                   color: AppColors.darkgreenColor,
@@ -54,6 +57,7 @@ class NostradamusBox extends StatelessWidget {
                     2) //TODO build a function to generate max mafia team number
                   MaterialButton(
                     onPressed: () {
+                      AudioManager().playClickEffect();
                       chooseSide(RoleSide.citizen);
                     },
                     color: AppColors.darkgreenColor,

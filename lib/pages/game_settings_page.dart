@@ -50,7 +50,7 @@ class _GameSettingsPageState extends State<GameSettingsPage> {
 
   void _decreaseNumber(bool isTimer, String varName) {
     setState(() {
-      AudioManager().playDownCounterMusic();
+      AudioManager().playDownCounterEffect();
       if (isTimer) {
         if (newGameSettings[varName] <= 10) {
           customSnackBar(context, 'فرصت صحبت نمی‌تونه کمتر از ۱۰ ثانیه باشه');

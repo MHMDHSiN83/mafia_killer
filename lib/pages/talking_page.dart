@@ -35,6 +35,7 @@ class _TalkingPageState extends State<TalkingPage> {
   }
 
   void startAndStopTimer() {
+    AudioManager().playClickEffect();
     _hasStarted = true;
     if (!_isRunning) {
       startTimer();
@@ -68,6 +69,7 @@ class _TalkingPageState extends State<TalkingPage> {
   }
 
   void resetTimer() {
+    AudioManager().playClickEffect();
     stopTimer();
     setState(() {
       if (_hasFinished) {

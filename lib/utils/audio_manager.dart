@@ -44,7 +44,7 @@ class AudioManager {
     _playEffect('audios/click_up_real.wav');
   }
 
-  Future<void> playDownCounterMusic() async {
+  Future<void> playDownCounterEffect() async {
     _playEffect('audios/click_down_real.wav');
   }
 
