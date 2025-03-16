@@ -8,6 +8,7 @@ import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/models/player_status.dart';
 import 'package:mafia_killer/models/scenarios/godfather/last_move_cards/beautiful_mind.dart';
 import 'package:mafia_killer/pages/last_move_card_page.dart';
+import 'package:mafia_killer/utils/custom_snackbar.dart';
 import 'package:mafia_killer/utils/audio_manager.dart';
 
 class BeautifulMindChooseNostradamusPage extends StatefulWidget {
@@ -63,6 +64,8 @@ class _BeautifulMindChooseNostradamusPageState
                 .lastMoveCardAction(selectedPlayers);
             AudioManager().playNextPageEffect();
             Navigator.pushNamed(context, '/night_page');
+          }else {
+            customSnackBar(context, "باید حتما یک بازیکن را انتخاب کنید.");
           }
         },
         child: Column(
