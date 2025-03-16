@@ -7,6 +7,7 @@ import 'package:mafia_killer/models/role.dart';
 import 'package:mafia_killer/models/role_side.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/citizen.dart';
 import 'package:mafia_killer/themes/app_color.dart';
+import 'package:mafia_killer/utils/audio_manager.dart';
 import 'package:mafia_killer/utils/custom_snackbar.dart';
 
 class RoleSelectionTile extends StatefulWidget {
@@ -44,6 +45,7 @@ class _RoleSelectionTileState extends State<RoleSelectionTile> {
       return;
     }
     if (widget.counter == 0 || widget.role is Citizen) {
+      AudioManager().playUpCounterEffect();
       setState(() {
         widget.counter++;
       });
@@ -60,6 +62,7 @@ class _RoleSelectionTileState extends State<RoleSelectionTile> {
       customSnackBar(context, 'تعداد یک نقش نمی‌تونه از صفر کمتر باشه');
       return;
     }
+    AudioManager().playDownCounterEffect();
     setState(() {
       widget.counter--;
     });

@@ -5,6 +5,7 @@ import 'package:mafia_killer/components/voting_tile.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/pages/last_move_card_page.dart';
+import 'package:mafia_killer/utils/audio_manager.dart';
 
 class HandcuffsPage extends StatefulWidget {
   HandcuffsPage({super.key});
@@ -52,6 +53,7 @@ class _HandcuffsPageState extends State<HandcuffsPage> {
             widget.selectedPlayers.insert(0, killedInDayPlayer);
             LastMoveCardPage.selectedLastMoveCard!
                 .lastMoveCardAction(widget.selectedPlayers);
+            AudioManager().playNextPageEffect();
             Navigator.pushNamed(context, '/night_page');
           }
         },

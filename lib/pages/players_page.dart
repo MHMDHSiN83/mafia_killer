@@ -3,6 +3,7 @@ import 'package:mafia_killer/components/page_frame.dart';
 import 'package:mafia_killer/components/player_tile.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/themes/app_color.dart';
+import 'package:mafia_killer/utils/audio_manager.dart';
 import 'package:mafia_killer/utils/custom_snackbar.dart';
 
 class PlayersPage extends StatefulWidget {
@@ -87,7 +88,8 @@ class _PlayersPageState extends State<PlayersPage>
           leftButtonOnTap: () => Navigator.pop(context),
           rightButtonOnTap: () {
             Player.fetchInGamePlayers();
-            Navigator.pushNamed(context, '/game_settings_page');
+            AudioManager().playNextPageEffect();
+          Navigator.pushNamed(context, '/game_settings_page');
           },
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,

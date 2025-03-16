@@ -4,6 +4,7 @@ import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/nostradamus.dart';
 import 'package:mafia_killer/pages/intro_night_page.dart';
 import 'package:mafia_killer/themes/app_color.dart';
+import 'package:mafia_killer/utils/audio_manager.dart';
 
 class IntroNightPlayerTile extends StatefulWidget {
   const IntroNightPlayerTile({
@@ -78,6 +79,7 @@ class _IntroNightPlayerTileState extends State<IntroNightPlayerTile> {
                       isChecked: widget.selected,
                       onChanged: !widget.isCheckBoxDisable
                           ? (bool? value) {
+                              AudioManager().playClickEffect();
                               widget.onChanged(widget.player);
                             }
                           : null,

@@ -11,6 +11,7 @@ import 'package:mafia_killer/models/scenarios/godfather/godfather_scenario.dart'
 import 'package:mafia_killer/models/scenarios/godfather/roles/nostradamus.dart';
 import 'package:mafia_killer/models/talking_page_screen_arguments.dart';
 import 'package:audioplayers/audioplayers.dart';
+import 'package:mafia_killer/utils/audio_manager.dart';
 import 'package:mafia_killer/utils/custom_snackbar.dart';
 
 class IntroNightPage extends StatefulWidget {
@@ -97,23 +98,13 @@ class _IntroNightPageState extends State<IntroNightPage> {
     for (Player player in Player.inGamePlayers) {
       playerCheckboxStatus[player] = false;
     }
-    music = AudioPlayer();
-
-    // Set the release mode to keep the source after playback has completed.
-    music.setReleaseMode(ReleaseMode.stop);
-
-    // Start the music as soon as the amusic is displayed.
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      // await music.setSource(AssetSource('audios/Dark-Legacy.mp3'));
-      // await music.resume();
-    });
+    // AudioManager().playMusic('audios/Dark-Legacy.mp3');
     super.initState();
   }
 
   @override
   void dispose() {
-    music.stop();
-    music.dispose();
+    AudioManager().stopMusic();
     super.dispose();
   }
 
@@ -141,6 +132,7 @@ class _IntroNightPageState extends State<IntroNightPage> {
             music.dispose();
             Scenario.currentScenario.goToNextStage();
             resetNight();
+            AudioManager().playNextPageEffect();
             Navigator.pushNamed(
               context,
               '/talking_page',
@@ -192,6 +184,7 @@ class _IntroNightPageState extends State<IntroNightPage> {
                 child: CallRole(
                   text: text,
                   onPressed: () {
+                    AudioManager().playClickEffect();
                     if (IntroNightPage.targetPlayers.length == 3) {
                       //TODO build a function to generate nostradamus choice
                       if (IntroNightPage.isNostradamusSelecting) {
@@ -211,87 +204,6 @@ class _IntroNightPageState extends State<IntroNightPage> {
                   },
                   buttonText: IntroNightPage.buttonText,
                 ),
-                // child: Container(
-                //   margin: const EdgeInsets.only(top: 25),
-                //   child: Column(
-                //     mainAxisAlignment: MainAxisAlignment.start,
-                //     children: [
-                //       Stack(
-                //         children: [
-                //           const Image(
-                //             image: AssetImage(
-                //               'lib/images/backgrounds/wood-plank.png',
-                //             ),
-                //           ),
-                //           Container(
-                //             padding: const EdgeInsets.symmetric(horizontal: 20),
-                //             height: 368 * 191 / 1140,
-                //             width: 368,
-                //             child: Row(
-                //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //               crossAxisAlignment: CrossAxisAlignment.center,
-                //               children: [
-                //                 Expanded(
-                //                   flex: 2,
-                //                   child: Text(
-                //                     text,
-                //                     style: TextStyle(
-                //                       color: AppColors.brownColor,
-                //                       fontSize: 12,
-                //                     ),
-                //                   ),
-                //                 ),
-                //                 if (IntroNightPage.buttonText != '')
-                //                   Expanded(
-                //                     flex: 1,
-                //                     child: OutlinedButton(
-                //                       style: OutlinedButton.styleFrom(
-                //                         padding: const EdgeInsets.symmetric(
-                //                             horizontal: 0, vertical: 10),
-                //                         foregroundColor: AppColors.brownColor,
-                //                         side: const BorderSide(
-                //                           width: 3,
-                //                           color: AppColors.brownColor,
-                //                         ),
-                //                         shape: RoundedRectangleBorder(
-                //                           borderRadius: BorderRadius.circular(
-                //                             8,
-                //                           ),
-                //                         ),
-                //                       ),
-                //                       onPressed: () {
-                //                         if (IntroNightPage
-                //                                 .targetPlayers.length ==
-                //                             3) {
-                //                           //TODO build a function to generate nostradamus choice
-                //                           if (IntroNightPage
-                //                               .isNostradamusSelecting) {
-                //                             nostradamusBox(
-                //                               GodfatherScenario
-                //                                   .resultOfNostradamusGuess(
-                //                                       IntroNightPage
-                //                                           .targetPlayers),
-                //                             );
-                //                           } else {
-                //                             setState(() {
-                //                               if (iterator.moveNext()) {
-                //                                 text = iterator.current;
-                //                               }
-                //                             });
-                //                           }
-                //                         }
-                //                       },
-                //                       child: Text(IntroNightPage.buttonText),
-                //                     ),
-                //                   ),
-                //               ],
-                //             ),
-                //           ),
-                //         ],
-                //       ),
-                //     ],
-                //   ),
-                // ),
               ),
             ],
           ),

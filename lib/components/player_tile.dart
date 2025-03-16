@@ -3,6 +3,7 @@ import 'package:mafia_killer/components/checkbox.dart';
 import 'package:mafia_killer/components/dialogbox.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/themes/app_color.dart';
+import 'package:mafia_killer/utils/audio_manager.dart';
 import 'package:mafia_killer/utils/custom_snackbar.dart';
 
 class PlayerTile extends StatefulWidget {
@@ -20,6 +21,7 @@ class _PlayerTileState extends State<PlayerTile> {
   void onChanged(bool? value) async {
     setState(() {
       Player.changePlayerStatus(widget.player);
+      AudioManager().playClickEffect();
     });
   }
 

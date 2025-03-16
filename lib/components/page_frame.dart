@@ -7,6 +7,7 @@ import 'package:mafia_killer/components/remove_player_dialogbox.dart';
 import 'package:mafia_killer/databases/page_guide.dart';
 import 'dart:math' as math;
 import 'package:mafia_killer/themes/app_color.dart';
+import 'package:mafia_killer/utils/audio_manager.dart';
 
 class PageFrame extends StatefulWidget {
   const PageFrame({
@@ -41,8 +42,6 @@ class PageFrame extends StatefulWidget {
   State<PageFrame> createState() => _PageFrameState();
 }
 
-
-
 class _PageFrameState extends State<PageFrame> {
   bool _showBubble = false;
   final Map<String, double> titleFontsizes = {
@@ -50,7 +49,6 @@ class _PageFrameState extends State<PageFrame> {
     "medium": 24,
     "large": 27,
   };
-
 
   double determineTitleFontsize() {
     double len = widget.pageTitle.length.toDouble();
@@ -240,6 +238,7 @@ class _PageFrameState extends State<PageFrame> {
   }
 
   void showGuideDialog() {
+    AudioManager().playClickEffect();
     showDialog(
       context: context,
       builder: (context) {
@@ -264,7 +263,7 @@ class _PageFrameState extends State<PageFrame> {
             color: AppColors.greenColor,
             hasIcon: true,
             isIconRight: true,
-            onTap: widget.rightButtonOnTap,
+            onTap: () => widget.rightButtonOnTap(),
             icon: widget.rightButtonIcon,
           ),
         ),
@@ -277,7 +276,10 @@ class _PageFrameState extends State<PageFrame> {
             text: widget.leftButtonText,
             hasIcon: true,
             color: AppColors.redColor,
-            onTap: widget.leftButtonOnTap,
+            onTap: () {
+              AudioManager().playPrePageEffect();
+              widget.leftButtonOnTap();
+            },
             isIconRight: false,
             icon: widget.leftButtonIcon,
           ),
@@ -314,6 +316,7 @@ class _PageFrameState extends State<PageFrame> {
                 text: "حذف بازیکن",
                 fontSize: 15,
                 onTap: () {
+                  AudioManager().playClickEffect();
                   showDialog(
                       barrierDismissible: false,
                       context: context,
@@ -346,6 +349,7 @@ class _PageFrameState extends State<PageFrame> {
                 text: "مشاهده وضعیت",
                 fontSize: 15,
                 onTap: () {
+                  AudioManager().playClickEffect();
                   showDialog(
                       barrierDismissible: false,
                       context: context,

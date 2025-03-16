@@ -8,6 +8,7 @@ import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/models/player_status.dart';
 import 'package:mafia_killer/models/scenarios/godfather/last_move_cards/beautiful_mind.dart';
 import 'package:mafia_killer/pages/last_move_card_page.dart';
+import 'package:mafia_killer/utils/audio_manager.dart';
 
 class BeautifulMindChooseNostradamusPage extends StatefulWidget {
   const BeautifulMindChooseNostradamusPage({super.key});
@@ -60,6 +61,7 @@ class _BeautifulMindChooseNostradamusPageState
                 0, Scenario.currentScenario.killedInDayPlayer!);
             LastMoveCardPage.selectedLastMoveCard!
                 .lastMoveCardAction(selectedPlayers);
+            AudioManager().playNextPageEffect();
             Navigator.pushNamed(context, '/night_page');
           }
         },

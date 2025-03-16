@@ -11,6 +11,7 @@ import 'package:mafia_killer/models/scenarios/godfather/last_move_cards/handcuff
 import 'package:mafia_killer/models/scenarios/godfather/last_move_cards/reveal_identity.dart';
 import 'package:mafia_killer/models/scenarios/godfather/last_move_cards/silence_of_the_lambs.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/nostradamus.dart';
+import 'package:mafia_killer/utils/audio_manager.dart';
 
 class LastMoveCardPage extends StatefulWidget {
   const LastMoveCardPage({super.key});
@@ -54,15 +55,20 @@ class _LastMoveCardPageState extends State<LastMoveCardPage> {
               (Scenario.currentScenario as GodfatherScenario)
                   .nostradamusRevealed();
             }
+            AudioManager().playNextPageEffect();
             Navigator.pushNamed(context, '/reveal_identity_page');
           } else if (LastMoveCardPage.selectedLastMoveCard is FaceOff) {
+            AudioManager().playNextPageEffect();
             Navigator.pushNamed(context, '/face_off_page');
           } else if (LastMoveCardPage.selectedLastMoveCard is Handcuffs) {
+            AudioManager().playNextPageEffect();
             Navigator.pushNamed(context, '/handcuffs_page');
           } else if (LastMoveCardPage.selectedLastMoveCard
               is SilenceOfTheLambs) {
+            AudioManager().playNextPageEffect();
             Navigator.pushNamed(context, '/silence_of_the_lambs_page');
           } else if (LastMoveCardPage.selectedLastMoveCard is BeautifulMind) {
+            AudioManager().playNextPageEffect();
             Navigator.pushNamed(
                 context, '/beautiful_mind_choose_nostradamus_page');
           }

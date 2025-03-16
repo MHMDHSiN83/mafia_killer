@@ -7,6 +7,7 @@ import 'package:mafia_killer/components/page_frame.dart';
 import 'package:mafia_killer/components/voting_tile.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/databases/scenario.dart';
+import 'package:mafia_killer/utils/audio_manager.dart';
 import 'package:mafia_killer/models/scenarios/godfather/godfather_scenario.dart';
 
 class DefenseVotingPage extends StatefulWidget {
@@ -87,6 +88,7 @@ class _DefenseVotingPageState extends State<DefenseVotingPage> {
             (Scenario.currentScenario as GodfatherScenario)
                 .resetSilencedPlayersBeforeLastMoveCardPage();
           }
+          AudioManager().playNextPageEffect();
           Navigator.pushNamed(
             context,
             (selectedPlayers.isEmpty) ? '/night_page' : '/last_move_card_page',

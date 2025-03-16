@@ -9,6 +9,7 @@ import 'package:mafia_killer/models/role_side.dart';
 import 'package:mafia_killer/models/scenarios/godfather/godfather_scenario.dart';
 import 'package:mafia_killer/models/talking_page_screen_arguments.dart';
 import 'package:mafia_killer/themes/app_color.dart';
+import 'package:mafia_killer/utils/audio_manager.dart';
 
 class NightEventsPage extends StatefulWidget {
   const NightEventsPage({super.key});
@@ -115,6 +116,7 @@ class _NightEventsPage extends State<NightEventsPage> {
         leftButtonOnTap: () => Navigator.pop(context),
         rightButtonOnTap: () {
           Scenario.currentScenario.resetDataAfterNight();
+          AudioManager().playNextPageEffect();
           Navigator.pushNamed(
             context,
             '/talking_page',

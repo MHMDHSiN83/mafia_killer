@@ -6,6 +6,7 @@ import 'package:mafia_killer/models/role.dart';
 import 'package:mafia_killer/models/role_side.dart';
 import 'package:mafia_killer/pages/last_move_card_page.dart';
 import 'package:mafia_killer/themes/app_color.dart';
+import 'package:mafia_killer/utils/audio_manager.dart';
 
 class RevealIdentityPage extends StatelessWidget {
   const RevealIdentityPage({super.key});
@@ -36,6 +37,7 @@ class RevealIdentityPage extends StatelessWidget {
           rightButtonOnTap: () {
             LastMoveCardPage.selectedLastMoveCard!.lastMoveCardAction(
                 [Scenario.currentScenario.killedInDayPlayer!]);
+            AudioManager().playNextPageEffect();
             Navigator.pushNamed(context, '/night_page');
           },
           child: Column(

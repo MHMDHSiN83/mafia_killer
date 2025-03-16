@@ -11,6 +11,7 @@ import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/models/player_status.dart';
 import 'package:mafia_killer/models/scenarios/godfather/godfather_scenario.dart';
 import 'package:mafia_killer/models/ui_player_status.dart';
+import 'package:mafia_killer/utils/audio_manager.dart';
 import 'package:mafia_killer/utils/custom_snackbar.dart';
 
 class NightPage extends StatefulWidget {
@@ -37,6 +38,7 @@ class _NightPageState extends State<NightPage> {
       builder: (context) {
         return MafiaChoiceBox(
           shot: () {
+            AudioManager().playClickEffect();
             setState(() {
               NightPage.mafiaTeamChoice = 0;
               (Scenario.currentScenario as GodfatherScenario)
@@ -47,6 +49,7 @@ class _NightPageState extends State<NightPage> {
             });
           },
           sixthSense: () {
+            AudioManager().playClickEffect();
             setState(() {
               NightPage.mafiaTeamChoice = 1;
               (Scenario.currentScenario as GodfatherScenario)
@@ -58,6 +61,7 @@ class _NightPageState extends State<NightPage> {
             });
           },
           buying: () {
+            AudioManager().playClickEffect();
             setState(() {
               NightPage.mafiaTeamChoice = 2;
               (Scenario.currentScenario as GodfatherScenario)
@@ -79,6 +83,7 @@ class _NightPageState extends State<NightPage> {
       builder: (context) {
         return ConfirmationBox(
           onSave: () {
+            AudioManager().playClickEffect();
             NightPage.targetPlayer = player;
 
             Navigator.of(context).pop();
@@ -88,7 +93,10 @@ class _NightPageState extends State<NightPage> {
               }
             });
           },
-          onCancel: () => Navigator.of(context).pop(),
+          onCancel: () {
+            AudioManager().playClickEffect();
+            Navigator.of(context).pop();
+          },
         );
       },
     );
@@ -210,6 +218,7 @@ class _NightPageState extends State<NightPage> {
             iterator.moveNext();
             Scenario.currentScenario.goToNextStage();
             resetNight();
+            AudioManager().playNextPageEffect();
             Navigator.pushNamed(context, '/night_events_page');
           } else {
             customSnackBar(context, 'تمام اکت‌های شب باید انجام بشه');
@@ -230,14 +239,19 @@ class _NightPageState extends State<NightPage> {
                   onPressed: () {
                     showDialog(
                       context: context,
-                      builder: (context) => ConfirmationBox(onSave: () {
-                        setState(() {
-                          resetNight();
-                        });
-                        Navigator.pop(context);
-                      }, onCancel: () {
-                        Navigator.pop(context);
-                      }),
+                      builder: (context) => ConfirmationBox(
+                        onSave: () {
+                          AudioManager().playClickEffect();
+                          setState(() {
+                            resetNight();
+                          });
+                          Navigator.pop(context);
+                        },
+                        onCancel: () {
+                          AudioManager().playClickEffect();
+                          Navigator.pop(context);
+                        },
+                      ),
                     );
                   },
                 ),
@@ -284,6 +298,7 @@ class _NightPageState extends State<NightPage> {
                   text: text,
                   buttonText: NightPage.buttonText,
                   onPressed: () {
+                    AudioManager().playClickEffect();
                     setState(() {
                       if (iterator.moveNext()) {
                         text = iterator.current;

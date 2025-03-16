@@ -4,6 +4,7 @@ import 'package:mafia_killer/components/remove_player_tile.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/models/player_status.dart';
 import 'package:mafia_killer/themes/app_color.dart';
+import 'package:mafia_killer/utils/audio_manager.dart';
 
 class RemovePlayerDialogbox extends StatefulWidget {
   RemovePlayerDialogbox({super.key, required this.reloadPage});
@@ -70,12 +71,14 @@ class _RemovePlayerDialogboxState extends State<RemovePlayerDialogbox> {
                     showDialog(
                         context: context,
                         builder: (context) => ConfirmationBox(onSave: () {
+                              AudioManager().playDeleteEffect();
                               Navigator.pop(context);
                               setState(() {
                                 alivePlayers[index].playerStatus =
                                     PlayerStatus.removed;
                               });
                             }, onCancel: () {
+                              AudioManager().playClickEffect();
                               Navigator.pop(context);
                             }));
                   });

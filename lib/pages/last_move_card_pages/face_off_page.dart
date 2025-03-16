@@ -5,6 +5,7 @@ import 'package:mafia_killer/components/voting_tile.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/models/player_status.dart';
+import 'package:mafia_killer/utils/audio_manager.dart';
 
 //  ----- FIRST PAGE OF FACE-OFF LAST MOVE CARD ------
 class FaceOffPage extends StatefulWidget {
@@ -48,6 +49,7 @@ class _FaceOffPageState extends State<FaceOffPage> {
         leftButtonOnTap: () => Navigator.pop(context),
         rightButtonOnTap: () {
           if (FaceOffPage.selectedPlayers.length == 1) {
+            AudioManager().playNextPageEffect();
             Navigator.pushNamed(context, '/faced_off_role_page');
           }
         },
