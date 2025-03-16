@@ -10,6 +10,7 @@ class LastMoveCard {
   late String description;
   late String imagePath;
   late String flippedImagePath;
+  late String selectionImagePath;
   bool isUsed = false;
 
   LastMoveCard();
@@ -34,9 +35,10 @@ class LastMoveCard {
     return {
       'title': title,
       'description': description,
-      'imagePath': imagePath,
+      'selectionImagePath': selectionImagePath,
       'flippedImagePath': flippedImagePath,
-      'isUsed' : isUsed,
+      'imagePath': imagePath,
+      'isUsed': isUsed,
     };
   }
 
@@ -65,5 +67,4 @@ class LastMoveCard {
   void lastMoveCardAction(List<Player> players) {
     throw Exception("no action defined for last move card!");
   }
-
 }
