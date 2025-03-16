@@ -90,7 +90,7 @@ class _PlayersPageState extends State<PlayersPage>
           rightButtonOnTap: () {
             Player.fetchInGamePlayers();
             AudioManager().playNextPageEffect();
-          Navigator.pushNamed(context, '/game_settings_page');
+            Navigator.pushNamed(context, '/game_settings_page');
           },
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -182,10 +182,6 @@ class _PlayersPageState extends State<PlayersPage>
                   },
                 ),
               ),
-              Expanded(
-                flex: 1,
-                child: CallRole(text: "text", onPressed: () {}, buttonText: ""),
-              )
             ],
           ),
         ),
