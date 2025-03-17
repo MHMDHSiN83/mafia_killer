@@ -41,6 +41,10 @@ class GodfatherScenario extends Scenario {
     }
   }
 
+  void resetSilencedPlayersBeforeLastMoveCardPage() {
+    Scenario.currentScenario.silencedPlayerDuringDay = [];
+  }
+
   @override
   Iterable<String> callRolesIntroNight() sync* {
     Player nostradamusPlayer = Player.getPlayerByRoleType(Nostradamus);

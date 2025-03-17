@@ -29,7 +29,7 @@ class LastMoveCardsDescriptionTile extends StatelessWidget {
             width: 280,
             child: Image(
               image: AssetImage(
-                lastMoveCard.imagePath,
+                lastMoveCard.selectionImagePath,
               ),
             ),
           ),

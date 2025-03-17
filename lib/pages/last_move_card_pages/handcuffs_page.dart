@@ -5,6 +5,7 @@ import 'package:mafia_killer/components/voting_tile.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/pages/last_move_card_page.dart';
+import 'package:mafia_killer/utils/custom_snackbar.dart';
 import 'package:mafia_killer/utils/audio_manager.dart';
 
 class HandcuffsPage extends StatefulWidget {
@@ -55,6 +56,8 @@ class _HandcuffsPageState extends State<HandcuffsPage> {
                 .lastMoveCardAction(widget.selectedPlayers);
             AudioManager.playNextPageEffect();
             Navigator.pushNamed(context, '/night_page');
+          } else {
+            customSnackBar(context, "باید حتما یک بازیکن را انتخاب کنید.");
           }
         },
         child: Column(

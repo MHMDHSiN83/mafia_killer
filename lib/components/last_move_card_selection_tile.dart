@@ -91,7 +91,7 @@ class _LastMoveCardSelectionTileState extends State<LastMoveCardSelectionTile> {
               width: 200,
               child: Image(
                 image: AssetImage(
-                  widget.lastMoveCard.imagePath,
+                  widget.lastMoveCard.selectionImagePath,
                 ),
               ),
             ),

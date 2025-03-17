@@ -12,6 +12,7 @@ RevealIdentity _$RevealIdentityFromJson(Map<String, dynamic> json) =>
       ..description = json['description'] as String
       ..imagePath = json['imagePath'] as String
       ..flippedImagePath = json['flippedImagePath'] as String
+      ..selectionImagePath = json['selectionImagePath'] as String
       ..isUsed = json['isUsed'] as bool;
 
 Map<String, dynamic> _$RevealIdentityToJson(RevealIdentity instance) =>
@@ -20,5 +21,6 @@ Map<String, dynamic> _$RevealIdentityToJson(RevealIdentity instance) =>
       'description': instance.description,
       'imagePath': instance.imagePath,
       'flippedImagePath': instance.flippedImagePath,
+      'selectionImagePath': instance.selectionImagePath,
       'isUsed': instance.isUsed,
     };

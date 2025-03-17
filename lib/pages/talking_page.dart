@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:mafia_killer/components/call_role.dart';
 import 'package:mafia_killer/components/page_frame.dart';
+import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/models/language.dart';
 import 'package:mafia_killer/models/talking_page_screen_arguments.dart';
@@ -35,6 +36,20 @@ class _TalkingPageState extends State<TalkingPage> {
     super.didChangeDependencies();
   }
 
+  String notTalkingPlayersText() {
+    String result = "";
+    for (Player player in Scenario.currentScenario.silencedPlayerDuringDay) {
+      print("hello ${player.name}");
+      result += "${player.name} و ";
+    }
+    if (result.isNotEmpty) {
+      result = result.substring(0, result.length - 2);
+    }
+    result += "امروز نمی‌توانند صحبت کنند!";
+    return result;
+  }
+
+  //  T I M E R
   void startAndStopTimer() {
     AudioManager.playClickEffect();
     _hasStarted = true;
@@ -239,8 +254,7 @@ class _TalkingPageState extends State<TalkingPage> {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: CallRole(
-                    text:
-                        "${Scenario.currentScenario.silencedPlayerDuringDay[0].name} و ${Scenario.currentScenario.silencedPlayerDuringDay[1].name} امروز نمیتوانند صحبت کنند!",
+                    text: notTalkingPlayersText(),
                     buttonText: "",
                     onPressed: () {},
                   ),
