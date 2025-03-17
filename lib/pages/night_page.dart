@@ -221,7 +221,7 @@ class _NightPageState extends State<NightPage> {
             AudioManager.playNextPageEffect();
             Navigator.pushNamed(context, '/night_events_page');
           } else {
-            customSnackBar(context, 'تمام اکت‌های شب باید انجام بشه');
+            customSnackBar(context, 'تمام اکت‌های شب باید انجام بشه', true);
           }
         },
         child: Padding(

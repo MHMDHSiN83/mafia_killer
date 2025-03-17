@@ -57,7 +57,7 @@ class _HandcuffsPageState extends State<HandcuffsPage> {
             AudioManager.playNextPageEffect();
             Navigator.pushNamed(context, '/night_page');
           } else {
-            customSnackBar(context, "باید حتما یک بازیکن را انتخاب کنید.");
+            customSnackBar(context, "باید حتما یک بازیکن را انتخاب کنید.", true);
           }
         },
         child: Column(

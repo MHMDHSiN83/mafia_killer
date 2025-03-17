@@ -142,7 +142,7 @@ class _IntroNightPageState extends State<IntroNightPage> {
               ),
             );
           } else {
-            customSnackBar(context, 'تمام اکت‌های شب باید انجام بشه');
+            customSnackBar(context, 'تمام اکت‌های شب باید انجام بشه', true);
           }
         },
         child: Padding(

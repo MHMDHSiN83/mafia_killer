@@ -47,7 +47,7 @@ class _LastMoveCardPageState extends State<LastMoveCardPage> {
         },
         rightButtonOnTap: () {
           if (LastMoveCardPage.selectedLastMoveCard == null) {
-            customSnackBar(context, "یک کارت باید انتخاب بشه.");
+            customSnackBar(context, "یک کارت باید انتخاب بشه.", true);
           }
           LastMoveCardPage.selectedLastMoveCard!.isUsed = true;
           if (LastMoveCardPage.selectedLastMoveCard is RevealIdentity) {

@@ -34,12 +34,12 @@ class _PlayerTileState extends State<PlayerTile> {
     setState(() {
       String text = controller.text.trim();
       if (text == "") {
-        customSnackBar(context, 'اسم وارد شده نمی‌تونه خالی باشه');
+        customSnackBar(context, 'اسم وارد شده نمی‌تونه خالی باشه', false);
       } else if (text.length > 12) {
         customSnackBar(
-            context, 'اسم وارد شده نمی‌تونه بیشتر از ۱۲ کاراکتر باشه');
+            context, 'اسم وارد شده نمی‌تونه بیشتر از ۱۲ کاراکتر باشه', false);
       } else if (Player.doesNameExist(text)) {
-        customSnackBar(context, 'اسم وارد شده نمی‌تونه تکراری باشه');
+        customSnackBar(context, 'اسم وارد شده نمی‌تونه تکراری باشه', false);
       } else {
         Player.editPlayerName(widget.player, text);
       }

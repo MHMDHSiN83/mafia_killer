@@ -103,7 +103,7 @@ class _RoleDistributionPageState extends State<RoleDistributionPage> {
 
             Navigator.pushNamed(context, '/intro_page');
           } else {
-            customSnackBar(context, "هنوز تمام بازیکن ها نقششون رو ندیدند.");
+            customSnackBar(context, "هنوز تمام بازیکن ها نقششون رو ندیدند.", true);
           }
         },
         child: Column(

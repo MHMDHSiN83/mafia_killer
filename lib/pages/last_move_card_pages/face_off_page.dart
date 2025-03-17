@@ -53,7 +53,7 @@ class _FaceOffPageState extends State<FaceOffPage> {
             AudioManager.playNextPageEffect();
             Navigator.pushNamed(context, '/faced_off_role_page');
           } else {
-            customSnackBar(context, "باید حتما یک بازیکن را انتخاب کنید.");
+            customSnackBar(context, "باید حتما یک بازیکن را انتخاب کنید.", true);
           }
         },
         child: Column(

@@ -1,3 +1,4 @@
+import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:mafia_killer/components/my_divider.dart';
 import 'package:mafia_killer/components/page_frame.dart';
@@ -53,13 +54,13 @@ class _GameSettingsPageState extends State<GameSettingsPage> {
       AudioManager.playDownCounterEffect();
       if (isTimer) {
         if (newGameSettings[varName] <= 10) {
-          customSnackBar(context, 'فرصت صحبت نمی‌تونه کمتر از ۱۰ ثانیه باشه');
+          customSnackBar(context, 'فرصت صحبت نمی‌تونه کمتر از ۱۰ ثانیه باشه', true);
           return;
         }
         newGameSettings[varName] -= 10;
       } else {
         if (newGameSettings[varName] == 1) {
-          customSnackBar(context, 'تعداد استعلام‌ها نمی‌تونه صفر باشه');
+          customSnackBar(context, 'تعداد استعلام‌ها نمی‌تونه صفر باشه', true);
           return;
         }
         newGameSettings[varName]--;
