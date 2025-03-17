@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mafia_killer/models/database.dart';
 import 'package:mafia_killer/themes/app_color.dart';
+import 'package:mafia_killer/utils/audio_manager.dart';
 
 class IntroPage extends StatelessWidget {
   const IntroPage({super.key});
@@ -8,6 +9,8 @@ class IntroPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Database();
+    AudioManager.playIntroMusic();
+    AudioManager.setPlayerAsset();
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
@@ -88,8 +91,10 @@ class IntroPage extends StatelessWidget {
                     color: Colors.transparent,
                     child: InkWell(
                       splashColor: Theme.of(context).colorScheme.inversePrimary,
-                      onTap: () =>
-                          Navigator.pushNamed(context, '/players_page'),
+                      onTap: () {
+                        AudioManager.stopMusic();
+                        Navigator.pushNamed(context, '/players_page');
+                      },
                       child: Container(
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,

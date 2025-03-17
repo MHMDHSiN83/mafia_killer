@@ -79,7 +79,7 @@ class _IntroNightPlayerTileState extends State<IntroNightPlayerTile> {
                       isChecked: widget.selected,
                       onChanged: !widget.isCheckBoxDisable
                           ? (bool? value) {
-                              AudioManager().playClickEffect();
+                              AudioManager.playClickEffect();
                               widget.onChanged(widget.player);
                             }
                           : null,

@@ -73,7 +73,7 @@ class RoleSelectionPage extends StatelessWidget {
           for (int i = 0; i < Player.inGamePlayers.length; i++) {
             Player.inGamePlayers[i].role = roles[i];
           }
-          AudioManager().playNextPageEffect();
+          AudioManager.playNextPageEffect();
           Scenario.currentScenario.resetDayes();
           //Navigator.pushNamed(context, '/role_distribution_page');
           //Navigator.pushNamed(context, '/role_distribution_page');

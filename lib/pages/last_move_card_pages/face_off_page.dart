@@ -49,7 +49,7 @@ class _FaceOffPageState extends State<FaceOffPage> {
         leftButtonOnTap: () => Navigator.pop(context),
         rightButtonOnTap: () {
           if (FaceOffPage.selectedPlayers.length == 1) {
-            AudioManager().playNextPageEffect();
+            AudioManager.playNextPageEffect();
             Navigator.pushNamed(context, '/faced_off_role_page');
           }
         },

@@ -71,14 +71,14 @@ class _RemovePlayerDialogboxState extends State<RemovePlayerDialogbox> {
                     showDialog(
                         context: context,
                         builder: (context) => ConfirmationBox(onSave: () {
-                              AudioManager().playDeleteEffect();
+                              AudioManager.playDeleteEffect();
                               Navigator.pop(context);
                               setState(() {
                                 alivePlayers[index].playerStatus =
                                     PlayerStatus.removed;
                               });
                             }, onCancel: () {
-                              AudioManager().playClickEffect();
+                              AudioManager.playClickEffect();
                               Navigator.pop(context);
                             }));
                   });

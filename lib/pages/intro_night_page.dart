@@ -10,7 +10,6 @@ import 'package:mafia_killer/models/role_side.dart';
 import 'package:mafia_killer/models/scenarios/godfather/godfather_scenario.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/nostradamus.dart';
 import 'package:mafia_killer/models/talking_page_screen_arguments.dart';
-import 'package:audioplayers/audioplayers.dart';
 import 'package:mafia_killer/utils/audio_manager.dart';
 import 'package:mafia_killer/utils/custom_snackbar.dart';
 
@@ -29,7 +28,6 @@ class _IntroNightPageState extends State<IntroNightPage> {
   late String text;
   Map<Player, bool> playerCheckboxStatus = {};
   late Iterator<String> iterator;
-  AudioPlayer music = AudioPlayer();
 
   bool isCheckBoxDisable(Player player) {
     bool result = false;
@@ -98,13 +96,13 @@ class _IntroNightPageState extends State<IntroNightPage> {
     for (Player player in Player.inGamePlayers) {
       playerCheckboxStatus[player] = false;
     }
-    // AudioManager().playMusic('audios/Dark-Legacy.mp3');
+    AudioManager.playNightMusic();
     super.initState();
   }
 
   @override
   void dispose() {
-    AudioManager().stopMusic();
+    AudioManager.stopMusic();
     super.dispose();
   }
 
@@ -128,11 +126,9 @@ class _IntroNightPageState extends State<IntroNightPage> {
         },
         rightButtonOnTap: () {
           if (IntroNightPage.isNightOver) {
-            music.stop();
-            music.dispose();
             Scenario.currentScenario.goToNextStage();
             resetNight();
-            AudioManager().playNextPageEffect();
+            AudioManager.playNextPageEffect();
             Navigator.pushNamed(
               context,
               '/talking_page',
@@ -184,7 +180,7 @@ class _IntroNightPageState extends State<IntroNightPage> {
                 child: CallRole(
                   text: text,
                   onPressed: () {
-                    AudioManager().playClickEffect();
+                    AudioManager.playClickEffect();
                     if (IntroNightPage.targetPlayers.length == 3) {
                       //TODO build a function to generate nostradamus choice
                       if (IntroNightPage.isNostradamusSelecting) {

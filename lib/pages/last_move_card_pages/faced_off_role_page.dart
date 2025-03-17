@@ -40,7 +40,7 @@ class FacedOffRolePage extends StatelessWidget {
               Scenario.currentScenario.killedInDayPlayer!,
               FaceOffPage.selectedPlayers[0]
             ]);
-            AudioManager().playNextPageEffect();
+            AudioManager.playNextPageEffect();
             Navigator.pushNamed(context, '/night_page');
           },
           child: Column(

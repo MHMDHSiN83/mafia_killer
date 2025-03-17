@@ -104,7 +104,7 @@ class _DefenseTalkingPageState extends State<DefenseTalkingPage> {
           Navigator.pop(context);
         },
         rightButtonOnTap: () {
-          AudioManager().playNextPageEffect();
+          AudioManager.playNextPageEffect();
           Scenario.currentScenario.goToNextStage();
           Navigator.pushNamed(context, args.nextPagePath);
         },

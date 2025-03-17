@@ -82,7 +82,7 @@ class _DefenseVotingPageState extends State<DefenseVotingPage> {
             default:
               break;
           }
-          AudioManager().playNextPageEffect();
+          AudioManager.playNextPageEffect();
           Navigator.pushNamed(
             context,
             (selectedPlayers.isEmpty) ? '/night_page' : '/last_move_card_page',

@@ -88,7 +88,7 @@ class _PlayersPageState extends State<PlayersPage>
           leftButtonOnTap: () => Navigator.pop(context),
           rightButtonOnTap: () {
             Player.fetchInGamePlayers();
-            AudioManager().playNextPageEffect();
+            AudioManager.playNextPageEffect();
           Navigator.pushNamed(context, '/game_settings_page');
           },
           child: Column(

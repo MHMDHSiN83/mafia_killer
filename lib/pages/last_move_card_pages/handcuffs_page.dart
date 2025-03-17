@@ -53,7 +53,7 @@ class _HandcuffsPageState extends State<HandcuffsPage> {
             widget.selectedPlayers.insert(0, killedInDayPlayer);
             LastMoveCardPage.selectedLastMoveCard!
                 .lastMoveCardAction(widget.selectedPlayers);
-            AudioManager().playNextPageEffect();
+            AudioManager.playNextPageEffect();
             Navigator.pushNamed(context, '/night_page');
           }
         },

@@ -55,20 +55,20 @@ class _LastMoveCardPageState extends State<LastMoveCardPage> {
               (Scenario.currentScenario as GodfatherScenario)
                   .nostradamusRevealed();
             }
-            AudioManager().playNextPageEffect();
+            AudioManager.playNextPageEffect();
             Navigator.pushNamed(context, '/reveal_identity_page');
           } else if (LastMoveCardPage.selectedLastMoveCard is FaceOff) {
-            AudioManager().playNextPageEffect();
+            AudioManager.playNextPageEffect();
             Navigator.pushNamed(context, '/face_off_page');
           } else if (LastMoveCardPage.selectedLastMoveCard is Handcuffs) {
-            AudioManager().playNextPageEffect();
+            AudioManager.playNextPageEffect();
             Navigator.pushNamed(context, '/handcuffs_page');
           } else if (LastMoveCardPage.selectedLastMoveCard
               is SilenceOfTheLambs) {
-            AudioManager().playNextPageEffect();
+            AudioManager.playNextPageEffect();
             Navigator.pushNamed(context, '/silence_of_the_lambs_page');
           } else if (LastMoveCardPage.selectedLastMoveCard is BeautifulMind) {
-            AudioManager().playNextPageEffect();
+            AudioManager.playNextPageEffect();
             Navigator.pushNamed(
                 context, '/beautiful_mind_choose_nostradamus_page');
           }

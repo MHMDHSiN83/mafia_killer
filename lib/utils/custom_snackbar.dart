@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:mafia_killer/themes/app_color.dart';
+import 'package:mafia_killer/utils/audio_manager.dart';
 
 void customSnackBar(BuildContext context, String message) {
+  AudioManager.playSnackBarEffect();
   final snackBar = SnackBar(
     content: Text(
       message,

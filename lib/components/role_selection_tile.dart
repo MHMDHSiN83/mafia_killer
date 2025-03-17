@@ -45,7 +45,7 @@ class _RoleSelectionTileState extends State<RoleSelectionTile> {
       return;
     }
     if (widget.counter == 0 || widget.role is Citizen) {
-      AudioManager().playUpCounterEffect();
+      AudioManager.playUpCounterEffect();
       setState(() {
         widget.counter++;
       });
@@ -62,7 +62,7 @@ class _RoleSelectionTileState extends State<RoleSelectionTile> {
       customSnackBar(context, 'تعداد یک نقش نمی‌تونه از صفر کمتر باشه');
       return;
     }
-    AudioManager().playDownCounterEffect();
+    AudioManager.playDownCounterEffect();
     setState(() {
       widget.counter--;
     });

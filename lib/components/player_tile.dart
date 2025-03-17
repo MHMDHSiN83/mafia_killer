@@ -21,7 +21,7 @@ class _PlayerTileState extends State<PlayerTile> {
   void onChanged(bool? value) async {
     setState(() {
       Player.changePlayerStatus(widget.player);
-      AudioManager().playClickEffect();
+      AudioManager.playClickEffect();
     });
   }
 

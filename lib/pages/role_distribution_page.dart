@@ -99,7 +99,7 @@ class _RoleDistributionPageState extends State<RoleDistributionPage> {
         rightButtonOnTap: () {
           if (_hasEveryoneSeen()) {
             Player.updateInGamePlayers(players);
-            AudioManager().playNextPageEffect();
+            AudioManager.playNextPageEffect();
 
             Navigator.pushNamed(context, '/intro_page');
           } else {

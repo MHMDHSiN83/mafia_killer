@@ -161,9 +161,7 @@ class _PageFrameState extends State<PageFrame> {
                           size: 35,
                         ),
                         color: const Color(0xFFE01357),
-                        onPressed: () {
-                          print('Icon Button Pressed');
-                        },
+                        onPressed: () {},
                       ),
                     ),
                   ),
@@ -238,7 +236,7 @@ class _PageFrameState extends State<PageFrame> {
   }
 
   void showGuideDialog() {
-    AudioManager().playClickEffect();
+    AudioManager.playClickEffect();
     showDialog(
       context: context,
       builder: (context) {
@@ -277,7 +275,7 @@ class _PageFrameState extends State<PageFrame> {
             hasIcon: true,
             color: AppColors.redColor,
             onTap: () {
-              AudioManager().playPrePageEffect();
+              AudioManager.playPrePageEffect();
               widget.leftButtonOnTap();
             },
             isIconRight: false,
@@ -316,7 +314,7 @@ class _PageFrameState extends State<PageFrame> {
                 text: "حذف بازیکن",
                 fontSize: 15,
                 onTap: () {
-                  AudioManager().playClickEffect();
+                  AudioManager.playClickEffect();
                   showDialog(
                       barrierDismissible: false,
                       context: context,
@@ -349,7 +347,7 @@ class _PageFrameState extends State<PageFrame> {
                 text: "مشاهده وضعیت",
                 fontSize: 15,
                 onTap: () {
-                  AudioManager().playClickEffect();
+                  AudioManager.playClickEffect();
                   showDialog(
                       barrierDismissible: false,
                       context: context,
