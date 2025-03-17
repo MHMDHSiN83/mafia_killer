@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/pages/defense_voting_page.dart';
+import 'package:mafia_killer/pages/end_game_page.dart';
 import 'package:mafia_killer/pages/game_settings_page.dart';
 import 'package:mafia_killer/pages/intro_night_page.dart';
 import 'package:mafia_killer/pages/intro_page.dart';
@@ -80,6 +81,7 @@ class MyApp extends StatelessWidget {
         '/handcuffs_page' : (context) => HandcuffsPage(),
         '/silence_of_the_lambs_page' : (context) => SilenceOfTheLambsPage(),
         '/beautiful_mind_choose_nostradamus_page' : (context) => BeautifulMindChooseNostradamusPage(),
+        '/end_game_page': (context) => EndGamePage(),
       },
     );
   }
