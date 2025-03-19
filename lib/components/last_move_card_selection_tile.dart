@@ -49,7 +49,7 @@ class _LastMoveCardSelectionTileState extends State<LastMoveCardSelectionTile> {
 
   void decreaseNumber() {
     if (widget.counter == 0) {
-      customSnackBar(context, 'تعداد کارت حرکت آخر نمی‌تونه از صفر کمتر باشه');
+      customSnackBar(context, 'تعداد کارت حرکت آخر نمی‌تونه از صفر کمتر باشه', true);
       return;
     }
     setState(() {

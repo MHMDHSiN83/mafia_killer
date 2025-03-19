@@ -23,6 +23,7 @@ class _TalkingPageState extends State<TalkingPage> {
   bool _isRunning = false;
   bool _hasStarted = false;
   bool _hasFinished = false;
+  bool _isClockTickingPlaye = false;
 
   late TalkingPageScreenArguments args;
 
@@ -50,7 +51,7 @@ class _TalkingPageState extends State<TalkingPage> {
 
   //  T I M E R
   void startAndStopTimer() {
-    AudioManager().playClickEffect();
+    AudioManager.playClickEffect();
     _hasStarted = true;
     if (!_isRunning) {
       startTimer();
@@ -63,12 +64,17 @@ class _TalkingPageState extends State<TalkingPage> {
     _isRunning = true;
     _timer = Timer.periodic(const Duration(milliseconds: 100), (timer) {
       if (_start > 0) {
+        if (_start < 6 && !_isClockTickingPlaye) {
+          AudioManager.playClockTicking();
+          _isClockTickingPlaye = true;
+        }
         setState(() {
           _start -= 0.1;
         });
       } else {
         setState(() {
           _hasFinished = true;
+          _isClockTickingPlaye = false;
           _timer.cancel();
           _isRunning = false;
         });
@@ -78,13 +84,17 @@ class _TalkingPageState extends State<TalkingPage> {
 
   void stopTimer() {
     _timer.cancel();
+    if (_isClockTickingPlaye) {
+      AudioManager.stopClockTicking();
+      _isClockTickingPlaye = false;
+    }
     setState(() {
       _isRunning = false;
     });
   }
 
   void resetTimer() {
-    AudioManager().playClickEffect();
+    AudioManager.playClickEffect();
     stopTimer();
     setState(() {
       if (_hasFinished) {
@@ -95,6 +105,7 @@ class _TalkingPageState extends State<TalkingPage> {
       } else {
         _hasStarted = false;
         _start = args.seconds.toDouble();
+        AudioManager.resetClockTicking();
       }
     });
   }
@@ -126,7 +137,7 @@ class _TalkingPageState extends State<TalkingPage> {
           if (Scenario.currentScenario.isIntroDay()) {
             Scenario.currentScenario.goToNextStage();
           }
-          AudioManager().playNextPageEffect();
+          AudioManager.playNextPageEffect();
           Navigator.pushNamed(context, args.nextPagePath);
         },
         child: Column(

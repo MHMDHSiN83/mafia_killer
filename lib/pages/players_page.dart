@@ -25,12 +25,12 @@ class _PlayersPageState extends State<PlayersPage>
     setState(() {
       String text = _controller.text.trim();
       if (text == "") {
-        customSnackBar(context, 'اسم وارد شده نمی‌تونه خالی باشه');
+        customSnackBar(context, 'اسم وارد شده نمی‌تونه خالی باشه', false);
       } else if (text.length > 12) {
         customSnackBar(
-            context, 'اسم وارد شده نمی‌تونه بیشتر از ۱۲ کاراکتر باشه');
+            context, 'اسم وارد شده نمی‌تونه بیشتر از ۱۲ کاراکتر باشه', false);
       } else if (Player.doesNameExist(text)) {
-        customSnackBar(context, 'اسم وارد شده نمی‌تونه تکراری باشه');
+        customSnackBar(context, 'اسم وارد شده نمی‌تونه تکراری باشه', false);
       } else {
         Player.addPlayer(text);
         _controller.text = '';
@@ -91,7 +91,7 @@ class _PlayersPageState extends State<PlayersPage>
           leftButtonOnTap: () => Navigator.pop(context),
           rightButtonOnTap: () {
             Player.fetchInGamePlayers();
-            AudioManager().playNextPageEffect();
+            AudioManager.playNextPageEffect();
             Navigator.pushNamed(context, '/game_settings_page');
           },
           child: Column(

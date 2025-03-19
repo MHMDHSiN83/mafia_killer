@@ -44,7 +44,7 @@ class RoleSelectionPage extends StatelessWidget {
           if (Player.inGamePlayers.length !=
               Scenario.currentScenario.inGameRoles.length) {
             customSnackBar(
-                context, 'تعداد نقش‌ها با تعداد بازیکن‌ها برابر نیست');
+                context, 'تعداد نقش‌ها با تعداد بازیکن‌ها برابر نیست', true);
             return;
           } else {
             int mafiaCount =
@@ -54,15 +54,15 @@ class RoleSelectionPage extends StatelessWidget {
             int independantCount = Scenario.currentScenario
                 .getNumberOfRoleBySide(RoleSide.independant);
             if (mafiaCount == 0) {
-              customSnackBar(context, 'تعداد مافیا ها نمی‌تونه صفر باشه');
+              customSnackBar(context, 'تعداد مافیا ها نمی‌تونه صفر باشه', true);
               return;
             } else if (citizenCount + independantCount <= mafiaCount) {
               customSnackBar(context,
-                  'تعداد مافیاها باید از مجموع شهروندها و نوستراداموس کمتر باشه');
+                  'تعداد مافیاها باید از مجموع شهروندها و نوستراداموس کمتر باشه', true);
               return;
             } else if (Scenario.currentScenario.inGameRoles.length < 5) {
               customSnackBar(
-                  context, 'تعداد بازیکن‌ها نمی‌تونه از پنج کمتر باشه');
+                  context, 'تعداد بازیکن‌ها نمی‌تونه از پنج کمتر باشه', true);
               return;
             }
           }
@@ -73,7 +73,7 @@ class RoleSelectionPage extends StatelessWidget {
           for (int i = 0; i < Player.inGamePlayers.length; i++) {
             Player.inGamePlayers[i].role = roles[i];
           }
-          AudioManager().playNextPageEffect();
+          AudioManager.playNextPageEffect();
           Scenario.currentScenario.resetDayes();
           //Navigator.pushNamed(context, '/role_distribution_page');
           //Navigator.pushNamed(context, '/role_distribution_page');

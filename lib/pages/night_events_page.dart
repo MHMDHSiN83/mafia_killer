@@ -116,7 +116,7 @@ class _NightEventsPage extends State<NightEventsPage> {
         leftButtonOnTap: () => Navigator.pop(context),
         rightButtonOnTap: () {
           Scenario.currentScenario.resetDataAfterNight();
-          AudioManager().playNextPageEffect();
+          AudioManager.playNextPageEffect();
           Navigator.pushNamed(
             context,
             '/talking_page',

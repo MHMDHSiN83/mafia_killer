@@ -1,3 +1,4 @@
+import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:mafia_killer/components/my_divider.dart';
 import 'package:mafia_killer/components/page_frame.dart';
@@ -33,7 +34,7 @@ class _GameSettingsPageState extends State<GameSettingsPage> {
 
   void _increaseNumber(bool isTimer, String varName) {
     setState(() {
-      AudioManager().playUpCounterEffect();
+      AudioManager.playUpCounterEffect();
       if (isTimer) {
         if (newGameSettings[varName] >= 590) {
           return;
@@ -50,16 +51,16 @@ class _GameSettingsPageState extends State<GameSettingsPage> {
 
   void _decreaseNumber(bool isTimer, String varName) {
     setState(() {
-      AudioManager().playDownCounterEffect();
+      AudioManager.playDownCounterEffect();
       if (isTimer) {
         if (newGameSettings[varName] <= 10) {
-          customSnackBar(context, 'فرصت صحبت نمی‌تونه کمتر از ۱۰ ثانیه باشه');
+          customSnackBar(context, 'فرصت صحبت نمی‌تونه کمتر از ۱۰ ثانیه باشه', true);
           return;
         }
         newGameSettings[varName] -= 10;
       } else {
         if (newGameSettings[varName] == 1) {
-          customSnackBar(context, 'تعداد استعلام‌ها نمی‌تونه صفر باشه');
+          customSnackBar(context, 'تعداد استعلام‌ها نمی‌تونه صفر باشه', true);
           return;
         }
         newGameSettings[varName]--;
@@ -81,7 +82,7 @@ class _GameSettingsPageState extends State<GameSettingsPage> {
           GameSettings.updateSettings(
               GameSettings.currentGameSettings, newGameSettings);
           Scenario.currentScenario.getRecommendedScenario();
-          AudioManager().playNextPageEffect();
+          AudioManager.playNextPageEffect();
           Navigator.pushNamed(context, '/role_selection_page');
         },
         child: ListView(

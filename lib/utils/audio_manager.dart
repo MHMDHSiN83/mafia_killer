@@ -1,56 +1,95 @@
-import 'package:audioplayers/audioplayers.dart';
+import 'package:just_audio/just_audio.dart';
 
 class AudioManager {
-  static final AudioManager _instance = AudioManager._internal();
+  static final AudioPlayer _musicPlayer = AudioPlayer();
+  static final AudioPlayer _effectPlayer = AudioPlayer();
+  static final AudioPlayer _clockTickingPlayer = AudioPlayer();
+  static Duration? _savedPosition;
 
-  final AudioPlayer _musicPlayer = AudioPlayer();
-  final AudioPlayer _effectPlayer = AudioPlayer();
-
-  factory AudioManager() {
-    return _instance;
+  static Future<void> playNightMusic() async {
+    // await _playMusic('assets/audios/Dark-Legacy.mp3');
   }
 
-  AudioManager._internal() {
-    _musicPlayer.setReleaseMode(ReleaseMode.loop);
-    _effectPlayer.setReleaseMode(ReleaseMode.stop);
+  static Future<void> setPlayerAsset() async {
+    await _clockTickingPlayer.setAsset('assets/audios/clock_tickin.mp3');
   }
 
-  Future<void> playMusic(String assetPath) async {
-    await _musicPlayer.setSource(AssetSource(assetPath));
-    await _musicPlayer.resume();
+  static Future<void> playIntroMusic() async {
+    // await _playMusic('assets/audios/intro_music.mp3');
   }
 
-  Future<void> stopMusic() async {
+  static Future<void> _playMusic(String assetPath) async {
+    await _musicPlayer.setAsset(assetPath);
+    await _musicPlayer.setLoopMode(LoopMode.one);
+    _musicPlayer.play();
+  }
+
+  static Future<void> _playClockTicking(String assetPath) async {
+    if (_clockTickingPlayer.processingState == ProcessingState.completed) {
+      await _clockTickingPlayer.seek(Duration.zero);
+    } else {
+      if (_savedPosition != null) {
+        await _clockTickingPlayer.seek(_savedPosition!);
+      } else {
+        await _clockTickingPlayer.seek(Duration.zero);
+      }
+    }
+
+    await _clockTickingPlayer.play();
+  }
+
+  static Future<void> resetClockTicking() async {
+    _savedPosition = null;
+  }
+
+  static Future<void> stopMusic() async {
     await _musicPlayer.stop();
   }
 
-  Future<void> playClickEffect() async {
-    _playEffect('audios/click.mp3');
+  static void savePosition() {
+    _savedPosition = _clockTickingPlayer.position;
   }
 
-  Future<void> playNextPageEffect() async {
-    _playEffect('audios/next.mp3');
+  static Future<void> stopClockTicking() async {
+    savePosition();
+    await _clockTickingPlayer.stop();
   }
 
-  Future<void> playPrePageEffect() async {
-    _playEffect('audios/pre.mp3');
+  static Future<void> playClickEffect() async {
+    await _playEffect('assets/audios/click.mp3');
   }
 
-  Future<void> playDeleteEffect() async {
-    _playEffect('audios/delete.mp3');
+  static Future<void> playNextPageEffect() async {
+    await _playEffect('assets/audios/next.mp3');
   }
 
-  Future<void> playUpCounterEffect() async {
-    _playEffect('audios/click_up_real.wav');
+  static Future<void> playPrePageEffect() async {
+    await _playEffect('assets/audios/pre.mp3');
   }
 
-  Future<void> playDownCounterEffect() async {
-    _playEffect('audios/click_down_real.wav');
+  static Future<void> playDeleteEffect() async {
+    await _playEffect('assets/audios/delete.mp3');
   }
 
-  Future<void> _playEffect(String assetPath) async {
-    await _effectPlayer.setSource(AssetSource(assetPath));
-    await _effectPlayer.resume();
+  static Future<void> playUpCounterEffect() async {
+    await _playEffect('assets/audios/click_up_real.wav');
+  }
+
+  static Future<void> playDownCounterEffect() async {
+    await _playEffect('assets/audios/click_down_real.wav');
+  }
+
+  static Future<void> playSnackBarEffect() async {
+    await _playEffect('assets/audios/snackbar.mp3');
+  }
+
+  static Future<void> playClockTicking() async {
+    await _playClockTicking('assets/audios/clock_tickin.mp3');
+  }
+
+  static Future<void> _playEffect(String assetPath) async {
+    await _effectPlayer.setAsset(assetPath);
+    _effectPlayer.play();
   }
 
   void disposeMusic() {

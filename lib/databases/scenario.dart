@@ -360,6 +360,9 @@ class Scenario {
 
   Iterable<String> callRolesIntroNight() sync* {}
 
+
+  void resetRemainingAbility() {}
+
   void resetUIPlayerStatus() {
     for (Player player in Player.inGamePlayers) {
       if (player.playerStatus == PlayerStatus.active ||

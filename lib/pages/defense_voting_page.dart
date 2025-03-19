@@ -88,7 +88,7 @@ class _DefenseVotingPageState extends State<DefenseVotingPage> {
             (Scenario.currentScenario as GodfatherScenario)
                 .resetSilencedPlayersBeforeLastMoveCardPage();
           }
-          AudioManager().playNextPageEffect();
+          AudioManager.playNextPageEffect();
           Navigator.pushNamed(
             context,
             (selectedPlayers.isEmpty) ? '/night_page' : '/last_move_card_page',

@@ -37,7 +37,7 @@ class RevealIdentityPage extends StatelessWidget {
           rightButtonOnTap: () {
             LastMoveCardPage.selectedLastMoveCard!.lastMoveCardAction(
                 [Scenario.currentScenario.killedInDayPlayer!]);
-            AudioManager().playNextPageEffect();
+            AudioManager.playNextPageEffect();
             Navigator.pushNamed(context, '/night_page');
           },
           child: Column(

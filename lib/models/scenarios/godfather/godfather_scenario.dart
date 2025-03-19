@@ -8,6 +8,8 @@ import 'package:mafia_killer/models/player_status.dart';
 import 'package:mafia_killer/models/role.dart';
 import 'package:mafia_killer/models/role_side.dart';
 import 'package:mafia_killer/models/scenarios/godfather/last_move_cards/beautiful_mind.dart';
+import 'package:mafia_killer/models/scenarios/godfather/roles/constantine.dart';
+import 'package:mafia_killer/models/scenarios/godfather/roles/doctor_watson.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/godfather.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/mafia.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/nostradamus.dart';
@@ -336,5 +338,45 @@ class GodfatherScenario extends Scenario {
 
   void shuffleLastMoveCards() {
     // Scenario.currentScenario.inGameLastMoveCards.shuffle();
+  }
+
+  @override
+  void resetRemainingAbility() {
+    Player? savedByDoctor = nightEvents[NightEvent.savedByDoctor];
+    Player? shotByLeon = nightEvents[NightEvent.shotByLeon];
+    Player? revivedByConstantine = nightEvents[NightEvent.revivedByConstantine];
+    Player? inquiryByCitizenKane = nightEvents[NightEvent.inquiryByCitizenKane];
+    Player? sixthSensedByGodfather =
+        nightEvents[NightEvent.sixthSensedByGodfather];
+    Player? boughtBySaulGoodman = nightEvents[NightEvent.boughtBySaulGoodman];
+
+    Player? godfatherPlayer = Player.getPlayerByRoleType(Godfather);
+    Player? saulGoodmanPlayer = Player.getPlayerByRoleType(SaulGoodman);
+    Player? leonPlayer = Player.getPlayerByRoleType(Leon);
+    Player? constantinePlayer = Player.getPlayerByRoleType(Constantine);
+    Player? citizenKanePlayer = Player.getPlayerByRoleType(CitizenKane);
+    Player? doctorPlayer = Player.getPlayerByRoleType(DoctorWatson);
+    if (sixthSensedByGodfather != null) {
+      (godfatherPlayer.role as Godfather).remainingAbility += 1;
+    }
+    if (shotByLeon != null) {
+      (leonPlayer.role as Leon).remainingAbility += 1;
+    }
+    if (revivedByConstantine != null) {
+      (constantinePlayer.role as Constantine).remainingAbility += 1;
+    }
+    if (inquiryByCitizenKane != null) {
+      (citizenKanePlayer.role as CitizenKane).remainingAbility += 1;
+    }
+    if (boughtBySaulGoodman != null) {
+      (saulGoodmanPlayer.role as SaulGoodman).remainingAbility += 1;
+      boughtBySaulGoodman.role = Role.fromJson(jsonDecode(jsonEncode(Scenario
+          .currentScenario
+          .getRoleByType(Citizen, searchInGmaeRoles: false)!
+          .toJson())));
+    }
+    if (doctorPlayer == savedByDoctor && savedByDoctor != null) {
+      (doctorPlayer.role as DoctorWatson).selfHeal += 1;
+    }
   }
 }

@@ -44,7 +44,7 @@ class _RegularVotingPageState extends State<RegularVotingPage> {
         leftButtonOnTap: () => Navigator.pop(context),
         rightButtonOnTap: () {
           Scenario.currentScenario.storeDefendingPlayers(defendingPlayers);
-          AudioManager().playNextPageEffect();
+          AudioManager.playNextPageEffect();
           if (Scenario.currentScenario.defendingPlayers.isNotEmpty) {
             Navigator.pushNamed(
               context,

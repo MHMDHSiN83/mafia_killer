@@ -41,11 +41,11 @@ class _RoleSelectionTileState extends State<RoleSelectionTile> {
     if (Player.inGamePlayers.length <=
         Scenario.currentScenario.inGameRoles.length) {
       customSnackBar(
-          context, 'تعداد نقش‌ها نمی‌تونه از تعداد بازیکن‌ها بیشتر باشه');
+          context, 'تعداد نقش‌ها نمی‌تونه از تعداد بازیکن‌ها بیشتر باشه', true);
       return;
     }
     if (widget.counter == 0 || widget.role is Citizen) {
-      AudioManager().playUpCounterEffect();
+      AudioManager.playUpCounterEffect();
       setState(() {
         widget.counter++;
       });
@@ -53,16 +53,16 @@ class _RoleSelectionTileState extends State<RoleSelectionTile> {
       Scenario.addRole(widget.role);
     } else {
       customSnackBar(context,
-          'بیشتر از یک ${widget.role.name} نمی‌تواند در بازی وجود داشته باشد');
+          'بیشتر از یک ${widget.role.name} نمی‌تواند در بازی وجود داشته باشد', true);
     }
   }
 
   void decreaseNumber() {
     if (widget.counter == 0) {
-      customSnackBar(context, 'تعداد یک نقش نمی‌تونه از صفر کمتر باشه');
+      customSnackBar(context, 'تعداد یک نقش نمی‌تونه از صفر کمتر باشه', true);
       return;
     }
-    AudioManager().playDownCounterEffect();
+    AudioManager.playDownCounterEffect();
     setState(() {
       widget.counter--;
     });

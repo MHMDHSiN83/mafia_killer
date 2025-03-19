@@ -99,11 +99,11 @@ class _RoleDistributionPageState extends State<RoleDistributionPage> {
         rightButtonOnTap: () {
           if (_hasEveryoneSeen()) {
             Player.updateInGamePlayers(players);
-            AudioManager().playNextPageEffect();
+            AudioManager.playNextPageEffect();
 
             Navigator.pushNamed(context, '/intro_page');
           } else {
-            customSnackBar(context, "هنوز تمام بازیکن ها نقششون رو ندیدند.");
+            customSnackBar(context, "هنوز تمام بازیکن ها نقششون رو ندیدند.", true);
           }
         },
         child: Column(

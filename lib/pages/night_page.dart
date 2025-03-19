@@ -38,7 +38,7 @@ class _NightPageState extends State<NightPage> {
       builder: (context) {
         return MafiaChoiceBox(
           shot: () {
-            AudioManager().playClickEffect();
+            AudioManager.playClickEffect();
             setState(() {
               NightPage.mafiaTeamChoice = 0;
               (Scenario.currentScenario as GodfatherScenario)
@@ -49,7 +49,7 @@ class _NightPageState extends State<NightPage> {
             });
           },
           sixthSense: () {
-            AudioManager().playClickEffect();
+            AudioManager.playClickEffect();
             setState(() {
               NightPage.mafiaTeamChoice = 1;
               (Scenario.currentScenario as GodfatherScenario)
@@ -61,7 +61,7 @@ class _NightPageState extends State<NightPage> {
             });
           },
           buying: () {
-            AudioManager().playClickEffect();
+            AudioManager.playClickEffect();
             setState(() {
               NightPage.mafiaTeamChoice = 2;
               (Scenario.currentScenario as GodfatherScenario)
@@ -83,7 +83,7 @@ class _NightPageState extends State<NightPage> {
       builder: (context) {
         return ConfirmationBox(
           onSave: () {
-            AudioManager().playClickEffect();
+            AudioManager.playClickEffect();
             NightPage.targetPlayer = player;
 
             Navigator.of(context).pop();
@@ -94,7 +94,7 @@ class _NightPageState extends State<NightPage> {
             });
           },
           onCancel: () {
-            AudioManager().playClickEffect();
+            AudioManager.playClickEffect();
             Navigator.of(context).pop();
           },
         );
@@ -150,6 +150,7 @@ class _NightPageState extends State<NightPage> {
   }
 
   void resetNight() {
+    Scenario.currentScenario.resetRemainingAbility();
     if (Scenario.currentScenario is GodfatherScenario) {
       iterator = Scenario.currentScenario
           .callRolesRegularNight(
@@ -168,6 +169,7 @@ class _NightPageState extends State<NightPage> {
     NightPage.isNightOver = false;
     Scenario.currentScenario.nightEvents = {};
     resetTiles();
+    Scenario.currentScenario.resetDataAfterNight();
   }
 
   void resetTiles() {
@@ -218,10 +220,10 @@ class _NightPageState extends State<NightPage> {
             iterator.moveNext();
             Scenario.currentScenario.goToNextStage();
             resetNight();
-            AudioManager().playNextPageEffect();
+            AudioManager.playNextPageEffect();
             Navigator.pushNamed(context, '/night_events_page');
           } else {
-            customSnackBar(context, 'تمام اکت‌های شب باید انجام بشه');
+            customSnackBar(context, 'تمام اکت‌های شب باید انجام بشه', true);
           }
         },
         child: Padding(
@@ -241,14 +243,14 @@ class _NightPageState extends State<NightPage> {
                       context: context,
                       builder: (context) => ConfirmationBox(
                         onSave: () {
-                          AudioManager().playClickEffect();
+                          AudioManager.playClickEffect();
                           setState(() {
                             resetNight();
                           });
                           Navigator.pop(context);
                         },
                         onCancel: () {
-                          AudioManager().playClickEffect();
+                          AudioManager.playClickEffect();
                           Navigator.pop(context);
                         },
                       ),
@@ -298,7 +300,7 @@ class _NightPageState extends State<NightPage> {
                   text: text,
                   buttonText: NightPage.buttonText,
                   onPressed: () {
-                    AudioManager().playClickEffect();
+                    AudioManager.playClickEffect();
                     setState(() {
                       if (iterator.moveNext()) {
                         text = iterator.current;
