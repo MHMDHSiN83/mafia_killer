@@ -292,6 +292,38 @@ class GodfatherScenario extends Scenario {
     }
   }
 
+  @override
+  bool isGameOver() {
+    int mafiaCounter = 0, citizenCounter = 0;
+    for (Player player in Player.inGamePlayers) {
+      if (player.playerStatus != PlayerStatus.dead &&
+          player.playerStatus != PlayerStatus.removed) {
+        if (player.role!.roleSide == RoleSide.mafia) {
+          mafiaCounter++;
+        } else {
+          citizenCounter++;
+        }
+      }
+    }
+
+    if (mafiaCounter == 0 || mafiaCounter == citizenCounter) {
+      return true;
+    }
+    return false;
+  }
+
+  @override
+  RoleSide whichTeamWon() {
+    for (Player player in Player.inGamePlayers) {
+      if (player.playerStatus != PlayerStatus.dead &&
+          player.playerStatus != PlayerStatus.removed &&
+          player.role!.roleSide == RoleSide.mafia) {
+        return RoleSide.mafia;
+      }
+    }
+    return RoleSide.citizen;
+  }
+
   bool ableToSixthSense() {
     Player godfather =
         Player.inGamePlayers.where((player) => player.role is Godfather).first;
