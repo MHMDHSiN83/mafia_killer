@@ -219,7 +219,7 @@ class _NightPageState extends State<NightPage> {
           if (NightPage.isNightOver) {
             iterator.moveNext();
             Scenario.currentScenario.goToNextStage();
-            resetNight();
+            //resetNight();
             AudioManager.playNextPageEffect();
             Navigator.pushNamed(context, '/night_events_page');
           } else {
