@@ -44,36 +44,37 @@ class EndGamePage extends StatelessWidget {
         },
         child: Align(
             alignment: Alignment.topCenter,
-            child: Stack(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Align(
-                  alignment: Alignment.topCenter,
+                Expanded(
+                  flex: 3,
                   child: Image(
-                    image: AssetImage('lib/images/endgame/Mafia-Won.png'),
+                    image: AssetImage('lib/images/endgame/Citizen-Won.png'),
                   ),
                 ),
-                Positioned(
-                  top: 235, // Adjust as needed
-                  left: 0,
-                  right: 0, // Ensures it stretches across the screen
-                  child: SizedBox(
-                    width: double.infinity, // Makes sure it takes full width
-                    height: 420,
+                Expanded(
+                  flex: 4,
+                  child: Container(
+                    //margin: EdgeInsets.all(15),
                     child: ListView.builder(
-                      padding: EdgeInsets.symmetric(horizontal: 50),
-                      itemCount: mafiaPlayers.length,
+                      padding: EdgeInsets.symmetric(horizontal: 40),
+                      itemCount: citizenPlayers.length,
                       itemBuilder: (context, index) {
                         return Container(
                           margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
                           child: EndGamePlayerTile(
-                            player: mafiaPlayers[index],
-                            roleSide: RoleSide.mafia,
+                            player: citizenPlayers[index],
+                            roleSide: RoleSide.citizen,
                           ),
                         );
                       },
                     ),
                   ),
                 ),
+                Spacer(
+                  flex: 1,
+                )
               ],
             )),
       ),

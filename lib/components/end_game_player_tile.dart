@@ -23,8 +23,11 @@ class EndGamePlayerTile extends StatelessWidget {
         borderRadius: BorderRadius.circular(6),
       ),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [Text(player.name), Text(player.role!.name)],
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Expanded(flex: 1, child: Center(child: Text(player.name))),
+          Expanded(flex: 1, child: Center(child: Text(player.role!.name)))
+        ],
       ),
     );
   }
