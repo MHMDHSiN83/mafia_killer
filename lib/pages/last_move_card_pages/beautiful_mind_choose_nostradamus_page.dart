@@ -62,9 +62,16 @@ class _BeautifulMindChooseNostradamusPageState
                 0, Scenario.currentScenario.killedInDayPlayer!);
             LastMoveCardPage.selectedLastMoveCard!
                 .lastMoveCardAction(selectedPlayers);
-            AudioManager().playNextPageEffect();
-            Navigator.pushNamed(context, '/night_page');
-          }else {
+
+            // in case the game ended
+            if (Scenario.currentScenario.isGameOver()) {
+              AudioManager().playNextPageEffect();
+              Navigator.pushNamed(context, '/end_game_page');
+            } else {
+              AudioManager().playNextPageEffect();
+              Navigator.pushNamed(context, '/night_page');
+            }
+          } else {
             customSnackBar(context, "باید حتما یک بازیکن را انتخاب کنید.");
           }
         },

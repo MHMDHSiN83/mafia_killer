@@ -220,6 +220,7 @@ class _NightPageState extends State<NightPage> {
             resetNight();
             AudioManager().playNextPageEffect();
             Navigator.pushNamed(context, '/night_events_page');
+            
           } else {
             customSnackBar(context, 'تمام اکت‌های شب باید انجام بشه');
           }

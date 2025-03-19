@@ -388,6 +388,14 @@ class Scenario {
 
   void nightReport() {}
 
+  bool isGameOver() {
+    throw UnimplementedError();
+  }
+
+  RoleSide whichTeamWon() {
+    throw UnimplementedError();
+  }
+
   void storeDefendingPlayers(List<Player> players) {
     defendingPlayers = players;
   }

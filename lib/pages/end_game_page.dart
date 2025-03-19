@@ -26,8 +26,12 @@ class EndGamePage extends StatelessWidget {
       .where((x) => x.role?.roleSide == RoleSide.independant)
       .first;
 
+  final RoleSide whoWon = Scenario.currentScenario.whichTeamWon();
+
   @override
   Widget build(BuildContext context) {
+    List<Player> winingPlayers =
+        (whoWon == RoleSide.citizen) ? citizenPlayers : mafiaPlayers;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: PageFrame(
@@ -50,7 +54,9 @@ class EndGamePage extends StatelessWidget {
                 Expanded(
                   flex: 3,
                   child: Image(
-                    image: AssetImage('lib/images/endgame/Citizen-Won.png'),
+                    image: AssetImage((whoWon == RoleSide.citizen)
+                        ? 'lib/images/endgame/Citizen-Won.png'
+                        : 'lib/images/endgame/Mafia-Won.png'),
                   ),
                 ),
                 Expanded(
@@ -59,13 +65,13 @@ class EndGamePage extends StatelessWidget {
                     //margin: EdgeInsets.all(15),
                     child: ListView.builder(
                       padding: EdgeInsets.symmetric(horizontal: 40),
-                      itemCount: citizenPlayers.length,
+                      itemCount: winingPlayers.length,
                       itemBuilder: (context, index) {
                         return Container(
                           margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
                           child: EndGamePlayerTile(
-                            player: citizenPlayers[index],
-                            roleSide: RoleSide.citizen,
+                            player: winingPlayers[index],
+                            roleSide: whoWon,
                           ),
                         );
                       },
