@@ -38,10 +38,10 @@ class RevealIdentityPage extends StatelessWidget {
             LastMoveCardPage.selectedLastMoveCard!.lastMoveCardAction(
                 [Scenario.currentScenario.killedInDayPlayer!]);
             if (Scenario.currentScenario.isGameOver()) {
-              AudioManager().playNextPageEffect();
+              AudioManager.playNextPageEffect();
               Navigator.pushNamed(context, '/end_game_page');
             } else {
-              AudioManager().playNextPageEffect();
+              AudioManager.playNextPageEffect();
               Navigator.pushNamed(context, '/night_page');
             }
           },

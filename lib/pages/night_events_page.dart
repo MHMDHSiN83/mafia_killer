@@ -117,10 +117,10 @@ class _NightEventsPage extends State<NightEventsPage> {
         rightButtonOnTap: () {
           Scenario.currentScenario.resetDataAfterNight();
           if (Scenario.currentScenario.isGameOver()) {
-            AudioManager().playNextPageEffect();
+            AudioManager.playNextPageEffect();
             Navigator.pushNamed(context, '/end_game_page');
           } else {
-            AudioManager().playNextPageEffect();
+            AudioManager.playNextPageEffect();
             Navigator.pushNamed(
               context,
               '/talking_page',

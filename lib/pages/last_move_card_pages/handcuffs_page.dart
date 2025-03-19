@@ -55,10 +55,10 @@ class _HandcuffsPageState extends State<HandcuffsPage> {
             LastMoveCardPage.selectedLastMoveCard!
                 .lastMoveCardAction(widget.selectedPlayers);
             if (Scenario.currentScenario.isGameOver()) {
-              AudioManager().playNextPageEffect();
+              AudioManager.playNextPageEffect();
               Navigator.pushNamed(context, '/end_game_page');
             } else {
-              AudioManager().playNextPageEffect();
+              AudioManager.playNextPageEffect();
               Navigator.pushNamed(context, '/night_page');
             }
           } else {

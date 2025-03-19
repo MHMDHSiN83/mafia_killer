@@ -65,14 +65,15 @@ class _BeautifulMindChooseNostradamusPageState
 
             // in case the game ended
             if (Scenario.currentScenario.isGameOver()) {
-              AudioManager().playNextPageEffect();
+              AudioManager.playNextPageEffect();
               Navigator.pushNamed(context, '/end_game_page');
             } else {
-              AudioManager().playNextPageEffect();
+              AudioManager.playNextPageEffect();
               Navigator.pushNamed(context, '/night_page');
             }
           } else {
-            customSnackBar(context, "باید حتما یک بازیکن را انتخاب کنید.");
+            customSnackBar(
+                context, "باید حتما یک بازیکن را انتخاب کنید.", true);
           }
         },
         child: Column(
