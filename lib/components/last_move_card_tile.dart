@@ -206,7 +206,7 @@ class _LastMoveCardTileState extends State<LastMoveCardTile>
         if (LastMoveCardPage.canClick) {
           _flipCard();
           
-          //LastMoveCardPage.canClick = false;
+          LastMoveCardPage.canClick = false;
           LastMoveCardPage.selectedLastMoveCard = widget.lastMoveCard;
         }
       },

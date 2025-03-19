@@ -7,7 +7,7 @@ class AudioManager {
   static Duration? _savedPosition;
 
   static Future<void> playNightMusic() async {
-    await _playMusic('assets/audios/Dark-Legacy.mp3');
+    // await _playMusic('assets/audios/Dark-Legacy.mp3');
   }
 
   static Future<void> setPlayerAsset() async {

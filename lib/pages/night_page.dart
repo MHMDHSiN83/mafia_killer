@@ -150,6 +150,7 @@ class _NightPageState extends State<NightPage> {
   }
 
   void resetNight() {
+    Scenario.currentScenario.resetRemainingAbility();
     if (Scenario.currentScenario is GodfatherScenario) {
       iterator = Scenario.currentScenario
           .callRolesRegularNight(
@@ -168,6 +169,7 @@ class _NightPageState extends State<NightPage> {
     NightPage.isNightOver = false;
     Scenario.currentScenario.nightEvents = {};
     resetTiles();
+    Scenario.currentScenario.resetDataAfterNight();
   }
 
   void resetTiles() {

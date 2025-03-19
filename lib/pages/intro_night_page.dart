@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mafia_killer/components/call_role.dart';
+import 'package:mafia_killer/components/confirmation_box.dart';
 import 'package:mafia_killer/components/intro_night_player_tile.dart';
 import 'package:mafia_killer/components/nostradamus_box.dart';
 import 'package:mafia_killer/components/page_frame.dart';
@@ -149,6 +150,34 @@ class _IntroNightPageState extends State<IntroNightPage> {
           padding: const EdgeInsets.symmetric(horizontal: 12),
           child: Column(
             children: [
+              Expanded(
+                flex: 2,
+                child: IconButton(
+                  icon: const Icon(
+                    Icons.refresh,
+                    size: 35,
+                  ),
+                  color: const Color(0xFFE01357),
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) => ConfirmationBox(
+                        onSave: () {
+                          AudioManager.playClickEffect();
+                          setState(() {
+                            resetNight();
+                          });
+                          Navigator.pop(context);
+                        },
+                        onCancel: () {
+                          AudioManager.playClickEffect();
+                          Navigator.pop(context);
+                        },
+                      ),
+                    );
+                  },
+                ),
+              ),
               Expanded(
                 flex: 15,
                 child: Directionality(
