@@ -52,8 +52,10 @@ class _RoleSelectionTileState extends State<RoleSelectionTile> {
 
       Scenario.addRole(widget.role);
     } else {
-      customSnackBar(context,
-          'بیشتر از یک ${widget.role.name} نمی‌تواند در بازی وجود داشته باشد', true);
+      customSnackBar(
+          context,
+          'بیشتر از یک ${widget.role.name} نمی‌تواند در بازی وجود داشته باشد',
+          true);
     }
   }
 
@@ -72,94 +74,94 @@ class _RoleSelectionTileState extends State<RoleSelectionTile> {
   @override
   Widget build(BuildContext context) {
     Color color = determineColor();
-    return GestureDetector(
-      onTap: () {
-        showDialog(
-            context: context,
-            builder: (context) {
-              return Dialog(
-                child: RoleDescriptionTile(role: widget.role),
-              );
-            });
-      },
-      child: Container(
-        width: 165,
-        padding: EdgeInsets.zero,
-        decoration: BoxDecoration(
-          color: Colors.black,
-          borderRadius: BorderRadius.circular(5),
-          border: Border.all(
-            color: color,
-            width: 2.5,
-          ),
+    return Container(
+      width: 165,
+      padding: EdgeInsets.zero,
+      decoration: BoxDecoration(
+        color: Colors.black,
+        borderRadius: BorderRadius.circular(5),
+        border: Border.all(
+          color: color,
+          width: 2.5,
         ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            SizedBox(
-              width: 155,
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          SizedBox(
+            width: 155,
+            child: GestureDetector(
+              onTap: () {
+                showDialog(
+                    context: context,
+                    builder: (context) {
+                      return Dialog(
+                        child: RoleDescriptionTile(role: widget.role),
+                      );
+                    });
+              },
               child: Image(
                 image: AssetImage(
                   widget.role.cardImagePath,
                 ),
               ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                ClipOval(
-                  child: Material(
-                    color: AppColors.darkgreenColor, // Button color
-                    child: InkWell(
-                      splashColor: AppColors.hoverGreenColor, // Splash color
-                      onTap: increaseNumber,
-                      child: const SizedBox(
-                        width: 28,
-                        height: 28,
-                        child: Icon(
-                          Icons.add,
-                          size: 28,
-                        ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              ClipOval(
+                child: Material(
+                  color: AppColors.darkgreenColor, // Button color
+                  child: InkWell(
+                    splashColor: AppColors.hoverGreenColor, // Splash color
+                    onTap: increaseNumber,
+                    child: const SizedBox(
+                      width: 28,
+                      height: 28,
+                      child: Icon(
+                        Icons.add,
+                        size: 28,
                       ),
                     ),
                   ),
                 ),
-                const SizedBox(
-                  width: 15,
+              ),
+              const SizedBox(
+                width: 15,
+              ),
+              Text(
+                Language.toPersian(widget.counter.toString()),
+                style: const TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
                 ),
-                Text(
-                  Language.toPersian(widget.counter.toString()),
-                  style: const TextStyle(
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(
-                  width: 15,
-                ),
-                ClipOval(
-                  child: Material(
-                    color: AppColors.redColor, // Button color
-                    child: InkWell(
-                      splashColor: AppColors.hoverRedColor, // Splash color
-                      onTap: decreaseNumber,
-                      child: const SizedBox(
-                        width: 28,
-                        height: 28,
-                        child: Icon(
-                          Icons.remove,
-                          size: 28,
-                        ),
+              ),
+              const SizedBox(
+                width: 15,
+              ),
+              ClipOval(
+                child: Material(
+                  color: AppColors.redColor, // Button color
+                  child: InkWell(
+                    splashColor: AppColors.hoverRedColor, // Splash color
+                    onTap: decreaseNumber,
+                    child: const SizedBox(
+                      width: 28,
+                      height: 28,
+                      child: Icon(
+                        Icons.remove,
+                        size: 28,
                       ),
                     ),
                   ),
-                )
-              ],
-            ),
-            const SizedBox(),
-          ],
-        ),
+                ),
+              )
+            ],
+          ),
+          const SizedBox(),
+        ],
       ),
     );
   }
