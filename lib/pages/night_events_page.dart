@@ -121,19 +121,24 @@ class _NightEventsPage extends State<NightEventsPage> {
               silencedPlayerDuringDay:
                   Scenario.currentScenario.silencedPlayerDuringDay, nightReport: Scenario.currentScenario.report);
           Scenario.currentScenario.resetDataAfterNight();
-          AudioManager.playNextPageEffect();
-          Navigator.pushNamed(
-            context,
-            '/talking_page',
-            arguments: TalkingPageScreenArguments(
-              nextPagePath: '/regular_voting_page',
-              seconds: GameSettings.currentGameSettings.mainSpeakTime,
-              leftButtonText:
-                  'شب ${Scenario.currentScenario.dayAndNightNumber(number: Scenario.currentScenario.nightNumber - 1)}',
-              rightButtonText: 'رای گیری',
-              isDefense: false,
-            ),
-          );
+          if (Scenario.currentScenario.isGameOver()) {
+            AudioManager.playNextPageEffect();
+            Navigator.pushNamed(context, '/end_game_page');
+          } else {
+            AudioManager.playNextPageEffect();
+            Navigator.pushNamed(
+              context,
+              '/talking_page',
+              arguments: TalkingPageScreenArguments(
+                nextPagePath: '/regular_voting_page',
+                seconds: GameSettings.currentGameSettings.mainSpeakTime,
+                leftButtonText:
+                    'شب ${Scenario.currentScenario.dayAndNightNumber(number: Scenario.currentScenario.nightNumber - 1)}',
+                rightButtonText: 'رای گیری',
+                isDefense: false,
+              ),
+            );
+          }
         },
         child: Column(
           children: [

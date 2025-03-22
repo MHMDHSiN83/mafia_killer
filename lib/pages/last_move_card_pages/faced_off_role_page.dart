@@ -39,8 +39,13 @@ class FacedOffRolePage extends StatelessWidget {
               Scenario.currentScenario.killedInDayPlayer!,
               FaceOffPage.selectedPlayers[0]
             ]);
-            AudioManager.playNextPageEffect();
-            Navigator.pushNamed(context, '/night_page');
+            if (Scenario.currentScenario.isGameOver()) {
+              AudioManager.playNextPageEffect();
+              Navigator.pushNamed(context, '/end_game_page');
+            } else {
+              AudioManager.playNextPageEffect();
+              Navigator.pushNamed(context, '/night_page');
+            }
           },
           child: Column(
             children: [

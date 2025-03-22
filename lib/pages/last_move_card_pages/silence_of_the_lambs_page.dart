@@ -50,8 +50,13 @@ class _SilenceOfTheLambsPageState extends State<SilenceOfTheLambsPage> {
             widget.selectedPlayers.insert(0, killedInDayPlayer);
             LastMoveCardPage.selectedLastMoveCard!
                 .lastMoveCardAction(widget.selectedPlayers);
-            AudioManager.playNextPageEffect();
-            Navigator.pushNamed(context, '/night_page');
+            if (Scenario.currentScenario.isGameOver()) {
+              AudioManager.playNextPageEffect();
+              Navigator.pushNamed(context, '/end_game_page');
+            } else {
+              AudioManager.playNextPageEffect();
+              Navigator.pushNamed(context, '/night_page');
+            }
           }
         },
         child: Column(

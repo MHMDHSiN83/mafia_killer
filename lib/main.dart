@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mafia_killer/pages/defense_voting_page.dart';
+import 'package:mafia_killer/pages/end_game_page.dart';
 import 'package:mafia_killer/pages/game_settings_page.dart';
 import 'package:mafia_killer/pages/intro_night_page.dart';
 import 'package:mafia_killer/pages/intro_page.dart';
