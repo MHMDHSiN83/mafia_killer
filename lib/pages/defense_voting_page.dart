@@ -59,7 +59,7 @@ class _DefenseVotingPageState extends State<DefenseVotingPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: PageFrame(
-        label: ModalRoute.of(context)!.settings.name!,
+        label: '/defense_voting_page',
         pageTitle: "کشته روز",
         reloadContentOfPage: () {
           setState(() {});
@@ -79,8 +79,6 @@ class _DefenseVotingPageState extends State<DefenseVotingPage> {
               int randomNumber = random.nextInt(2);
               Scenario.currentScenario.killedInDayPlayer =
                   selectedPlayers[randomNumber];
-              break;
-            default:
               break;
           }
 

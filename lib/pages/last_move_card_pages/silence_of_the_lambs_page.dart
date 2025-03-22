@@ -39,7 +39,7 @@ class _SilenceOfTheLambsPageState extends State<SilenceOfTheLambsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: PageFrame(
-        label: ModalRoute.of(context)!.settings.name!,
+        label: '/silence_of_the_lambs_page',
         pageTitle: "سکوت بره ها",
         leftButtonText: "کارت حرکت آخر",
         rightButtonText:

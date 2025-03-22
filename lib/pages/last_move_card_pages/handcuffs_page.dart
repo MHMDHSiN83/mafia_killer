@@ -41,7 +41,7 @@ class _HandcuffsPageState extends State<HandcuffsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: PageFrame(
-        label: ModalRoute.of(context)!.settings.name!,
+        label: '/handcuffs_page',
         pageTitle: "دستبند",
         leftButtonText: "کارت حرکت آخر",
         rightButtonText:

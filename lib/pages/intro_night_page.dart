@@ -5,6 +5,7 @@ import 'package:mafia_killer/components/intro_night_player_tile.dart';
 import 'package:mafia_killer/components/nostradamus_box.dart';
 import 'package:mafia_killer/components/page_frame.dart';
 import 'package:mafia_killer/databases/game_settings.dart';
+import 'package:mafia_killer/databases/game_state_manager.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/models/role_side.dart';
@@ -111,7 +112,7 @@ class _IntroNightPageState extends State<IntroNightPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: PageFrame(
-        label: ModalRoute.of(context)!.settings.name!,
+        label: '/intro_night_page',
         pageTitle: 'شب معارفه',
         reloadContentOfPage: () {
           setState(() {});
@@ -128,7 +129,7 @@ class _IntroNightPageState extends State<IntroNightPage> {
         rightButtonOnTap: () {
           if (IntroNightPage.isNightOver) {
             Scenario.currentScenario.goToNextStage();
-            resetNight();
+            // resetNight();
             AudioManager.playNextPageEffect();
             Navigator.pushNamed(
               context,
@@ -142,6 +143,7 @@ class _IntroNightPageState extends State<IntroNightPage> {
                 isDefense: false,
               ),
             );
+            GameStateManager.addState(lastMoveCards: Scenario.currentScenario.lastMoveCards);
           } else {
             customSnackBar(context, 'تمام اکت‌های شب باید انجام بشه', true);
           }

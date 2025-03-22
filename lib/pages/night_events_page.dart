@@ -3,6 +3,7 @@ import 'package:mafia_killer/components/inquiry_dialog.dart';
 import 'package:mafia_killer/components/night_event_tile.dart';
 import 'package:mafia_killer/components/page_frame.dart';
 import 'package:mafia_killer/databases/game_settings.dart';
+import 'package:mafia_killer/databases/game_state_manager.dart';
 import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/models/language.dart';
 import 'package:mafia_killer/models/role_side.dart';
@@ -107,7 +108,7 @@ class _NightEventsPage extends State<NightEventsPage> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: PageFrame(
-        label: ModalRoute.of(context)!.settings.name!,
+        label: '/night_events_page',
         pageTitle: "اتفاقات شب",
         leftButtonText:
             "شب ${Scenario.currentScenario.dayAndNightNumber(number: Scenario.currentScenario.nightNumber)}",
@@ -115,6 +116,10 @@ class _NightEventsPage extends State<NightEventsPage> {
             "روز ${Scenario.currentScenario.dayAndNightNumber(number: Scenario.currentScenario.dayNumber)}",
         leftButtonOnTap: () => Navigator.pop(context),
         rightButtonOnTap: () {
+          GameStateManager.addState(
+              lastMoveCards: Scenario.currentScenario.lastMoveCards,
+              silencedPlayerDuringDay:
+                  Scenario.currentScenario.silencedPlayerDuringDay, nightReport: Scenario.currentScenario.report);
           Scenario.currentScenario.resetDataAfterNight();
           AudioManager.playNextPageEffect();
           Navigator.pushNamed(
