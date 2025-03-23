@@ -11,39 +11,74 @@ class ConfirmationBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      backgroundColor: Theme.of(context).colorScheme.primary,
+      backgroundColor: Colors.transparent,
       elevation: 10,
-      content: SizedBox(
-        height: 160,
-        width: 250,
+      content: Container(
+        decoration: BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage('lib/images/dialogbox/DialogBoxBg.png'),
+                fit: BoxFit.cover)),
+        height: 240,
+        //width: 650,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                MaterialButton(
-                  onPressed: onSave,
-                  color: AppColors.darkgreenColor,
-                  child: Text(
-                    "ذخیره",
-                    style: TextStyle(
-                        color: Theme.of(context).colorScheme.inversePrimary,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ),
-                MaterialButton(
-                  onPressed: onCancel,
-                  color: AppColors.redColor,
-                  child: Text(
-                    "بازگشت",
-                    style: TextStyle(
-                        color: Theme.of(context).colorScheme.inversePrimary,
-                        fontWeight: FontWeight.bold),
-                  ),
-                )
-              ],
+            Spacer(
+              flex: 5,
             ),
+            Expanded(
+              flex: 4,
+              child: Text(
+                "آیا از انتخاب خود مطمئنید؟",
+                style: TextStyle(color: AppColors.brownColor),
+              ),
+            ),
+            Expanded(
+              flex: 2,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Spacer(
+                    flex: 10,
+                  ),
+                  Expanded(
+                    flex: 16,
+                    child: MaterialButton(
+                      onPressed: onCancel,
+                      color: AppColors.brownColor,
+                      child: Text(
+                        "خیر",
+                        style: TextStyle(
+                            color: Theme.of(context).colorScheme.inversePrimary,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ),
+                  Spacer(
+                    flex: 3,
+                  ),
+                  Expanded(
+                    flex: 16,
+                    child: MaterialButton(
+                      onPressed: onSave,
+                      color: AppColors.brownColor,
+                      child: Text(
+                        "بله",
+                        style: TextStyle(
+                            color: Theme.of(context).colorScheme.inversePrimary,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ),
+                  Spacer(
+                    flex: 10,
+                  )
+                ],
+              ),
+            ),
+            Spacer(
+              flex: 5,
+            )
           ],
         ),
       ),

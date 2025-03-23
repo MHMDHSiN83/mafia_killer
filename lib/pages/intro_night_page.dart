@@ -63,7 +63,7 @@ class _IntroNightPageState extends State<IntroNightPage> {
         return NostradamusBox(
           mafiaNumber: mafiaNumber,
           chooseSide: (RoleSide roleSide) {
-            (Player.getPlayerByRoleType(Nostradamus).role as Nostradamus)
+            (Player.getPlayerByRoleType(Nostradamus)!.role as Nostradamus)
                 .setNostradamusRole(roleSide);
             IntroNightPage.isNostradamusSelecting = false;
             Navigator.of(context).pop();

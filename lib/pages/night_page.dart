@@ -87,7 +87,6 @@ class _NightPageState extends State<NightPage> {
           onSave: () {
             AudioManager.playClickEffect();
             NightPage.targetPlayer = player;
-
             Navigator.of(context).pop();
             setState(() {
               if (iterator.moveNext()) {

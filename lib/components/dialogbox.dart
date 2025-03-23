@@ -16,66 +16,72 @@ class DialogBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      backgroundColor: Theme.of(context).colorScheme.primary,
+      backgroundColor: Colors.transparent,
       elevation: 10,
-      content: SizedBox(
-        height: 160,
-        width: 250,
+      content: Container(
+        decoration: BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage('lib/images/dialogbox/DialogBoxBg.png'),
+                fit: BoxFit.cover)),
+        height: 240,
+        width: 700,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            TextField(
-              style: TextStyle(
-                  color: Theme.of(context).colorScheme.inversePrimary),
-              decoration: InputDecoration(
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(4)),
-                    borderSide: BorderSide(
-                      width: 1,
-                      color: Theme.of(context).colorScheme.inversePrimary,
-                    ),
-                  ),
-                  // border: OutlineInputBorder(),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(4)),
-                    borderSide: BorderSide(
-                      width: 1,
-                      color: Theme.of(context).colorScheme.inversePrimary,
-                    ),
-                  ),
-                  labelText: "نام بازیکن",
-                  labelStyle: TextStyle(
-                      color: Theme.of(context).colorScheme.inversePrimary,
-                      fontSize: 20),
-                  hintText: 'نام بازیکن را وارد کنید...',
-                  hintStyle:
-                      TextStyle(color: Color.fromARGB(139, 255, 255, 255))),
-              controller: controller,
+            Spacer(
+              flex: 5,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                MaterialButton(
-                  onPressed: onSave,
-                  color: AppColors.darkgreenColor,
-                  child: Text(
-                    "ذخیره",
-                    style: TextStyle(
-                        color: Theme.of(context).colorScheme.inversePrimary,
-                        fontWeight: FontWeight.bold),
-                  ),
+            Expanded(
+              flex: 3,
+              child: SizedBox(
+                width: 180,
+                child: TextField(
+                  style: TextStyle(color: AppColors.brownColor, fontSize: 16),
+                  decoration: InputDecoration(
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(4)),
+                        borderSide: BorderSide(
+                          width: 1,
+                          color: AppColors.brownColor,
+                        ),
+                      ),
+                      // border: OutlineInputBorder(),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(4)),
+                        borderSide: BorderSide(
+                          width: 1,
+                          color: AppColors.brownColor,
+                        ),
+                      ),
+                      labelText: "نام بازیکن",
+                      labelStyle:
+                          TextStyle(color: AppColors.brownColor, fontSize: 14),
+                      hintText: 'نام بازیکن را وارد کنید...',
+                      hintStyle: TextStyle(
+                          color: const Color.fromARGB(167, 44, 31, 31),
+                          fontSize: 14)),
+                  controller: controller,
                 ),
-                MaterialButton(
-                  onPressed: onCancel,
-                  color: AppColors.redColor,
-                  child: Text(
-                    "بازگشت",
-                    style: TextStyle(
-                        color: Theme.of(context).colorScheme.inversePrimary,
-                        fontWeight: FontWeight.bold),
-                  ),
-                )
-              ],
+              ),
+            ),
+            Spacer(
+              flex: 1,
+            ),
+            Expanded(
+              flex: 2,
+              child: MaterialButton(
+                onPressed: onSave,
+                color: AppColors.brownColor,
+                child: Text(
+                  "ذخیره",
+                  style: TextStyle(
+                      color: Theme.of(context).colorScheme.inversePrimary,
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
+            ),
+            Spacer(
+              flex: 5,
             ),
           ],
         ),

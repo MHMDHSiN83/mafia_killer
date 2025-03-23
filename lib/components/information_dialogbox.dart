@@ -11,20 +11,37 @@ class InformationDialogbox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      backgroundColor: Theme.of(context).colorScheme.primary,
+      backgroundColor: Colors.transparent,
       elevation: 10,
-      content: SizedBox(
-        height: 100,
-        width: 250,
+      content: Container(
+        decoration: BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage('lib/images/dialogbox/DialogBoxBg.png'),
+                fit: BoxFit.cover)),
+        height: 225,
+        width: 650,
         child: Column(
+          mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Expanded(flex: 2, child: Text(text)),
+            Spacer(
+              flex: 4,
+            ),
             Expanded(
-              flex: 1,
+                flex: 4,
+                child: SizedBox(
+                  width: 180,
+                  child: Text(
+                    text,
+                    style: TextStyle(color: AppColors.brownColor),
+                  ),
+                )),
+            Expanded(
+              flex: 2,
               child: MaterialButton(
                 onPressed: onSave,
-                color: AppColors.darkgreenColor,
+                color: AppColors.brownColor,
                 child: Text(
                   "متوجه شدم",
                   style: TextStyle(
@@ -33,6 +50,9 @@ class InformationDialogbox extends StatelessWidget {
                 ),
               ),
             ),
+            Spacer(
+              flex: 4,
+            )
           ],
         ),
       ),

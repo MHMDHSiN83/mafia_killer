@@ -153,7 +153,12 @@ class Player extends ChangeNotifier {
     return playerStatus == PlayerStatus.active && role!.hasAbility();
   }
 
-  static Player getPlayerByRoleType(Type type) {
+  static Player? getPlayerByRoleType(Type type) {
+    if (inGamePlayers
+        .where((player) => player.role.runtimeType == type)
+        .isEmpty) {
+      return null;
+    }
     return inGamePlayers
         .where((player) => player.role.runtimeType == type)
         .first;
@@ -179,5 +184,13 @@ class Player extends ChangeNotifier {
         .where((p) =>
             (p.playerStatus == PlayerStatus.active && player.name != p.name))
         .toList();
+  }
+
+  static void resetPlayersBeforeGame() {
+    for (Player player in Player.players) {
+      player.playerStatus = PlayerStatus.active;
+      player.uiPlayerStatus = UIPlayerStatus.targetable;
+      player.role = null;
+    }
   }
 }

@@ -88,6 +88,7 @@ class _PlayersPageState extends State<PlayersPage>
           rightButtonText: "تنظیمات بازی",
           leftButtonOnTap: () => Navigator.pop(context),
           rightButtonOnTap: () {
+            Player.resetPlayersBeforeGame();
             Player.fetchInGamePlayers();
             AudioManager.playNextPageEffect();
             Logger().d("uppush");
