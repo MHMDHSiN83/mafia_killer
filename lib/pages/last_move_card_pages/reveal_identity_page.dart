@@ -37,6 +37,8 @@ class RevealIdentityPage extends StatelessWidget {
           rightButtonOnTap: () {
             LastMoveCardPage.selectedLastMoveCard!.lastMoveCardAction(
                 [Scenario.currentScenario.killedInDayPlayer!]);
+            Scenario.currentScenario.goToNextStage();
+
             if (Scenario.currentScenario.isGameOver()) {
               AudioManager.playNextPageEffect();
               Navigator.pushNamed(context, '/end_game_page');

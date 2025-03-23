@@ -50,6 +50,8 @@ class _SilenceOfTheLambsPageState extends State<SilenceOfTheLambsPage> {
             widget.selectedPlayers.insert(0, killedInDayPlayer);
             LastMoveCardPage.selectedLastMoveCard!
                 .lastMoveCardAction(widget.selectedPlayers);
+            Scenario.currentScenario.goToNextStage();
+
             if (Scenario.currentScenario.isGameOver()) {
               AudioManager.playNextPageEffect();
               Navigator.pushNamed(context, '/end_game_page');

@@ -66,6 +66,7 @@ class _BeautifulMindChooseNostradamusPageState
             GameStateManager.addLastMoveCardAction(selectedPlayers, LastMoveCardPage.selectedLastMoveCard!);
             LastMoveCardPage.selectedLastMoveCard!
                 .lastMoveCardAction(selectedPlayers);
+            Scenario.currentScenario.goToNextStage();
 
             // in case the game ended
             if (Scenario.currentScenario.isGameOver()) {
