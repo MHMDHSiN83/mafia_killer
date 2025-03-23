@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:mafia_killer/components/call_role.dart';
 import 'package:mafia_killer/components/page_frame.dart';
+import 'package:mafia_killer/databases/game_state_manager.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/models/language.dart';
@@ -123,13 +124,14 @@ class _TalkingPageState extends State<TalkingPage> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: PageFrame(
-        label: ModalRoute.of(context)!.settings.name!,
+        label: args.isDefense ? '/defense_talking_page' : '/talking_page',
         pageTitle: 'روز ${Scenario.currentScenario.dayAndNightNumber()}',
         leftButtonText: args.leftButtonText,
         rightButtonText: args.rightButtonText,
         leftButtonOnTap: () {
           if (!args.isDefense && !Scenario.currentScenario.isIntroDay()) {
             Scenario.currentScenario.backToLastStage();
+            GameStateManager.goToPreviousState();
           }
           Navigator.pop(context);
         },

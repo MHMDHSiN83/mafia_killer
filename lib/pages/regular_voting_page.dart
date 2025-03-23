@@ -34,7 +34,7 @@ class _RegularVotingPageState extends State<RegularVotingPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: PageFrame(
-        label: ModalRoute.of(context)!.settings.name!,
+        label: '/regular_voting_page',
         pageTitle: "بازیکنان داخل دفاع",
         reloadContentOfPage: () {
           setState(() {});
@@ -59,7 +59,6 @@ class _RegularVotingPageState extends State<RegularVotingPage> {
             );
           } else {
             Scenario.currentScenario.goToNextStage();
-
             Navigator.pushNamed(context, '/night_page');
           }
         },

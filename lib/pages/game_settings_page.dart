@@ -1,5 +1,5 @@
-import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 import 'package:mafia_killer/components/my_divider.dart';
 import 'package:mafia_killer/components/page_frame.dart';
 import 'package:mafia_killer/components/row_counterbox.dart';
@@ -54,7 +54,8 @@ class _GameSettingsPageState extends State<GameSettingsPage> {
       AudioManager.playDownCounterEffect();
       if (isTimer) {
         if (newGameSettings[varName] <= 10) {
-          customSnackBar(context, 'فرصت صحبت نمی‌تونه کمتر از ۱۰ ثانیه باشه', true);
+          customSnackBar(
+              context, 'فرصت صحبت نمی‌تونه کمتر از ۱۰ ثانیه باشه', true);
           return;
         }
         newGameSettings[varName] -= 10;
@@ -70,9 +71,10 @@ class _GameSettingsPageState extends State<GameSettingsPage> {
 
   @override
   Widget build(BuildContext context) {
+    Logger().d("build_gamesetting");
     return Scaffold(
       body: PageFrame(
-        label: ModalRoute.of(context)!.settings.name!,
+        label: '/game_setting_page',
         isInGame: false,
         pageTitle: "تنظیمات این دست",
         rightButtonText: "انتخاب نقش‌ها",
@@ -83,7 +85,10 @@ class _GameSettingsPageState extends State<GameSettingsPage> {
               GameSettings.currentGameSettings, newGameSettings);
           Scenario.currentScenario.getRecommendedScenario();
           AudioManager.playNextPageEffect();
+          Logger().d("uppush");
+
           Navigator.pushNamed(context, '/role_selection_page');
+          Logger().d("downpush");
         },
         child: ListView(
           padding: const EdgeInsets.only(bottom: 50, left: 20, right: 20),

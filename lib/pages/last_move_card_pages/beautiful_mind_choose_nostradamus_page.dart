@@ -50,7 +50,7 @@ class _BeautifulMindChooseNostradamusPageState
   Widget build(BuildContext context) {
     return Scaffold(
       body: PageFrame(
-        label: ModalRoute.of(context)!.settings.name!,
+        label: '/beautiful_mind_choose_nostradamus_page',
         pageTitle: "ذهن زیبا",
         leftButtonText: "کارت حرکت آخر",
         rightButtonText:

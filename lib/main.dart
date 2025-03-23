@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/pages/defense_voting_page.dart';
 import 'package:mafia_killer/pages/end_game_page.dart';
 import 'package:mafia_killer/pages/game_settings_page.dart';
@@ -22,19 +21,16 @@ import 'package:mafia_killer/pages/role_selection_page.dart';
 import 'package:mafia_killer/pages/talking_page.dart';
 import 'package:mafia_killer/test.dart';
 import 'package:mafia_killer/themes/dark_mode.dart';
-import 'package:provider/provider.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+
+// final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
 
 void main() {
   runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider<Player>(create: (context) => Player('handler')),
-      ],
-      child: const Directionality(
-        textDirection: TextDirection.rtl,
-        child: MyApp(),
-      ),
+    const Directionality(
+      textDirection: TextDirection.rtl,
+      child: MyApp(),
     ),
   );
 }
@@ -45,6 +41,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      // navigatorKey: navigatorKey,
       localizationsDelegates: const [
         GlobalCupertinoLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
@@ -76,12 +73,12 @@ class MyApp extends StatelessWidget {
         '/last_move_card_page': (context) => LastMoveCardPage(),
         '/reveal_identity_page': (context) => RevealIdentityPage(),
         '/test': (context) => Test(),
-        '/face_off_page' : (context) => FaceOffPage(),
-        '/faced_off_role_page' : (context) => FacedOffRolePage(),
-        '/handcuffs_page' : (context) => HandcuffsPage(),
-        '/silence_of_the_lambs_page' : (context) => SilenceOfTheLambsPage(),
-        '/beautiful_mind_choose_nostradamus_page' : (context) => BeautifulMindChooseNostradamusPage(),
-        '/end_game_page': (context) => EndGamePage(),
+        '/face_off_page': (context) => FaceOffPage(),
+        '/faced_off_role_page': (context) => FacedOffRolePage(),
+        '/handcuffs_page': (context) => HandcuffsPage(),
+        '/silence_of_the_lambs_page': (context) => SilenceOfTheLambsPage(),
+        '/beautiful_mind_choose_nostradamus_page': (context) =>
+            BeautifulMindChooseNostradamusPage(),
       },
     );
   }

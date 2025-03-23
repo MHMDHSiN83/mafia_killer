@@ -75,7 +75,9 @@ class _PageFrameState extends State<PageFrame> {
       ),
       child: SafeArea(
         child: SizedBox(
+          // width: 411,
           width: MediaQuery.of(context).size.width,
+          // height: 890,
           height: MediaQuery.of(context).size.height,
           child: Column(
             children: [
@@ -293,10 +295,12 @@ class _PageFrameState extends State<PageFrame> {
     double screenHeight = (MediaQuery.of(context).size.height -
             MediaQuery.of(context).padding.top) *
         (30 / 32);
+    // double screenHeight = 789;
     double buttonHeight = 48;
     return Positioned(
       bottom: screenHeight * (1 / 34) + 12 - buttonHeight / 2,
       child: SizedBox(
+        // width: 411,
         width: MediaQuery.of(context).size.width,
         height: buttonHeight,
         child: Row(

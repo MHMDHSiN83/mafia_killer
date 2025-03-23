@@ -35,6 +35,11 @@ class Player extends ChangeNotifier {
   static List<Player> players = [];
   static List<Player> inGamePlayers = [];
   static late String filePath;
+
+  factory Player.copy(Player player) {
+    return Player.fromJson(jsonDecode(jsonEncode(player.toJson())));
+  }
+
   factory Player.fromJson(Map<String, dynamic> json) => _$PlayerFromJson(json);
 
   // Generated method to convert an object to JSON
@@ -165,7 +170,8 @@ class Player extends ChangeNotifier {
 
   static List<Player> getAlivePlayersExcept(Player player) {
     return Player.inGamePlayers
-        .where((p) => (p.playerStatus == PlayerStatus.active && player.name != p.name))
+        .where((p) =>
+            (p.playerStatus == PlayerStatus.active && player.name != p.name))
         .toList();
   }
 }
