@@ -152,7 +152,29 @@ class _NightPageState extends State<NightPage> {
   }
 
   void resetNight() {
-    Scenario.currentScenario.resetRemainingAbility();
+    // Scenario.currentScenario.resetRemainingAbility();
+    // if (Scenario.currentScenario is GodfatherScenario) {
+    //   iterator = Scenario.currentScenario
+    //       .callRolesRegularNight(
+    //           mafiaChoiceBox: mafiaChoicBox, noAbilityBox: noAbilityBox)
+    //       .iterator;
+    // } else {
+    //   UnimplementedError("error");
+    // }
+    // iterator.moveNext();
+    // text = iterator.current;
+    // NightPage.targetPlayer = null;
+    // NightPage.mafiaTeamChoice = 0;
+    // NightPage.buttonText = 'بیدار شدند';
+    // NightPage.typeOfConfirmation = 0;
+    // NightPage.ableToSelectTile = false;
+    // NightPage.isNightOver = false;
+    // Scenario.currentScenario.nightEvents = {};
+    // resetTiles();
+    // Scenario.currentScenario.resetDataAfterNight();
+    // Scenario.currentScenario.resetRemainingAbility();
+    Player.inGamePlayers = GameStateManager
+        .gameStates[GameStateManager.getPreviousState()]!.players;
     if (Scenario.currentScenario is GodfatherScenario) {
       iterator = Scenario.currentScenario
           .callRolesRegularNight(
@@ -171,7 +193,6 @@ class _NightPageState extends State<NightPage> {
     NightPage.isNightOver = false;
     Scenario.currentScenario.nightEvents = {};
     resetTiles();
-    Scenario.currentScenario.resetDataAfterNight();
   }
 
   void resetTiles() {
@@ -230,7 +251,6 @@ class _NightPageState extends State<NightPage> {
             // resetNight();
             AudioManager.playNextPageEffect();
             Navigator.pushNamed(context, '/night_events_page');
-            
           } else {
             customSnackBar(context, 'تمام اکت‌های شب باید انجام بشه', true);
           }

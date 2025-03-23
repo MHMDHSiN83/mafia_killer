@@ -111,7 +111,7 @@ class _NightEventsPage extends State<NightEventsPage> {
         label: '/night_events_page',
         pageTitle: "اتفاقات شب",
         leftButtonText:
-            "شب ${Scenario.currentScenario.dayAndNightNumber(number: Scenario.currentScenario.nightNumber)}",
+            "شب ${Scenario.currentScenario.dayAndNightNumber(number: Scenario.currentScenario.nightNumber - 1)}",
         rightButtonText:
             "روز ${Scenario.currentScenario.dayAndNightNumber(number: Scenario.currentScenario.dayNumber)}",
         leftButtonOnTap: () => Navigator.pop(context),
