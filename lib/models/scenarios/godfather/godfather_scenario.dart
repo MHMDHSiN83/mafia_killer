@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:json_annotation/json_annotation.dart';
+import 'package:logger/web.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/models/last_move_card.dart';
@@ -49,8 +50,8 @@ class GodfatherScenario extends Scenario {
 
   @override
   Iterable<String> callRolesIntroNight() sync* {
-    Player nostradamusPlayer = Player.getPlayerByRoleType(Nostradamus);
-    yield nostradamusPlayer.role!.introAwakingRole();
+    Player? nostradamusPlayer = Player.getPlayerByRoleType(Nostradamus);
+    yield nostradamusPlayer!.role!.introAwakingRole();
     yield nostradamusPlayer.role!.introSleepRoleText();
     List<String> introMafiaTeamAwakingTexts =
         Scenario.currentScenario.getIntroMafiaTeamAwakingTexts();
@@ -132,7 +133,7 @@ class GodfatherScenario extends Scenario {
         nightEvents[NightEvent.shotByMafia] = NightPage.targetPlayer;
         break;
       case 1:
-        godfatherPlayer.role!.nightAction(NightPage.targetPlayer);
+        godfatherPlayer?.role!.nightAction(NightPage.targetPlayer);
         // nightEvents[NightEvent.sixthSensedByGodfather] = NightPage.targetPlayer;
         if (NightPage.targetPlayer != null) {
           NightPage.targetPlayer!.playerStatus = PlayerStatus.disable;
@@ -141,7 +142,7 @@ class GodfatherScenario extends Scenario {
       case 2: // buying
         NightPage.ableToSelectTile = false;
         NightPage.buttonText = 'اتمام';
-        saulGoodmanPlayer.role!.nightAction(NightPage.targetPlayer);
+        saulGoodmanPlayer?.role!.nightAction(NightPage.targetPlayer);
         if (NightPage.targetPlayer!.role is Citizen) {
           // nightEvents[NightEvent.boughtBySaulGoodman] = NightPage.targetPlayer;
           NightPage.targetPlayer!.role = Role.fromJson(jsonDecode(jsonEncode(
@@ -154,10 +155,13 @@ class GodfatherScenario extends Scenario {
         }
         break;
     }
+
+    Logger().d("اینجا");
   }
 
   @override
   Iterable<String> otherRolesAction({Function? noAbilityBox}) sync* {
+    Logger().d("test");
     List<String> constantRoleOrder =
         Scenario.currentScenario.getConstantRoleOrder();
     NightPage.buttonText = 'خوابید';
@@ -222,11 +226,8 @@ class GodfatherScenario extends Scenario {
     Player? sixthSensedByGodfather =
         nightEvents[NightEvent.sixthSensedByGodfather];
 
-    Player leon =
-        Player.inGamePlayers.where((player) => player.role is Leon).first;
-    Player citizenKane = Player.inGamePlayers
-        .where((player) => player.role is CitizenKane)
-        .first;
+    Player? leon = Player.getPlayerByRoleType(Leon);
+    Player? citizenKane = Player.getPlayerByRoleType(CitizenKane);
 
     // mafia shot process -> Done
     if (shotByMafia != null) {
@@ -256,7 +257,7 @@ class GodfatherScenario extends Scenario {
     // leon shot process -> Done
     if (shotByLeon != null) {
       if (shotByLeon.role!.roleSide == RoleSide.citizen) {
-        leon.playerStatus = PlayerStatus.dead;
+        leon!.playerStatus = PlayerStatus.dead;
         report.add("${leon.name} کشته شد.");
       } else if (shotByLeon.role is! Nostradamus &&
           (shotByLeon.role is! Godfather ||
@@ -272,12 +273,12 @@ class GodfatherScenario extends Scenario {
     }
 
     // citizen kane inquiry -> player has to die the next day
-    if ((citizenKane.role as CitizenKane).remainingAbility == 0) {
+    if ((citizenKane != null ) && (citizenKane.role as CitizenKane).remainingAbility == 0) {
       citizenKane.playerStatus = PlayerStatus.dead;
       report.add("${citizenKane.name} کشته شد.)");
     }
     if (inquiryByCitizenKane != null) {
-      if (citizenKane.playerStatus == PlayerStatus.active &&
+      if (citizenKane!.playerStatus == PlayerStatus.active &&
           inquiryByCitizenKane.playerStatus == PlayerStatus.active) {
         if (inquiryByCitizenKane.role!.roleSide == RoleSide.mafia) {
           report.add("${inquiryByCitizenKane.name} مافیای بازی است");
@@ -393,26 +394,26 @@ class GodfatherScenario extends Scenario {
     Player? citizenKanePlayer = Player.getPlayerByRoleType(CitizenKane);
     Player? doctorPlayer = Player.getPlayerByRoleType(DoctorWatson);
     if (sixthSensedByGodfather != null) {
-      (godfatherPlayer.role as Godfather).remainingAbility += 1;
+      (godfatherPlayer!.role as Godfather).remainingAbility += 1;
     }
     if (shotByLeon != null) {
-      (leonPlayer.role as Leon).remainingAbility += 1;
+      (leonPlayer!.role as Leon).remainingAbility += 1;
     }
     if (revivedByConstantine != null) {
-      (constantinePlayer.role as Constantine).remainingAbility += 1;
+      (constantinePlayer!.role as Constantine).remainingAbility += 1;
     }
     if (inquiryByCitizenKane != null) {
-      (citizenKanePlayer.role as CitizenKane).remainingAbility += 1;
+      (citizenKanePlayer!.role as CitizenKane).remainingAbility += 1;
     }
     if (boughtBySaulGoodman != null) {
-      (saulGoodmanPlayer.role as SaulGoodman).remainingAbility += 1;
+      (saulGoodmanPlayer!.role as SaulGoodman).remainingAbility += 1;
       boughtBySaulGoodman.role = Role.fromJson(jsonDecode(jsonEncode(Scenario
           .currentScenario
           .getRoleByType(Citizen, searchInGmaeRoles: false)!
           .toJson())));
     }
     if (doctorPlayer == savedByDoctor && savedByDoctor != null) {
-      (doctorPlayer.role as DoctorWatson).selfHeal += 1;
+      (doctorPlayer!.role as DoctorWatson).selfHeal += 1;
     }
   }
 }

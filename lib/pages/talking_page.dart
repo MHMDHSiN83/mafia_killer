@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:logger/web.dart';
 import 'package:mafia_killer/components/call_role.dart';
 import 'package:mafia_killer/components/page_frame.dart';
 import 'package:mafia_killer/databases/game_state_manager.dart';
@@ -121,6 +122,7 @@ class _TalkingPageState extends State<TalkingPage> {
 
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: PageFrame(

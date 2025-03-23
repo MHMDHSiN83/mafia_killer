@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:logger/web.dart';
 import 'package:mafia_killer/components/page_frame.dart';
 import 'package:mafia_killer/components/voting_tile.dart';
 import 'package:mafia_killer/databases/game_settings.dart';
@@ -29,6 +30,12 @@ class _RegularVotingPageState extends State<RegularVotingPage> {
       defendingPlayers.remove(player);
     });
   }
+
+  List<Player> alivePlayers = Player.inGamePlayers
+      .where((player) =>
+          player.playerStatus != PlayerStatus.dead &&
+          player.playerStatus != PlayerStatus.removed)
+      .toList();
 
   @override
   Widget build(BuildContext context) {
@@ -71,32 +78,17 @@ class _RegularVotingPageState extends State<RegularVotingPage> {
               mainAxisSpacing: 0,
               crossAxisSpacing: 0,
             ),
-            itemCount: Player.inGamePlayers
-                .where((player) => player.playerStatus == PlayerStatus.active)
-                .toList()
-                .length,
+            itemCount: alivePlayers.length,
             itemBuilder: (context, index) {
               return VotingTile(
-                player: Player.inGamePlayers
-                    .where(
-                        (player) => player.playerStatus == PlayerStatus.active)
-                    .toList()[index],
+                player: alivePlayers[index],
                 addPlayer: () {
-                  addPlayer(Player.inGamePlayers
-                      .where((player) =>
-                          player.playerStatus == PlayerStatus.active)
-                      .toList()[index]);
+                  addPlayer(alivePlayers[index]);
                 },
                 removePlayer: () {
-                  removePlayer(Player.inGamePlayers
-                      .where((player) =>
-                          player.playerStatus == PlayerStatus.active)
-                      .toList()[index]);
+                  removePlayer(alivePlayers[index]);
                 },
-                isClicked: defendingPlayers.contains(Player.inGamePlayers
-                    .where(
-                        (player) => player.playerStatus == PlayerStatus.active)
-                    .toList()[index]),
+                isClicked: defendingPlayers.contains(alivePlayers[index]),
                 stamp: 'دفاعیه',
               );
             },

@@ -28,51 +28,122 @@ class MafiaChoiceBox extends StatelessWidget {
             image: DecorationImage(
                 image: AssetImage('lib/images/dialogbox/DialogBoxBg.png'),
                 fit: BoxFit.cover)),
-        height: 240,
+        height: 250,
+        width: 650,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            MaterialButton(
-              onPressed: shot,
-              color: AppColors.brownColor,
-              child: Text(
-                "شلیک شب",
-                style: TextStyle(
-                  color: Theme.of(context).colorScheme.inversePrimary,
-                  fontWeight: FontWeight.bold,
+            Spacer(
+              flex: 5,
+            ),
+            Expanded(
+              flex: 6,
+              child: SizedBox(
+                width: 180,
+                child: Text(
+                  "تیم مافیا از بین شلیک شب و حس ششم یک گزینه را انتخاب کند.",
+                  style: TextStyle(color: AppColors.brownColor, fontSize: 12),
                 ),
               ),
             ),
-            Opacity(
-              opacity: ableToSixthSense ? 1 : 0.6,
-              child: MaterialButton(
-                onPressed: ableToSixthSense ? sixthSense : () {},
-                color: AppColors.brownColor,
-                child: Text(
-                  "حس ششم",
-                  style: TextStyle(
-                    color: Theme.of(context).colorScheme.inversePrimary,
-                    fontWeight: FontWeight.bold,
+            Spacer(
+              flex: 1,
+            ),
+            Expanded(
+              flex: 2,
+              child: Row(
+                children: [
+                  Spacer(
+                    flex: 10,
                   ),
-                ),
+                  Expanded(
+                    flex: 16,
+                    child: Opacity(
+                      opacity: ableToSixthSense ? 1 : 0.6,
+                      child: MaterialButton(
+                        onPressed: ableToSixthSense ? sixthSense : () {},
+                        color: AppColors.brownColor,
+                        child: Text(
+                          "حس ششم",
+                          style: TextStyle(
+                            color: Theme.of(context).colorScheme.inversePrimary,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 10,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Spacer(
+                    flex: 1,
+                  ),
+                  if ((Scenario.currentScenario as GodfatherScenario)
+                      .doesSaulGoodmanParticipate())
+                    Expanded(
+                      flex: 16,
+                      child: Opacity(
+                        opacity: ableToBuying ? 1 : 0.6,
+                        child: MaterialButton(
+                          onPressed: ableToBuying ? buying : () {},
+                          color: AppColors.brownColor,
+                          child: Text(
+                            "خریداری",
+                            style: TextStyle(
+                              color:
+                                  Theme.of(context).colorScheme.inversePrimary,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 10,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  if (!(Scenario.currentScenario as GodfatherScenario)
+                      .doesSaulGoodmanParticipate())
+                    Expanded(
+                      flex: 16,
+                      child: MaterialButton(
+                        onPressed: shot,
+                        color: AppColors.brownColor,
+                        child: Text(
+                          "شلیک شب",
+                          style: TextStyle(
+                            color: Theme.of(context).colorScheme.inversePrimary,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 10,
+                          ),
+                        ),
+                      ),
+                    ),
+                  Spacer(
+                    flex: 10,
+                  ),
+                ],
               ),
+            ),
+            Spacer(
+              flex: 1,
             ),
             if ((Scenario.currentScenario as GodfatherScenario)
                 .doesSaulGoodmanParticipate())
-              Opacity(
-                opacity: ableToBuying ? 1 : 0.6,
+              Expanded(
+                flex: 2,
                 child: MaterialButton(
-                  onPressed: ableToBuying ? buying : () {},
+                  onPressed: shot,
                   color: AppColors.brownColor,
                   child: Text(
-                    "خریداری",
+                    "شلیک شب",
                     style: TextStyle(
                       color: Theme.of(context).colorScheme.inversePrimary,
                       fontWeight: FontWeight.bold,
+                      fontSize: 10,
                     ),
                   ),
                 ),
               ),
+            Spacer(
+              flex: 5,
+            ),
           ],
         ),
       ),

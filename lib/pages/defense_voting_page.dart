@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:mafia_killer/components/call_role.dart';
+import 'package:mafia_killer/components/information_dialogbox.dart';
 import 'package:mafia_killer/components/message_box.dart';
 import 'package:mafia_killer/components/page_frame.dart';
 import 'package:mafia_killer/components/voting_tile.dart';

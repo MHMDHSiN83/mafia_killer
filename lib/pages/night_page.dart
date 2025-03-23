@@ -87,7 +87,6 @@ class _NightPageState extends State<NightPage> {
           onSave: () {
             AudioManager.playClickEffect();
             NightPage.targetPlayer = player;
-
             Navigator.of(context).pop();
             setState(() {
               if (iterator.moveNext()) {
@@ -230,7 +229,6 @@ class _NightPageState extends State<NightPage> {
             // resetNight();
             AudioManager.playNextPageEffect();
             Navigator.pushNamed(context, '/night_events_page');
-            
           } else {
             customSnackBar(context, 'تمام اکت‌های شب باید انجام بشه', true);
           }
