@@ -9,7 +9,7 @@ import 'package:mafia_killer/utils/custom_snackbar.dart';
 class LastMoveCardSelectionTile extends StatefulWidget {
   LastMoveCardSelectionTile(
       {super.key, required this.lastMoveCard, required this.counter});
-  LastMoveCard lastMoveCard;
+  final LastMoveCard lastMoveCard;
   int counter;
   @override
   State<LastMoveCardSelectionTile> createState() =>
@@ -17,30 +17,7 @@ class LastMoveCardSelectionTile extends StatefulWidget {
 }
 
 class _LastMoveCardSelectionTileState extends State<LastMoveCardSelectionTile> {
-  // Color determineColor() {
-  //   Color color;
-  //   switch (widget.role.roleSide) {
-  //     case RoleSide.mafia:
-  //       color = AppColors.redColor;
-  //       break;
-  //     case RoleSide.citizen:
-  //       color = AppColors.darkgreenColor;
-
-  //       break;
-  //     case RoleSide.independant:
-  //       color = const Color(0xFFFEE604);
-
-  //       break;
-  //   }
-  //   return color;
-  // }
-
   void increaseNumber() {
-    // TODO
-    // if (Player.inGamePlayers.length <=
-    //     Scenario.currentScenario.inGameRoles.length) {
-    //   return;
-    // }
     setState(() {
       widget.counter++;
     });

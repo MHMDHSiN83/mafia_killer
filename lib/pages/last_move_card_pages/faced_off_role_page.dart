@@ -14,7 +14,6 @@ class FacedOffRolePage extends StatelessWidget {
 
   Color determineRoleCardBorderColor() {
     Role role = Scenario.currentScenario.killedInDayPlayer!.role!;
-
     if (role.roleSide == RoleSide.citizen) {
       return AppColors.darkgreenColor;
     } else if (role.roleSide == RoleSide.mafia) {
@@ -29,7 +28,7 @@ class FacedOffRolePage extends StatelessWidget {
     return Scaffold(
         resizeToAvoidBottomInset: true,
         body: PageFrame(
-          label: ModalRoute.of(context)!.settings.name!,
+          label: '/faced_off_role_page',
           pageTitle: "نقش جدید",
           leftButtonText: "کارت حرکت آخر",
           rightButtonText:

@@ -28,7 +28,7 @@ class RevealIdentityPage extends StatelessWidget {
     return Scaffold(
         resizeToAvoidBottomInset: true,
         body: PageFrame(
-          label: ModalRoute.of(context)!.settings.name!,
+          label: '/reveal_identity_page',
           pageTitle: "افشای هویت",
           leftButtonText: "کارت حرکت آخر",
           rightButtonText:

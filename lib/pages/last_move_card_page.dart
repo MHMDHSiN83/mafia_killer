@@ -34,7 +34,7 @@ class _LastMoveCardPageState extends State<LastMoveCardPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: PageFrame(
-        label: ModalRoute.of(context)!.settings.name!,
+        label: '/last_move_card_page',
         pageTitle: "کارت حرکت آخر",
         leftButtonText: "قبلی",
         rightButtonText: "بعدی",

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:logger/web.dart';
 import 'package:mafia_killer/components/call_role.dart';
-import 'package:mafia_killer/components/confirmation_box.dart';
-import 'package:mafia_killer/components/dialogbox.dart';
 import 'package:mafia_killer/components/information_dialogbox.dart';
 import 'package:mafia_killer/components/page_frame.dart';
 import 'package:mafia_killer/components/player_tile.dart';
@@ -19,7 +18,7 @@ class PlayersPage extends StatefulWidget {
 }
 
 class _PlayersPageState extends State<PlayersPage>
-    with SingleTickerProviderStateMixin {
+ {
   final TextEditingController _controller = TextEditingController();
   void addPlayer() {
     setState(() {
@@ -44,7 +43,6 @@ class _PlayersPageState extends State<PlayersPage>
     });
   }
 
-  late AnimationController _textFieldController;
   final FocusNode _focusNode = FocusNode();
   bool isTextFieldFocused = false;
 
@@ -63,13 +61,13 @@ class _PlayersPageState extends State<PlayersPage>
   void dispose() {
     _controller.dispose();
     _focusNode.dispose();
-    _textFieldController.dispose();
 
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    Logger().d("playerespage");
     int numberOfInGamePlayers =
         Player.players.where((x) => x.doesParticipate).length;
     int numberOfPlayers = Player.players.length;
@@ -83,7 +81,7 @@ class _PlayersPageState extends State<PlayersPage>
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         body: PageFrame(
-          label: ModalRoute.of(context)!.settings.name!,
+          label: '/players_page',
           isInGame: false,
           pageTitle: "نام بازیکنان",
           leftButtonText: "صفحه اصلی",
@@ -92,7 +90,12 @@ class _PlayersPageState extends State<PlayersPage>
           rightButtonOnTap: () {
             Player.fetchInGamePlayers();
             AudioManager.playNextPageEffect();
+            Logger().d("uppush");
+            // navigatorKey.currentState!.pushNamed('/game_settings_page');
             Navigator.pushNamed(context, '/game_settings_page');
+            // Navigator.of(context).push(MaterialPageRoute(builder: (context) => GameSettingsPage()));
+            Logger().d("downpush");
+
           },
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,

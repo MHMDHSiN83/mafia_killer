@@ -290,6 +290,10 @@ class GodfatherScenario extends Scenario {
       revivedByConstantine.playerStatus = PlayerStatus.active;
       report.add("${revivedByConstantine.name} متولد شد.");
     }
+
+    if (report.isEmpty) {
+      report.add("توی شبی که گذشت هیچکس کشته نشد!");
+    }
   }
 
   @override

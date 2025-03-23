@@ -4,7 +4,6 @@ import 'package:mafia_killer/components/page_frame.dart';
 import 'package:mafia_killer/components/voting_tile.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/databases/scenario.dart';
-import 'package:mafia_killer/models/player_status.dart';
 import 'package:mafia_killer/utils/custom_snackbar.dart';
 import 'package:mafia_killer/utils/audio_manager.dart';
 
@@ -42,7 +41,7 @@ class _FaceOffPageState extends State<FaceOffPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: PageFrame(
-        label: ModalRoute.of(context)!.settings.name!,
+        label: '/face_off_page',
         pageTitle: "تغییر چهره",
         leftButtonText: "کارت حرکت آخر",
         rightButtonText:

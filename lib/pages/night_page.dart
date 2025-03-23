@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:logger/web.dart';
 import 'package:mafia_killer/components/call_role.dart';
 import 'package:mafia_killer/components/confirmation_box.dart';
 import 'package:mafia_killer/components/mafia_choice_box.dart';
@@ -6,6 +7,7 @@ import 'package:mafia_killer/components/message_box.dart';
 import 'package:mafia_killer/components/night_player_tile.dart';
 import 'package:mafia_killer/components/page_frame.dart';
 import 'package:mafia_killer/components/sixth_sense_box.dart';
+import 'package:mafia_killer/databases/game_state_manager.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/models/player_status.dart';
@@ -185,6 +187,11 @@ class _NightPageState extends State<NightPage> {
 
   @override
   void initState() {
+    GameStateManager.addState(
+        lastMoveCards: Scenario.currentScenario.lastMoveCards,
+        silencedPlayerDuringDay:
+            Scenario.currentScenario.silencedPlayerDuringDay);
+    Logger().d(GameStateManager.gameStates);
     if (Scenario.currentScenario is GodfatherScenario) {
       iterator = Scenario.currentScenario
           .callRolesRegularNight(
@@ -203,7 +210,7 @@ class _NightPageState extends State<NightPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: PageFrame(
-        label: ModalRoute.of(context)!.settings.name!,
+        label: '/night_page',
         pageTitle: 'شب ${Scenario.currentScenario.dayAndNightNumber()}',
         reloadContentOfPage: () {
           setState(() {});
@@ -213,13 +220,14 @@ class _NightPageState extends State<NightPage> {
             "روز ${Scenario.currentScenario.dayAndNightNumber(number: Scenario.currentScenario.dayNumber - 1)}",
         leftButtonOnTap: () {
           Scenario.currentScenario.backToLastStage();
+          GameStateManager.goToPreviousState();
           Navigator.pop(context);
         },
         rightButtonOnTap: () {
           if (NightPage.isNightOver) {
             iterator.moveNext();
             Scenario.currentScenario.goToNextStage();
-            //resetNight();
+            // resetNight();
             AudioManager.playNextPageEffect();
             Navigator.pushNamed(context, '/night_events_page');
             

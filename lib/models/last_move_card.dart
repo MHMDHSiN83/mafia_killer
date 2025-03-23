@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/models/scenarios/godfather/last_move_cards/beautiful_mind.dart';
 import 'package:mafia_killer/models/scenarios/godfather/last_move_cards/face_off.dart';
@@ -40,6 +42,10 @@ class LastMoveCard {
       'imagePath': imagePath,
       'isUsed': isUsed,
     };
+  }
+
+  factory LastMoveCard.copy(LastMoveCard lastMoveCard) {
+    return LastMoveCard.fromJson(jsonDecode(jsonEncode(lastMoveCard.toJson())));
   }
 
   double titleVerticalPadding() {
