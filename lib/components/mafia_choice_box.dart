@@ -16,20 +16,25 @@ class MafiaChoiceBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool ableToSixthSense = (Scenario.currentScenario as GodfatherScenario).ableToSixthSense();
-    bool ableToBuying = (Scenario.currentScenario as GodfatherScenario).ableToBuying();
+    bool ableToSixthSense =
+        (Scenario.currentScenario as GodfatherScenario).ableToSixthSense();
+    bool ableToBuying =
+        (Scenario.currentScenario as GodfatherScenario).ableToBuying();
     return AlertDialog(
-      backgroundColor: Theme.of(context).colorScheme.primary,
+      backgroundColor: Colors.transparent,
       elevation: 10,
-      content: SizedBox(
-        height: 160,
-        width: 250,
+      content: Container(
+        decoration: BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage('lib/images/dialogbox/DialogBoxBg.png'),
+                fit: BoxFit.cover)),
+        height: 240,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             MaterialButton(
               onPressed: shot,
-              color: AppColors.darkgreenColor,
+              color: AppColors.brownColor,
               child: Text(
                 "شلیک شب",
                 style: TextStyle(
@@ -42,7 +47,7 @@ class MafiaChoiceBox extends StatelessWidget {
               opacity: ableToSixthSense ? 1 : 0.6,
               child: MaterialButton(
                 onPressed: ableToSixthSense ? sixthSense : () {},
-                color: AppColors.redColor,
+                color: AppColors.brownColor,
                 child: Text(
                   "حس ششم",
                   style: TextStyle(
@@ -52,12 +57,13 @@ class MafiaChoiceBox extends StatelessWidget {
                 ),
               ),
             ),
-            if ((Scenario.currentScenario as GodfatherScenario).doesSaulGoodmanParticipate())
+            if ((Scenario.currentScenario as GodfatherScenario)
+                .doesSaulGoodmanParticipate())
               Opacity(
                 opacity: ableToBuying ? 1 : 0.6,
                 child: MaterialButton(
                   onPressed: ableToBuying ? buying : () {},
-                  color: AppColors.redColor,
+                  color: AppColors.brownColor,
                   child: Text(
                     "خریداری",
                     style: TextStyle(

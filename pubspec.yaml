@@ -83,6 +83,7 @@ flutter:
     - lib/images/icons/
     - lib/images/last_move_cards/
     - lib/images/endgame/
+    - lib/images/dialogbox/
     - lib/images/
     - lib/images/backgrounds/
     - lib/icons/
