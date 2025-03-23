@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:logger/web.dart';
 import 'package:mafia_killer/components/call_role.dart';
 import 'package:mafia_killer/components/page_frame.dart';
+import 'package:mafia_killer/databases/game_state_manager.dart';
 import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/models/role.dart';
 import 'package:mafia_killer/models/role_side.dart';
@@ -35,6 +37,11 @@ class FacedOffRolePage extends StatelessWidget {
               'شب ${Scenario.currentScenario.dayAndNightNumber(number: Scenario.currentScenario.nightNumber)}',
           leftButtonOnTap: () => Navigator.pop(context),
           rightButtonOnTap: () {
+            Logger().d(Scenario.currentScenario.killedInDayPlayer!.name);
+            Logger().d(FaceOffPage.selectedPlayers[0].name);
+            Logger().d(LastMoveCardPage.selectedLastMoveCard!.title);
+            GameStateManager.addLastMoveCardAction([Scenario.currentScenario.killedInDayPlayer!,
+              FaceOffPage.selectedPlayers[0]], LastMoveCardPage.selectedLastMoveCard!);
             LastMoveCardPage.selectedLastMoveCard!.lastMoveCardAction([
               Scenario.currentScenario.killedInDayPlayer!,
               FaceOffPage.selectedPlayers[0]

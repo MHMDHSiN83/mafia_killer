@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:logger/web.dart';
 import 'package:mafia_killer/components/player_status_tile.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/themes/app_color.dart';
@@ -31,7 +32,13 @@ class _PlayerStatusDialogboxState extends State<PlayerStatusDialogbox> {
                   "متوجه شدم",
                   style: TextStyle(color: AppColors.redColor, fontSize: 17),
                 )),
-          )
+          ),
+          GestureDetector(
+            onTap: () {
+              setState(() {});
+            },
+            child: Text("data"),
+          ),
         ],
         content: Container(
           decoration: const BoxDecoration(

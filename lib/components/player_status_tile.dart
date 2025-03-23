@@ -9,10 +9,9 @@ class PlayerStatusTile extends StatelessWidget {
   final Player player;
 
   String getTileIconPath() {
-    if (player.uiPlayerStatus == UIPlayerStatus.targetable) {
+    if (player.playerStatus == PlayerStatus.active) {
       return 'lib/images/icons/target.png';
-    } else if (player.playerStatus == PlayerStatus.active ||
-        player.playerStatus == PlayerStatus.disable) {
+    } else if (player.playerStatus == PlayerStatus.disable) {
       return 'lib/images/icons/disable.png';
     } else {
       return 'lib/images/icons/skeleton_head.png';

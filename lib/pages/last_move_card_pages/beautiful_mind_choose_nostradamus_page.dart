@@ -3,6 +3,8 @@ import 'package:mafia_killer/components/call_role.dart';
 import 'package:mafia_killer/components/message_box.dart';
 import 'package:mafia_killer/components/page_frame.dart';
 import 'package:mafia_killer/components/voting_tile.dart';
+import 'package:mafia_killer/databases/game_settings.dart';
+import 'package:mafia_killer/databases/game_state_manager.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/models/player_status.dart';
@@ -10,6 +12,7 @@ import 'package:mafia_killer/models/scenarios/godfather/last_move_cards/beautifu
 import 'package:mafia_killer/pages/last_move_card_page.dart';
 import 'package:mafia_killer/utils/custom_snackbar.dart';
 import 'package:mafia_killer/utils/audio_manager.dart';
+import 'package:mafia_killer/utils/game_state.dart';
 
 class BeautifulMindChooseNostradamusPage extends StatefulWidget {
   const BeautifulMindChooseNostradamusPage({super.key});
@@ -60,6 +63,7 @@ class _BeautifulMindChooseNostradamusPageState
           if (isConfirmed && selectedPlayers.length == 1) {
             selectedPlayers.insert(
                 0, Scenario.currentScenario.killedInDayPlayer!);
+            GameStateManager.addLastMoveCardAction(selectedPlayers, LastMoveCardPage.selectedLastMoveCard!);
             LastMoveCardPage.selectedLastMoveCard!
                 .lastMoveCardAction(selectedPlayers);
 

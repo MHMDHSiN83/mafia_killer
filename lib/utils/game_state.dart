@@ -10,4 +10,5 @@ class GameState {
   int remainingInquiry;
   List<String> nightReport;
   List<Player> silencedPlayerDuringDay;
+  
 }
