@@ -13,11 +13,11 @@ class NewInquiryDialogbox extends StatelessWidget {
       content: Container(
         decoration: BoxDecoration(
             image: DecorationImage(
-                scale: 0.5,
+                //scale: 0.5,
                 image: AssetImage('lib/images/dialogbox/DialogBoxBg.png'),
                 fit: BoxFit.cover)),
-        height: 250,
-        width: 700,
+        height: 240,
+        width: 650,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
