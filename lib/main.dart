@@ -25,7 +25,6 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 
 // final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
-
 void main() {
   runApp(
     const Directionality(
@@ -79,6 +78,7 @@ class MyApp extends StatelessWidget {
         '/silence_of_the_lambs_page': (context) => SilenceOfTheLambsPage(),
         '/beautiful_mind_choose_nostradamus_page': (context) =>
             BeautifulMindChooseNostradamusPage(),
+        '/end_game_page': (context) => EndGamePage(),
       },
     );
   }
