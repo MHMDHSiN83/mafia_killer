@@ -5,6 +5,7 @@ import 'package:mafia_killer/components/voting_tile.dart';
 import 'package:mafia_killer/databases/game_state_manager.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/databases/scenario.dart';
+import 'package:mafia_killer/models/player_status.dart';
 import 'package:mafia_killer/pages/last_move_card_page.dart';
 import 'package:mafia_killer/utils/audio_manager.dart';
 
@@ -16,10 +17,19 @@ class SilenceOfTheLambsPage extends StatefulWidget {
 }
 
 class _SilenceOfTheLambsPageState extends State<SilenceOfTheLambsPage> {
+  bool isTwoSilenced = (Player.inGamePlayers
+              .where((player) =>
+                  player.playerStatus != PlayerStatus.dead &&
+                  player.playerStatus != PlayerStatus.removed)
+              .length -
+          1 >
+      ((Player.inGamePlayers.length + 1) ~/ 2));
+
   void addPlayer(Player player) {
     setState(() {
       widget.selectedPlayers.add(player);
-      if (widget.selectedPlayers.length == 3) {
+      if ((widget.selectedPlayers.length == 3 && isTwoSilenced) ||
+          (widget.selectedPlayers.length == 2 && !isTwoSilenced)) {
         widget.selectedPlayers.removeAt(0);
       }
     });
@@ -47,17 +57,26 @@ class _SilenceOfTheLambsPageState extends State<SilenceOfTheLambsPage> {
             'شب ${Scenario.currentScenario.dayAndNightNumber(number: Scenario.currentScenario.nightNumber)}',
         leftButtonOnTap: () => Navigator.pop(context),
         rightButtonOnTap: () {
-          if (widget.selectedPlayers.length == 2) {
+          if ((widget.selectedPlayers.length == 2 && isTwoSilenced) ||
+              (widget.selectedPlayers.length == 1 && !isTwoSilenced)) {
             // widget.selectedPlayers.insert(0, killedInDayPlayer);
             GameStateManager.addLastMoveCardAction(
                 [Scenario.currentScenario.killedInDayPlayer!],
                 LastMoveCardPage.selectedLastMoveCard!);
-            LastMoveCardPage.selectedLastMoveCard!.lastMoveCardAction([
-              Player.getPlayerByName(
-                  Scenario.currentScenario.killedInDayPlayer!.name),
-              Player.getPlayerByName(widget.selectedPlayers[0].name),
-              Player.getPlayerByName(widget.selectedPlayers[1].name)
-            ]);
+            if (isTwoSilenced) {
+              LastMoveCardPage.selectedLastMoveCard!.lastMoveCardAction([
+                Player.getPlayerByName(
+                    Scenario.currentScenario.killedInDayPlayer!.name),
+                Player.getPlayerByName(widget.selectedPlayers[0].name),
+                Player.getPlayerByName(widget.selectedPlayers[1].name)
+              ]);
+            } else {
+              LastMoveCardPage.selectedLastMoveCard!.lastMoveCardAction([
+                Player.getPlayerByName(
+                    Scenario.currentScenario.killedInDayPlayer!.name),
+                Player.getPlayerByName(widget.selectedPlayers[0].name),
+              ]);
+            }
 
             Scenario.currentScenario.goToNextStage();
 
@@ -107,7 +126,7 @@ class _SilenceOfTheLambsPageState extends State<SilenceOfTheLambsPage> {
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: CallRole(
                   text:
-                      "${killedInDayPlayer.name} دو نفرو انتخاب کن که فردا صبح ساکت باشن.",
+                      "${killedInDayPlayer.name} ${(isTwoSilenced) ? "دو" : "یک"} نفرو انتخاب کن که فردا صبح ساکت باشن.",
                   buttonText: "",
                   onPressed: () {},
                 ),
