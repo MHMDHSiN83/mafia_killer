@@ -108,6 +108,7 @@ class _NightPageState extends State<NightPage> {
       context: context,
       builder: (context) {
         return SixthSenseBox(
+          player: player,
           guessedRight: () {
             NightPage.targetPlayer = player;
             Navigator.of(context).pop();
