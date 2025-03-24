@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mafia_killer/components/call_role.dart';
-import 'package:mafia_killer/components/message_box.dart';
+import 'package:mafia_killer/components/dialogboxes/message_dialogbox.dart';
 import 'package:mafia_killer/components/page_frame.dart';
 import 'package:mafia_killer/components/voting_tile.dart';
 import 'package:mafia_killer/databases/game_settings.dart';
@@ -63,7 +63,8 @@ class _BeautifulMindChooseNostradamusPageState
           if (isConfirmed && selectedPlayers.length == 1) {
             selectedPlayers.insert(
                 0, Scenario.currentScenario.killedInDayPlayer!);
-            GameStateManager.addLastMoveCardAction(selectedPlayers, LastMoveCardPage.selectedLastMoveCard!);
+            GameStateManager.addLastMoveCardAction(
+                selectedPlayers, LastMoveCardPage.selectedLastMoveCard!);
             LastMoveCardPage.selectedLastMoveCard!
                 .lastMoveCardAction(selectedPlayers);
             Scenario.currentScenario.goToNextStage();
@@ -131,7 +132,7 @@ class _BeautifulMindChooseNostradamusPageState
                                 .lastMoveCardMessage(selectedPlayers);
                             isConfirmed = true;
                             selectedPlayers.removeAt(0);
-                            return MessageBox(
+                            return MessageDialogbox(
                                 onSave: () {
                                   Navigator.pop(context);
                                 },

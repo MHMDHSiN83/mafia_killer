@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mafia_killer/components/confirmation_box.dart';
+import 'package:mafia_killer/components/dialogboxes/confirmation_dialogbox.dart';
 import 'package:mafia_killer/components/remove_player_tile.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/models/player_status.dart';
@@ -70,7 +70,7 @@ class _RemovePlayerDialogboxState extends State<RemovePlayerDialogbox> {
                   confirmAction: () {
                     showDialog(
                         context: context,
-                        builder: (context) => ConfirmationBox(onSave: () {
+                        builder: (context) => ConfirmationDialogbox(onSave: () {
                               AudioManager.playDeleteEffect();
                               Navigator.pop(context);
                               setState(() {

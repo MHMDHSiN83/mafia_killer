@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:logger/web.dart';
 import 'package:mafia_killer/components/call_role.dart';
-import 'package:mafia_killer/components/confirmation_box.dart';
-import 'package:mafia_killer/components/mafia_choice_box.dart';
-import 'package:mafia_killer/components/message_box.dart';
+import 'package:mafia_killer/components/dialogboxes/confirmation_dialogbox.dart';
+import 'package:mafia_killer/components/dialogboxes/mafia_choice_dialogbox.dart';
+import 'package:mafia_killer/components/dialogboxes/message_dialogbox.dart';
 import 'package:mafia_killer/components/night_player_tile.dart';
 import 'package:mafia_killer/components/page_frame.dart';
-import 'package:mafia_killer/components/sixth_sense_box.dart';
+import 'package:mafia_killer/components/dialogboxes/sixth_sense_dialogbox.dart';
 import 'package:mafia_killer/databases/game_state_manager.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/databases/scenario.dart';
@@ -38,7 +38,7 @@ class _NightPageState extends State<NightPage> {
     showDialog(
       context: context,
       builder: (context) {
-        return MafiaChoiceBox(
+        return MafiaChoiceDialogbox(
           shot: () {
             AudioManager.playClickEffect();
             setState(() {
@@ -83,7 +83,7 @@ class _NightPageState extends State<NightPage> {
     showDialog(
       context: context,
       builder: (context) {
-        return ConfirmationBox(
+        return ConfirmationDialogbox(
           onSave: () {
             AudioManager.playClickEffect();
             NightPage.targetPlayer = player;
@@ -107,7 +107,7 @@ class _NightPageState extends State<NightPage> {
     showDialog(
       context: context,
       builder: (context) {
-        return SixthSenseBox(
+        return SixthSenseDialogbox(
           player: player,
           guessedRight: () {
             NightPage.targetPlayer = player;
@@ -141,7 +141,7 @@ class _NightPageState extends State<NightPage> {
     showDialog(
       context: context,
       builder: (context) {
-        return MessageBox(
+        return MessageDialogbox(
           message: message,
           onSave: () {
             Navigator.of(context).pop();
@@ -270,7 +270,7 @@ class _NightPageState extends State<NightPage> {
                   onPressed: () {
                     showDialog(
                       context: context,
-                      builder: (context) => ConfirmationBox(
+                      builder: (context) => ConfirmationDialogbox(
                         onSave: () {
                           AudioManager.playClickEffect();
                           setState(() {

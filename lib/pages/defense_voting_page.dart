@@ -2,8 +2,8 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:mafia_killer/components/call_role.dart';
-import 'package:mafia_killer/components/information_dialogbox.dart';
-import 'package:mafia_killer/components/message_box.dart';
+import 'package:mafia_killer/components/dialogboxes/information_dialogbox.dart';
+import 'package:mafia_killer/components/dialogboxes/message_dialogbox.dart';
 import 'package:mafia_killer/components/page_frame.dart';
 import 'package:mafia_killer/components/voting_tile.dart';
 import 'package:mafia_killer/databases/player.dart';
@@ -140,7 +140,7 @@ class _DefenseVotingPageState extends State<DefenseVotingPage> {
                     showDialog(
                       context: context,
                       builder: (context) {
-                        return MessageBox(
+                        return MessageDialogbox(
                           message:
                               'حالا دو نفر رو انتخاب کن بعدی رو بزن تا به صورت تصادفی یه نفر بره به مرحله کارت حرکت آخر',
                           onSave: () => Navigator.of(context).pop(),

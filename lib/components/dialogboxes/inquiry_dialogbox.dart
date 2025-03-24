@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mafia_killer/themes/app_color.dart';
 
-class InquiryDialog extends StatelessWidget {
-  const InquiryDialog({
+class InquiryDialogbox extends StatelessWidget {
+  const InquiryDialogbox({
     super.key,
     required this.child,
   });

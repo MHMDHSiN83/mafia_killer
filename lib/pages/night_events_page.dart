@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mafia_killer/components/inquiry_dialog.dart';
+import 'package:mafia_killer/components/dialogboxes/inquiry_dialogbox.dart';
+import 'package:mafia_killer/components/dialogboxes/new_inquiry_dialogbox.dart';
 import 'package:mafia_killer/components/night_event_tile.dart';
 import 'package:mafia_killer/components/page_frame.dart';
 import 'package:mafia_killer/databases/game_settings.dart';
@@ -50,52 +51,54 @@ class _NightEventsPage extends State<NightEventsPage> {
         barrierDismissible: false,
         context: context,
         builder: (context) {
-          return InquiryDialog(
-            child: Column(
-              children: [
-                Text(
-                  '${Scenario.currentScenario.numberOfDeadPlayersBySide(RoleSide.citizen)} شهروند',
-                  style: TextStyle(
-                    fontSize: 20,
-                    color: Theme.of(context).colorScheme.inversePrimary,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Text(
-                  '${Scenario.currentScenario.numberOfDeadPlayersBySide(RoleSide.mafia)} مافیا',
-                  style: TextStyle(
-                    fontSize: 20,
-                    color: Theme.of(context).colorScheme.inversePrimary,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Text(
-                  '${Scenario.currentScenario.numberOfDeadPlayersBySide(RoleSide.independant)} نوستراداموس',
-                  style: TextStyle(
-                    fontSize: 20,
-                    color: Theme.of(context).colorScheme.inversePrimary,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Text(
-                  'از بازی خارج شدند.',
-                  style: TextStyle(
-                    fontSize: 20,
-                    color: Theme.of(context).colorScheme.inversePrimary,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
-            ),
+          return NewInquiryDialogbox(
+            inquiry:
+                "${Language.toPersian(Scenario.currentScenario.numberOfDeadPlayersBySide(RoleSide.citizen).toString())} شهروند | ${Language.toPersian(Scenario.currentScenario.numberOfDeadPlayersBySide(RoleSide.mafia).toString())} مافیا | ${Language.toPersian(Scenario.currentScenario.numberOfDeadPlayersBySide(RoleSide.independant).toString())} نوستراداموس \n از بازی خارج شدند.",
+            // child: Column(
+            //   children: [
+            //     Text(
+            //       '${Scenario.currentScenario.numberOfDeadPlayersBySide(RoleSide.citizen)} شهروند',
+            //       style: TextStyle(
+            //         fontSize: 20,
+            //         color: Theme.of(context).colorScheme.inversePrimary,
+            //         fontWeight: FontWeight.bold,
+            //       ),
+            //     ),
+            //     const SizedBox(
+            //       height: 10,
+            //     ),
+            //     Text(
+            //       '${Scenario.currentScenario.numberOfDeadPlayersBySide(RoleSide.mafia)} مافیا',
+            //       style: TextStyle(
+            //         fontSize: 20,
+            //         color: Theme.of(context).colorScheme.inversePrimary,
+            //         fontWeight: FontWeight.bold,
+            //       ),
+            //     ),
+            //     const SizedBox(
+            //       height: 10,
+            //     ),
+            //     Text(
+            //       '${Scenario.currentScenario.numberOfDeadPlayersBySide(RoleSide.independant)} نوستراداموس',
+            //       style: TextStyle(
+            //         fontSize: 20,
+            //         color: Theme.of(context).colorScheme.inversePrimary,
+            //         fontWeight: FontWeight.bold,
+            //       ),
+            //     ),
+            //     const SizedBox(
+            //       height: 10,
+            //     ),
+            //     Text(
+            //       'از بازی خارج شدند.',
+            //       style: TextStyle(
+            //         fontSize: 20,
+            //         color: Theme.of(context).colorScheme.inversePrimary,
+            //         fontWeight: FontWeight.bold,
+            //       ),
+            //     ),
+            //   ],
+            // ),
           );
         },
       );
@@ -119,7 +122,8 @@ class _NightEventsPage extends State<NightEventsPage> {
           GameStateManager.addState(
               lastMoveCards: Scenario.currentScenario.lastMoveCards,
               silencedPlayerDuringDay:
-                  Scenario.currentScenario.silencedPlayerDuringDay, nightReport: Scenario.currentScenario.report);
+                  Scenario.currentScenario.silencedPlayerDuringDay,
+              nightReport: Scenario.currentScenario.report);
           Scenario.currentScenario.resetDataAfterNight();
           if (Scenario.currentScenario.isGameOver()) {
             AudioManager.playNextPageEffect();

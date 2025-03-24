@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mafia_killer/components/call_role.dart';
-import 'package:mafia_killer/components/confirmation_box.dart';
+import 'package:mafia_killer/components/dialogboxes/confirmation_dialogbox.dart';
 import 'package:mafia_killer/components/intro_night_player_tile.dart';
-import 'package:mafia_killer/components/nostradamus_box.dart';
+import 'package:mafia_killer/components/dialogboxes/nostradamus_dialogbox.dart';
 import 'package:mafia_killer/components/page_frame.dart';
 import 'package:mafia_killer/databases/game_settings.dart';
 import 'package:mafia_killer/databases/game_state_manager.dart';
@@ -60,7 +60,7 @@ class _IntroNightPageState extends State<IntroNightPage> {
     showDialog(
       context: context,
       builder: (context) {
-        return NostradamusBox(
+        return NostradamusDialogbox(
           mafiaNumber: mafiaNumber,
           chooseSide: (RoleSide roleSide) {
             (Player.getPlayerByRoleType(Nostradamus)!.role as Nostradamus)
@@ -143,7 +143,8 @@ class _IntroNightPageState extends State<IntroNightPage> {
                 isDefense: false,
               ),
             );
-            GameStateManager.addState(lastMoveCards: Scenario.currentScenario.lastMoveCards);
+            GameStateManager.addState(
+                lastMoveCards: Scenario.currentScenario.lastMoveCards);
           } else {
             customSnackBar(context, 'تمام اکت‌های شب باید انجام بشه', true);
           }
@@ -163,7 +164,7 @@ class _IntroNightPageState extends State<IntroNightPage> {
                   onPressed: () {
                     showDialog(
                       context: context,
-                      builder: (context) => ConfirmationBox(
+                      builder: (context) => ConfirmationDialogbox(
                         onSave: () {
                           AudioManager.playClickEffect();
                           setState(() {

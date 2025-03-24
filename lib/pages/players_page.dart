@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:logger/web.dart';
 import 'package:mafia_killer/components/call_role.dart';
-import 'package:mafia_killer/components/information_dialogbox.dart';
+import 'package:mafia_killer/components/dialogboxes/information_dialogbox.dart';
 import 'package:mafia_killer/components/page_frame.dart';
 import 'package:mafia_killer/components/player_tile.dart';
 import 'package:mafia_killer/databases/player.dart';
