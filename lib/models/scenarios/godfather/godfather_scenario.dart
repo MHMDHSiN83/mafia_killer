@@ -311,7 +311,7 @@ class GodfatherScenario extends Scenario {
       }
     }
 
-    if (mafiaCounter == 0 || mafiaCounter == citizenCounter) {
+    if (mafiaCounter == 0 || mafiaCounter >= citizenCounter) {
       return true;
     }
     return false;

@@ -81,6 +81,9 @@ class _GameSettingsPageState extends State<GameSettingsPage> {
         leftButtonText: "بازیکنان",
         leftButtonOnTap: () => Navigator.pop(context),
         rightButtonOnTap: () {
+          // TODO: this function should be optimized
+          Scenario.currentScenario.resetScenarioDataBeforeGame();
+          
           GameSettings.updateSettings(
               GameSettings.currentGameSettings, newGameSettings);
           Scenario.currentScenario.getRecommendedScenario();

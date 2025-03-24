@@ -491,4 +491,13 @@ class Scenario {
       }
     });
   }
+
+  // TODO: this should be removed
+  void resetScenarioDataBeforeGame(){
+    nightEvents = {};
+    defendingPlayers = [];
+    killedInDayPlayer = null;
+    silencedPlayerDuringDay = [];
+    report = [];
+  }
 }

@@ -165,9 +165,7 @@ class Player extends ChangeNotifier {
   }
 
   static Player getPlayerByName(String name) {
-    return inGamePlayers
-        .where((player) => player.name == name)
-        .first;
+    return inGamePlayers.where((player) => player.name == name).first;
   }
 
   static bool doesNameExist(String name) {
