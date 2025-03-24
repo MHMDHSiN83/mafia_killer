@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:logger/web.dart';
 import 'package:mafia_killer/components/page_frame.dart';
 import 'package:mafia_killer/components/voting_tile.dart';
 import 'package:mafia_killer/databases/game_settings.dart';

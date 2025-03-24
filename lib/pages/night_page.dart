@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:logger/web.dart';
 import 'package:mafia_killer/components/call_role.dart';
 import 'package:mafia_killer/components/dialogboxes/confirmation_dialogbox.dart';
 import 'package:mafia_killer/components/dialogboxes/mafia_choice_dialogbox.dart';
@@ -212,7 +211,6 @@ class _NightPageState extends State<NightPage> {
         lastMoveCards: Scenario.currentScenario.lastMoveCards,
         silencedPlayerDuringDay:
             Scenario.currentScenario.silencedPlayerDuringDay);
-    Logger().d(GameStateManager.gameStates);
     if (Scenario.currentScenario is GodfatherScenario) {
       iterator = Scenario.currentScenario
           .callRolesRegularNight(
@@ -243,12 +241,12 @@ class _NightPageState extends State<NightPage> {
           Scenario.currentScenario.backToLastStage();
           GameStateManager.goToPreviousState();
           Navigator.pop(context);
+          resetNight();
         },
         rightButtonOnTap: () {
           if (NightPage.isNightOver) {
             iterator.moveNext();
             Scenario.currentScenario.goToNextStage();
-            // resetNight();
             AudioManager.playNextPageEffect();
             Navigator.pushNamed(context, '/night_events_page');
           } else {

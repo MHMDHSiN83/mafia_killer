@@ -31,6 +31,11 @@ class Handcuffs extends LastMoveCard {
       players[i].playerStatus = PlayerStatus.disable;
     }
     players[0].playerStatus = PlayerStatus.dead;
-    
+  }
+
+  @override
+  void undoLastMoveCardAction(List<Player> players) {
+    players[0].playerStatus = PlayerStatus.active;
+    players[1].playerStatus = PlayerStatus.active;
   }
 }

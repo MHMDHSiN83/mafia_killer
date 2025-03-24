@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:logger/web.dart';
+
 import 'package:mafia_killer/components/call_role.dart';
 import 'package:mafia_killer/components/dialogboxes/information_dialogbox.dart';
 import 'package:mafia_killer/components/page_frame.dart';
@@ -67,7 +67,6 @@ class _PlayersPageState extends State<PlayersPage>
 
   @override
   Widget build(BuildContext context) {
-    Logger().d("playerespage");
     int numberOfInGamePlayers =
         Player.players.where((x) => x.doesParticipate).length;
     int numberOfPlayers = Player.players.length;
@@ -93,11 +92,7 @@ class _PlayersPageState extends State<PlayersPage>
             
             Player.fetchInGamePlayers();
             AudioManager.playNextPageEffect();
-            Logger().d("uppush");
-            // navigatorKey.currentState!.pushNamed('/game_settings_page');
             Navigator.pushNamed(context, '/game_settings_page');
-            // Navigator.of(context).push(MaterialPageRoute(builder: (context) => GameSettingsPage()));
-            Logger().d("downpush");
 
           },
           child: Column(
@@ -215,7 +210,6 @@ class _PlayersPageState extends State<PlayersPage>
                                     Navigator.of(context).pop();
                                   });
                             }).then((_) {
-                          print("dialog dismissed!");
                           _focusNode.unfocus();
                         });
                       },

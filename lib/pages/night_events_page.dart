@@ -117,7 +117,12 @@ class _NightEventsPage extends State<NightEventsPage> {
             "شب ${Scenario.currentScenario.dayAndNightNumber(number: Scenario.currentScenario.nightNumber - 1)}",
         rightButtonText:
             "روز ${Scenario.currentScenario.dayAndNightNumber(number: Scenario.currentScenario.dayNumber)}",
-        leftButtonOnTap: () => Navigator.pop(context),
+        leftButtonOnTap: () {
+          if(doesPressInquiry) {
+            GameSettings.currentGameSettings.inquiry += 1;
+          }
+          Navigator.pop(context);
+        },
         rightButtonOnTap: () {
           GameStateManager.addState(
               lastMoveCards: Scenario.currentScenario.lastMoveCards,

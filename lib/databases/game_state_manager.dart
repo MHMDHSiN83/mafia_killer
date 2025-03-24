@@ -1,15 +1,7 @@
-import 'package:logger/logger.dart';
 import 'package:mafia_killer/databases/game_settings.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/models/last_move_card.dart';
-import 'package:mafia_killer/models/player_status.dart';
-import 'package:mafia_killer/models/scenarios/godfather/last_move_cards/beautiful_mind.dart';
-import 'package:mafia_killer/models/scenarios/godfather/last_move_cards/face_off.dart';
-import 'package:mafia_killer/models/scenarios/godfather/last_move_cards/handcuffs.dart';
-import 'package:mafia_killer/models/scenarios/godfather/last_move_cards/reveal_identity.dart';
-import 'package:mafia_killer/models/scenarios/godfather/last_move_cards/silence_of_the_lambs.dart';
-import 'package:mafia_killer/pages/last_move_card_pages/beautiful_mind_choose_nostradamus_page.dart';
 import 'package:mafia_killer/utils/game_state.dart';
 import 'package:mafia_killer/utils/last_move_card_action.dart';
 
@@ -25,13 +17,15 @@ class GameStateManager {
   }) {
     List<Player> statePlayers = [];
     List<LastMoveCard> stateLastMoveCards = [];
+    List<Player> stateSilencedPlayerDuringDay = [];
+    Player? stateKilledInDayPlayer;
+    if (Scenario.currentScenario.killedInDayPlayer != null) {
+      stateKilledInDayPlayer =
+          Player.copy(Scenario.currentScenario.killedInDayPlayer!);
+    }
+
     for (Player p in Player.inGamePlayers) {
       statePlayers.add(Player.copy(p));
-      if(p.name == 'سجاد') {
-        Logger().d('this is test:');
-
-        Logger().d(p.playerStatus);
-      }
     }
     nightReport ??= [];
     if (lastMoveCards != null) {
@@ -40,13 +34,21 @@ class GameStateManager {
       }
     }
 
-    silencedPlayerDuringDay ??= [];
+    if (silencedPlayerDuringDay != null) {
+      for (Player p in silencedPlayerDuringDay) {
+        stateSilencedPlayerDuringDay.add(Player.copy(p));
+      }
+    } else {
+      stateSilencedPlayerDuringDay = [];
+    }
+
     GameState gameState = GameState(
         statePlayers,
         GameSettings.currentGameSettings.inquiry,
         nightReport,
         stateLastMoveCards,
-        silencedPlayerDuringDay);
+        stateKilledInDayPlayer,
+        stateSilencedPlayerDuringDay);
     gameStates[currentState] = gameState;
     goToNextState();
   }
@@ -85,10 +87,11 @@ class GameStateManager {
     GameSettings.currentGameSettings.inquiry =
         gameStates[currentState]!.remainingInquiry;
     Scenario.currentScenario.report = gameStates[currentState]!.nightReport;
+    Scenario.currentScenario.killedInDayPlayer =
+        gameStates[currentState]!.killedInDayPlayer;
     Scenario.currentScenario.silencedPlayerDuringDay =
         gameStates[currentState]!.silencedPlayerDuringDay;
     undoLastMoveCardAction();
-
   }
 
   static void addLastMoveCardAction(
@@ -102,33 +105,15 @@ class GameStateManager {
     LastMoveCard stateLastMoveCard = LastMoveCard.copy(lastMoveCard);
     lastMoveCardActions[currentState] =
         LastMoveCardAction(statePlayers, stateLastMoveCard);
-    Logger().d(currentState);
   }
 
   static void undoLastMoveCardAction() {
-    Logger().d("11111111111");
     if (lastMoveCardActions.containsKey(currentState)) {
-    Logger().d("222222222222");
-
       LastMoveCardAction lastMoveCardAction =
           lastMoveCardActions[currentState]!;
-      if (lastMoveCardAction.lastMoveCard is BeautifulMind) {
-
-      } else if (lastMoveCardAction.lastMoveCard is FaceOff) {
-        Logger().d("testtttttttttttttttt");
-        for (Player p in Player.inGamePlayers) {
-          if (p.name == lastMoveCardAction.players[0].name) {
-            p.role = lastMoveCardAction.players[0].role;
-            p.playerStatus = PlayerStatus.active;
-          }
-          if (p.name == lastMoveCardAction.players[1].name) {
-            p.role = lastMoveCardAction.players[1].role;
-            p.playerStatus = PlayerStatus.active;
-          }
-        }
-      } else if (lastMoveCardAction.lastMoveCard is Handcuffs) {
-      } else if (lastMoveCardAction.lastMoveCard is RevealIdentity) {
-      } else if (lastMoveCardAction.lastMoveCard is SilenceOfTheLambs) {}
+      lastMoveCardAction.lastMoveCard.undoLastMoveCardAction(
+          Player.getPlayersByName(
+              Player.getPlayerNames(lastMoveCardAction.players)));
       lastMoveCardActions.remove(currentState);
     }
   }

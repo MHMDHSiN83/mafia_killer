@@ -34,4 +34,13 @@ class FaceOff extends LastMoveCard {
     players[1].role = players[0].role!;
     players[0].role = tmp;
   }
+
+  @override
+  void undoLastMoveCardAction(List<Player> players) {
+    Role? temp = players[0].role;
+    players[0].role = players[1].role;
+    players[1].role = temp;
+    players[0].playerStatus = PlayerStatus.active;
+    players[1].playerStatus = PlayerStatus.active;
+  }
 }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mafia_killer/components/call_role.dart';
 import 'package:mafia_killer/components/page_frame.dart';
+import 'package:mafia_killer/databases/game_state_manager.dart';
+import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/models/role.dart';
 import 'package:mafia_killer/models/role_side.dart';
@@ -35,8 +37,14 @@ class RevealIdentityPage extends StatelessWidget {
               'شب ${Scenario.currentScenario.dayAndNightNumber(number: Scenario.currentScenario.nightNumber)}',
           leftButtonOnTap: () => Navigator.pop(context),
           rightButtonOnTap: () {
-            LastMoveCardPage.selectedLastMoveCard!.lastMoveCardAction(
-                [Scenario.currentScenario.killedInDayPlayer!]);
+            GameStateManager.addLastMoveCardAction(
+                [Scenario.currentScenario.killedInDayPlayer!],
+                LastMoveCardPage.selectedLastMoveCard!);
+            LastMoveCardPage.selectedLastMoveCard!.lastMoveCardAction([
+              Player.getPlayerByName(
+                  Scenario.currentScenario.killedInDayPlayer!.name)
+            ]);
+
             Scenario.currentScenario.goToNextStage();
 
             if (Scenario.currentScenario.isGameOver()) {

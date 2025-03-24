@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:logger/web.dart';
 import 'package:mafia_killer/components/player_status_tile.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/themes/app_color.dart';

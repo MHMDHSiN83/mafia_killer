@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:json_annotation/json_annotation.dart';
-import 'package:logger/web.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/models/last_move_card.dart';
@@ -155,13 +154,10 @@ class GodfatherScenario extends Scenario {
         }
         break;
     }
-
-    Logger().d("اینجا");
   }
 
   @override
   Iterable<String> otherRolesAction({Function? noAbilityBox}) sync* {
-    Logger().d("test");
     List<String> constantRoleOrder =
         Scenario.currentScenario.getConstantRoleOrder();
     NightPage.buttonText = 'خوابید';
