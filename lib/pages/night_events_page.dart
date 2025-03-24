@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mafia_killer/components/dialogboxes/inquiry_dialogbox.dart';
 import 'package:mafia_killer/components/dialogboxes/new_inquiry_dialogbox.dart';
 import 'package:mafia_killer/components/night_event_tile.dart';
 import 'package:mafia_killer/components/page_frame.dart';

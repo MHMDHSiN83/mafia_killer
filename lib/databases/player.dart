@@ -170,7 +170,7 @@ class Player extends ChangeNotifier {
 
   static List<Player> getPlayersByName(List<String> names) {
     List<Player> result = [];
-    for (Player p in inGamePlayers) {
+    for (Player p in Player.inGamePlayers) {
       for (String name in names) {
         if (p.name == name) {
           result.add(p);

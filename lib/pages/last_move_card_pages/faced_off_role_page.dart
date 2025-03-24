@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 import 'package:mafia_killer/components/call_role.dart';
 import 'package:mafia_killer/components/page_frame.dart';
 import 'package:mafia_killer/databases/game_state_manager.dart';
@@ -27,6 +28,7 @@ class FacedOffRolePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Logger().d(Scenario.currentScenario.killedInDayPlayer!.name);
     return Scaffold(
         resizeToAvoidBottomInset: true,
         body: PageFrame(

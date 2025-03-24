@@ -239,9 +239,9 @@ class _NightPageState extends State<NightPage> {
             "روز ${Scenario.currentScenario.dayAndNightNumber(number: Scenario.currentScenario.dayNumber - 1)}",
         leftButtonOnTap: () {
           Scenario.currentScenario.backToLastStage();
+          resetNight();
           GameStateManager.goToPreviousState();
           Navigator.pop(context);
-          resetNight();
         },
         rightButtonOnTap: () {
           if (NightPage.isNightOver) {
