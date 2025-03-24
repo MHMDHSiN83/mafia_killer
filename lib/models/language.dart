@@ -25,4 +25,12 @@ class Language {
     final secs = (seconds % 60).toString().padLeft(2, '0');
     return '$minutes:$secs';
   }
+
+  static String trimTextWithZWNJ(String text) {
+    String result = text.trim();
+    result = String.fromCharCodes(
+      result.runes.where((char) => char != 8204),
+    );
+    return result;
+  }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 
 import 'package:mafia_killer/components/call_role.dart';
 import 'package:mafia_killer/components/dialogboxes/information_dialogbox.dart';
@@ -17,12 +18,11 @@ class PlayersPage extends StatefulWidget {
   State<PlayersPage> createState() => _PlayersPageState();
 }
 
-class _PlayersPageState extends State<PlayersPage>
- {
+class _PlayersPageState extends State<PlayersPage> {
   final TextEditingController _controller = TextEditingController();
   void addPlayer() {
     setState(() {
-      String text = _controller.text.trim();
+      String text = Language.trimTextWithZWNJ(_controller.text);
       if (text == "") {
         customSnackBar(context, 'اسم وارد شده نمی‌تونه خالی باشه', false);
       } else if (text.length > 12) {
@@ -89,11 +89,12 @@ class _PlayersPageState extends State<PlayersPage>
           rightButtonOnTap: () {
             // TODO: this function should be optimized
             Player.resetPlayersBeforeGame();
-            
+
             Player.fetchInGamePlayers();
             AudioManager.playNextPageEffect();
+            Logger().d(
+                Player.inGamePlayers[0].name == Player.inGamePlayers[1].name);
             Navigator.pushNamed(context, '/game_settings_page');
-
           },
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
