@@ -165,9 +165,24 @@ class Player extends ChangeNotifier {
   }
 
   static Player getPlayerByName(String name) {
-    return inGamePlayers
-        .where((player) => player.name == name)
-        .first;
+    return inGamePlayers.where((player) => player.name == name).first;
+  }
+
+  static List<Player> getPlayersByName(List<String> names) {
+    List<Player> result = [];
+    for (Player p in inGamePlayers) {
+      for (String name in names) {
+        if (p.name == name) {
+          result.add(p);
+          continue;
+        }
+      }
+    }
+    return result;
+  }
+
+  static List<String> getPlayerNames(List<Player> players) {
+    return players.map((player) => player.name).toList();
   }
 
   static bool doesNameExist(String name) {

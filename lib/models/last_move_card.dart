@@ -73,4 +73,9 @@ class LastMoveCard {
   void lastMoveCardAction(List<Player> players) {
     throw Exception("no action defined for last move card!");
   }
+
+  
+  void undoLastMoveCardAction(List<Player> players) {
+    throw UnimplementedError();
+  }
 }

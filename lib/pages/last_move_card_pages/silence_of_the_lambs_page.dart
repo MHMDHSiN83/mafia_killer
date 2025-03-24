@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mafia_killer/components/call_role.dart';
 import 'package:mafia_killer/components/page_frame.dart';
 import 'package:mafia_killer/components/voting_tile.dart';
+import 'package:mafia_killer/databases/game_state_manager.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/pages/last_move_card_page.dart';
@@ -47,9 +48,17 @@ class _SilenceOfTheLambsPageState extends State<SilenceOfTheLambsPage> {
         leftButtonOnTap: () => Navigator.pop(context),
         rightButtonOnTap: () {
           if (widget.selectedPlayers.length == 2) {
-            widget.selectedPlayers.insert(0, killedInDayPlayer);
-            LastMoveCardPage.selectedLastMoveCard!
-                .lastMoveCardAction(widget.selectedPlayers);
+            // widget.selectedPlayers.insert(0, killedInDayPlayer);
+            GameStateManager.addLastMoveCardAction(
+                [Scenario.currentScenario.killedInDayPlayer!],
+                LastMoveCardPage.selectedLastMoveCard!);
+            LastMoveCardPage.selectedLastMoveCard!.lastMoveCardAction([
+              Player.getPlayerByName(
+                  Scenario.currentScenario.killedInDayPlayer!.name),
+              Player.getPlayerByName(widget.selectedPlayers[0].name),
+              Player.getPlayerByName(widget.selectedPlayers[1].name)
+            ]);
+
             Scenario.currentScenario.goToNextStage();
 
             if (Scenario.currentScenario.isGameOver()) {

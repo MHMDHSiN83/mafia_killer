@@ -44,7 +44,6 @@ class BeautifulMind extends LastMoveCard {
   }
 
   void lastMoveCardMessage(List<Player> players) {
-
     // killed player in day be nostradamus
     if (players[0].name == players[1].name && players[0].role! is Nostradamus) {
       BeautifulMindChooseNostradamusPage.message =
@@ -60,5 +59,14 @@ class BeautifulMind extends LastMoveCard {
       BeautifulMindChooseNostradamusPage.message =
           "${players[1].name} نوستراداموس بازی نیست پس ${players[0].name} از بازی خارج میشود.";
     }
+  }
+
+  @override
+  void undoLastMoveCardAction(List<Player> players) {
+    if (players[0].name == players[1].name && players[0].role! is Nostradamus) {
+      (players[0].role! as Nostradamus).shield = true;
+    }
+    players[0].playerStatus = PlayerStatus.active;
+    players[1].playerStatus = PlayerStatus.active;
   }
 }

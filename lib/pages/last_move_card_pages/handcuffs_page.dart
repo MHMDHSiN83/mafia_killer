@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mafia_killer/components/call_role.dart';
 import 'package:mafia_killer/components/page_frame.dart';
 import 'package:mafia_killer/components/voting_tile.dart';
+import 'package:mafia_killer/databases/game_state_manager.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/pages/last_move_card_page.dart';
@@ -51,9 +52,13 @@ class _HandcuffsPageState extends State<HandcuffsPage> {
         },
         rightButtonOnTap: () {
           if (widget.selectedPlayers.length == 1) {
-            widget.selectedPlayers.insert(0, killedInDayPlayer);
-            LastMoveCardPage.selectedLastMoveCard!
-                .lastMoveCardAction(widget.selectedPlayers);
+            // widget.selectedPlayers.insert(0, killedInDayPlayer);
+            GameStateManager.addLastMoveCardAction([Scenario.currentScenario.killedInDayPlayer!,
+              widget.selectedPlayers[0]], LastMoveCardPage.selectedLastMoveCard!);
+            LastMoveCardPage.selectedLastMoveCard!.lastMoveCardAction([Player.getPlayerByName(Scenario.currentScenario.killedInDayPlayer!.name),
+              Player.getPlayerByName(widget.selectedPlayers[0].name),
+            ]);
+
             Scenario.currentScenario.goToNextStage();
 
             if (Scenario.currentScenario.isGameOver()) {

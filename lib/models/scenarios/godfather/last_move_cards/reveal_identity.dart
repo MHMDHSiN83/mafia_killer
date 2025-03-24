@@ -28,4 +28,9 @@ class RevealIdentity extends LastMoveCard {
   void lastMoveCardAction(List<Player> players) {
     players[0].playerStatus = PlayerStatus.removed;
   }
+
+  @override
+  void undoLastMoveCardAction(List<Player> players) {
+    players[0].playerStatus = PlayerStatus.active;
+  }
 }

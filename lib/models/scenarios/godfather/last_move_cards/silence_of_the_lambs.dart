@@ -36,4 +36,10 @@ class SilenceOfTheLambs extends LastMoveCard {
     }
     players[0].playerStatus = PlayerStatus.dead;
   }
+
+  @override
+  void undoLastMoveCardAction(List<Player> players) {
+    (Scenario.currentScenario as GodfatherScenario).silencedPlayerDuringDay = [];
+    players[0].playerStatus = PlayerStatus.active;
+  }
 }

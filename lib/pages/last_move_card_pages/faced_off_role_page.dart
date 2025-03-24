@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:logger/web.dart';
 import 'package:mafia_killer/components/call_role.dart';
 import 'package:mafia_killer/components/page_frame.dart';
 import 'package:mafia_killer/databases/game_state_manager.dart';
+import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/models/role.dart';
 import 'package:mafia_killer/models/role_side.dart';
@@ -39,9 +39,8 @@ class FacedOffRolePage extends StatelessWidget {
           rightButtonOnTap: () {
             GameStateManager.addLastMoveCardAction([Scenario.currentScenario.killedInDayPlayer!,
               FaceOffPage.selectedPlayers[0]], LastMoveCardPage.selectedLastMoveCard!);
-            LastMoveCardPage.selectedLastMoveCard!.lastMoveCardAction([
-              Scenario.currentScenario.killedInDayPlayer!,
-              FaceOffPage.selectedPlayers[0]
+            LastMoveCardPage.selectedLastMoveCard!.lastMoveCardAction([Player.getPlayerByName(Scenario.currentScenario.killedInDayPlayer!.name),
+              Player.getPlayerByName(FaceOffPage.selectedPlayers[0].name),
             ]);
             Scenario.currentScenario.goToNextStage();
 

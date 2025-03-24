@@ -114,12 +114,18 @@ class _NightEventsPage extends State<NightEventsPage> {
             "شب ${Scenario.currentScenario.dayAndNightNumber(number: Scenario.currentScenario.nightNumber - 1)}",
         rightButtonText:
             "روز ${Scenario.currentScenario.dayAndNightNumber(number: Scenario.currentScenario.dayNumber)}",
-        leftButtonOnTap: () => Navigator.pop(context),
+        leftButtonOnTap: () {
+          if(doesPressInquiry) {
+            GameSettings.currentGameSettings.inquiry += 1;
+          }
+          Navigator.pop(context);
+        },
         rightButtonOnTap: () {
           GameStateManager.addState(
               lastMoveCards: Scenario.currentScenario.lastMoveCards,
               silencedPlayerDuringDay:
-                  Scenario.currentScenario.silencedPlayerDuringDay, nightReport: Scenario.currentScenario.report);
+                  Scenario.currentScenario.silencedPlayerDuringDay,
+              nightReport: Scenario.currentScenario.report);
           Scenario.currentScenario.resetDataAfterNight();
           if (Scenario.currentScenario.isGameOver()) {
             AudioManager.playNextPageEffect();
