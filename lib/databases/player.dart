@@ -63,6 +63,13 @@ class Player extends ChangeNotifier {
       print('File already exists in internal storage');
       String jsonString = await file.readAsString();
       List<dynamic> jsonData = jsonDecode(jsonString);
+      try {
+        jsonData = jsonDecode(jsonString);
+      } catch (e) {
+        String jsonString =
+            await rootBundle.loadString('lib/assets/scenarios.json');
+        jsonData = jsonDecode(jsonString);
+      }
       players = jsonData.map((player) => Player.fromJson(player)).toList();
     }
   }
@@ -145,6 +152,8 @@ class Player extends ChangeNotifier {
     for (Player player in players) {
       player.role = null;
       player.seenRole = false;
+      player.playerStatus = PlayerStatus.active;
+      player.uiPlayerStatus = UIPlayerStatus.targetable;
     }
     Database.writePlayersData(players);
   }
@@ -199,13 +208,5 @@ class Player extends ChangeNotifier {
         .where((p) =>
             (p.playerStatus == PlayerStatus.active && player.name != p.name))
         .toList();
-  }
-
-  static void resetPlayersBeforeGame() {
-    for (Player player in Player.players) {
-      player.playerStatus = PlayerStatus.active;
-      player.uiPlayerStatus = UIPlayerStatus.targetable;
-      player.role = null;
-    }
   }
 }

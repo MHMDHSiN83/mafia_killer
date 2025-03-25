@@ -1,7 +1,10 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:mafia_killer/databases/scenario.dart';
+import 'package:mafia_killer/models/database.dart';
+import 'package:path_provider/path_provider.dart';
 
 part 'game_settings.g.dart';
 
@@ -25,27 +28,38 @@ class GameSettings {
   late bool soundEffect;
   late List<String> narrators;
   static late GameSettings currentGameSettings;
+  static late String filePath;
 
-  static Future<void> getGameSettingsFromDatabase() async {
-    final String jsonString =
-        await rootBundle.loadString('lib/assets/game_settings.json');
-    currentGameSettings = (GameSettings.fromJson(jsonDecode(jsonString)));
+  static Future<String> getFilePath() async {
+    final directory = await getApplicationDocumentsDirectory();
+    return '${directory.path}/game_settings.json';
   }
 
-  // static Future<void> getGameSettingsFromDatabase() async {
-  //   final isar = await IsarService.db;
-  //   currentGameSettings = (await isar.gameSettings.get(1))!;
-  //   currentGameSettings.scenario.loadSync();
-  //   Scenario.currentScenario = currentGameSettings.scenario.value!;
-  // }
-
-  // String get introTime {
-  //   return "0${_introTime.inMinutes}:${_introTime.inSeconds.remainder(60)}";
-  // }
-
-  // String get mainSpeakTime {
-  //   return "0${_mainSpeakTime.inMinutes}:${_mainSpeakTime.inSeconds.remainder(60)}";
-  // }
+  static Future<void> getGameSettingsFromDatabase() async {
+    filePath = await getFilePath();
+    final file = File(filePath);
+    if (!(await file.exists())) {
+      print('Asset copied to $filePath');
+      String jsonString =
+          await rootBundle.loadString('lib/assets/game_settings.json');
+      Map<String, dynamic> jsonData = jsonDecode(jsonString);
+      currentGameSettings = GameSettings.fromJson(jsonData);
+      await file.writeAsString(jsonString);
+    } else {
+      print('Game Settings already exists in internal storage');
+      String jsonString = await file.readAsString();
+      Map<String, dynamic> jsonData;
+      try {
+        jsonData = jsonDecode(jsonString);
+      } catch (e) {
+        print('Error reading game settings, loading default settings.');
+        String defaultJsonString =
+            await rootBundle.loadString('lib/assets/game_settings.json');
+        jsonData = jsonDecode(defaultJsonString);
+      }
+      currentGameSettings = GameSettings.fromJson(jsonData);
+    }
+  }
 
   Map<String, dynamic> getSettingsInMap() {
     return {
@@ -78,15 +92,9 @@ class GameSettings {
     soundEffect = newGameSettings['soundEffect'];
   }
 
-  static Future<void> setDefaultSettings() async {
-    // currentGameSettings = GameSettings();
-    // gameSettings.scenario.value!.roles.loadSync();
-    // final isar = await IsarService.db;
-    // isar.writeTxnSync(() => isar.gameSettings.putSync(currentGameSettings));
-  }
-
   static Future<void> updateSettings(
       GameSettings gameSettings, Map<String, dynamic> newGameSettings) async {
     gameSettings.setNewSettings(newGameSettings);
+    Database.writeGameSettingsData(currentGameSettings);
   }
 }
