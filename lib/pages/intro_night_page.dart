@@ -92,12 +92,7 @@ class _IntroNightPageState extends State<IntroNightPage> {
 
   @override
   void initState() {
-    iterator = Scenario.currentScenario.callRolesIntroNight().iterator;
-    iterator.moveNext();
-    text = iterator.current;
-    for (Player player in Player.inGamePlayers) {
-      playerCheckboxStatus[player] = false;
-    }
+    resetNight();
     AudioManager.playNightMusic();
     super.initState();
   }

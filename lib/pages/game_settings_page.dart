@@ -145,7 +145,7 @@ class _GameSettingsPageState extends State<GameSettingsPage> {
                   child: Text(
                     "به زودی ...",
                     style: TextStyle(
-                      color: Colors.red,
+                      color: AppColors.redColor,
                       fontWeight: FontWeight.bold,
                       fontSize: 16,
                     ),
