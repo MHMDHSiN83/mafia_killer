@@ -28,7 +28,7 @@ class MafiaChoiceDialogbox extends StatelessWidget {
             image: DecorationImage(
                 image: AssetImage('lib/images/dialogbox/DialogBoxBg.png'),
                 fit: BoxFit.cover)),
-        height: 250,
+        height: 240,
         width: 650,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
