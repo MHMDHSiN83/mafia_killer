@@ -31,7 +31,7 @@ class _RoleDistributionPageState extends State<RoleDistributionPage> {
 
   double calculateSizeOfPadding() {
     double width = MediaQuery.of(context).size.width - 100;
-    if (inGamePlayersNumber > 11) {
+    if (inGamePlayersNumber > 8) {
       padding = (width - 11 * circleSize) / 22;
     } else {
       padding = 3;
@@ -73,6 +73,18 @@ class _RoleDistributionPageState extends State<RoleDistributionPage> {
   }
 
   @override
+  void initState() {
+    players = Player.distributeRoles();
+    super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    padding = calculateSizeOfPadding();
+    super.didChangeDependencies();
+  }
+
+  @override
   void dispose() {
     _controller.dispose();
     super.dispose();
@@ -80,7 +92,6 @@ class _RoleDistributionPageState extends State<RoleDistributionPage> {
 
   @override
   Widget build(BuildContext context) {
-    padding = calculateSizeOfPadding();
     return Scaffold(
       body: PageFrame(
         label: '/role_distribution_page',
@@ -103,7 +114,8 @@ class _RoleDistributionPageState extends State<RoleDistributionPage> {
 
             Navigator.pushNamed(context, '/intro_page');
           } else {
-            customSnackBar(context, "هنوز تمام بازیکن ها نقششون رو ندیدند.", true);
+            customSnackBar(
+                context, "هنوز تمام بازیکن ها نقششون رو ندیدند.", true);
           }
         },
         child: Column(
@@ -185,50 +197,25 @@ class _RoleDistributionPageState extends State<RoleDistributionPage> {
               flex: 14,
               child: Container(
                 margin: const EdgeInsets.symmetric(horizontal: 40),
-                child: FutureBuilder(
-                  future: Player.distributeRoles(),
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      players = snapshot.data!;
-                      return ListView.builder(
-                        itemCount: (players.length / 2).ceil(),
-                        itemBuilder: (context, index) {
-                          int firstItemIndex = index * 2;
-                          int secondItemIndex = firstItemIndex + 1;
-                          return Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 8.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                PlayerRoleCard(
-                                  player: players[firstItemIndex],
-                                  onTap: _scrollRight,
-                                ),
-                                const SizedBox(
-                                  width: 10,
-                                ),
-                                if (secondItemIndex <
-                                    players
-                                        .length) // Check if second item exists
-                                  PlayerRoleCard(
-                                    player: players[secondItemIndex],
-                                    onTap: _scrollRight,
-                                  )
-                              ],
-                            ),
-                          );
-                        },
+                child: Container(
+                  padding: EdgeInsets.fromLTRB(0, 20, 0, 40),
+                  child: GridView.builder(
+                    itemCount: players.length,
+                    scrollDirection: Axis.vertical,
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      childAspectRatio: 1,
+                      mainAxisSpacing: 10,
+                      crossAxisSpacing: 10,
+                    ),
+                    itemBuilder: (context, index) {
+                      return PlayerRoleCard(
+                        player: players[index],
+                        onTap: _scrollRight,
                       );
-                    } else {
-                      return Center(
-                        child: SpinKitSpinningLines(
-                          color: Theme.of(context).colorScheme.inversePrimary,
-                          size: 100.0,
-                          lineWidth: 7,
-                        ),
-                      );
-                    }
-                  },
+                    },
+                  ),
                 ),
               ),
             ),

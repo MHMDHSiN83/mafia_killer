@@ -131,7 +131,7 @@ class Player extends ChangeNotifier {
     Database.writePlayersData(players);
   }
 
-  static Future<List<Player>> distributeRoles() async {
+  static List<Player> distributeRoles() {
     if (inGamePlayers[0].role != null) {
       return inGamePlayers;
     }

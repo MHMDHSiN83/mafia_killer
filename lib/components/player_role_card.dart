@@ -52,7 +52,6 @@ class _PlayerRoleCardState extends State<PlayerRoleCard> {
             builder: (context) {
               return Dialog(
                 child: Container(
-                    width: 300,
                     height: 500,
 
                     //margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
@@ -88,11 +87,14 @@ class _PlayerRoleCardState extends State<PlayerRoleCard> {
                         ),
                         ElevatedButton(
                           onPressed: () {
-                            widget.onTap();
                             Navigator.pop(context);
                           },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: AppColors.darkgreenColor,
+                            backgroundColor: (widget.player.role!.roleSide == RoleSide.mafia)
+                                ? AppColors.redColor
+                                : (widget.player.role!.roleSide == RoleSide.citizen)
+                                    ? AppColors.blueColor
+                                    : AppColors.darkYellowColor,
                             elevation: 12.0,
                           ),
                           child: Padding(
