@@ -381,6 +381,15 @@ class GodfatherScenario extends Scenario {
     return false;
   }
 
+    bool doesBeautifulMindParticipate() {
+    for (LastMoveCard lastMoveCard in Scenario.currentScenario.inGameLastMoveCards) {
+      if (lastMoveCard is BeautifulMind) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   int resultOfNostradamusGuess(List<Player> players) {
     int counter = 0;
     for (Player player in players) {

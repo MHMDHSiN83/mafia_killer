@@ -42,8 +42,7 @@ class RoleSelectionPage extends StatelessWidget {
         leftButtonOnTap: () => Navigator.pop(context),
         rightButtonOnTap: () {
           int roleLength = Scenario.currentScenario.inGameRoles.length;
-          if (Player.inGamePlayers.length !=
-              roleLength) {
+          if (Player.inGamePlayers.length != roleLength) {
             customSnackBar(
                 context, 'تعداد نقش‌ها با تعداد بازیکن‌ها برابر نیست', true);
             return;
@@ -67,6 +66,15 @@ class RoleSelectionPage extends StatelessWidget {
               customSnackBar(
                   context, 'تعداد بازیکن‌ها نمی‌تونه از پنج کمتر باشه', true);
               return;
+            } else if (!(Scenario.currentScenario as GodfatherScenario)
+                    .doesNostradamusParticipate() &&
+                (Scenario.currentScenario as GodfatherScenario)
+                    .doesBeautifulMindParticipate()) {
+              customSnackBar(
+                  context,
+                  "وقتی نوستراداموس توی بازی نیست، کارت ذهن زیبا قابل استفاده نیست",
+                  true);
+              return;
             }
           }
           (Scenario.currentScenario as GodfatherScenario)
@@ -77,7 +85,7 @@ class RoleSelectionPage extends StatelessWidget {
             Player.inGamePlayers[i].role = roles[i];
           }
           (Scenario.currentScenario as GodfatherScenario)
-              .setNostradamusInquiryNumber();          
+              .setNostradamusInquiryNumber();
           AudioManager.playNextPageEffect();
           Scenario.currentScenario.resetDayes();
           // Navigator.pushNamed(context, '/role_distribution_page');
