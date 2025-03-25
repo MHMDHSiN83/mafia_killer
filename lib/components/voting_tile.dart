@@ -1,6 +1,8 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/themes/app_color.dart';
+import 'package:mafia_killer/utils/audio_manager.dart';
 
 class VotingTile extends StatefulWidget {
   VotingTile({
@@ -25,14 +27,14 @@ class VotingTile extends StatefulWidget {
 class _VotingTileState extends State<VotingTile> {
   @override
   Widget build(BuildContext context) {
-    if (widget.isClicked == null) {
-      widget.isClicked = false;
-    }
+    widget.isClicked ??= false;
     return GestureDetector(
       onTap: () {
         if (widget.isClicked!) {
+          AudioManager.playDeleteEffect();
           widget.removePlayer();
         } else {
+          AudioManager.playVotingTileStampEffect();
           widget.addPlayer();
         }
         widget.isClicked = !widget.isClicked!;
@@ -53,7 +55,10 @@ class _VotingTileState extends State<VotingTile> {
                   const SizedBox(
                     height: 65,
                   ),
-                  Text(
+                  AutoSizeText(
+                    minFontSize: 10,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                     widget.player.name,
                     style: const TextStyle(
                       fontSize: 20,

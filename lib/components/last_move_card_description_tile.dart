@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mafia_killer/models/last_move_card.dart';
+import 'package:mafia_killer/themes/app_color.dart';
 
 // ignore: must_be_immutable
 class LastMoveCardsDescriptionTile extends StatelessWidget {
@@ -9,13 +10,13 @@ class LastMoveCardsDescriptionTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 300,
-      height: 700,
+      height: 350,
       padding: EdgeInsets.zero,
       decoration: BoxDecoration(
         color: Colors.black,
         borderRadius: BorderRadius.circular(5),
         border: Border.all(
-          color: Colors.black,
+          color: AppColors.darkgreenColor,
           width: 2.5,
         ),
       ),
@@ -24,7 +25,7 @@ class LastMoveCardsDescriptionTile extends StatelessWidget {
         children: [
           Container(
             margin: const EdgeInsets.symmetric(
-              vertical: 10,
+              vertical: 0,
             ),
             width: 280,
             child: Image(
@@ -33,9 +34,44 @@ class LastMoveCardsDescriptionTile extends StatelessWidget {
               ),
             ),
           ),
-          Text(
-            lastMoveCard.description,
-            style: const TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+          Container(
+            height: 120,
+            margin: EdgeInsets.fromLTRB(20, 0, 20.0, 0),
+            child: Directionality(
+              textDirection: TextDirection.ltr,
+              child: Scrollbar(
+                child: ListView(children: [
+                  Directionality(
+                    textDirection: TextDirection.rtl,
+                    child: Text(
+                      lastMoveCard.description,
+                      style: const TextStyle(fontSize: 15),
+                      textAlign: TextAlign.justify,
+                    ),
+                  ),
+                ]),
+              ),
+            ),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: AppColors.darkgreenColor,
+              elevation: 12.0,
+            ),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+              child: Text(
+                'متوجه شدم',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                  color: Theme.of(context).colorScheme.inversePrimary,
+                ),
+              ),
+            ),
           ),
         ],
       ),

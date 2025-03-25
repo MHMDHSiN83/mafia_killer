@@ -26,7 +26,8 @@ class _LastMoveCardSelectionTileState extends State<LastMoveCardSelectionTile> {
 
   void decreaseNumber() {
     if (widget.counter == 0) {
-      customSnackBar(context, 'تعداد کارت حرکت آخر نمی‌تونه از صفر کمتر باشه', true);
+      customSnackBar(
+          context, 'تعداد کارت حرکت آخر نمی‌تونه از صفر کمتر باشه', true);
       return;
     }
     setState(() {
@@ -38,96 +39,96 @@ class _LastMoveCardSelectionTileState extends State<LastMoveCardSelectionTile> {
   @override
   Widget build(BuildContext context) {
     // Color color = determineColor();
-    Color color = Colors.white;
-    return GestureDetector(
-      onTap: () {
-        showDialog(
-            context: context,
-            builder: (context) {
-              return Dialog(
-                child: LastMoveCardsDescriptionTile(
-                    lastMoveCard: widget.lastMoveCard),
-              );
-            });
-      },
-      child: Container(
-        width: 200,
-        padding: EdgeInsets.zero,
-        decoration: BoxDecoration(
-          color: Colors.black,
-          borderRadius: BorderRadius.circular(5),
-          border: Border.all(
-            color: color,
-            width: 2.5,
-          ),
+    Color color = AppColors.darkgreenColor;
+    return Container(
+      width: 200,
+      padding: EdgeInsets.zero,
+      decoration: BoxDecoration(
+        color: Colors.black,
+        borderRadius: BorderRadius.circular(5),
+        border: Border.all(
+          color: color,
+          width: 2.5,
         ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            SizedBox(
-              width: 200,
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          SizedBox(
+            width: 200,
+            child: GestureDetector(
+              onTap: () {
+                showDialog(
+                    context: context,
+                    builder: (context) {
+                      return Dialog(
+                        child: LastMoveCardsDescriptionTile(
+                            lastMoveCard: widget.lastMoveCard),
+                      );
+                    });
+              },
               child: Image(
                 image: AssetImage(
                   widget.lastMoveCard.selectionImagePath,
                 ),
               ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                ClipOval(
-                  child: Material(
-                    color: AppColors.darkgreenColor, // Button color
-                    child: InkWell(
-                      splashColor: AppColors.hoverGreenColor, // Splash color
-                      onTap: increaseNumber,
-                      child: const SizedBox(
-                        width: 28,
-                        height: 28,
-                        child: Icon(
-                          Icons.add,
-                          size: 28,
-                        ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              ClipOval(
+                child: Material(
+                  color: AppColors.darkgreenColor, // Button color
+                  child: InkWell(
+                    splashColor: AppColors.hoverGreenColor, // Splash color
+                    onTap: increaseNumber,
+                    child: const SizedBox(
+                      width: 28,
+                      height: 28,
+                      child: Icon(
+                        Icons.add,
+                        size: 28,
                       ),
                     ),
                   ),
                 ),
-                const SizedBox(
-                  width: 15,
+              ),
+              const SizedBox(
+                width: 15,
+              ),
+              Text(
+                Language.toPersian(widget.counter.toString()),
+                style: const TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
                 ),
-                Text(
-                  Language.toPersian(widget.counter.toString()),
-                  style: const TextStyle(
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(
-                  width: 15,
-                ),
-                ClipOval(
-                  child: Material(
-                    color: AppColors.redColor, // Button color
-                    child: InkWell(
-                      splashColor: AppColors.hoverRedColor, // Splash color
-                      onTap: decreaseNumber,
-                      child: const SizedBox(
-                        width: 28,
-                        height: 28,
-                        child: Icon(
-                          Icons.remove,
-                          size: 28,
-                        ),
+              ),
+              const SizedBox(
+                width: 15,
+              ),
+              ClipOval(
+                child: Material(
+                  color: AppColors.redColor, // Button color
+                  child: InkWell(
+                    splashColor: AppColors.hoverRedColor, // Splash color
+                    onTap: decreaseNumber,
+                    child: const SizedBox(
+                      width: 28,
+                      height: 28,
+                      child: Icon(
+                        Icons.remove,
+                        size: 28,
                       ),
                     ),
                   ),
-                )
-              ],
-            ),
-            const SizedBox(),
-          ],
-        ),
+                ),
+              )
+            ],
+          ),
+          const SizedBox(),
+        ],
       ),
     );
   }

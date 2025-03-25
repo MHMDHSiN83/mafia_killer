@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mafia_killer/components/guide_box.dart';
@@ -181,7 +182,10 @@ class _PageFrameState extends State<PageFrame> {
                       ),
                     ),
                     child: Center(
-                      child: Text(
+                      child: AutoSizeText(
+                        minFontSize: 16,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                         widget.pageTitle,
                         style: TextStyle(
                           fontSize: determineTitleFontsize(),

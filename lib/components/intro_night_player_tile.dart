@@ -1,10 +1,13 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:mafia_killer/components/checkbox.dart';
 import 'package:mafia_killer/databases/player.dart';
+import 'package:mafia_killer/models/role_side.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/nostradamus.dart';
 import 'package:mafia_killer/pages/intro_night_page.dart';
 import 'package:mafia_killer/themes/app_color.dart';
 import 'package:mafia_killer/utils/audio_manager.dart';
+import 'package:mafia_killer/utils/determine_color.dart';
 
 class IntroNightPlayerTile extends StatefulWidget {
   const IntroNightPlayerTile({
@@ -26,6 +29,8 @@ class IntroNightPlayerTile extends StatefulWidget {
 class _IntroNightPlayerTileState extends State<IntroNightPlayerTile> {
   bool selected = false;
 
+  
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -37,21 +42,27 @@ class _IntroNightPlayerTileState extends State<IntroNightPlayerTile> {
           ),
           Expanded(
             flex: 6,
-            child: Text(
-              widget.player.role!.name,
+            child: AutoSizeText(
+              minFontSize: 10,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              widget.player.name,
               style: TextStyle(
-                color: AppColors.greenColor,
+                color: Theme.of(context).colorScheme.inversePrimary,
                 fontSize: 15,
               ),
             ),
           ),
           Expanded(
             flex: 6,
-            child: Text(
-              widget.player.name,
+            child: AutoSizeText(
+              minFontSize: 10,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              widget.player.role!.name,
               style: TextStyle(
-                color: Theme.of(context).colorScheme.inversePrimary,
-                fontSize: 12,
+                color: determineColorForPlayerTile(widget.player.role!),
+                fontSize: 11,
               ),
             ),
           ),

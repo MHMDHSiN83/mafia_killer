@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
 class MyOutlinedButton extends StatelessWidget {
@@ -60,7 +61,10 @@ class MyOutlinedButton extends StatelessWidget {
               : IconAlignment.end,
       label: Padding(
         padding: EdgeInsets.symmetric(horizontal: horizontalPadding ?? 4),
-        child: Text(
+        child: AutoSizeText(
+          minFontSize: 10,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
           textAlign: TextAlign.center,
           text,
           style: TextStyle(

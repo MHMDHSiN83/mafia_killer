@@ -87,8 +87,6 @@ class _RoleDistributionPageState extends State<RoleDistributionPage> {
         pageTitle: "تقسیم نقش ها",
         leftButtonText: "انتخاب نقش‌ها",
         rightButtonText: "روز معارفه",
-        leftButtonIcon: Icons.keyboard_arrow_left,
-        rightButtonIcon: Icons.keyboard_arrow_right,
         leftButtonOnTap: () {
           for (Player player in Player.inGamePlayers) {
             player.role = null;
@@ -103,7 +101,8 @@ class _RoleDistributionPageState extends State<RoleDistributionPage> {
 
             Navigator.pushNamed(context, '/intro_page');
           } else {
-            customSnackBar(context, "هنوز تمام بازیکن ها نقششون رو ندیدند.", true);
+            customSnackBar(
+                context, "هنوز تمام بازیکن ها نقششون رو ندیدند.", true);
           }
         },
         child: Column(

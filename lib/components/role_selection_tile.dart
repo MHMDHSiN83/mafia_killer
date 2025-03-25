@@ -9,6 +9,7 @@ import 'package:mafia_killer/models/scenarios/godfather/roles/citizen.dart';
 import 'package:mafia_killer/themes/app_color.dart';
 import 'package:mafia_killer/utils/audio_manager.dart';
 import 'package:mafia_killer/utils/custom_snackbar.dart';
+import 'package:mafia_killer/utils/determine_color.dart';
 
 class RoleSelectionTile extends StatefulWidget {
   RoleSelectionTile({super.key, required this.role, required this.counter});
@@ -19,23 +20,7 @@ class RoleSelectionTile extends StatefulWidget {
 }
 
 class _RoleSelectionTileState extends State<RoleSelectionTile> {
-  Color determineColor() {
-    Color color;
-    switch (widget.role.roleSide) {
-      case RoleSide.mafia:
-        color = AppColors.redColor;
-        break;
-      case RoleSide.citizen:
-        color = AppColors.blueColor;
-
-        break;
-      case RoleSide.independant:
-        color = const Color(0xFFFEE604);
-
-        break;
-    }
-    return color;
-  }
+  
 
   void increaseNumber() {
     if (Player.inGamePlayers.length <=
@@ -73,7 +58,7 @@ class _RoleSelectionTileState extends State<RoleSelectionTile> {
 
   @override
   Widget build(BuildContext context) {
-    Color color = determineColor();
+    Color color = determineColorForRoleCard(widget.role);
     return Container(
       width: 165,
       padding: EdgeInsets.zero,

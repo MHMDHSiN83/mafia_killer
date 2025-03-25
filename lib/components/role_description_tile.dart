@@ -2,32 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:mafia_killer/models/role.dart';
 import 'package:mafia_killer/models/role_side.dart';
 import 'package:mafia_killer/themes/app_color.dart';
+import 'package:mafia_killer/utils/determine_color.dart';
 
 // ignore: must_be_immutable
 class RoleDescriptionTile extends StatelessWidget {
   RoleDescriptionTile({super.key, required this.role});
   Role role;
-  Color determineColor() {
-    Color color;
-    switch (role.roleSide) {
-      case RoleSide.mafia:
-        color = AppColors.redColor;
-        break;
-      case RoleSide.citizen:
-        color = AppColors.blueColor;
-
-        break;
-      case RoleSide.independant:
-        color = const Color(0xFFFAF746);
-
-        break;
-    }
-    return color;
-  }
+  
 
   @override
   Widget build(BuildContext context) {
-    Color color = determineColor();
+    Color color = determineColorForRoleCard(role);
     return Container(
       width: 320,
       height: 600,

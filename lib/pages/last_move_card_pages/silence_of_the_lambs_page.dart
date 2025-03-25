@@ -8,6 +8,7 @@ import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/models/player_status.dart';
 import 'package:mafia_killer/pages/last_move_card_page.dart';
 import 'package:mafia_killer/utils/audio_manager.dart';
+import 'package:mafia_killer/utils/custom_snackbar.dart';
 
 class SilenceOfTheLambsPage extends StatefulWidget {
   SilenceOfTheLambsPage({super.key});
@@ -18,12 +19,13 @@ class SilenceOfTheLambsPage extends StatefulWidget {
 
 class _SilenceOfTheLambsPageState extends State<SilenceOfTheLambsPage> {
   bool isTwoSilenced = (Player.inGamePlayers
-              .where((player) =>
-                  player.playerStatus != PlayerStatus.dead &&
-                  player.playerStatus != PlayerStatus.removed)
-              .length -
-          1 >
-      ((Player.inGamePlayers.length + 1) ~/ 2)) && (Player.inGamePlayers.length > 8);
+                  .where((player) =>
+                      player.playerStatus != PlayerStatus.dead &&
+                      player.playerStatus != PlayerStatus.removed)
+                  .length -
+              1 >
+          ((Player.inGamePlayers.length + 1) ~/ 2)) &&
+      (Player.inGamePlayers.length > 8);
 
   void addPlayer(Player player) {
     setState(() {
@@ -87,6 +89,11 @@ class _SilenceOfTheLambsPageState extends State<SilenceOfTheLambsPage> {
               AudioManager.playNextPageEffect();
               Navigator.pushNamed(context, '/night_page');
             }
+          } else {
+            customSnackBar(
+                context,
+                "باید حتما ${isTwoSilenced ? 'دو' : 'یک'} بازیکن را انتخاب کنید.",
+                true);
           }
         },
         child: Column(

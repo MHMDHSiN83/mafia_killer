@@ -83,6 +83,10 @@ class AudioManager {
     await _playEffect('assets/audios/snackbar.mp3');
   }
 
+  static Future<void> playVotingTileStampEffect() async {
+    await _playEffect('assets/audios/mohr.mp3');
+  }
+
   static Future<void> playClockTicking() async {
     await _playClockTicking('assets/audios/clock_tickin.mp3');
   }

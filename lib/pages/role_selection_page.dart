@@ -57,8 +57,10 @@ class RoleSelectionPage extends StatelessWidget {
               customSnackBar(context, 'تعداد مافیا ها نمی‌تونه صفر باشه', true);
               return;
             } else if (citizenCount + independantCount <= mafiaCount) {
-              customSnackBar(context,
-                  'تعداد مافیاها باید از مجموع شهروندها و نوستراداموس کمتر باشه', true);
+              customSnackBar(
+                  context,
+                  'تعداد مافیاها باید از مجموع شهروندها و نوستراداموس کمتر باشه',
+                  true);
               return;
             } else if (Scenario.currentScenario.inGameRoles.length < 5) {
               customSnackBar(
@@ -164,11 +166,11 @@ class RoleSelectionPage extends StatelessWidget {
               style: TextStyle(
                 fontSize: 38,
                 shadows: [
-                  Shadow(color: Color(0xFFFEE604), offset: Offset(0, -12))
+                  Shadow(color: AppColors.yellowColor, offset: Offset(0, -12))
                 ],
                 color: Colors.transparent,
                 //decoration: TextDecoration.underline,
-                decorationColor: Color(0xFFFEE604),
+                decorationColor: AppColors.yellowColor,
                 decorationThickness: 2,
               ),
             ),
@@ -199,13 +201,13 @@ class RoleSelectionPage extends StatelessWidget {
                 fontSize: 38,
                 shadows: [
                   Shadow(
-                    color: Theme.of(context).colorScheme.inversePrimary,
+                    color: AppColors.darkgreenColor,
                     offset: Offset(0, -12),
                   )
                 ],
                 color: Colors.transparent,
                 //decoration: TextDecoration.underline,
-                decorationColor: Theme.of(context).colorScheme.inversePrimary,
+                decorationColor: AppColors.darkgreenColor,
                 decorationThickness: 2,
               ),
             ),

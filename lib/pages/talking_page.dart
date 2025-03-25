@@ -121,12 +121,13 @@ class _TalkingPageState extends State<TalkingPage> {
 
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: PageFrame(
         label: args.isDefense ? '/defense_talking_page' : '/talking_page',
-        pageTitle: 'روز ${Scenario.currentScenario.dayAndNightNumber()}',
+        pageTitle: args.isDefense
+            ? 'صحبت دفاعیه'
+            : 'روز ${Scenario.currentScenario.dayAndNightNumber()}',
         leftButtonText: args.leftButtonText,
         rightButtonText: args.rightButtonText,
         leftButtonOnTap: () {

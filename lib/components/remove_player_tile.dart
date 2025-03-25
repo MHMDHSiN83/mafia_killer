@@ -1,7 +1,9 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/models/ui_player_status.dart';
 import 'package:mafia_killer/themes/app_color.dart';
+import 'package:mafia_killer/utils/determine_color.dart';
 
 class RemovePlayerTile extends StatelessWidget {
   const RemovePlayerTile(
@@ -24,20 +26,26 @@ class RemovePlayerTile extends StatelessWidget {
               ),
               Expanded(
                 flex: 6,
-                child: Text(
-                  player.role!.name,
+                child: AutoSizeText(
+                  minFontSize: 10,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  player.name,
                   style: TextStyle(
-                    color: AppColors.greenColor,
+                    color: Theme.of(context).colorScheme.inversePrimary,
                     fontSize: 15,
                   ),
                 ),
               ),
               Expanded(
                 flex: 6,
-                child: Text(
-                  player.name,
+                child: AutoSizeText(
+                  minFontSize: 10,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  player.role!.name,
                   style: TextStyle(
-                    color: Theme.of(context).colorScheme.inversePrimary,
+                    color: determineColorForPlayerTile(player.role!),
                     fontSize: 12,
                   ),
                 ),

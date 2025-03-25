@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:mafia_killer/components/counterbox.dart';
 
@@ -27,12 +28,15 @@ class RowCounterBox extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Text(
+        AutoSizeText(
+          minFontSize: 10,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
           title,
           style: TextStyle(
             color: Theme.of(context).colorScheme.inversePrimary,
             fontWeight: FontWeight.bold,
-            fontSize: fontSize ?? 16,
+            fontSize: 15,
           ),
         ),
         CounterBox(

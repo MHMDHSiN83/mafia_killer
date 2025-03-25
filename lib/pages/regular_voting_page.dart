@@ -41,7 +41,7 @@ class _RegularVotingPageState extends State<RegularVotingPage> {
     return Scaffold(
       body: PageFrame(
         label: '/regular_voting_page',
-        pageTitle: "بازیکنان داخل دفاع",
+        pageTitle: "رای‌ گیری",
         reloadContentOfPage: () {
           setState(() {});
         },

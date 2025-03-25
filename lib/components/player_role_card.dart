@@ -1,7 +1,9 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/models/role_side.dart';
 import 'package:mafia_killer/themes/app_color.dart';
+import 'package:mafia_killer/utils/determine_color.dart';
 
 class PlayerRoleCard extends StatefulWidget {
   PlayerRoleCard({
@@ -18,24 +20,6 @@ class PlayerRoleCard extends StatefulWidget {
 }
 
 class _PlayerRoleCardState extends State<PlayerRoleCard> {
-  Color determineColor() {
-    Color color;
-    switch (widget.player.role!.roleSide) {
-      case RoleSide.mafia:
-        color = AppColors.redColor;
-        break;
-      case RoleSide.citizen:
-        color = AppColors.blueColor;
-
-        break;
-      case RoleSide.independant:
-        color = const Color(0xFFFAF746);
-
-        break;
-    }
-    return color;
-  }
-
   @override
   void initState() {
     super.initState();
@@ -43,7 +27,7 @@ class _PlayerRoleCardState extends State<PlayerRoleCard> {
 
   @override
   Widget build(BuildContext context) {
-    Color color = determineColor();
+    Color color = determineColorForRoleCard(widget.player.role!);
     return GestureDetector(
       onTap: () {
         showDialog(
@@ -78,10 +62,13 @@ class _PlayerRoleCardState extends State<PlayerRoleCard> {
                             ),
                           ),
                         ),
-                        Text(
+                        AutoSizeText(
+                          minFontSize: 8,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                           widget.player.name,
                           style: TextStyle(
-                            fontSize: 30,
+                            fontSize: 23,
                             fontWeight: FontWeight.bold,
                             color: color,
                           ),
@@ -92,7 +79,13 @@ class _PlayerRoleCardState extends State<PlayerRoleCard> {
                             Navigator.pop(context);
                           },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: AppColors.darkgreenColor,
+                            backgroundColor:
+                                (widget.player.role!.roleSide == RoleSide.mafia)
+                                    ? AppColors.redColor
+                                    : (widget.player.role!.roleSide ==
+                                            RoleSide.citizen)
+                                        ? AppColors.blueColor
+                                        : AppColors.darkYellowColor,
                             elevation: 12.0,
                           ),
                           child: Padding(
@@ -139,7 +132,10 @@ class _PlayerRoleCardState extends State<PlayerRoleCard> {
                 fit: BoxFit.cover,
               )),
           child: Center(
-            child: Text(
+            child: AutoSizeText(
+              minFontSize: 10,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
               widget.player.name,
               style: const TextStyle(
                 fontSize: 20,

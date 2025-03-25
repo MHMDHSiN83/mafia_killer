@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:mafia_killer/components/dialogboxes/new_inquiry_dialogbox.dart';
 import 'package:mafia_killer/components/night_event_tile.dart';
@@ -117,7 +118,7 @@ class _NightEventsPage extends State<NightEventsPage> {
         rightButtonText:
             "روز ${Scenario.currentScenario.dayAndNightNumber(number: Scenario.currentScenario.dayNumber)}",
         leftButtonOnTap: () {
-          if(doesPressInquiry) {
+          if (doesPressInquiry) {
             GameSettings.currentGameSettings.inquiry += 1;
           }
           Navigator.pop(context);
@@ -199,18 +200,18 @@ class _NightEventsPage extends State<NightEventsPage> {
                                 ),
                                 Expanded(
                                   flex: 2,
-                                  child: ElevatedButton(
+                                  child: MaterialButton(
                                     onPressed: () {
                                       showInquiryDialog(context);
                                     },
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: AppColors.brownColor,
-                                      elevation: 12.0,
-                                    ),
+                                    color: AppColors.brownColor,
                                     child: Padding(
                                       padding: const EdgeInsets.symmetric(
-                                          horizontal: 25, vertical: 0),
-                                      child: Text(
+                                          horizontal: 12, vertical: 0),
+                                      child: AutoSizeText(
+                                        minFontSize: 14,
+                                        maxFontSize: 28,
+                                        overflow: TextOverflow.ellipsis,
                                         'استعلام وضعیت',
                                         style: TextStyle(
                                           fontWeight: FontWeight.bold,

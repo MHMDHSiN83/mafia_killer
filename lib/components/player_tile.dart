@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:mafia_killer/components/checkbox.dart';
 import 'package:mafia_killer/components/dialogboxes/dialogbox.dart';
@@ -75,49 +76,62 @@ class _PlayerTileState extends State<PlayerTile> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Row(
-              children: [
-                MyCheckBox(
-                  isChecked: widget.player.doesParticipate,
-                  onChanged: onChanged,
-                  scale: 1.3,
-                ),
-                Center(
-                  child: Text(
-                    widget.player.name,
-                    style: TextStyle(
-                      color: Theme.of(context).colorScheme.inversePrimary,
-                      fontSize: 24,
+            Expanded(
+              flex: 7,
+              child: Row(
+                children: [
+                  Expanded(
+                    flex: 1,
+                    child: MyCheckBox(
+                      isChecked: widget.player.doesParticipate,
+                      onChanged: onChanged,
+                      scale: 1.3,
                     ),
                   ),
-                ),
-                const SizedBox(
-                  width: 5,
-                ),
-              ],
+                  Expanded(
+                    flex: 3,
+                    child: AutoSizeText(
+                      minFontSize: 12,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      widget.player.name,
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.inversePrimary,
+                        fontSize: 20,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 5,
+                  ),
+                ],
+              ),
             ),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                IconButton(
-                  padding: EdgeInsets.zero,
-                  onPressed: showEditDialog,
-                  icon: Icon(
-                    Icons.edit,
-                    size: 35,
-                    color: Theme.of(context).colorScheme.inversePrimary,
+            Expanded(
+              flex: 3,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  IconButton(
+                    padding: EdgeInsets.zero,
+                    onPressed: showEditDialog,
+                    icon: Icon(
+                      Icons.edit,
+                      size: 35,
+                      color: Theme.of(context).colorScheme.inversePrimary,
+                    ),
                   ),
-                ),
-                IconButton(
-                  padding: EdgeInsets.zero,
-                  onPressed: widget.removePlayer,
-                  icon: const Icon(
-                    Icons.delete,
-                    size: 35,
-                    color: AppColors.redColor,
+                  IconButton(
+                    padding: EdgeInsets.zero,
+                    onPressed: widget.removePlayer,
+                    icon: const Icon(
+                      Icons.delete,
+                      size: 35,
+                      color: AppColors.redColor,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ],
         ),

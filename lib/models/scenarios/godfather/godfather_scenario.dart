@@ -268,7 +268,8 @@ class GodfatherScenario extends Scenario {
     }
 
     // citizen kane inquiry -> player has to die the next day
-    if ((citizenKane != null ) && (citizenKane.role as CitizenKane).remainingAbility == 0) {
+    if ((citizenKane != null) &&
+        (citizenKane.role as CitizenKane).remainingAbility == 0) {
       citizenKane.playerStatus = PlayerStatus.dead;
       report.add("${citizenKane.name} کشته شد.)");
     }
@@ -334,13 +335,24 @@ class GodfatherScenario extends Scenario {
     return false;
   }
 
+  bool isAnyMaifaDead() {
+    for (Player player in Player.inGamePlayers) {
+      if (player.role!.roleSide == RoleSide.mafia &&
+          (player.playerStatus == PlayerStatus.dead ||
+              player.playerStatus == PlayerStatus.removed)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   bool ableToBuying() {
     if (doesSaulGoodmanParticipate()) {
       Player saulGoodman = Player.inGamePlayers
           .where((player) => player.role is SaulGoodman)
           .first;
       if (saulGoodman.playerStatus == PlayerStatus.active &&
-          saulGoodman.hasAbility()) {
+          saulGoodman.hasAbility() && isAnyMaifaDead()) {
         return true;
       }
       return false;

@@ -36,6 +36,7 @@ class _NightPageState extends State<NightPage> {
 
   void mafiaChoicBox() {
     showDialog(
+      barrierDismissible: false,
       context: context,
       builder: (context) {
         return MafiaChoiceDialogbox(

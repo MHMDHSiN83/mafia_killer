@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:mafia_killer/components/dropdownbox.dart';
 
@@ -23,12 +24,15 @@ class RowDropdownBox extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Text(
+        AutoSizeText(
           title,
+          minFontSize: 16,
+          maxFontSize: 28,
+          overflow: TextOverflow.ellipsis,
           style: TextStyle(
             color: Theme.of(context).colorScheme.inversePrimary,
             fontWeight: FontWeight.bold,
-            fontSize: fontSize ?? 17,
+            //fontSize: fontSize ?? 17,
           ),
         ),
         DropdownBox(
