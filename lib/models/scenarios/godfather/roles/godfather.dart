@@ -1,5 +1,6 @@
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/databases/scenario.dart';
+import 'package:mafia_killer/models/scenarios/godfather/roles/nostradamus.dart';
 import 'package:mafia_killer/models/ui_player_status.dart';
 import 'package:mafia_killer/models/night_event.dart';
 import 'package:mafia_killer/models/role.dart';
@@ -33,15 +34,17 @@ class Godfather extends Role {
 
   @override
   void nightAction(Player? player) {
-    Scenario.currentScenario.nightEvents[NightEvent.sixthSensedByGodfather] = player;
-    remainingAbility--; 
+    Scenario.currentScenario.nightEvents[NightEvent.sixthSensedByGodfather] =
+        player;
+    remainingAbility--;
   }
 
   @override
   void setAvailablePlayers() {
-    //TODO carte  harakat akhar zehn ziba
     for (Player player in Player.inGamePlayers) {
-      if (player.role!.roleSide == RoleSide.mafia) {
+      if (player.role!.roleSide == RoleSide.mafia ||
+          (player.role! is Nostradamus &&
+              (player.role! as Nostradamus).shield == false)) {
         player.uiPlayerStatus = UIPlayerStatus.untargetable;
       }
     }
