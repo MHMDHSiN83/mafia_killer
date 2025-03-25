@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 import 'package:mafia_killer/components/call_role.dart';
 import 'package:mafia_killer/components/dialogboxes/confirmation_dialogbox.dart';
 import 'package:mafia_killer/components/dialogboxes/mafia_choice_dialogbox.dart';
@@ -150,6 +151,28 @@ class _NightPageState extends State<NightPage> {
     );
   }
 
+  void resetUIBeforeNight() {
+    if (Scenario.currentScenario is GodfatherScenario) {
+      iterator = Scenario.currentScenario
+          .callRolesRegularNight(
+              mafiaChoiceBox: mafiaChoicBox, noAbilityBox: noAbilityBox)
+          .iterator;
+    } else {
+      UnimplementedError("error");
+    }
+    resetTiles();
+    iterator.moveNext();
+    text = iterator.current;
+
+    NightPage.targetPlayer = null;
+    NightPage.mafiaTeamChoice = 0;
+    NightPage.buttonText = 'بیدار شدند';
+    NightPage.typeOfConfirmation = 0;
+    NightPage.ableToSelectTile = false;
+    NightPage.isNightOver = false;
+    Scenario.currentScenario.nightEvents = {};
+  }
+
   void resetNight() {
     // Scenario.currentScenario.resetRemainingAbility();
     // if (Scenario.currentScenario is GodfatherScenario) {
@@ -174,24 +197,7 @@ class _NightPageState extends State<NightPage> {
     // Scenario.currentScenario.resetRemainingAbility();
     Player.inGamePlayers = GameStateManager
         .gameStates[GameStateManager.getPreviousState()]!.players;
-    if (Scenario.currentScenario is GodfatherScenario) {
-      iterator = Scenario.currentScenario
-          .callRolesRegularNight(
-              mafiaChoiceBox: mafiaChoicBox, noAbilityBox: noAbilityBox)
-          .iterator;
-    } else {
-      UnimplementedError("error");
-    }
-    iterator.moveNext();
-    text = iterator.current;
-    NightPage.targetPlayer = null;
-    NightPage.mafiaTeamChoice = 0;
-    NightPage.buttonText = 'بیدار شدند';
-    NightPage.typeOfConfirmation = 0;
-    NightPage.ableToSelectTile = false;
-    NightPage.isNightOver = false;
-    Scenario.currentScenario.nightEvents = {};
-    resetTiles();
+    resetUIBeforeNight();
   }
 
   void resetTiles() {
@@ -207,26 +213,19 @@ class _NightPageState extends State<NightPage> {
 
   @override
   void initState() {
+    Logger().d("night page init state");
     GameStateManager.addState(
         lastMoveCards: Scenario.currentScenario.lastMoveCards,
         silencedPlayerDuringDay:
             Scenario.currentScenario.silencedPlayerDuringDay);
-    if (Scenario.currentScenario is GodfatherScenario) {
-      iterator = Scenario.currentScenario
-          .callRolesRegularNight(
-              mafiaChoiceBox: mafiaChoicBox, noAbilityBox: noAbilityBox)
-          .iterator;
-    } else {
-      UnimplementedError("error");
-    }
-    resetTiles();
-    iterator.moveNext();
-    text = iterator.current;
+    resetUIBeforeNight();
+
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    Logger().d("night page rebuild");
     return Scaffold(
       body: PageFrame(
         label: '/night_page',
