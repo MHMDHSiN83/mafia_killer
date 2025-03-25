@@ -68,24 +68,24 @@ class RoleSelectionPage extends StatelessWidget {
           }
           (Scenario.currentScenario as GodfatherScenario)
               .shuffleLastMoveCards();
-          // List<Role> roles = Scenario.currentScenario.inGameRoles.deepCopy();
-          // roles.shuffle();
-          // for (int i = 0; i < Player.inGamePlayers.length; i++) {
-          //   Player.inGamePlayers[i].role = roles[i];
-          // }
+          List<Role> roles = Scenario.currentScenario.inGameRoles.deepCopy();
+          roles.shuffle();
+          for (int i = 0; i < Player.inGamePlayers.length; i++) {
+            Player.inGamePlayers[i].role = roles[i];
+          }
           AudioManager.playNextPageEffect();
           Scenario.currentScenario.resetDayes();
-          Navigator.pushNamed(context, '/role_distribution_page');
-          // Navigator.pushNamed(
-          //   context,
-          //   '/talking_page',
-          //   arguments: TalkingPageScreenArguments(
-          //       nextPagePath: '/intro_night_page',
-          //       seconds: GameSettings.currentGameSettings.introTime,
-          //       rightButtonText: "شب معارفه",
-          //       leftButtonText: "تقسیم نقش",
-          //       isDefense: false),
-          // );
+          // Navigator.pushNamed(context, '/role_distribution_page');
+          Navigator.pushNamed(
+            context,
+            '/talking_page',
+            arguments: TalkingPageScreenArguments(
+                nextPagePath: '/intro_night_page',
+                seconds: GameSettings.currentGameSettings.introTime,
+                rightButtonText: "شب معارفه",
+                leftButtonText: "تقسیم نقش",
+                isDefense: false),
+          );
         },
         child: ListView(
           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
