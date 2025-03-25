@@ -23,7 +23,7 @@ class _SilenceOfTheLambsPageState extends State<SilenceOfTheLambsPage> {
                   player.playerStatus != PlayerStatus.removed)
               .length -
           1 >
-      ((Player.inGamePlayers.length + 1) ~/ 2));
+      ((Player.inGamePlayers.length + 1) ~/ 2)) && (Player.inGamePlayers.length > 8);
 
   void addPlayer(Player player) {
     setState(() {
