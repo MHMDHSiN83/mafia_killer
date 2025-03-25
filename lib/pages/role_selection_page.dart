@@ -41,8 +41,9 @@ class RoleSelectionPage extends StatelessWidget {
         rightButtonText: "توزیع نقش‌ها",
         leftButtonOnTap: () => Navigator.pop(context),
         rightButtonOnTap: () {
+          int roleLength = Scenario.currentScenario.inGameRoles.length;
           if (Player.inGamePlayers.length !=
-              Scenario.currentScenario.inGameRoles.length) {
+              roleLength) {
             customSnackBar(
                 context, 'تعداد نقش‌ها با تعداد بازیکن‌ها برابر نیست', true);
             return;
@@ -62,7 +63,7 @@ class RoleSelectionPage extends StatelessWidget {
                   'تعداد مافیاها باید از مجموع شهروندها و نوستراداموس کمتر باشه',
                   true);
               return;
-            } else if (Scenario.currentScenario.inGameRoles.length < 5) {
+            } else if (roleLength < 5) {
               customSnackBar(
                   context, 'تعداد بازیکن‌ها نمی‌تونه از پنج کمتر باشه', true);
               return;
@@ -75,10 +76,11 @@ class RoleSelectionPage extends StatelessWidget {
           for (int i = 0; i < Player.inGamePlayers.length; i++) {
             Player.inGamePlayers[i].role = roles[i];
           }
+          (Scenario.currentScenario as GodfatherScenario)
+              .setNostradamusInquiryNumber();          
           AudioManager.playNextPageEffect();
           Scenario.currentScenario.resetDayes();
-          //Navigator.pushNamed(context, '/role_distribution_page');
-          //Navigator.pushNamed(context, '/end_game_page');
+          // Navigator.pushNamed(context, '/role_distribution_page');
           Navigator.pushNamed(
             context,
             '/talking_page',

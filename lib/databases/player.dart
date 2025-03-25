@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/models/player_status.dart';
+import 'package:mafia_killer/models/role_side.dart';
 import 'package:mafia_killer/models/ui_player_status.dart';
 import 'package:mafia_killer/models/database.dart';
 import 'package:mafia_killer/models/role.dart';
@@ -63,6 +64,13 @@ class Player extends ChangeNotifier {
       print('File already exists in internal storage');
       String jsonString = await file.readAsString();
       List<dynamic> jsonData = jsonDecode(jsonString);
+      try {
+        jsonData = jsonDecode(jsonString);
+      } catch (e) {
+        String jsonString =
+            await rootBundle.loadString('lib/assets/scenarios.json');
+        jsonData = jsonDecode(jsonString);
+      }
       players = jsonData.map((player) => Player.fromJson(player)).toList();
     }
   }
@@ -124,7 +132,7 @@ class Player extends ChangeNotifier {
     Database.writePlayersData(players);
   }
 
-  static Future<List<Player>> distributeRoles() async {
+  static List<Player> distributeRoles() {
     if (inGamePlayers[0].role != null) {
       return inGamePlayers;
     }
@@ -145,6 +153,8 @@ class Player extends ChangeNotifier {
     for (Player player in players) {
       player.role = null;
       player.seenRole = false;
+      player.playerStatus = PlayerStatus.active;
+      player.uiPlayerStatus = UIPlayerStatus.targetable;
     }
     Database.writePlayersData(players);
   }
@@ -162,6 +172,11 @@ class Player extends ChangeNotifier {
     return inGamePlayers
         .where((player) => player.role.runtimeType == type)
         .first;
+  }
+
+  static List<Player>? getPlayersByRoleSide(RoleSide roleSide) {
+    return inGamePlayers
+        .where((player) => player.role!.roleSide == roleSide).toList();
   }
 
   static Player getPlayerByName(String name) {
@@ -199,13 +214,5 @@ class Player extends ChangeNotifier {
         .where((p) =>
             (p.playerStatus == PlayerStatus.active && player.name != p.name))
         .toList();
-  }
-
-  static void resetPlayersBeforeGame() {
-    for (Player player in Player.players) {
-      player.playerStatus = PlayerStatus.active;
-      player.uiPlayerStatus = UIPlayerStatus.targetable;
-      player.role = null;
-    }
   }
 }

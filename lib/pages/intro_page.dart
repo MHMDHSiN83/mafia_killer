@@ -10,8 +10,7 @@ class IntroPage extends StatelessWidget {
   Widget build(BuildContext context) {
     Database();
     
-    AudioManager.playIntroMusic();
-    AudioManager.setPlayerAsset();
+
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(

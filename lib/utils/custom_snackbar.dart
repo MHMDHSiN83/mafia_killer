@@ -5,16 +5,17 @@ import 'package:mafia_killer/utils/audio_manager.dart';
 void customSnackBar(BuildContext context, String message, isBottom) {
   AudioManager.playSnackBarEffect();
   return AnimatedSnackBar(
-    mobileSnackBarPosition: isBottom ? MobileSnackBarPosition.bottom : MobileSnackBarPosition.top,
+    mobileSnackBarPosition:
+        isBottom ? MobileSnackBarPosition.bottom : MobileSnackBarPosition.top,
     duration: Duration(seconds: 5),
     builder: ((context) {
       return MaterialAnimatedSnackBar(
         messageText: message,
         type: AnimatedSnackBarType.info,
-        backgroundColor: Theme.of(context).colorScheme.primary,
+        backgroundColor: const Color(0xFF382E2E),
         foregroundColor: Colors.amber,
         messageTextStyle: TextStyle(
-          color: Theme.of(context).colorScheme.inversePrimary,
+          color: Colors.grey.shade200,
           fontSize: 14,
         ),
       );

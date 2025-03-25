@@ -36,7 +36,6 @@ class _PlayerRoleCardState extends State<PlayerRoleCard> {
             builder: (context) {
               return Dialog(
                 child: Container(
-                    width: 300,
                     height: 500,
 
                     //margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
@@ -75,7 +74,6 @@ class _PlayerRoleCardState extends State<PlayerRoleCard> {
                         ),
                         ElevatedButton(
                           onPressed: () {
-                            widget.onTap();
                             Navigator.pop(context);
                           },
                           style: ElevatedButton.styleFrom(

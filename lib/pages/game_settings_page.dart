@@ -72,7 +72,7 @@ class _GameSettingsPageState extends State<GameSettingsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: PageFrame(
-        label: '/game_setting_page',
+        label: '/game_settings_page',
         isInGame: false,
         pageTitle: "تنظیمات این دست",
         rightButtonText: "انتخاب نقش‌ها",
@@ -81,7 +81,7 @@ class _GameSettingsPageState extends State<GameSettingsPage> {
         rightButtonOnTap: () {
           // TODO: this function should be optimized
           Scenario.currentScenario.resetScenarioDataBeforeGame();
-          
+
           GameSettings.updateSettings(
               GameSettings.currentGameSettings, newGameSettings);
           Scenario.currentScenario.getRecommendedScenario();
@@ -124,16 +124,42 @@ class _GameSettingsPageState extends State<GameSettingsPage> {
               number: newGameSettings['inquiry']!,
               isTimer: false,
               varName: 'inquiry',
-              fontSize: 20,
             ),
             const MyDivider(),
-            RowDropdownBox(
-              title: 'صدای گرداننده بازی (راوی)',
-              options: newGameSettings['narrators'],
-              selectedItem: newGameSettings['narrator'],
-              onSelect: _onItemSelected,
-              varName: 'narrator',
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Opacity(
+                  opacity: 0.7,
+                  child: Text(
+                    "صدای گرداننده بازی (راوی)",
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.inversePrimary,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(15, 0, 0, 0),
+                  child: Text(
+                    "به زودی ...",
+                    style: TextStyle(
+                      color: AppColors.redColor,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
+                  ),
+                ),
+              ],
             ),
+            // RowDropdownBox(
+            //   title: 'صدای گرداننده بازی (راوی)',
+            //   options: newGameSettings['narrators'],
+            //   selectedItem: newGameSettings['narrator'],
+            //   onSelect: _onItemSelected,
+            //   varName: 'narrator',
+            // ),
             const MyDivider(),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -148,6 +174,7 @@ class _GameSettingsPageState extends State<GameSettingsPage> {
                 ),
                 IconButton(
                   onPressed: () {
+                    AudioManager.playClickEffect();
                     setState(() {
                       newGameSettings['playMusic'] =
                           !newGameSettings['playMusic'];
@@ -180,6 +207,8 @@ class _GameSettingsPageState extends State<GameSettingsPage> {
                 ),
                 GestureDetector(
                   onTap: () {
+                    AudioManager.playClickEffect();
+
                     setState(() {
                       newGameSettings['soundEffect'] =
                           !newGameSettings['soundEffect'];

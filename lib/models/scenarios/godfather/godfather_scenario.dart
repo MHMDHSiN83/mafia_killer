@@ -48,9 +48,12 @@ class GodfatherScenario extends Scenario {
 
   @override
   Iterable<String> callRolesIntroNight() sync* {
+    if((Scenario.currentScenario as GodfatherScenario).doesNostradamusParticipate()) {
     Player? nostradamusPlayer = Player.getPlayerByRoleType(Nostradamus);
+
     yield nostradamusPlayer!.role!.introAwakingRole();
     yield nostradamusPlayer.role!.introSleepRoleText();
+    }
     List<String> introMafiaTeamAwakingTexts =
         Scenario.currentScenario.getIntroMafiaTeamAwakingTexts();
     List<Role> introCitizenTeamRoles =
@@ -369,6 +372,15 @@ class GodfatherScenario extends Scenario {
     return false;
   }
 
+  bool doesNostradamusParticipate() {
+    for (Role role in Scenario.currentScenario.inGameRoles) {
+      if (role is Nostradamus) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   int resultOfNostradamusGuess(List<Player> players) {
     int counter = 0;
     for (Player player in players) {
@@ -423,4 +435,13 @@ class GodfatherScenario extends Scenario {
       (doctorPlayer!.role as DoctorWatson).selfHeal += 1;
     }
   }
+
+  void setNostradamusInquiryNumber() {
+    Player? nostradamusPlayer = Player.getPlayerByRoleType(Nostradamus);
+    if(nostradamusPlayer == null) {
+      return;
+    }
+    (nostradamusPlayer.role! as Nostradamus).setInquiryNumber();
+  }
+
 }

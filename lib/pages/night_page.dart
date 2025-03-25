@@ -214,7 +214,6 @@ class _NightPageState extends State<NightPage> {
 
   @override
   void initState() {
-    Logger().d("night page init state");
     GameStateManager.addState(
         lastMoveCards: Scenario.currentScenario.lastMoveCards,
         silencedPlayerDuringDay:
@@ -226,7 +225,6 @@ class _NightPageState extends State<NightPage> {
 
   @override
   Widget build(BuildContext context) {
-    Logger().d("night page rebuild");
     return Scaffold(
       body: PageFrame(
         label: '/night_page',

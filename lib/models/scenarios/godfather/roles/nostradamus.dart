@@ -1,4 +1,6 @@
+import 'package:logger/logger.dart';
 import 'package:mafia_killer/databases/player.dart';
+import 'package:mafia_killer/models/language.dart';
 import 'package:mafia_killer/models/ui_player_status.dart';
 import 'package:mafia_killer/models/role.dart';
 import 'package:mafia_killer/models/role_side.dart';
@@ -18,6 +20,7 @@ class Nostradamus extends Role {
 
   late RoleSide inGameRoleSide;
   bool shield = true;
+  late int inquiryNumber;
 
   factory Nostradamus.fromJson(Map<String, dynamic> json) =>
       _$NostradamusFromJson(json);
@@ -47,7 +50,7 @@ class Nostradamus extends Role {
   @override
   String introAwakingRole() {
     IntroNightPage.buttonText = 'تائید';
-    return 'نوستراداموس بیدار شه و سه نفر رو انتخاب کنه';
+    return 'نوستراداموس بیدار شه و ${Language.toPersian((Player.getPlayerByRoleType(Nostradamus)!.role as Nostradamus).inquiryNumber.toString())} نفر رو انتخاب کنه';
   }
 
   void setNostradamusRole(RoleSide roleSide) {
@@ -63,5 +66,10 @@ class Nostradamus extends Role {
             ? "مافیا"
             : "شهروند";
     return ["محافظ $tmp", "ساید: $side"];
+  }
+
+  void setInquiryNumber() {
+    Logger().d("helloooooooooooo");
+    inquiryNumber = Player.getPlayersByRoleSide(RoleSide.mafia)!.length;
   }
 }

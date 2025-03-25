@@ -1,4 +1,5 @@
 import 'package:just_audio/just_audio.dart';
+import 'package:mafia_killer/databases/game_settings.dart';
 
 class AudioManager {
   static final AudioPlayer _musicPlayer = AudioPlayer();
@@ -7,7 +8,7 @@ class AudioManager {
   static Duration? _savedPosition;
 
   static Future<void> playNightMusic() async {
-    // await _playMusic('assets/audios/Dark-Legacy.mp3');
+    await _playMusic('assets/audios/Dark-Legacy.mp3');
   }
 
   static Future<void> setPlayerAsset() async {
@@ -15,27 +16,31 @@ class AudioManager {
   }
 
   static Future<void> playIntroMusic() async {
-    // await _playMusic('assets/audios/intro_music.mp3');
+    await _playMusic('assets/audios/intro_music.mp3');
   }
 
   static Future<void> _playMusic(String assetPath) async {
-    await _musicPlayer.setAsset(assetPath);
-    await _musicPlayer.setLoopMode(LoopMode.one);
-    _musicPlayer.play();
+    if (GameSettings.currentGameSettings.playMusic) {
+      await _musicPlayer.setAsset(assetPath);
+      await _musicPlayer.setLoopMode(LoopMode.one);
+      _musicPlayer.play();
+    }
   }
 
   static Future<void> _playClockTicking(String assetPath) async {
-    if (_clockTickingPlayer.processingState == ProcessingState.completed) {
-      await _clockTickingPlayer.seek(Duration.zero);
-    } else {
-      if (_savedPosition != null) {
-        await _clockTickingPlayer.seek(_savedPosition!);
-      } else {
+    if (GameSettings.currentGameSettings.playMusic) {
+      if (_clockTickingPlayer.processingState == ProcessingState.completed) {
         await _clockTickingPlayer.seek(Duration.zero);
+      } else {
+        if (_savedPosition != null) {
+          await _clockTickingPlayer.seek(_savedPosition!);
+        } else {
+          await _clockTickingPlayer.seek(Duration.zero);
+        }
       }
-    }
 
-    await _clockTickingPlayer.play();
+      await _clockTickingPlayer.play();
+    }
   }
 
   static Future<void> resetClockTicking() async {
@@ -92,8 +97,10 @@ class AudioManager {
   }
 
   static Future<void> _playEffect(String assetPath) async {
-    await _effectPlayer.setAsset(assetPath);
-    _effectPlayer.play();
+    if (GameSettings.currentGameSettings.soundEffect) {
+      await _effectPlayer.setAsset(assetPath);
+      _effectPlayer.play();
+    }
   }
 
   void disposeMusic() {

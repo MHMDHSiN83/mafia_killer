@@ -5,12 +5,13 @@ import 'package:mafia_killer/databases/page_guide.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/databases/recommended_scenario.dart';
 import 'package:mafia_killer/databases/scenario.dart';
+import 'package:mafia_killer/utils/audio_manager.dart';
 import 'package:path_provider/path_provider.dart';
 
 class Database {
   static late String playersDataFilePath;
   static late String scenariosDataFilePath;
-  static late String guideDataFilePath;
+  static late String gameSettingsDataFilePath;
   Database() {
     setInitialValues();
   }
@@ -28,8 +29,11 @@ class Database {
     String directoryPath = await getDirectoryPath();
     playersDataFilePath = '$directoryPath/players.json';
     scenariosDataFilePath = '$directoryPath/scenarios.json';
-    
+    gameSettingsDataFilePath = '$directoryPath/game_settings.json';
+    //TODO: fix this with loading
     Player.freePlayers();
+    AudioManager.playIntroMusic();
+    AudioManager.setPlayerAsset();
   }
 
   static Future<void> fetchData(String jsonString, String path) async {
@@ -51,4 +55,9 @@ class Database {
     await file.writeAsString(jsonString);
   }
 
+  static Future<void> writeGameSettingsData(GameSettings gameSettings) async {
+    File file = File(gameSettingsDataFilePath);
+    String jsonString = jsonEncode(gameSettings.toJson());
+    await file.writeAsString(jsonString);
+  }
 }
