@@ -23,7 +23,6 @@ import 'package:mafia_killer/test.dart';
 import 'package:mafia_killer/themes/dark_mode.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
-// final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 void main() {
   runApp(
@@ -40,7 +39,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      // navigatorKey: navigatorKey,
       localizationsDelegates: const [
         GlobalCupertinoLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,

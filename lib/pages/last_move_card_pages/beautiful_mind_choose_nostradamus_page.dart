@@ -41,7 +41,7 @@ class _BeautifulMindChooseNostradamusPageState
     });
   }
 
-  List<Player> alivePlayers = Player.players
+  List<Player> alivePlayers = Player.inGamePlayers
       .where((player) => (player.playerStatus == PlayerStatus.active))
       .toList();
 
