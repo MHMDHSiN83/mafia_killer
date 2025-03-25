@@ -19,7 +19,9 @@ class IntroNightPage extends StatefulWidget {
   const IntroNightPage({super.key});
   static List<Player> targetPlayers = [];
   static String buttonText = 'بیدار شد';
-  static bool isNostradamusSelecting = true;
+  static bool isNostradamusSelecting =
+      (Scenario.currentScenario as GodfatherScenario)
+          .doesNostradamusParticipate();
   static bool isNightOver = false;
 
   @override
@@ -33,7 +35,9 @@ class _IntroNightPageState extends State<IntroNightPage> {
 
   bool isCheckBoxDisable(Player player) {
     bool result = false;
-    if (IntroNightPage.targetPlayers.length == 3) {
+    if ( (Scenario.currentScenario as GodfatherScenario).doesNostradamusParticipate() &&(IntroNightPage.targetPlayers.length ==
+        (Player.getPlayerByRoleType(Nostradamus)!.role as Nostradamus)
+            .inquiryNumber)) {
       result = true;
     }
     for (Player p in IntroNightPage.targetPlayers) {
@@ -80,7 +84,9 @@ class _IntroNightPageState extends State<IntroNightPage> {
   void resetNight() {
     IntroNightPage.targetPlayers = [];
     IntroNightPage.buttonText = 'بیدار شد';
-    IntroNightPage.isNostradamusSelecting = true;
+    IntroNightPage.isNostradamusSelecting =
+        (Scenario.currentScenario as GodfatherScenario)
+            .doesNostradamusParticipate();
     IntroNightPage.isNightOver = false;
     iterator = Scenario.currentScenario.callRolesIntroNight().iterator;
     iterator.moveNext();
@@ -208,21 +214,39 @@ class _IntroNightPageState extends State<IntroNightPage> {
                   text: text,
                   onPressed: () {
                     AudioManager.playClickEffect();
-                    if (IntroNightPage.targetPlayers.length == 3) {
-                      //TODO build a function to generate nostradamus choice
-                      if (IntroNightPage.isNostradamusSelecting) {
+                    // if (IntroNightPage.targetPlayers.length == 3) {
+                    //   //TODO build a function to generate nostradamus choice
+                    //   if (IntroNightPage.isNostradamusSelecting) {
+                    //     nostradamusBox(
+                    //       (Scenario.currentScenario as GodfatherScenario)
+                    //           .resultOfNostradamusGuess(
+                    //               IntroNightPage.targetPlayers),
+                    //     );
+                    //   } else {
+                    //     setState(() {
+                    //       if (iterator.moveNext()) {
+                    //         text = iterator.current;
+                    //       }
+                    //     });
+                    //   }
+                    // }
+                    if (IntroNightPage.isNostradamusSelecting) {
+                      if (IntroNightPage.targetPlayers.length ==
+                          (Player.getPlayerByRoleType(Nostradamus)!.role
+                                  as Nostradamus)
+                              .inquiryNumber) {
                         nostradamusBox(
                           (Scenario.currentScenario as GodfatherScenario)
                               .resultOfNostradamusGuess(
                                   IntroNightPage.targetPlayers),
                         );
-                      } else {
-                        setState(() {
-                          if (iterator.moveNext()) {
-                            text = iterator.current;
-                          }
-                        });
                       }
+                    } else {
+                      setState(() {
+                        if (iterator.moveNext()) {
+                          text = iterator.current;
+                        }
+                      });
                     }
                   },
                   buttonText: IntroNightPage.buttonText,

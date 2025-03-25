@@ -13,7 +13,8 @@ Nostradamus _$NostradamusFromJson(Map<String, dynamic> json) => Nostradamus()
   ..characterImagePath = json['characterImagePath'] as String
   ..roleSide = $enumDecode(_$RoleSideEnumMap, json['roleSide'])
   ..inGameRoleSide = $enumDecode(_$RoleSideEnumMap, json['inGameRoleSide'])
-  ..shield = json['shield'] as bool;
+  ..shield = json['shield'] as bool
+  ..inquiryNumber = (json['inquiryNumber'] as num).toInt();
 
 Map<String, dynamic> _$NostradamusToJson(Nostradamus instance) =>
     <String, dynamic>{
@@ -24,6 +25,7 @@ Map<String, dynamic> _$NostradamusToJson(Nostradamus instance) =>
       'roleSide': _$RoleSideEnumMap[instance.roleSide]!,
       'inGameRoleSide': _$RoleSideEnumMap[instance.inGameRoleSide]!,
       'shield': instance.shield,
+      'inquiryNumber': instance.inquiryNumber,
     };
 
 const _$RoleSideEnumMap = {

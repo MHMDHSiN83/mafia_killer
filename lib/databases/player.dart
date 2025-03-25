@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/models/player_status.dart';
+import 'package:mafia_killer/models/role_side.dart';
 import 'package:mafia_killer/models/ui_player_status.dart';
 import 'package:mafia_killer/models/database.dart';
 import 'package:mafia_killer/models/role.dart';
@@ -171,6 +172,11 @@ class Player extends ChangeNotifier {
     return inGamePlayers
         .where((player) => player.role.runtimeType == type)
         .first;
+  }
+
+  static List<Player>? getPlayersByRoleSide(RoleSide roleSide) {
+    return inGamePlayers
+        .where((player) => player.role!.roleSide == roleSide).toList();
   }
 
   static Player getPlayerByName(String name) {

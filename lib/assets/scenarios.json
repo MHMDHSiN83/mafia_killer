@@ -49,7 +49,8 @@
                 "cardImagePath": "lib/images/roles/role_cards/nostradamus.jpg",
                 "characterImagePath": "lib/images/roles/role_characters/nostradamus.png",
                 "inGameRoleSide": "independant",
-                "shield": true
+                "shield": true,
+                "inquiryNumber": 0
             },
             {
                 "name": "دکتر واتسون",
