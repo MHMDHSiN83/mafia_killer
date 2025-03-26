@@ -20,10 +20,6 @@ class PlayerRoleCard extends StatefulWidget {
 }
 
 class _PlayerRoleCardState extends State<PlayerRoleCard> {
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -74,6 +70,7 @@ class _PlayerRoleCardState extends State<PlayerRoleCard> {
                         ),
                         ElevatedButton(
                           onPressed: () {
+                            widget.onTap();
                             Navigator.pop(context);
                           },
                           style: ElevatedButton.styleFrom(
