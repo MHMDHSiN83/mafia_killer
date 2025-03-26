@@ -4,6 +4,8 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:mafia_killer/components/page_frame.dart';
 import 'package:mafia_killer/components/player_role_card.dart';
 import 'package:mafia_killer/databases/player.dart';
+import 'package:mafia_killer/databases/scenario.dart';
+import 'package:mafia_killer/models/scenarios/godfather/godfather_scenario.dart';
 import 'package:mafia_killer/themes/app_color.dart';
 import 'package:mafia_killer/utils/audio_manager.dart';
 import 'package:mafia_killer/utils/custom_snackbar.dart';
@@ -108,6 +110,8 @@ class _RoleDistributionPageState extends State<RoleDistributionPage> {
         rightButtonOnTap: () {
           if (_hasEveryoneSeen()) {
             Player.updateInGamePlayers(players);
+            (Scenario.currentScenario as GodfatherScenario)
+              .setNostradamusInquiryNumber();
             AudioManager.playNextPageEffect();
 
             Navigator.pushNamed(context, '/intro_page');
