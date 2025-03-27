@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:mafia_killer/themes/app_color.dart';
 
@@ -73,6 +74,7 @@ class DialogBox extends StatelessWidget {
                 onPressed: onSave,
                 color: AppColors.brownColor,
                 child: Text(
+                 
                   "ذخیره",
                   style: TextStyle(
                       color: Theme.of(context).colorScheme.inversePrimary,

@@ -4,9 +4,11 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:logger/logger.dart';
 import 'package:mafia_killer/components/page_frame.dart';
 import 'package:mafia_killer/components/player_role_card.dart';
+import 'package:mafia_killer/databases/game_settings.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/models/scenarios/godfather/godfather_scenario.dart';
+import 'package:mafia_killer/models/talking_page_screen_arguments.dart';
 import 'package:mafia_killer/themes/app_color.dart';
 import 'package:mafia_killer/utils/audio_manager.dart';
 import 'package:mafia_killer/utils/custom_snackbar.dart';
@@ -112,10 +114,19 @@ class _RoleDistributionPageState extends State<RoleDistributionPage> {
           if (_hasEveryoneSeen()) {
             Player.updateInGamePlayers(players);
             (Scenario.currentScenario as GodfatherScenario)
-              .setNostradamusInquiryNumber();
+                .setNostradamusInquiryNumber();
             AudioManager.playNextPageEffect();
 
-            Navigator.pushNamed(context, '/intro_page');
+            Navigator.pushNamed(
+              context,
+              '/talking_page',
+              arguments: TalkingPageScreenArguments(
+                  nextPagePath: '/intro_night_page',
+                  seconds: GameSettings.currentGameSettings.introTime,
+                  rightButtonText: "شب معارفه",
+                  leftButtonText: "تقسیم نقش",
+                  isDefense: false),
+            );
           } else {
             customSnackBar(
                 context, "هنوز تمام بازیکن ها نقششون رو ندیدند.", true);

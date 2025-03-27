@@ -68,7 +68,7 @@ class MafiaChoiceDialogbox extends StatelessWidget {
                           style: TextStyle(
                             color: Theme.of(context).colorScheme.inversePrimary,
                             fontWeight: FontWeight.bold,
-                            fontSize: 10,
+                            fontSize: 8,
                           ),
                         ),
                       ),
@@ -92,7 +92,7 @@ class MafiaChoiceDialogbox extends StatelessWidget {
                               color:
                                   Theme.of(context).colorScheme.inversePrimary,
                               fontWeight: FontWeight.bold,
-                              fontSize: 10,
+                              fontSize: 8,
                             ),
                           ),
                         ),
@@ -110,7 +110,7 @@ class MafiaChoiceDialogbox extends StatelessWidget {
                           style: TextStyle(
                             color: Theme.of(context).colorScheme.inversePrimary,
                             fontWeight: FontWeight.bold,
-                            fontSize: 10,
+                            fontSize: 8,
                           ),
                         ),
                       ),
@@ -136,7 +136,7 @@ class MafiaChoiceDialogbox extends StatelessWidget {
                     style: TextStyle(
                       color: Theme.of(context).colorScheme.inversePrimary,
                       fontWeight: FontWeight.bold,
-                      fontSize: 10,
+                      fontSize: 8,
                     ),
                   ),
                 ),

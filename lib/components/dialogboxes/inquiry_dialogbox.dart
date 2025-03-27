@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:mafia_killer/themes/app_color.dart';
 
@@ -64,7 +65,10 @@ class InquiryDialogbox extends StatelessWidget {
                             width: 3.0,
                           )),
                       child: const Center(
-                        child: Text(
+                        child: AutoSizeText(
+                          minFontSize: 10,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                           'استعلام وضعیت',
                           style: TextStyle(
                             fontSize: 20,
@@ -94,7 +98,10 @@ class InquiryDialogbox extends StatelessWidget {
                 child: SizedBox(
                   width: 240,
                   child: Center(
-                    child: Text(
+                    child: AutoSizeText(
+                      minFontSize: 10,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                       'متوجه شدم',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,

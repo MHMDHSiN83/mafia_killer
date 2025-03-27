@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:mafia_killer/themes/app_color.dart';
 
@@ -33,6 +34,7 @@ class InformationDialogbox extends StatelessWidget {
                 child: SizedBox(
                   width: 180,
                   child: Text(
+                    
                     text,
                     style: TextStyle(color: AppColors.brownColor),
                   ),
@@ -43,6 +45,7 @@ class InformationDialogbox extends StatelessWidget {
                 onPressed: onSave,
                 color: AppColors.brownColor,
                 child: Text(
+                  
                   "متوجه شدم",
                   style: TextStyle(
                       color: Theme.of(context).colorScheme.inversePrimary,
