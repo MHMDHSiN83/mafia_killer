@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/services.dart';
+import 'package:logger/logger.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/databases/recommended_scenario.dart';
 import 'package:mafia_killer/models/player_status.dart';
@@ -331,6 +332,7 @@ class Scenario {
   }
 
   void goToNextStage() {
+    Logger().d("next stage");
     if (isNight) {
       nightNumber++;
     } else {

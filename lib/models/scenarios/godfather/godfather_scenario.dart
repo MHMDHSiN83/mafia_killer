@@ -160,8 +160,9 @@ class GodfatherScenario extends Scenario {
 
   @override
   Iterable<String> otherRolesAction({Function? noAbilityBox}) sync* {
-    List<String> constantRoleOrder =
-        Scenario.currentScenario.getConstantRoleOrder();
+    // List<String> constantRoleOrder =
+    //     Scenario.currentScenario.getConstantRoleOrder();
+      List<String> constantRoleOrder = ['ماتادور', 'دکتر واتسون', 'لئون حرفه‌ای', 'همشهری کین', 'کنستانتین'];
     NightPage.buttonText = 'خوابید';
     for (int i = 0; i < constantRoleOrder.length; i++) {
       for (Player player in Player.inGamePlayers) {

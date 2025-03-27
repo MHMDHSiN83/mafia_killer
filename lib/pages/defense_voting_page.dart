@@ -69,7 +69,6 @@ class _DefenseVotingPageState extends State<DefenseVotingPage> {
             'شب ${Scenario.currentScenario.dayAndNightNumber(number: Scenario.currentScenario.nightNumber)}',
         leftButtonOnTap: () => Navigator.pop(context),
         rightButtonOnTap: () {
-          Scenario.currentScenario.goToNextStage();
           switch (selectedPlayers.length) {
             case 1:
               Scenario.currentScenario.killedInDayPlayer = selectedPlayers[0];
