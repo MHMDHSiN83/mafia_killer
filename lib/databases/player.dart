@@ -37,8 +37,12 @@ class Player extends ChangeNotifier {
   static List<Player> inGamePlayers = [];
   static late String filePath;
 
-  factory Player.copy(Player player) {
-    return Player.fromJson(jsonDecode(jsonEncode(player.toJson())));
+  factory Player.copy(Player? player) {
+    return Player.fromJson(jsonDecode(jsonEncode(player!.toJson())));
+  }
+
+  static List<Player> copyList(List<Player> players) {
+    return players.map((player) => Player.copy(player)).toList();
   }
 
   factory Player.fromJson(Map<String, dynamic> json) => _$PlayerFromJson(json);
@@ -176,7 +180,8 @@ class Player extends ChangeNotifier {
 
   static List<Player>? getPlayersByRoleSide(RoleSide roleSide) {
     return inGamePlayers
-        .where((player) => player.role!.roleSide == roleSide).toList();
+        .where((player) => player.role!.roleSide == roleSide)
+        .toList();
   }
 
   static Player getPlayerByName(String name) {

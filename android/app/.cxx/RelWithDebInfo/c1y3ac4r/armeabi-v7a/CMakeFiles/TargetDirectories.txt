@@ -1,0 +1,2 @@
+C:/Users/CR7/AndroidStudioProjects/mafia/mafia_killer/android/app/.cxx/RelWithDebInfo/c1y3ac4r/armeabi-v7a/CMakeFiles/edit_cache.dir
+C:/Users/CR7/AndroidStudioProjects/mafia/mafia_killer/android/app/.cxx/RelWithDebInfo/c1y3ac4r/armeabi-v7a/CMakeFiles/rebuild_cache.dir

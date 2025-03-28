@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:logger/logger.dart';
-
 import 'package:mafia_killer/components/call_role.dart';
 import 'package:mafia_killer/components/dialogboxes/information_dialogbox.dart';
 import 'package:mafia_killer/components/page_frame.dart';
@@ -89,8 +87,6 @@ class _PlayersPageState extends State<PlayersPage> {
           rightButtonOnTap: () {
             Player.fetchInGamePlayers();
             AudioManager.playNextPageEffect();
-            Logger().d(
-                Player.inGamePlayers[0].name == Player.inGamePlayers[1].name);
             Navigator.pushNamed(context, '/game_settings_page');
           },
           child: Column(

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:logger/logger.dart';
 import 'package:mafia_killer/components/call_role.dart';
 import 'package:mafia_killer/components/dialogboxes/confirmation_dialogbox.dart';
 import 'package:mafia_killer/components/dialogboxes/mafia_choice_dialogbox.dart';
@@ -172,6 +171,7 @@ class _NightPageState extends State<NightPage> {
     NightPage.ableToSelectTile = false;
     NightPage.isNightOver = false;
     Scenario.currentScenario.nightEvents = {};
+    Scenario.currentScenario.report = [];
   }
 
   void resetNight() {
@@ -196,8 +196,10 @@ class _NightPageState extends State<NightPage> {
     // resetTiles();
     // Scenario.currentScenario.resetDataAfterNight();
     // Scenario.currentScenario.resetRemainingAbility();
-    Player.inGamePlayers = GameStateManager
-        .gameStates[GameStateManager.getPreviousState()]!.players;
+
+    Player.inGamePlayers = Player.copyList(GameStateManager
+        .gameStates[GameStateManager.getPreviousState()]!.players);
+
     resetUIBeforeNight();
   }
 
@@ -244,7 +246,7 @@ class _NightPageState extends State<NightPage> {
         rightButtonOnTap: () {
           if (NightPage.isNightOver) {
             iterator.moveNext();
-            Scenario.currentScenario.goToNextStage();
+            // Scenario.currentScenario.goToNextStage();
             AudioManager.playNextPageEffect();
             Navigator.pushNamed(context, '/night_events_page');
           } else {

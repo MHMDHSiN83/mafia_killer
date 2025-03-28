@@ -114,7 +114,7 @@ class _NightEventsPage extends State<NightEventsPage> {
         label: '/night_events_page',
         pageTitle: "اتفاقات شب",
         leftButtonText:
-            "شب ${Scenario.currentScenario.dayAndNightNumber(number: Scenario.currentScenario.nightNumber - 1)}",
+            "شب ${Scenario.currentScenario.dayAndNightNumber(number: Scenario.currentScenario.nightNumber)}",
         rightButtonText:
             "روز ${Scenario.currentScenario.dayAndNightNumber(number: Scenario.currentScenario.dayNumber)}",
         leftButtonOnTap: () {
@@ -129,6 +129,7 @@ class _NightEventsPage extends State<NightEventsPage> {
               silencedPlayerDuringDay:
                   Scenario.currentScenario.silencedPlayerDuringDay,
               nightReport: Scenario.currentScenario.report);
+              Scenario.currentScenario.goToNextStage();
           Scenario.currentScenario.resetDataAfterNight();
           if (Scenario.currentScenario.isGameOver()) {
             AudioManager.playNextPageEffect();

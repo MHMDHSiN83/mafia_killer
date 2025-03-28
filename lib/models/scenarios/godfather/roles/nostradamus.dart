@@ -1,4 +1,3 @@
-import 'package:logger/logger.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/models/language.dart';
 import 'package:mafia_killer/models/ui_player_status.dart';
@@ -69,7 +68,6 @@ class Nostradamus extends Role {
   }
 
   void setInquiryNumber() {
-    Logger().d("helloooooooooooo");
     inquiryNumber = Player.getPlayersByRoleSide(RoleSide.mafia)!.length;
   }
 }

@@ -23,21 +23,16 @@ class GameStateManager {
       stateKilledInDayPlayer =
           Player.copy(Scenario.currentScenario.killedInDayPlayer!);
     }
+    
+    statePlayers = Player.copyList(Player.inGamePlayers);
 
-    for (Player p in Player.inGamePlayers) {
-      statePlayers.add(Player.copy(p));
-    }
     nightReport ??= [];
     if (lastMoveCards != null) {
-      for (LastMoveCard l in lastMoveCards) {
-        stateLastMoveCards.add(LastMoveCard.copy(l));
-      }
+      stateLastMoveCards = LastMoveCard.copyList(lastMoveCards);
     }
 
     if (silencedPlayerDuringDay != null) {
-      for (Player p in silencedPlayerDuringDay) {
-        stateSilencedPlayerDuringDay.add(Player.copy(p));
-      }
+      stateSilencedPlayerDuringDay = Player.copyList(silencedPlayerDuringDay);
     } else {
       stateSilencedPlayerDuringDay = [];
     }
@@ -81,16 +76,18 @@ class GameStateManager {
 
   static void goToPreviousState() {
     currentState = getPreviousState();
-    Player.inGamePlayers = gameStates[currentState]!.players;
+    Player.inGamePlayers = Player.copyList(gameStates[currentState]!.players);
     Scenario.currentScenario.inGameLastMoveCards =
-        gameStates[currentState]!.lastMoveCards;
+        LastMoveCard.copyList(gameStates[currentState]!.lastMoveCards);
     GameSettings.currentGameSettings.inquiry =
         gameStates[currentState]!.remainingInquiry;
     Scenario.currentScenario.report = gameStates[currentState]!.nightReport;
     Scenario.currentScenario.killedInDayPlayer =
-        gameStates[currentState]!.killedInDayPlayer;
+        gameStates[currentState]!.killedInDayPlayer == null
+            ? null
+            : Player.copy(gameStates[currentState]!.killedInDayPlayer);
     Scenario.currentScenario.silencedPlayerDuringDay =
-        gameStates[currentState]!.silencedPlayerDuringDay;
+        Player.copyList(gameStates[currentState]!.silencedPlayerDuringDay);
     undoLastMoveCardAction();
   }
 
@@ -98,9 +95,7 @@ class GameStateManager {
       List<Player> players, LastMoveCard lastMoveCard) {
     List<Player> statePlayers = [];
 
-    for (Player p in players) {
-      statePlayers.add(Player.copy(p));
-    }
+    statePlayers = Player.copyList(players);
 
     LastMoveCard stateLastMoveCard = LastMoveCard.copy(lastMoveCard);
     lastMoveCardActions[currentState] =

@@ -48,6 +48,10 @@ class LastMoveCard {
     return LastMoveCard.fromJson(jsonDecode(jsonEncode(lastMoveCard.toJson())));
   }
 
+  static List<LastMoveCard> copyList(List<LastMoveCard> lastMoveCards) {
+    return lastMoveCards.map((lastMoveCard) => LastMoveCard.copy(lastMoveCard)).toList();
+  }
+
   double titleVerticalPadding() {
     return 15;
   }
@@ -74,7 +78,6 @@ class LastMoveCard {
     throw Exception("no action defined for last move card!");
   }
 
-  
   void undoLastMoveCardAction(List<Player> players) {
     throw UnimplementedError();
   }
