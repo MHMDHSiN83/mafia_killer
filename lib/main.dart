@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:mafia_killer/pages/defense_voting_page.dart';
 import 'package:mafia_killer/pages/end_game_page.dart';
 import 'package:mafia_killer/pages/game_settings_page.dart';
@@ -30,6 +31,9 @@ void main() {
       child: MyApp(),
     ),
   );
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+  ]);
 }
 
 class MyApp extends StatelessWidget {

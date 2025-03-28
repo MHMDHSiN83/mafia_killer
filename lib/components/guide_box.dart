@@ -45,7 +45,7 @@ class SpeechBubblePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     var paint = Paint()
-      ..color = Colors.white
+      ..color = Colors.grey.shade200
       ..style = PaintingStyle.fill
       ..strokeWidth = 2;
 

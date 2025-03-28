@@ -5,6 +5,7 @@ import 'package:mafia_killer/components/guide_box.dart';
 import 'package:mafia_killer/components/my_outlined_button.dart';
 import 'package:mafia_killer/components/dialogboxes/player_status_dialogbox.dart';
 import 'package:mafia_killer/components/remove_player_dialogbox.dart';
+import 'package:mafia_killer/components/settings_box.dart';
 import 'package:mafia_killer/databases/page_guide.dart';
 import 'dart:math' as math;
 import 'package:mafia_killer/themes/app_color.dart';
@@ -44,7 +45,6 @@ class PageFrame extends StatefulWidget {
 }
 
 class _PageFrameState extends State<PageFrame> {
-  bool _showBubble = false;
   final Map<String, double> titleFontsizes = {
     "small": 21,
     "medium": 24,
@@ -164,7 +164,9 @@ class _PageFrameState extends State<PageFrame> {
                           size: 35,
                         ),
                         color: const Color(0xFFE01357),
-                        onPressed: () {},
+                        onPressed: () {
+                          showSettingsDialog();
+                        },
                       ),
                     ),
                   ),
@@ -224,9 +226,6 @@ class _PageFrameState extends State<PageFrame> {
                           color: const Color(0xFFE01357),
                           onPressed: () {
                             showGuideDialog();
-                            setState(() {
-                              _showBubble = !_showBubble;
-                            });
                           },
                         ),
                       ),
@@ -247,6 +246,18 @@ class _PageFrameState extends State<PageFrame> {
       context: context,
       builder: (context) {
         return GuideBox(
+          text: PageGuide.pageGuides![widget.label]!,
+        );
+      },
+    );
+  }
+
+  void showSettingsDialog() {
+    AudioManager.playClickEffect();
+    showDialog(
+      context: context,
+      builder: (context) {
+        return SettingsBox(
           text: PageGuide.pageGuides![widget.label]!,
         );
       },
