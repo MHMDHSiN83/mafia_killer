@@ -21,16 +21,16 @@ class EndGamePage extends StatelessWidget {
           ((x.role! is Nostradamus) &&
               (x.role! as Nostradamus).inGameRoleSide == RoleSide.citizen))
       .toList();
-  final Player independentPlayer = Player.inGamePlayers
-      .where((x) => x.role?.roleSide == RoleSide.independant)
-      .first;
+  final Player? independentPlayer = Player.inGamePlayers
+      .where((x) => x.role?.roleSide == RoleSide.independant).isNotEmpty ? Player.inGamePlayers
+      .where((x) => x.role?.roleSide == RoleSide.independant).first : null;
 
   final RoleSide whoWon = Scenario.currentScenario.whichTeamWon();
 
   @override
   Widget build(BuildContext context) {
     List<Player> winingPlayers =
-        (whoWon == RoleSide.citizen) ? citizenPlayers : mafiaPlayers;
+        (whoWon == RoleSide.citizen) ? citizenPlayers : (whoWon == RoleSide.independant) ? [independentPlayer!] : mafiaPlayers;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: PageFrame(
