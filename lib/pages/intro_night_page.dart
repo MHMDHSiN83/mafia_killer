@@ -3,6 +3,7 @@ import 'package:mafia_killer/components/call_role.dart';
 import 'package:mafia_killer/components/dialogboxes/confirmation_dialogbox.dart';
 import 'package:mafia_killer/components/intro_night_player_tile.dart';
 import 'package:mafia_killer/components/dialogboxes/nostradamus_dialogbox.dart';
+import 'package:mafia_killer/components/my_divider.dart';
 import 'package:mafia_killer/components/page_frame.dart';
 import 'package:mafia_killer/databases/game_settings.dart';
 import 'package:mafia_killer/databases/game_state_manager.dart';
@@ -12,6 +13,7 @@ import 'package:mafia_killer/models/role_side.dart';
 import 'package:mafia_killer/models/scenarios/godfather/godfather_scenario.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/nostradamus.dart';
 import 'package:mafia_killer/models/talking_page_screen_arguments.dart';
+import 'package:mafia_killer/themes/app_color.dart';
 import 'package:mafia_killer/utils/audio_manager.dart';
 import 'package:mafia_killer/utils/custom_snackbar.dart';
 
@@ -32,12 +34,16 @@ class _IntroNightPageState extends State<IntroNightPage> {
   late String text;
   Map<Player, bool> playerCheckboxStatus = {};
   late Iterator<String> iterator;
+  Map<String, dynamic> gameSettings =
+      GameSettings.currentGameSettings.getSettingsInMap();
 
   bool isCheckBoxDisable(Player player) {
     bool result = false;
-    if ( (Scenario.currentScenario as GodfatherScenario).doesNostradamusParticipate() &&(IntroNightPage.targetPlayers.length ==
-        (Player.getPlayerByRoleType(Nostradamus)!.role as Nostradamus)
-            .inquiryNumber)) {
+    if ((Scenario.currentScenario as GodfatherScenario)
+            .doesNostradamusParticipate() &&
+        (IntroNightPage.targetPlayers.length ==
+            (Player.getPlayerByRoleType(Nostradamus)!.role as Nostradamus)
+                .inquiryNumber)) {
       result = true;
     }
     for (Player p in IntroNightPage.targetPlayers) {
@@ -96,6 +102,56 @@ class _IntroNightPageState extends State<IntroNightPage> {
     }
   }
 
+  Widget? settingsPage() {
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              'شروع مجدد شب معارفه',
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.primary,
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
+              ),
+            ),
+            IconButton(
+              onPressed: () {
+                AudioManager.playClickEffect();
+                setState(() {
+                  showDialog(
+                    context: context,
+                    builder: (context) => ConfirmationDialogbox(
+                      onSave: () {
+                        AudioManager.playClickEffect();
+                        setState(() {
+                          resetNight();
+                        });
+                        Navigator.pop(context);
+                      },
+                      onCancel: () {
+                        AudioManager.playClickEffect();
+                        Navigator.pop(context);
+                      },
+                    ),
+                  );
+                });
+              },
+              padding: EdgeInsets.zero,
+              icon: Icon(
+                Icons.refresh,
+                size: 40,
+                color: AppColors.redColor,
+              ),
+            ),
+          ],
+        ),
+        MyDivider(),
+      ],
+    );
+  }
+
   @override
   void initState() {
     resetNight();
@@ -118,6 +174,7 @@ class _IntroNightPageState extends State<IntroNightPage> {
         reloadContentOfPage: () {
           setState(() {});
         },
+        settingsPage: settingsPage,
         rightButtonText:
             "روز ${Scenario.currentScenario.dayAndNightNumber(number: Scenario.currentScenario.dayNumber)}",
         leftButtonText:
@@ -154,34 +211,6 @@ class _IntroNightPageState extends State<IntroNightPage> {
           padding: const EdgeInsets.symmetric(horizontal: 12),
           child: Column(
             children: [
-              Expanded(
-                flex: 2,
-                child: IconButton(
-                  icon: const Icon(
-                    Icons.refresh,
-                    size: 35,
-                  ),
-                  color: const Color(0xFFE01357),
-                  onPressed: () {
-                    showDialog(
-                      context: context,
-                      builder: (context) => ConfirmationDialogbox(
-                        onSave: () {
-                          AudioManager.playClickEffect();
-                          setState(() {
-                            resetNight();
-                          });
-                          Navigator.pop(context);
-                        },
-                        onCancel: () {
-                          AudioManager.playClickEffect();
-                          Navigator.pop(context);
-                        },
-                      ),
-                    );
-                  },
-                ),
-              ),
               Expanded(
                 flex: 15,
                 child: Directionality(

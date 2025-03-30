@@ -3,6 +3,7 @@ import 'package:mafia_killer/components/call_role.dart';
 import 'package:mafia_killer/components/dialogboxes/confirmation_dialogbox.dart';
 import 'package:mafia_killer/components/dialogboxes/mafia_choice_dialogbox.dart';
 import 'package:mafia_killer/components/dialogboxes/message_dialogbox.dart';
+import 'package:mafia_killer/components/my_divider.dart';
 import 'package:mafia_killer/components/night_player_tile.dart';
 import 'package:mafia_killer/components/page_frame.dart';
 import 'package:mafia_killer/components/dialogboxes/sixth_sense_dialogbox.dart';
@@ -12,6 +13,7 @@ import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/models/player_status.dart';
 import 'package:mafia_killer/models/scenarios/godfather/godfather_scenario.dart';
 import 'package:mafia_killer/models/ui_player_status.dart';
+import 'package:mafia_killer/themes/app_color.dart';
 import 'package:mafia_killer/utils/audio_manager.dart';
 import 'package:mafia_killer/utils/custom_snackbar.dart';
 
@@ -214,6 +216,56 @@ class _NightPageState extends State<NightPage> {
     }
   }
 
+  Widget? settingsPage() {
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              'شروع مجدد شب ${Scenario.currentScenario.dayAndNightNumber()}',
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.primary,
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
+              ),
+            ),
+            IconButton(
+              onPressed: () {
+                AudioManager.playClickEffect();
+                setState(() {
+                  showDialog(
+                    context: context,
+                    builder: (context) => ConfirmationDialogbox(
+                      onSave: () {
+                        AudioManager.playClickEffect();
+                        setState(() {
+                          resetNight();
+                        });
+                        Navigator.pop(context);
+                      },
+                      onCancel: () {
+                        AudioManager.playClickEffect();
+                        Navigator.pop(context);
+                      },
+                    ),
+                  );
+                });
+              },
+              padding: EdgeInsets.zero,
+              icon: Icon(
+                Icons.refresh,
+                size: 40,
+                color: AppColors.redColor,
+              ),
+            ),
+          ],
+        ),
+        MyDivider(),
+      ],
+    );
+  }
+
   @override
   void initState() {
     GameStateManager.addState(
@@ -234,6 +286,7 @@ class _NightPageState extends State<NightPage> {
         reloadContentOfPage: () {
           setState(() {});
         },
+        settingsPage: settingsPage,
         rightButtonText: 'اتفاقات شب',
         leftButtonText:
             "روز ${Scenario.currentScenario.dayAndNightNumber(number: Scenario.currentScenario.dayNumber - 1)}",
@@ -257,34 +310,6 @@ class _NightPageState extends State<NightPage> {
           padding: const EdgeInsets.symmetric(horizontal: 12),
           child: Column(
             children: [
-              Expanded(
-                flex: 2,
-                child: IconButton(
-                  icon: const Icon(
-                    Icons.refresh,
-                    size: 35,
-                  ),
-                  color: const Color(0xFFE01357),
-                  onPressed: () {
-                    showDialog(
-                      context: context,
-                      builder: (context) => ConfirmationDialogbox(
-                        onSave: () {
-                          AudioManager.playClickEffect();
-                          setState(() {
-                            resetNight();
-                          });
-                          Navigator.pop(context);
-                        },
-                        onCancel: () {
-                          AudioManager.playClickEffect();
-                          Navigator.pop(context);
-                        },
-                      ),
-                    );
-                  },
-                ),
-              ),
               Expanded(
                 flex: 15,
                 child: Directionality(

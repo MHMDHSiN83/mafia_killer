@@ -1,6 +1,8 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:mafia_killer/components/dialogboxes/confirmation_dialogbox.dart';
 import 'package:mafia_killer/components/dialogboxes/new_inquiry_dialogbox.dart';
+import 'package:mafia_killer/components/my_divider.dart';
 import 'package:mafia_killer/components/night_event_tile.dart';
 import 'package:mafia_killer/components/page_frame.dart';
 import 'package:mafia_killer/databases/game_settings.dart';
@@ -105,6 +107,63 @@ class _NightEventsPage extends State<NightEventsPage> {
     });
   }
 
+  void resetInquiry() {
+    if(doesPressInquiry) {
+        GameSettings.currentGameSettings.inquiry++;
+        doesPressInquiry = false;
+    }
+  }
+
+  Widget? settingsPage() {
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              'بازگرداندن استعلام',
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.primary,
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
+              ),
+            ),
+            IconButton(
+              onPressed: () {
+                AudioManager.playClickEffect();
+                setState(() {
+                  showDialog(
+                    context: context,
+                    builder: (context) => ConfirmationDialogbox(
+                      onSave: () {
+                        AudioManager.playClickEffect();
+                        setState(() {
+                          resetInquiry();
+                        });
+                        Navigator.pop(context);
+                      },
+                      onCancel: () {
+                        AudioManager.playClickEffect();
+                        Navigator.pop(context);
+                      },
+                    ),
+                  );
+                });
+              },
+              padding: EdgeInsets.zero,
+              icon: Icon(
+                Icons.refresh,
+                size: 40,
+                color: AppColors.redColor,
+              ),
+            ),
+          ],
+        ),
+        MyDivider(),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     calculateSizeOfImage();
@@ -113,6 +172,7 @@ class _NightEventsPage extends State<NightEventsPage> {
       body: PageFrame(
         label: '/night_events_page',
         pageTitle: "اتفاقات شب",
+        settingsPage: settingsPage,
         leftButtonText:
             "شب ${Scenario.currentScenario.dayAndNightNumber(number: Scenario.currentScenario.nightNumber)}",
         rightButtonText:

@@ -26,6 +26,7 @@ class PageFrame extends StatefulWidget {
     this.questionOnTap,
     this.child,
     this.reloadContentOfPage,
+    this.settingsPage,
   });
   final String label;
   final String pageTitle;
@@ -39,6 +40,8 @@ class PageFrame extends StatefulWidget {
   final Widget? child;
   final bool isInGame;
   final Function? reloadContentOfPage;
+  
+  final Function? settingsPage;
 
   @override
   State<PageFrame> createState() => _PageFrameState();
@@ -259,6 +262,7 @@ class _PageFrameState extends State<PageFrame> {
       builder: (context) {
         return SettingsBox(
           text: PageGuide.pageGuides![widget.label]!,
+          settingsPage: widget.settingsPage,
         );
       },
     );

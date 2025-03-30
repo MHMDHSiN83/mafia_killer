@@ -102,9 +102,9 @@ class Scenario {
       await file.writeAsString(jsonString);
     } else {
       print('scenario already exists in internal storage');
-      String jsonString = await file.readAsString();
       List<dynamic> jsonData;
       try {
+      String jsonString = await file.readAsString();
         jsonData = jsonDecode(jsonString);
       } catch (e) {
         String jsonString =
