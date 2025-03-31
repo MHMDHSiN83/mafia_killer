@@ -61,7 +61,7 @@ dev_dependencies:
   # rules and activating additional ones.
   flutter_lints: ^5.0.0
   build_runner: ^2.4.11
-  json_serializable: ^6.8.0
+  json_serializable: ^6.9.4
   keyboard_avoider: ^0.2.0
 
 # For information on the generic Dart part of this file, see the
@@ -78,16 +78,13 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - lib/assets/
-    - lib/assets/players.json
     - lib/images/roles/role_cards/
     - lib/images/roles/role_characters/
     - lib/images/icons/
     - lib/images/last_move_cards/
     - lib/images/endgame/
     - lib/images/dialogbox/
-    - lib/images/
     - lib/images/backgrounds/
-    - lib/icons/
     - assets/audios/
 
 

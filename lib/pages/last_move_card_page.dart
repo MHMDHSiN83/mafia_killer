@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:logger/logger.dart';
 import 'package:mafia_killer/components/call_role.dart';
 import 'package:mafia_killer/components/last_move_card_tile.dart';
 import 'package:mafia_killer/components/page_frame.dart';
@@ -47,7 +46,6 @@ class _LastMoveCardPageState extends State<LastMoveCardPage> {
           return settingsPage(context, 6);
         },
         leftButtonOnTap: () {
-          Logger().d("aaaa");
           LastMoveCardPage.selectedLastMoveCard?.isUsed = false;
           if (Scenario.currentScenario is GodfatherScenario) {
             Scenario.currentScenario.inGameLastMoveCards.shuffle();
