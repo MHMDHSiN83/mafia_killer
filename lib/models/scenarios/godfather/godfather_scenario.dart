@@ -48,11 +48,12 @@ class GodfatherScenario extends Scenario {
 
   @override
   Iterable<String> callRolesIntroNight() sync* {
-    if((Scenario.currentScenario as GodfatherScenario).doesNostradamusParticipate()) {
-    Player? nostradamusPlayer = Player.getPlayerByRoleType(Nostradamus);
+    if ((Scenario.currentScenario as GodfatherScenario)
+        .doesNostradamusParticipate()) {
+      Player? nostradamusPlayer = Player.getPlayerByRoleType(Nostradamus);
 
-    yield nostradamusPlayer!.role!.introAwakingRole();
-    yield nostradamusPlayer.role!.introSleepRoleText();
+      yield nostradamusPlayer!.role!.introAwakingRole();
+      yield nostradamusPlayer.role!.introSleepRoleText();
     }
     List<String> introMafiaTeamAwakingTexts =
         Scenario.currentScenario.getIntroMafiaTeamAwakingTexts();
@@ -146,10 +147,8 @@ class GodfatherScenario extends Scenario {
         saulGoodmanPlayer?.role!.nightAction(NightPage.targetPlayer);
         if (NightPage.targetPlayer!.role is Citizen) {
           // nightEvents[NightEvent.boughtBySaulGoodman] = NightPage.targetPlayer;
-          NightPage.targetPlayer!.role = Role.fromJson(jsonDecode(jsonEncode(
-              Scenario.currentScenario
-                  .getRoleByType(Mafia, searchInGmaeRoles: false)!
-                  .toJson())));
+          NightPage.targetPlayer!.role = Role.copy(Scenario.currentScenario
+              .getRoleByType(Mafia, searchInGmaeRoles: false)!);
           yield 'خریداری موفقیت آمیز بود. فرد خریداری شده رو بیدار کن تا هم تیمیاشو ببینه';
         } else {
           yield 'خریداری موفقیت امیز نبود. کمی راه برو و اتمام رو بزن';
@@ -162,7 +161,13 @@ class GodfatherScenario extends Scenario {
   Iterable<String> otherRolesAction({Function? noAbilityBox}) sync* {
     // List<String> constantRoleOrder =
     //     Scenario.currentScenario.getConstantRoleOrder();
-      List<String> constantRoleOrder = ['ماتادور', 'دکتر واتسون', 'لئون حرفه‌ای', 'همشهری کین', 'کنستانتین'];
+    List<String> constantRoleOrder = [
+      'ماتادور',
+      'دکتر واتسون',
+      'لئون حرفه‌ای',
+      'همشهری کین',
+      'کنستانتین'
+    ];
     NightPage.buttonText = 'خوابید';
     for (int i = 0; i < constantRoleOrder.length; i++) {
       for (Player player in Player.inGamePlayers) {
@@ -356,7 +361,8 @@ class GodfatherScenario extends Scenario {
           .where((player) => player.role is SaulGoodman)
           .first;
       if (saulGoodman.playerStatus == PlayerStatus.active &&
-          saulGoodman.hasAbility() && isAnyMaifaDead()) {
+          saulGoodman.hasAbility() &&
+          isAnyMaifaDead()) {
         return true;
       }
       return false;
@@ -382,8 +388,9 @@ class GodfatherScenario extends Scenario {
     return false;
   }
 
-    bool doesBeautifulMindParticipate() {
-    for (LastMoveCard lastMoveCard in Scenario.currentScenario.inGameLastMoveCards) {
+  bool doesBeautifulMindParticipate() {
+    for (LastMoveCard lastMoveCard
+        in Scenario.currentScenario.inGameLastMoveCards) {
       if (lastMoveCard is BeautifulMind) {
         return true;
       }
@@ -448,10 +455,9 @@ class GodfatherScenario extends Scenario {
 
   void setNostradamusInquiryNumber() {
     Player? nostradamusPlayer = Player.getPlayerByRoleType(Nostradamus);
-    if(nostradamusPlayer == null) {
+    if (nostradamusPlayer == null) {
       return;
     }
     (nostradamusPlayer.role! as Nostradamus).setInquiryNumber();
   }
-
 }

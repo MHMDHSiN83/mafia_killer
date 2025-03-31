@@ -1,4 +1,3 @@
-import 'package:deep_collection/deep_collection.dart';
 import 'package:flutter/material.dart';
 import 'package:mafia_killer/components/last_move_card_selection_tile.dart';
 import 'package:mafia_killer/components/page_frame.dart';
@@ -79,7 +78,9 @@ class RoleSelectionPage extends StatelessWidget {
           }
           (Scenario.currentScenario as GodfatherScenario)
               .shuffleLastMoveCards();
-          List<Role> roles = Scenario.currentScenario.inGameRoles.deepCopy();
+          List<Role> roles =
+              Role.copyList(Scenario.currentScenario.inGameRoles);
+
           roles.shuffle();
           for (int i = 0; i < Player.inGamePlayers.length; i++) {
             Player.inGamePlayers[i].role = roles[i];

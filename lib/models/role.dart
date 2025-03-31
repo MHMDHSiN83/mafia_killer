@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/models/role_side.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/citizen.dart';
@@ -20,16 +22,14 @@ class Role {
   late RoleSide roleSide;
 
   Role();
+
   factory Role.copy(Role role) {
-    Role newRole = Role();
-    newRole.name = role.name;
-    newRole.description = role.description;
-    newRole.cardImagePath = role.cardImagePath;
-    newRole.characterImagePath = role.characterImagePath;
-    newRole.roleSide = role.roleSide;
-    return newRole;
+    return Role.fromJson(jsonDecode(jsonEncode(role.toJson())));
   }
 
+  static List<Role> copyList(List<Role> roles) {
+    return roles.map((role) => Role.copy(role)).toList();
+  }
   factory Role.fromJson(Map<String, dynamic> json) {
     switch (json['name']) {
       case 'پدرخوانده':
@@ -52,19 +52,9 @@ class Role {
         return CitizenKane.fromJson(json);
       case 'شهروند ساده':
         return Citizen.fromJson(json);
+      default:
+        return Role(); 
     }
-
-    if (json['name'] == 'دکتر واتسون') {
-      return DoctorWatson.fromJson(json);
-    }
-    Role role = Role();
-    role.name = json['name'];
-    role.description = json['description'];
-    role.roleSide = RoleSide.values
-        .firstWhere((e) => e.toString().split('.').last == json['roleSide']);
-    role.cardImagePath = json['cardImagePath'];
-    role.characterImagePath = json['characterImagePath'];
-    return role;
   }
 
   Map<String, dynamic> toJson() {

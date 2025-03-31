@@ -135,44 +135,5 @@
                 "isUsed": false
             }
         ]
-    },
-    {
-        "name": "کلاسیک",
-        "inGameRoles": [],
-        "inGameLastMoveCards": [],
-        "nightNumber": 0,
-        "dayNumber": 0,
-        "isNight": false,
-        "nightEvents": {},
-        "defendingPlayers": [],
-        "silencedPlayerDuringDay": [],
-        "report": [],
-        "roles": [
-            {
-                "name": "پدرخوانده",
-                "description": "او یک بار از شلیک شب لئون در امان است، یک جلیقه دارد. تعیین شلیک شب از طرف گروه به عهده پدرخوانده است و اگر از بازی خارج شود دیگر اعضا به جای او شلیک می‌کنند. پدرخوانده دارای توانایی حس ششم است است و اگر در شب تصمیم بگیرد به جای شلیک از حس ششم استفاده کند باید نقش بازیکنی را درست حدس بزند و توسط گرداننده تایید شود. بازیکنی که پدرخوانده نقش او را درست حدس زده است سلاخی می‌شود، یعنی اگر سپر داشته باشد یا دکتر او را سیو کرده باشد بازهم از بازی خارج می‌شود و آن شب توانایی وی اعمال نخواهد شد و پس از خروج از بازی توسط کنستانتین قابل احضار نمی‌باشد. استعلام پدرخوانده برای نوستراداموس شهروندی بوده ولی برای همشهری کین مافیایی و مثبت خواهد بود.",
-                "roleSide": "mafia",
-                "cardImagePath": "lib/images/roles/role_cards/godfather.jpg",
-                "characterImagePath": "lib/images/roles/role_characters/godfather.png",
-                "remainingAbility": 1,
-                "shield": 1
-            },
-            {
-                "name": "دکتر",
-                "description": "هر شب می‌تواند جان یک نفر چه عضو مافیا و چه عضو شهروندی را نجات دهد. جان خودش را یکبار می‌تواند در طول بازی نجات دهد ولی در نجات جان دیگران محدودیتی ندارد.",
-                "roleSide": "citizen",
-                "cardImagePath": "lib/images/roles/role_cards/doctor_watson.jpg",
-                "characterImagePath": "lib/images/roles/role_characters/doctor_watson.png",
-                "selfHeal": 2
-            },
-            {
-                "name": "شهروند ساده",
-                "description": "نقش شهروند ساده کمک به هم تیمی های خود در تشخیص مافیا به درستی است و رای دادن با زرنگی به اعضای مافیاست. او در شب نقش خاصی را ایفا نمی‌کند و بیشتر به روند بازی و تیم شهروندی در پیروز شدن کمک می‌کند.",
-                "roleSide": "citizen",
-                "cardImagePath": "lib/images/roles/role_cards/citizen.jpg",
-                "characterImagePath": "lib/images/roles/role_characters/citizen.png"
-            }
-        ],
-        "lastMoveCards": []
     }
 ]

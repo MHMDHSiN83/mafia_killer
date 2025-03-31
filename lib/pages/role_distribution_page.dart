@@ -115,16 +115,16 @@ class _RoleDistributionPageState extends State<RoleDistributionPage> {
                 .setNostradamusInquiryNumber();
             AudioManager.playNextPageEffect();
 
-          Navigator.pushNamed(
-            context,
-            '/talking_page',
-            arguments: TalkingPageScreenArguments(
-                nextPagePath: '/intro_night_page',
-                seconds: GameSettings.currentGameSettings.introTime,
-                rightButtonText: "شب معارفه",
-                leftButtonText: "تقسیم نقش",
-                isDefense: false),
-          );
+            Navigator.pushNamed(
+              context,
+              '/talking_page',
+              arguments: TalkingPageScreenArguments(
+                  nextPagePath: '/intro_night_page',
+                  seconds: GameSettings.currentGameSettings.introTime,
+                  rightButtonText: "شب معارفه",
+                  leftButtonText: "تقسیم نقش",
+                  isDefense: false),
+            );
           } else {
             customSnackBar(
                 context, "هنوز تمام بازیکن ها نقششون رو ندیدند.", true);

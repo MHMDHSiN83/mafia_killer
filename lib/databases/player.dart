@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:deep_collection/deep_collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:json_annotation/json_annotation.dart';
@@ -140,7 +139,7 @@ class Player extends ChangeNotifier {
     if (inGamePlayers[0].role != null) {
       return inGamePlayers;
     }
-    List<Role> roles = Scenario.currentScenario.inGameRoles.deepCopy();
+    List<Role> roles = Role.copyList(Scenario.currentScenario.inGameRoles);
     roles.shuffle();
     for (int i = 0; i < inGamePlayers.length; i++) {
       inGamePlayers[i].role = roles[i];

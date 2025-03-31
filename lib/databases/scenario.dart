@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/services.dart';
+import 'package:logger/logger.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/databases/recommended_scenario.dart';
 import 'package:mafia_killer/models/player_status.dart';
@@ -130,8 +131,10 @@ class Scenario {
     if (newRole == null) {
       return;
     }
+    Role role = Role.copy(newRole);
+    Logger().d(role.name);
     currentScenario.inGameRoles
-        .add(Role.fromJson(jsonDecode(jsonEncode(newRole.toJson()))));
+        .add(Role.copy(newRole));
     Database.writeScenariosData(scenarios);
   }
 

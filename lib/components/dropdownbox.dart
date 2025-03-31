@@ -16,7 +16,6 @@ class DropdownBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    options.removeAt(1);
     options.add("کلاسیک (به‌زودی)");
     options.add("زودیاک (به‌زودی)");
     return SizedBox(
