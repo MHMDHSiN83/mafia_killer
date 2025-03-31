@@ -2,13 +2,18 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:mafia_killer/components/call_role.dart';
+import 'package:mafia_killer/components/dialogboxes/confirmation_dialogbox.dart';
 import 'package:mafia_killer/components/dialogboxes/message_dialogbox.dart';
+import 'package:mafia_killer/components/my_divider.dart';
 import 'package:mafia_killer/components/page_frame.dart';
 import 'package:mafia_killer/components/voting_tile.dart';
+import 'package:mafia_killer/databases/game_state_manager.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/databases/scenario.dart';
+import 'package:mafia_killer/themes/app_color.dart';
 import 'package:mafia_killer/utils/audio_manager.dart';
 import 'package:mafia_killer/models/scenarios/godfather/godfather_scenario.dart';
+import 'package:mafia_killer/utils/settings_page.dart';
 
 class DefenseVotingPage extends StatefulWidget {
   const DefenseVotingPage({super.key});
@@ -47,6 +52,7 @@ class _DefenseVotingPageState extends State<DefenseVotingPage> {
     });
   }
 
+
   @override
   void initState() {
     for (Player player in Scenario.currentScenario.defendingPlayers) {
@@ -63,6 +69,9 @@ class _DefenseVotingPageState extends State<DefenseVotingPage> {
         pageTitle: "کشته روز",
         reloadContentOfPage: () {
           setState(() {});
+        },
+        settingsPage:  () {
+          return settingsPage(context, 5);
         },
         leftButtonText: "صحبت دفاعیه",
         rightButtonText:

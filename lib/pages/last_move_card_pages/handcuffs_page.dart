@@ -8,6 +8,7 @@ import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/pages/last_move_card_page.dart';
 import 'package:mafia_killer/utils/custom_snackbar.dart';
 import 'package:mafia_killer/utils/audio_manager.dart';
+import 'package:mafia_killer/utils/settings_page.dart';
 
 class HandcuffsPage extends StatefulWidget {
   HandcuffsPage({super.key});
@@ -44,6 +45,12 @@ class _HandcuffsPageState extends State<HandcuffsPage> {
       body: PageFrame(
         label: '/handcuffs_page',
         pageTitle: "دستبند",
+        settingsPage: () {
+          if (LastMoveCardPage.selectedLastMoveCard != null) {
+            LastMoveCardPage.selectedLastMoveCard!.isUsed = false;
+          }
+          return settingsPage(context, 7);
+        },
         leftButtonText: "کارت حرکت آخر",
         rightButtonText:
             'شب ${Scenario.currentScenario.dayAndNightNumber(number: Scenario.currentScenario.nightNumber)}',
@@ -53,9 +60,13 @@ class _HandcuffsPageState extends State<HandcuffsPage> {
         rightButtonOnTap: () {
           if (widget.selectedPlayers.length == 1) {
             // widget.selectedPlayers.insert(0, killedInDayPlayer);
-            GameStateManager.addLastMoveCardAction([Scenario.currentScenario.killedInDayPlayer!,
-              widget.selectedPlayers[0]], LastMoveCardPage.selectedLastMoveCard!);
-            LastMoveCardPage.selectedLastMoveCard!.lastMoveCardAction([Player.getPlayerByName(Scenario.currentScenario.killedInDayPlayer!.name),
+            GameStateManager.addLastMoveCardAction([
+              Scenario.currentScenario.killedInDayPlayer!,
+              widget.selectedPlayers[0]
+            ], LastMoveCardPage.selectedLastMoveCard!);
+            LastMoveCardPage.selectedLastMoveCard!.lastMoveCardAction([
+              Player.getPlayerByName(
+                  Scenario.currentScenario.killedInDayPlayer!.name),
               Player.getPlayerByName(widget.selectedPlayers[0].name),
             ]);
 
@@ -69,7 +80,8 @@ class _HandcuffsPageState extends State<HandcuffsPage> {
               Navigator.pushNamed(context, '/night_page');
             }
           } else {
-            customSnackBar(context, "باید حتما یک بازیکن را انتخاب کنید.", true);
+            customSnackBar(
+                context, "باید حتما یک بازیکن را انتخاب کنید.", true);
           }
         },
         child: Column(

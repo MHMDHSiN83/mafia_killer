@@ -9,6 +9,7 @@ import 'package:mafia_killer/models/player_status.dart';
 import 'package:mafia_killer/pages/last_move_card_page.dart';
 import 'package:mafia_killer/utils/audio_manager.dart';
 import 'package:mafia_killer/utils/custom_snackbar.dart';
+import 'package:mafia_killer/utils/settings_page.dart';
 
 class SilenceOfTheLambsPage extends StatefulWidget {
   SilenceOfTheLambsPage({super.key});
@@ -54,6 +55,12 @@ class _SilenceOfTheLambsPageState extends State<SilenceOfTheLambsPage> {
       body: PageFrame(
         label: '/silence_of_the_lambs_page',
         pageTitle: "سکوت بره ها",
+        settingsPage: () {
+          if (LastMoveCardPage.selectedLastMoveCard != null) {
+            LastMoveCardPage.selectedLastMoveCard!.isUsed = false;
+          }
+          return settingsPage(context, 7);
+        },
         leftButtonText: "کارت حرکت آخر",
         rightButtonText:
             'شب ${Scenario.currentScenario.dayAndNightNumber(number: Scenario.currentScenario.nightNumber)}',

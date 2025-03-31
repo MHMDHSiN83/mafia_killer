@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:mafia_killer/components/call_role.dart';
+import 'package:mafia_killer/components/dialogboxes/confirmation_dialogbox.dart';
+import 'package:mafia_killer/components/my_divider.dart';
 import 'package:mafia_killer/components/page_frame.dart';
 import 'package:mafia_killer/databases/game_state_manager.dart';
 import 'package:mafia_killer/databases/player.dart';
@@ -9,6 +11,7 @@ import 'package:mafia_killer/models/language.dart';
 import 'package:mafia_killer/models/talking_page_screen_arguments.dart';
 import 'package:mafia_killer/themes/app_color.dart';
 import 'package:mafia_killer/utils/audio_manager.dart';
+import 'package:mafia_killer/utils/settings_page.dart';
 
 class TalkingPage extends StatefulWidget {
   const TalkingPage({super.key});
@@ -128,6 +131,9 @@ class _TalkingPageState extends State<TalkingPage> {
         pageTitle: args.isDefense
             ? 'صحبت دفاعیه'
             : 'روز ${Scenario.currentScenario.dayAndNightNumber()}',
+        settingsPage: () {
+          return settingsPage(context, args.isDefense ? 4 : 2);
+        },
         leftButtonText: args.leftButtonText,
         rightButtonText: args.rightButtonText,
         leftButtonOnTap: () {

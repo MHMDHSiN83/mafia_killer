@@ -108,9 +108,9 @@ class _NightEventsPage extends State<NightEventsPage> {
   }
 
   void resetInquiry() {
-    if(doesPressInquiry) {
-        GameSettings.currentGameSettings.inquiry++;
-        doesPressInquiry = false;
+    if (doesPressInquiry) {
+      GameSettings.currentGameSettings.inquiry++;
+      doesPressInquiry = false;
     }
   }
 
@@ -131,24 +131,22 @@ class _NightEventsPage extends State<NightEventsPage> {
             IconButton(
               onPressed: () {
                 AudioManager.playClickEffect();
-                setState(() {
-                  showDialog(
-                    context: context,
-                    builder: (context) => ConfirmationDialogbox(
-                      onSave: () {
-                        AudioManager.playClickEffect();
-                        setState(() {
-                          resetInquiry();
-                        });
-                        Navigator.pop(context);
-                      },
-                      onCancel: () {
-                        AudioManager.playClickEffect();
-                        Navigator.pop(context);
-                      },
-                    ),
-                  );
-                });
+                showDialog(
+                  context: context,
+                  builder: (context) => ConfirmationDialogbox(
+                    onSave: () {
+                      AudioManager.playClickEffect();
+                      setState(() {
+                        resetInquiry();
+                      });
+                      Navigator.pop(context);
+                    },
+                    onCancel: () {
+                      AudioManager.playClickEffect();
+                      Navigator.pop(context);
+                    },
+                  ),
+                );
               },
               padding: EdgeInsets.zero,
               icon: Icon(
@@ -189,7 +187,7 @@ class _NightEventsPage extends State<NightEventsPage> {
               silencedPlayerDuringDay:
                   Scenario.currentScenario.silencedPlayerDuringDay,
               nightReport: Scenario.currentScenario.report);
-              Scenario.currentScenario.goToNextStage();
+          Scenario.currentScenario.goToNextStage();
           Scenario.currentScenario.resetDataAfterNight();
           if (Scenario.currentScenario.isGameOver()) {
             AudioManager.playNextPageEffect();

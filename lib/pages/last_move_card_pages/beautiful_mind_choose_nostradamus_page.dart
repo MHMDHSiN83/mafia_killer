@@ -11,6 +11,7 @@ import 'package:mafia_killer/models/scenarios/godfather/last_move_cards/beautifu
 import 'package:mafia_killer/pages/last_move_card_page.dart';
 import 'package:mafia_killer/utils/custom_snackbar.dart';
 import 'package:mafia_killer/utils/audio_manager.dart';
+import 'package:mafia_killer/utils/settings_page.dart';
 
 class BeautifulMindChooseNostradamusPage extends StatefulWidget {
   const BeautifulMindChooseNostradamusPage({super.key});
@@ -53,15 +54,27 @@ class _BeautifulMindChooseNostradamusPageState
       body: PageFrame(
         label: '/beautiful_mind_choose_nostradamus_page',
         pageTitle: "ذهن زیبا",
+        settingsPage: () {
+          if (LastMoveCardPage.selectedLastMoveCard != null) {
+            LastMoveCardPage.selectedLastMoveCard!.isUsed = false;
+          }
+          return settingsPage(context, 7);
+        },
         leftButtonText: "کارت حرکت آخر",
         rightButtonText:
             'شب ${Scenario.currentScenario.dayAndNightNumber(number: Scenario.currentScenario.nightNumber)}',
         leftButtonOnTap: () => Navigator.pop(context),
         rightButtonOnTap: () {
           if (isConfirmed && selectedPlayers.length == 1) {
-            GameStateManager.addLastMoveCardAction([Scenario.currentScenario.killedInDayPlayer!, selectedPlayers[0]], LastMoveCardPage.selectedLastMoveCard!);
-            LastMoveCardPage.selectedLastMoveCard!
-                .lastMoveCardAction([Player.getPlayerByName(Scenario.currentScenario.killedInDayPlayer!.name), Player.getPlayerByName(selectedPlayers[0].name)]);
+            GameStateManager.addLastMoveCardAction([
+              Scenario.currentScenario.killedInDayPlayer!,
+              selectedPlayers[0]
+            ], LastMoveCardPage.selectedLastMoveCard!);
+            LastMoveCardPage.selectedLastMoveCard!.lastMoveCardAction([
+              Player.getPlayerByName(
+                  Scenario.currentScenario.killedInDayPlayer!.name),
+              Player.getPlayerByName(selectedPlayers[0].name)
+            ]);
             Scenario.currentScenario.goToNextStage();
 
             // in case the game ended

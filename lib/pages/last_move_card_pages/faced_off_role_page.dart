@@ -10,6 +10,7 @@ import 'package:mafia_killer/pages/last_move_card_page.dart';
 import 'package:mafia_killer/pages/last_move_card_pages/face_off_page.dart';
 import 'package:mafia_killer/themes/app_color.dart';
 import 'package:mafia_killer/utils/audio_manager.dart';
+import 'package:mafia_killer/utils/settings_page.dart';
 
 class FacedOffRolePage extends StatelessWidget {
   const FacedOffRolePage({super.key});
@@ -32,14 +33,24 @@ class FacedOffRolePage extends StatelessWidget {
         body: PageFrame(
           label: '/faced_off_role_page',
           pageTitle: "نقش جدید",
+          settingsPage: () {
+            if (LastMoveCardPage.selectedLastMoveCard != null) {
+              LastMoveCardPage.selectedLastMoveCard!.isUsed = false;
+            }
+            return settingsPage(context, 8);
+          },
           leftButtonText: "کارت حرکت آخر",
           rightButtonText:
               'شب ${Scenario.currentScenario.dayAndNightNumber(number: Scenario.currentScenario.nightNumber)}',
           leftButtonOnTap: () => Navigator.pop(context),
           rightButtonOnTap: () {
-            GameStateManager.addLastMoveCardAction([Scenario.currentScenario.killedInDayPlayer!,
-              FaceOffPage.selectedPlayers[0]], LastMoveCardPage.selectedLastMoveCard!);
-            LastMoveCardPage.selectedLastMoveCard!.lastMoveCardAction([Player.getPlayerByName(Scenario.currentScenario.killedInDayPlayer!.name),
+            GameStateManager.addLastMoveCardAction([
+              Scenario.currentScenario.killedInDayPlayer!,
+              FaceOffPage.selectedPlayers[0]
+            ], LastMoveCardPage.selectedLastMoveCard!);
+            LastMoveCardPage.selectedLastMoveCard!.lastMoveCardAction([
+              Player.getPlayerByName(
+                  Scenario.currentScenario.killedInDayPlayer!.name),
               Player.getPlayerByName(FaceOffPage.selectedPlayers[0].name),
             ]);
             Scenario.currentScenario.goToNextStage();

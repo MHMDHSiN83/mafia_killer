@@ -4,8 +4,10 @@ import 'package:mafia_killer/components/page_frame.dart';
 import 'package:mafia_killer/components/voting_tile.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/databases/scenario.dart';
+import 'package:mafia_killer/pages/last_move_card_page.dart';
 import 'package:mafia_killer/utils/custom_snackbar.dart';
 import 'package:mafia_killer/utils/audio_manager.dart';
+import 'package:mafia_killer/utils/settings_page.dart';
 
 //  ----- FIRST PAGE OF FACE-OFF LAST MOVE CARD ------
 class FaceOffPage extends StatefulWidget {
@@ -43,6 +45,12 @@ class _FaceOffPageState extends State<FaceOffPage> {
       body: PageFrame(
         label: '/face_off_page',
         pageTitle: "تغییر چهره",
+        settingsPage: () {
+          if (LastMoveCardPage.selectedLastMoveCard != null) {
+            LastMoveCardPage.selectedLastMoveCard!.isUsed = false;
+          }
+          return settingsPage(context, 7);
+        },
         leftButtonText: "کارت حرکت آخر",
         rightButtonText:
             'شب ${Scenario.currentScenario.dayAndNightNumber(number: Scenario.currentScenario.nightNumber)}',
@@ -52,7 +60,8 @@ class _FaceOffPageState extends State<FaceOffPage> {
             AudioManager.playNextPageEffect();
             Navigator.pushNamed(context, '/faced_off_role_page');
           } else {
-            customSnackBar(context, "باید حتما یک بازیکن را انتخاب کنید.", true);
+            customSnackBar(
+                context, "باید حتما یک بازیکن را انتخاب کنید.", true);
           }
         },
         child: Column(

@@ -119,24 +119,22 @@ class _IntroNightPageState extends State<IntroNightPage> {
             IconButton(
               onPressed: () {
                 AudioManager.playClickEffect();
-                setState(() {
-                  showDialog(
-                    context: context,
-                    builder: (context) => ConfirmationDialogbox(
-                      onSave: () {
-                        AudioManager.playClickEffect();
-                        setState(() {
-                          resetNight();
-                        });
-                        Navigator.pop(context);
-                      },
-                      onCancel: () {
-                        AudioManager.playClickEffect();
-                        Navigator.pop(context);
-                      },
-                    ),
-                  );
-                });
+                showDialog(
+                  context: context,
+                  builder: (context) => ConfirmationDialogbox(
+                    onSave: () {
+                      AudioManager.playClickEffect();
+                      setState(() {
+                        resetNight();
+                      });
+                      Navigator.pop(context);
+                    },
+                    onCancel: () {
+                      AudioManager.playClickEffect();
+                      Navigator.pop(context);
+                    },
+                  ),
+                );
               },
               padding: EdgeInsets.zero,
               icon: Icon(

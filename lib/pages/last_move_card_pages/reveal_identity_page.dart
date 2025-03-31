@@ -9,6 +9,7 @@ import 'package:mafia_killer/models/role_side.dart';
 import 'package:mafia_killer/pages/last_move_card_page.dart';
 import 'package:mafia_killer/themes/app_color.dart';
 import 'package:mafia_killer/utils/audio_manager.dart';
+import 'package:mafia_killer/utils/settings_page.dart';
 
 class RevealIdentityPage extends StatelessWidget {
   const RevealIdentityPage({super.key});
@@ -32,6 +33,12 @@ class RevealIdentityPage extends StatelessWidget {
         body: PageFrame(
           label: '/reveal_identity_page',
           pageTitle: "افشای هویت",
+          settingsPage: () {
+            if (LastMoveCardPage.selectedLastMoveCard != null) {
+              LastMoveCardPage.selectedLastMoveCard!.isUsed = false;
+            }
+            return settingsPage(context, 7);
+          },
           leftButtonText: "کارت حرکت آخر",
           rightButtonText:
               'شب ${Scenario.currentScenario.dayAndNightNumber(number: Scenario.currentScenario.nightNumber)}',

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 import 'package:mafia_killer/components/call_role.dart';
 import 'package:mafia_killer/components/last_move_card_tile.dart';
 import 'package:mafia_killer/components/page_frame.dart';
@@ -13,6 +14,7 @@ import 'package:mafia_killer/models/scenarios/godfather/last_move_cards/silence_
 import 'package:mafia_killer/models/scenarios/godfather/roles/nostradamus.dart';
 import 'package:mafia_killer/utils/custom_snackbar.dart';
 import 'package:mafia_killer/utils/audio_manager.dart';
+import 'package:mafia_killer/utils/settings_page.dart';
 
 class LastMoveCardPage extends StatefulWidget {
   const LastMoveCardPage({super.key});
@@ -38,7 +40,14 @@ class _LastMoveCardPageState extends State<LastMoveCardPage> {
         pageTitle: "کارت حرکت آخر",
         leftButtonText: "قبلی",
         rightButtonText: "بعدی",
+        settingsPage: () {
+          if (LastMoveCardPage.selectedLastMoveCard != null) {
+            LastMoveCardPage.selectedLastMoveCard!.isUsed = false;
+          }
+          return settingsPage(context, 6);
+        },
         leftButtonOnTap: () {
+          Logger().d("aaaa");
           LastMoveCardPage.selectedLastMoveCard?.isUsed = false;
           if (Scenario.currentScenario is GodfatherScenario) {
             Scenario.currentScenario.inGameLastMoveCards.shuffle();
