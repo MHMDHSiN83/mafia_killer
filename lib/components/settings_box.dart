@@ -5,11 +5,12 @@ import 'package:mafia_killer/themes/app_color.dart';
 import 'package:mafia_killer/utils/audio_manager.dart';
 
 class SettingsBox extends StatefulWidget {
-  const SettingsBox({super.key, required this.text, this.settingsPage});
+  const SettingsBox(
+      {super.key, required this.text, required this.lable, this.settingsPage});
 
   final String text;
-
   final Function? settingsPage;
+  final String lable;
 
   @override
   State<SettingsBox> createState() => _SettingsBoxState();
@@ -42,8 +43,7 @@ class _SettingsBoxState extends State<SettingsBox> {
                     60, // Adjust width as needed
                 child: Column(
                   children: [
-                    if(widget.settingsPage != null)
-                      widget.settingsPage!(),
+                    if (widget.settingsPage != null) widget.settingsPage!(),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -64,6 +64,14 @@ class _SettingsBoxState extends State<SettingsBox> {
                               GameSettings.updateSettings(
                                   GameSettings.currentGameSettings,
                                   gameSettings);
+                              if (widget.lable == '/intro_night_page' ||
+                                  widget.lable == '/night_page') {
+                                if (gameSettings['playMusic']) {
+                                  AudioManager.playNightMusic();
+                                } else {
+                                  AudioManager.stopMusic();
+                                }
+                              }
                             });
                           },
                           padding: EdgeInsets.zero,

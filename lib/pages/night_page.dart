@@ -266,6 +266,7 @@ class _NightPageState extends State<NightPage> {
 
   @override
   void initState() {
+    AudioManager.playNightMusic();
     GameStateManager.addState(
         lastMoveCards: Scenario.currentScenario.lastMoveCards,
         silencedPlayerDuringDay:
@@ -296,8 +297,8 @@ class _NightPageState extends State<NightPage> {
         },
         rightButtonOnTap: () {
           if (NightPage.isNightOver) {
+            AudioManager.stopMusic();
             iterator.moveNext();
-            // Scenario.currentScenario.goToNextStage();
             AudioManager.playNextPageEffect();
             Navigator.pushNamed(context, '/night_events_page');
           } else {

@@ -184,6 +184,7 @@ class _IntroNightPageState extends State<IntroNightPage> {
         },
         rightButtonOnTap: () {
           if (IntroNightPage.isNightOver) {
+            AudioManager.stopMusic();
             Scenario.currentScenario.goToNextStage();
             // resetNight();
             AudioManager.playNextPageEffect();

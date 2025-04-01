@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/services.dart';
-import 'package:logger/logger.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/databases/recommended_scenario.dart';
 import 'package:mafia_killer/models/player_status.dart';
@@ -33,7 +32,6 @@ import 'package:path_provider/path_provider.dart';
 class Scenario {
   Scenario();
 
-  // Id id = Isar.autoIncrement;
   late String name;
   late List<Role> roles;
   List<LastMoveCard> lastMoveCards = [];
@@ -131,8 +129,6 @@ class Scenario {
     if (newRole == null) {
       return;
     }
-    Role role = Role.copy(newRole);
-    Logger().d(role.name);
     currentScenario.inGameRoles
         .add(Role.copy(newRole));
     Database.writeScenariosData(scenarios);

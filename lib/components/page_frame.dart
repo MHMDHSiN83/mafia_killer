@@ -262,6 +262,7 @@ class _PageFrameState extends State<PageFrame> {
       builder: (context) {
         return SettingsBox(
           text: PageGuide.pageGuides![widget.label]!,
+          lable: widget.label,
           settingsPage: widget.settingsPage,
         );
       },

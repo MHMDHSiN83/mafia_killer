@@ -3,9 +3,13 @@ import 'package:mafia_killer/databases/game_settings.dart';
 
 class AudioManager {
   static final AudioPlayer _musicPlayer = AudioPlayer();
-  static final AudioPlayer _effectPlayer = AudioPlayer();
   static final AudioPlayer _clockTickingPlayer = AudioPlayer();
   static Duration? _savedPosition;
+
+  static final int _poolSize = 5;
+  static final List<AudioPlayer> _effectPlayers =
+      List.generate(_poolSize, (_) => AudioPlayer());
+  static int _currentPlayerIndex = 0;
 
   static Future<void> playNightMusic() async {
     await _playMusic('assets/audios/Dark-Legacy.mp3');
@@ -98,16 +102,14 @@ class AudioManager {
 
   static Future<void> _playEffect(String assetPath) async {
     if (GameSettings.currentGameSettings.soundEffect) {
-      await _effectPlayer.setAsset(assetPath);
-      _effectPlayer.play();
+      _currentPlayerIndex = (_currentPlayerIndex + 1) % _poolSize;
+      final player = _effectPlayers[_currentPlayerIndex];
+      await player.setAsset(assetPath);
+      player.play();
     }
   }
 
   void disposeMusic() {
     _musicPlayer.dispose();
-  }
-
-  void disposeEffect() {
-    _effectPlayer.dispose();
   }
 }
