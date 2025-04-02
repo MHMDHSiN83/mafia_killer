@@ -53,7 +53,7 @@ class MyApp extends StatelessWidget {
       locale: const Locale(
           "fa", "IR"), // OR Locale('ar', 'AE') OR Other RTL locales,
       debugShowCheckedModeBanner: false,
-      home: const IntroPage(),
+      home: const LoadingPage(),
       // theme: ThemeData(fontFamily: 'Negar'),
       theme: darkMode,
       routes: {

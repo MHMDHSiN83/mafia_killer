@@ -39,7 +39,7 @@ class _PlayerTileState extends State<PlayerTile> {
       } else if (text.length > 12) {
         customSnackBar(
             context, 'اسم وارد شده نمی‌تونه بیشتر از ۱۲ کاراکتر باشه', false);
-      } else if (Player.doesNameExist(text)) {
+      } else if (widget.player.name != text && Player.doesNameExist(text)) {
         customSnackBar(context, 'اسم وارد شده نمی‌تونه تکراری باشه', false);
       } else {
         Player.editPlayerName(widget.player, text);

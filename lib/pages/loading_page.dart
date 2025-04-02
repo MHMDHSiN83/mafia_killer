@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:mafia_killer/models/database.dart';
 
 class LoadingPage extends StatefulWidget {
   const LoadingPage({super.key});
@@ -9,6 +10,19 @@ class LoadingPage extends StatefulWidget {
 }
 
 class _LoadingPageState extends State<LoadingPage> {
+  void setInitialValues() async {
+    await precacheImage(AssetImage("lib/images/backgrounds/background-image-edited.png"), context);
+    await Database.setInitialValues();
+    Navigator.of(context).pushReplacementNamed('/intro_page');
+  }
+
+
+  @override
+  void didChangeDependencies() {
+    setInitialValues();
+    super.didChangeDependencies();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,15 +34,12 @@ class _LoadingPageState extends State<LoadingPage> {
           colors: [
             Color.fromRGBO(17, 7, 7, 1),
             Color.fromRGBO(40, 7, 7, 1),
-            // Color(0xFF111111),
-            // Color(0xFF3F0000)
           ],
         )),
         child: Center(
-          child: SpinKitSpinningLines(
+          child: SpinKitFadingCircle(
             color: Theme.of(context).colorScheme.inversePrimary,
             size: 100.0,
-            lineWidth: 7,
           ),
         ),
       ),

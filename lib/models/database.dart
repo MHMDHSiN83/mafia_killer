@@ -13,15 +13,15 @@ class Database {
   static late String playersDataFilePath;
   static late String scenariosDataFilePath;
   static late String gameSettingsDataFilePath;
-  Database() {
-    setInitialValues();
-  }
+
+
+
   static Future<String> getDirectoryPath() async {
     final directory = await getApplicationDocumentsDirectory();
     return directory.path;
   }
 
-  Future<void> setInitialValues() async {
+  static Future<void> setInitialValues() async {
     await Scenario.getScenariosFromDatabase();
     await GameSettings.getGameSettingsFromDatabase();
     await Player.getPlayersFromDatabase();
@@ -35,11 +35,6 @@ class Database {
     Player.freePlayers();
     AudioManager.playIntroMusic();
     AudioManager.setPlayerAsset();
-  }
-
-  static Future<void> fetchData(String jsonString, String path) async {
-    File file = File(path);
-    await file.writeAsString(jsonString);
   }
 
   static Future<void> writePlayersData(List<Player> players) async {
