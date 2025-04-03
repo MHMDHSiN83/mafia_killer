@@ -211,22 +211,31 @@ class _RoleDistributionPageState extends State<RoleDistributionPage> {
                 margin: const EdgeInsets.symmetric(horizontal: 40),
                 child: Container(
                   padding: EdgeInsets.fromLTRB(0, 20, 0, 40),
-                  child: GridView.builder(
-                    itemCount: players.length,
-                    scrollDirection: Axis.vertical,
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      childAspectRatio: 1,
-                      mainAxisSpacing: 10,
-                      crossAxisSpacing: 10,
+                  child: Directionality(
+                    textDirection: TextDirection.ltr,
+                    child: Scrollbar(
+                      thumbVisibility: true,
+                      child: Directionality(
+                        textDirection: TextDirection.rtl,
+                        child: GridView.builder(
+                          itemCount: players.length,
+                          scrollDirection: Axis.vertical,
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            childAspectRatio: 1,
+                            mainAxisSpacing: 10,
+                            crossAxisSpacing: 10,
+                          ),
+                          itemBuilder: (context, index) {
+                            return PlayerRoleCard(
+                              player: players[index],
+                              onTap: _scrollRight,
+                            );
+                          },
+                        ),
+                      ),
                     ),
-                    itemBuilder: (context, index) {
-                      return PlayerRoleCard(
-                        player: players[index],
-                        onTap: _scrollRight,
-                      );
-                    },
                   ),
                 ),
               ),

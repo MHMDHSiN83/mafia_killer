@@ -4,7 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mafia_killer/components/guide_box.dart';
 import 'package:mafia_killer/components/my_outlined_button.dart';
 import 'package:mafia_killer/components/dialogboxes/player_status_dialogbox.dart';
-import 'package:mafia_killer/components/remove_player_dialogbox.dart';
+import 'package:mafia_killer/components/dialogboxes/remove_player_dialogbox.dart';
 import 'package:mafia_killer/components/settings_box.dart';
 import 'package:mafia_killer/databases/page_guide.dart';
 import 'dart:math' as math;

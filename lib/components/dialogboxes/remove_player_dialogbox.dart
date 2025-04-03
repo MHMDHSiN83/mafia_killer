@@ -15,7 +15,7 @@ class RemovePlayerDialogbox extends StatefulWidget {
 }
 
 class _RemovePlayerDialogboxState extends State<RemovePlayerDialogbox> {
-  List<Player> alivePlayers = [];
+  List<Player> allPlayers = [];
   @override
   void initState() {
     super.initState();
@@ -23,7 +23,7 @@ class _RemovePlayerDialogboxState extends State<RemovePlayerDialogbox> {
 
   @override
   Widget build(BuildContext context) {
-    alivePlayers = Player.getAliveInGamePlayers();
+    allPlayers = Player.inGamePlayers;
     return AlertDialog(
         actions: [
           Center(
@@ -56,7 +56,7 @@ class _RemovePlayerDialogboxState extends State<RemovePlayerDialogbox> {
           width: 300,
           height: 450,
           child: GridView.builder(
-            itemCount: alivePlayers.length,
+            itemCount: allPlayers.length,
             scrollDirection: Axis.vertical,
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2, // Number of tiles per row
@@ -66,7 +66,7 @@ class _RemovePlayerDialogboxState extends State<RemovePlayerDialogbox> {
             ),
             itemBuilder: (context, index) {
               return RemovePlayerTile(
-                  player: alivePlayers[index],
+                  player: allPlayers[index],
                   confirmAction: () {
                     showDialog(
                         context: context,
@@ -74,7 +74,7 @@ class _RemovePlayerDialogboxState extends State<RemovePlayerDialogbox> {
                               AudioManager.playDeleteEffect();
                               Navigator.pop(context);
                               setState(() {
-                                alivePlayers[index].playerStatus =
+                                allPlayers[index].playerStatus =
                                     PlayerStatus.removed;
                               });
                             }, onCancel: () {

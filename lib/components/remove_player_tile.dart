@@ -1,8 +1,10 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:mafia_killer/databases/player.dart';
+import 'package:mafia_killer/models/player_status.dart';
 import 'package:mafia_killer/models/ui_player_status.dart';
 import 'package:mafia_killer/themes/app_color.dart';
+import 'package:mafia_killer/utils/custom_snackbar.dart';
 import 'package:mafia_killer/utils/determine_color.dart';
 
 class RemovePlayerTile extends StatelessWidget {
@@ -13,10 +15,16 @@ class RemovePlayerTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isPlayerAlive = (player.playerStatus == PlayerStatus.active ||
+        player.playerStatus == PlayerStatus.disable);
     return Opacity(
-      opacity: player.uiPlayerStatus == UIPlayerStatus.targetable ? 1 : 0.6,
+      opacity: isPlayerAlive ? 1 : 0.6,
       child: GestureDetector(
-        onTap: confirmAction,
+        onTap: (isPlayerAlive)
+            ? confirmAction
+            : () {
+                customSnackBar(context, "بازیکن خارج از بازی است.", true);
+              },
         child: Container(
           color: AppColors.darkBrownColor,
           child: Column(
@@ -65,17 +73,18 @@ class RemovePlayerTile extends StatelessWidget {
                         ),
                       ),
                     ),
-                    Expanded(
-                      flex: 3,
-                      child: Container(
-                        height: 25,
-                        margin: const EdgeInsets.only(bottom: 5),
-                        child: Icon(
-                          Icons.delete,
-                          color: AppColors.redColor,
+                    if (isPlayerAlive)
+                      Expanded(
+                        flex: 3,
+                        child: Container(
+                          height: 25,
+                          margin: const EdgeInsets.only(bottom: 5),
+                          child: Icon(
+                            Icons.delete,
+                            color: AppColors.redColor,
+                          ),
                         ),
                       ),
-                    ),
                   ],
                 ),
               )
