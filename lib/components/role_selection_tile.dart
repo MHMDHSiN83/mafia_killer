@@ -5,6 +5,7 @@ import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/models/language.dart';
 import 'package:mafia_killer/models/role.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/citizen.dart';
+import 'package:mafia_killer/models/scenarios/godfather/roles/mafia.dart';
 import 'package:mafia_killer/themes/app_color.dart';
 import 'package:mafia_killer/utils/audio_manager.dart';
 import 'package:mafia_killer/utils/custom_snackbar.dart';
@@ -28,7 +29,7 @@ class _RoleSelectionTileState extends State<RoleSelectionTile> {
           context, 'تعداد نقش‌ها نمی‌تونه از تعداد بازیکن‌ها بیشتر باشه', true);
       return;
     }
-    if (widget.counter == 0 || widget.role is Citizen) {
+    if (widget.counter == 0 || widget.role is Citizen || widget.role is Mafia) {
       AudioManager.playUpCounterEffect();
       setState(() {
         widget.counter++;

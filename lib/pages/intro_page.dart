@@ -36,7 +36,9 @@ class IntroPage extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(right: 8),
                       child: IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/scenario_guid_page');
+                        },
                         icon: const Icon(
                           Icons.lightbulb_outline,
                           color: AppColors.redColor,

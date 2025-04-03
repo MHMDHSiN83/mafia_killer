@@ -117,7 +117,7 @@ class Scenario {
 
   List<Role> getRolesBySide(RoleSide side) {
     return roles
-        .where((role) => role.roleSide == side && role is! Mafia)
+        .where((role) => role.roleSide == side)
         .toList();
   }
 

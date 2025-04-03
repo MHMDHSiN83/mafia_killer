@@ -37,9 +37,9 @@
             },
             {
                 "name": "مافیا ساده",
-                "description": "نقش شهروند ساده کمک به هم تیمی های خود در تشخیص مافیا به درستی است و رای دادن با زرنگی به اعضای مافیاست. او در شب نقش خاصی را ایفا نمی‌کند و بیشتر به روند بازی و تیم شهروندی در پیروز شدن کمک می‌کند.",
+                "description": "مافیا ساده یکی از اعضای تیم مافیاست که در شب به یارانش مشورت می‌دهد و در روز تلاش میکند تا اتهامات را از یارانش بردارد و شهروندان را از بازی خارج کند. این نقش جز کمک به تیم مافیا توانایی دیگری ندارد.",
                 "roleSide": "mafia",
-                "cardImagePath": "lib/images/roles/role_cards/matador.jpg",
+                "cardImagePath": "lib/images/roles/role_cards/the_mafia.jpg",
                 "characterImagePath": "lib/images/roles/role_characters/mafia.png"
             },
             {
