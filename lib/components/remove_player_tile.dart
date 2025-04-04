@@ -20,11 +20,7 @@ class RemovePlayerTile extends StatelessWidget {
     return Opacity(
       opacity: isPlayerAlive ? 1 : 0.6,
       child: GestureDetector(
-        onTap: (isPlayerAlive)
-            ? confirmAction
-            : () {
-                customSnackBar(context, "بازیکن خارج از بازی است.", true);
-              },
+        onTap: (isPlayerAlive) ? confirmAction : () {},
         child: Container(
           color: AppColors.darkBrownColor,
           child: Column(
@@ -84,6 +80,16 @@ class RemovePlayerTile extends StatelessWidget {
                             color: AppColors.redColor,
                           ),
                         ),
+                      ),
+                    if (!isPlayerAlive)
+                      Expanded(
+                        flex: 3,
+                        child: Container(
+                            height: 25,
+                            margin: const EdgeInsets.only(bottom: 5),
+                            child: Image(
+                                image: AssetImage(
+                                    'lib/images/icons/skeleton_head.png'))),
                       ),
                   ],
                 ),

@@ -45,13 +45,17 @@ class RoleDescriptionTile extends StatelessWidget {
             child: Directionality(
               textDirection: TextDirection.ltr,
               child: Scrollbar(
+                thumbVisibility: true,
                 child: ListView(children: [
                   Directionality(
                     textDirection: TextDirection.rtl,
-                    child: Text(
-                      role.description,
-                      style: const TextStyle(fontSize: 15),
-                      textAlign: TextAlign.justify,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: Text(
+                        role.description,
+                        style: const TextStyle(fontSize: 15),
+                        textAlign: TextAlign.justify,
+                      ),
                     ),
                   ),
                 ]),

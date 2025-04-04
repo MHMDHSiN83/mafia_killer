@@ -11,4 +11,9 @@ class Mafia extends Role {
 
   @override
   Map<String, dynamic> toJson() => _$MafiaToJson(this);
+
+  @override
+  String introAwakingRole() {
+    return 'مافیای ساده لایک نشون بده';
+  }
 }

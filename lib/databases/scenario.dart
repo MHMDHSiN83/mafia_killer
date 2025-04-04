@@ -97,13 +97,14 @@ class Scenario {
       String jsonString =
           await rootBundle.loadString('lib/assets/scenarios.json');
       List<dynamic> jsonData = jsonDecode(jsonString);
-      scenarios = jsonData.map((scenario) => Scenario.fromJson(scenario)).toList();
+      scenarios =
+          jsonData.map((scenario) => Scenario.fromJson(scenario)).toList();
       await file.writeAsString(jsonString);
     } else {
       print('scenario already exists in internal storage');
       List<dynamic> jsonData;
       try {
-      String jsonString = await file.readAsString();
+        String jsonString = await file.readAsString();
         jsonData = jsonDecode(jsonString);
       } catch (e) {
         String jsonString =
@@ -116,9 +117,7 @@ class Scenario {
   }
 
   List<Role> getRolesBySide(RoleSide side) {
-    return roles
-        .where((role) => role.roleSide == side)
-        .toList();
+    return roles.where((role) => role.roleSide == side).toList();
   }
 
   int getNumberOfRoleBySide(RoleSide side) {
@@ -129,8 +128,7 @@ class Scenario {
     if (newRole == null) {
       return;
     }
-    currentScenario.inGameRoles
-        .add(Role.copy(newRole));
+    currentScenario.inGameRoles.add(Role.copy(newRole));
     Database.writeScenariosData(scenarios);
   }
 
@@ -230,6 +228,7 @@ class Scenario {
     Role? godfather = getRoleByType(Godfather);
     Role? matador = getRoleByType(Matador);
     Role? saulGoodman = getRoleByType(SaulGoodman);
+    Role? theMafia = getRoleByType(Mafia);
     if (godfather != null) {
       introMafiaTeamAwakingTexts.add(godfather.introAwakingRole());
     }
@@ -238,6 +237,9 @@ class Scenario {
     }
     if (saulGoodman != null) {
       introMafiaTeamAwakingTexts.add(saulGoodman.introAwakingRole());
+    }
+    if (theMafia != null) {
+      introMafiaTeamAwakingTexts.add(theMafia.introAwakingRole());
     }
     introMafiaTeamAwakingTexts.add("تیم مافیا بخوابه");
     return introMafiaTeamAwakingTexts;
@@ -358,7 +360,6 @@ class Scenario {
   }
 
   Iterable<String> callRolesIntroNight() sync* {}
-
 
   void resetRemainingAbility() {}
 
@@ -492,7 +493,7 @@ class Scenario {
   }
 
   // TODO: this should be removed
-  void resetScenarioDataBeforeGame(){
+  void resetScenarioDataBeforeGame() {
     nightEvents = {};
     defendingPlayers = [];
     killedInDayPlayer = null;

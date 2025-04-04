@@ -342,11 +342,12 @@ class _PageFrameState extends State<PageFrame> {
                   showDialog(
                       barrierDismissible: false,
                       context: context,
-                      builder: (context) {
+                      builder: (dialogboxContext) {
                         return RemovePlayerDialogbox(
                           reloadPage: widget.reloadContentOfPage == null
                               ? () {}
                               : widget.reloadContentOfPage!,
+                            outerContext: context,
                         );
                       });
                 },

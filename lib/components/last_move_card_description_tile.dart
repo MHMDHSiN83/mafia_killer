@@ -40,13 +40,17 @@ class LastMoveCardsDescriptionTile extends StatelessWidget {
             child: Directionality(
               textDirection: TextDirection.ltr,
               child: Scrollbar(
+                thumbVisibility: true,
                 child: ListView(children: [
                   Directionality(
                     textDirection: TextDirection.rtl,
-                    child: Text(
-                      lastMoveCard.description,
-                      style: const TextStyle(fontSize: 15),
-                      textAlign: TextAlign.justify,
+                    child: Padding(
+                      padding: const EdgeInsets.all(4.0),
+                      child: Text(
+                        lastMoveCard.description,
+                        style: const TextStyle(fontSize: 15),
+                        textAlign: TextAlign.justify,
+                      ),
                     ),
                   ),
                 ]),

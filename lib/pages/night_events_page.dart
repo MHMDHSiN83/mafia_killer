@@ -261,7 +261,18 @@ class _NightEventsPage extends State<NightEventsPage> {
                                   flex: 2,
                                   child: MaterialButton(
                                     onPressed: () {
-                                      showInquiryDialog(context);
+                                      showDialog(
+                                          context: context,
+                                          builder: (builder) {
+                                            return ConfirmationDialogbox(
+                                              onCancel: () =>
+                                                  Navigator.pop(context),
+                                              onSave: () {
+                                                Navigator.pop(context);
+                                                showInquiryDialog(context);
+                                              },
+                                            );
+                                          });
                                     },
                                     color: AppColors.brownColor,
                                     child: Padding(

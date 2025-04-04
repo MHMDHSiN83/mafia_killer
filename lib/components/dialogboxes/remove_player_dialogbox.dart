@@ -7,9 +7,11 @@ import 'package:mafia_killer/themes/app_color.dart';
 import 'package:mafia_killer/utils/audio_manager.dart';
 
 class RemovePlayerDialogbox extends StatefulWidget {
-  const RemovePlayerDialogbox({super.key, required this.reloadPage});
+  const RemovePlayerDialogbox(
+      {super.key, required this.reloadPage, required this.outerContext});
 
   final Function reloadPage;
+  final BuildContext outerContext;
   @override
   State<RemovePlayerDialogbox> createState() => _RemovePlayerDialogboxState();
 }

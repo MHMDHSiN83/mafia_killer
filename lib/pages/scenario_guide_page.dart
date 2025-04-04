@@ -1,8 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:mafia_killer/components/last_move_card_guide_tile.dart';
+import 'package:mafia_killer/components/role_guide_tile.dart';
+import 'package:mafia_killer/databases/scenario.dart';
+import 'package:mafia_killer/databases/scenario_guide.dart';
+import 'package:mafia_killer/models/last_move_card.dart';
+import 'package:mafia_killer/models/role.dart';
 import 'package:mafia_killer/themes/app_color.dart';
 
 class ScenarioGuidPage extends StatelessWidget {
-  const ScenarioGuidPage({super.key});
+  ScenarioGuidPage({super.key});
+
+  //TODO all the things in this page are for godfather scenario
+
+  Scenario selectedScenario = Scenario.scenarios.first;
+  List<Widget> roleDescriptions() {
+    List<Widget> result = [];
+    for (Role role in selectedScenario.roles) {
+      result.add(RoleGuideTile(role: role));
+    }
+    return result;
+  }
+
+  List<Widget> lastMoveCardsDescriptions() {
+    List<Widget> result = [];
+    for (LastMoveCard lastMoveCard in selectedScenario.lastMoveCards) {
+      result.add(LastMoveCardGuideTile(lastMoveCard: lastMoveCard));
+    }
+    return result;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -95,12 +120,47 @@ class ScenarioGuidPage extends StatelessWidget {
                               child: ListView(children: [
                                 Directionality(
                                   textDirection: TextDirection.rtl,
-                                  child: Text(
-                                    "",
-                                    style: const TextStyle(fontSize: 15),
-                                    textAlign: TextAlign.justify,
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 8),
+                                    child: Text(
+                                      ScenarioGuide
+                                          .scenarioGuides!["پدرخوانده"]!,
+                                      style: const TextStyle(fontSize: 15),
+                                      textAlign: TextAlign.justify,
+                                    ),
                                   ),
                                 ),
+                                Directionality(
+                                  textDirection: TextDirection.rtl,
+                                  child: Padding(
+                                    padding:
+                                        const EdgeInsets.fromLTRB(8, 25, 8, 8),
+                                    child: Text(
+                                      "نقش‌های بازی",
+                                      style: const TextStyle(fontSize: 20),
+                                      textAlign: TextAlign.justify,
+                                    ),
+                                  ),
+                                ),
+                                Divider(),
+                                ...roleDescriptions(),
+                                if (selectedScenario.lastMoveCards.isNotEmpty)
+                                  Directionality(
+                                    textDirection: TextDirection.rtl,
+                                    child: Padding(
+                                      padding: const EdgeInsets.fromLTRB(
+                                          8, 25, 8, 8),
+                                      child: Text(
+                                        "کارت های حرکت آخر",
+                                        style: const TextStyle(fontSize: 20),
+                                        textAlign: TextAlign.justify,
+                                      ),
+                                    ),
+                                  ),
+                                if (selectedScenario.lastMoveCards.isNotEmpty)
+                                  Divider(),
+                                ...lastMoveCardsDescriptions()
                               ]),
                             ),
                           ),
