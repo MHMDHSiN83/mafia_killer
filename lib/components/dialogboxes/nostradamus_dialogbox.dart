@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/models/language.dart';
 import 'package:mafia_killer/models/role_side.dart';
 import 'package:mafia_killer/themes/app_color.dart';
@@ -85,7 +86,7 @@ class NostradamusDialogbox extends StatelessWidget {
                     flex: 3,
                   ),
                   if (mafiaNumber !=
-                      2) //TODO build a function to generate max mafia team number
+                      Player.getPlayersByRoleSide(RoleSide.mafia)!.length - 1)
                     Expanded(
                       flex: 16,
                       child: MaterialButton(

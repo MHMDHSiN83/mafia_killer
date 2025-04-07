@@ -15,6 +15,7 @@ import 'package:mafia_killer/pages/last_move_card_pages/silence_of_the_lambs_pag
 import 'package:mafia_killer/pages/loading_page.dart';
 import 'package:mafia_killer/pages/night_events_page.dart';
 import 'package:mafia_killer/pages/night_page.dart';
+import 'package:mafia_killer/pages/play_again_loading_page.dart';
 import 'package:mafia_killer/pages/players_page.dart';
 import 'package:mafia_killer/pages/regular_voting_page.dart';
 import 'package:mafia_killer/pages/role_distribution_page.dart';
@@ -81,6 +82,7 @@ class MyApp extends StatelessWidget {
             BeautifulMindChooseNostradamusPage(),
         '/end_game_page': (context) => EndGamePage(),
         '/scenario_guid_page': (context) => ScenarioGuidPage(),
+        '/play_again_loading_page': (context) => PlayAgainLoadingPage(),
       },
     );
   }

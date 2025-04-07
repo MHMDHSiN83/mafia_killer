@@ -99,6 +99,7 @@ class _RoleDistributionPageState extends State<RoleDistributionPage> {
       body: PageFrame(
         label: '/role_distribution_page',
         pageTitle: "تقسیم نقش ها",
+        isInGame: false,
         leftButtonText: "انتخاب نقش‌ها",
         rightButtonText: "روز معارفه",
         leftButtonOnTap: () {

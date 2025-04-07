@@ -31,7 +31,6 @@ class Database {
     playersDataFilePath = '$directoryPath/players.json';
     scenariosDataFilePath = '$directoryPath/scenarios.json';
     gameSettingsDataFilePath = '$directoryPath/game_settings.json';
-    //TODO: fix this with loading
     Player.freePlayers();
     AudioManager.playIntroMusic();
     AudioManager.setPlayerAsset();
