@@ -44,6 +44,7 @@ dependencies:
   animated_snack_bar: ^0.4.0
   logger: ^2.5.0
   auto_size_text: ^3.0.0
+  tapsell_plus: ^2.3.2
 
 dev_dependencies:
   flutter_test:

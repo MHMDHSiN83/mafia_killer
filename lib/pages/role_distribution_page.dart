@@ -8,6 +8,7 @@ import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/models/scenarios/godfather/godfather_scenario.dart';
 import 'package:mafia_killer/models/talking_page_screen_arguments.dart';
 import 'package:mafia_killer/themes/app_color.dart';
+import 'package:mafia_killer/utils/ad_manager.dart';
 import 'package:mafia_killer/utils/audio_manager.dart';
 import 'package:mafia_killer/utils/custom_snackbar.dart';
 
@@ -77,6 +78,7 @@ class _RoleDistributionPageState extends State<RoleDistributionPage> {
 
   @override
   void initState() {
+    AdManager.showAd();
     players = Player.distributeRoles();
     super.initState();
   }

@@ -24,7 +24,7 @@ import 'package:mafia_killer/pages/scenario_guide_page.dart';
 import 'package:mafia_killer/pages/talking_page.dart';
 import 'package:mafia_killer/themes/dark_mode.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-
+import 'package:mafia_killer/utils/ad_manager.dart';
 
 void main() {
   runApp(
@@ -33,6 +33,9 @@ void main() {
       child: MyApp(),
     ),
   );
+
+  AdManager.initialize();
+
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
   ]);

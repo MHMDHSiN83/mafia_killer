@@ -18,6 +18,7 @@ class PlayersPage extends StatefulWidget {
 
 class _PlayersPageState extends State<PlayersPage> {
   final TextEditingController _controller = TextEditingController();
+
   void addPlayer() {
     setState(() {
       String text = Language.trimTextWithZWNJ(_controller.text);
@@ -43,11 +44,9 @@ class _PlayersPageState extends State<PlayersPage> {
 
   final FocusNode _focusNode = FocusNode();
   bool isTextFieldFocused = false;
-
   @override
   void initState() {
     super.initState();
-
     _focusNode.addListener(() {
       setState(() {
         isTextFieldFocused = _focusNode.hasFocus; // Update focus state
@@ -59,7 +58,6 @@ class _PlayersPageState extends State<PlayersPage> {
   void dispose() {
     _controller.dispose();
     _focusNode.dispose();
-
     super.dispose();
   }
 

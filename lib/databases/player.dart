@@ -65,9 +65,9 @@ class Player extends ChangeNotifier {
       print('Asset copied to $filePath');
     } else {
       print('File already exists in internal storage');
-      String jsonString = await file.readAsString();
-      List<dynamic> jsonData = jsonDecode(jsonString);
+      List<dynamic> jsonData;
       try {
+        String jsonString = await file.readAsString();
         jsonData = jsonDecode(jsonString);
       } catch (e) {
         String jsonString =
