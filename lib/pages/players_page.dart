@@ -18,7 +18,6 @@ class PlayersPage extends StatefulWidget {
 
 class _PlayersPageState extends State<PlayersPage> {
   final TextEditingController _controller = TextEditingController();
-
   void addPlayer() {
     setState(() {
       String text = Language.trimTextWithZWNJ(_controller.text);

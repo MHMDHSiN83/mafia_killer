@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mafia_killer/models/last_move_card.dart';
 import 'package:mafia_killer/themes/app_color.dart';
-import 'package:mafia_killer/utils/determine_color.dart';
 
 class LastMoveCardGuideTile extends StatelessWidget {
   const LastMoveCardGuideTile({super.key, required this.lastMoveCard});

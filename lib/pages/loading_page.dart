@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:mafia_killer/models/database.dart';
+import 'package:mafia_killer/utils/app_info.dart';
+import 'package:mafia_killer/utils/update_checker.dart';
 
 class LoadingPage extends StatefulWidget {
   const LoadingPage({super.key});
@@ -10,6 +12,8 @@ class LoadingPage extends StatefulWidget {
 
 class _LoadingPageState extends State<LoadingPage> {
   void setInitialValues() async {
+    await AppInfo.loadAppInfo();
+    await UpdateChecker.checkUpdate();
     await precacheImage(
         AssetImage("lib/images/backgrounds/background-image-edited.png"),
         context);
@@ -19,6 +23,7 @@ class _LoadingPageState extends State<LoadingPage> {
 
   @override
   void didChangeDependencies() {
+
     setInitialValues();
     super.didChangeDependencies();
   }
