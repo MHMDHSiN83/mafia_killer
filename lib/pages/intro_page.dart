@@ -32,6 +32,12 @@ class _IntroPageState extends State<IntroPage> with WidgetsBindingObserver {
   }
 
   @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
@@ -116,7 +122,7 @@ class _IntroPageState extends State<IntroPage> with WidgetsBindingObserver {
                     child: InkWell(
                       splashColor: Theme.of(context).colorScheme.inversePrimary,
                       onTap: () {
-                        AudioManager.stopMusic();
+                        //AudioManager.stopMusic();
                         if (UpdateChecker.isUpdateAvilable) {
                           showDialog(
                             context: context,

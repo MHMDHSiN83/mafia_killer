@@ -118,6 +118,7 @@ class _RoleDistributionPageState extends State<RoleDistributionPage> {
                 .setNostradamusInquiryNumber();
             AudioManager.playNextPageEffect();
             AudioManager.stopMusic();
+            AudioManager.resetMusicPlayer();
 
             Navigator.pushNamed(
               context,

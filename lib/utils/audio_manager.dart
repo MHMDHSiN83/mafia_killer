@@ -31,6 +31,13 @@ class AudioManager {
     }
   }
 
+  static Future<void> resetMusicPlayer() async {
+    await _musicPlayer.setAudioSource(
+      ConcatenatingAudioSource(children: []),
+      preload: false,
+    );
+  }
+
   static Future<void> _playClockTicking(String assetPath) async {
     if (GameSettings.currentGameSettings.playMusic) {
       if (_clockTickingPlayer.processingState == ProcessingState.completed) {

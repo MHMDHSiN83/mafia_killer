@@ -30,7 +30,7 @@ class NightPage extends StatefulWidget {
   State<NightPage> createState() => _NightPageState();
 }
 
-class _NightPageState extends State<NightPage> with WidgetsBindingObserver{
+class _NightPageState extends State<NightPage> with WidgetsBindingObserver {
   late String text;
 
   late Iterator<String> iterator;
@@ -266,7 +266,6 @@ class _NightPageState extends State<NightPage> with WidgetsBindingObserver{
 
   @override
   void initState() {
-    
     GameStateManager.addState(
         lastMoveCards: Scenario.currentScenario.lastMoveCards,
         silencedPlayerDuringDay:
@@ -279,14 +278,12 @@ class _NightPageState extends State<NightPage> with WidgetsBindingObserver{
     AudioManager.playNightMusic();
   }
 
-  
-
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.paused) {
       AudioManager.pauseMusic();
     } else if (state == AppLifecycleState.resumed) {
-      AudioManager.resumeMusic(); 
+      AudioManager.resumeMusic();
     }
   }
 
@@ -312,6 +309,7 @@ class _NightPageState extends State<NightPage> with WidgetsBindingObserver{
         rightButtonOnTap: () {
           if (NightPage.isNightOver) {
             AudioManager.stopMusic();
+            AudioManager.resetMusicPlayer();
             iterator.moveNext();
             AudioManager.playNextPageEffect();
             Navigator.pushNamed(context, '/night_events_page');
