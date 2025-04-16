@@ -6,6 +6,7 @@ import 'package:mafia_killer/databases/game_state_manager.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/models/language.dart';
+import 'package:mafia_killer/models/player_status.dart';
 import 'package:mafia_killer/models/talking_page_screen_arguments.dart';
 import 'package:mafia_killer/themes/app_color.dart';
 import 'package:mafia_killer/utils/audio_manager.dart';
@@ -277,7 +278,11 @@ class _TalkingPageState extends State<TalkingPage> {
                 ],
               ),
             ),
-            if (Scenario.currentScenario.silencedPlayerDuringDay.isNotEmpty)
+            if (Scenario.currentScenario.silencedPlayerDuringDay
+                    .where(
+                        (player) => player.playerStatus == PlayerStatus.active)
+                    .isNotEmpty &&
+                !isChaos)
               Expanded(
                 flex: 4,
                 child: Padding(
@@ -289,14 +294,35 @@ class _TalkingPageState extends State<TalkingPage> {
                   ),
                 ),
               ),
-            if (isChaos)
+            if (isChaos &&
+                !Scenario.currentScenario.silencedPlayerDuringDay
+                    .where(
+                        (player) => player.playerStatus == PlayerStatus.active)
+                    .isNotEmpty)
               Expanded(
-                flex: 1,
+                flex: 4,
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: CallRole(
                     text:
                         'بازیکنان پنج دقیقه فرصت دارند با هم صحبت کنند و در نهایت دو نفر با هم هم‌پیمان شوند',
+                    buttonText: "",
+                    onPressed: () {},
+                  ),
+                ),
+              ),
+            if (isChaos &&
+                Scenario.currentScenario.silencedPlayerDuringDay
+                    .where(
+                        (player) => player.playerStatus == PlayerStatus.active)
+                    .isNotEmpty)
+              Expanded(
+                flex: 4,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: CallRole(
+                    text:
+                        'بازیکنان پنج دقیقه فرصت دارند با هم صحبت کنند و در نهایت دو نفر با هم هم‌پیمان شوند. \n${notTalkingPlayersText()}',
                     buttonText: "",
                     onPressed: () {},
                   ),

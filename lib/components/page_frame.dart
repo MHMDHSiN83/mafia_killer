@@ -279,12 +279,12 @@ class _PageFrameState extends State<PageFrame> {
         Expanded(
           flex: 40,
           child: MyOutlinedButton(
-              text: widget.rightButtonText,
-              color: AppColors.greenColor,
-              hasIcon: true,
-              isIconRight: true,
-              onTap: () => widget.rightButtonOnTap(),
-              icon: Icons.arrow_back_ios),
+            text: widget.rightButtonText,
+            color: AppColors.greenColor,
+            hasIcon: true,
+            isIconRight: true,
+            onTap: () => widget.rightButtonOnTap(),
+          ),
         ),
         const Spacer(
           flex: 2,
@@ -300,7 +300,6 @@ class _PageFrameState extends State<PageFrame> {
               widget.leftButtonOnTap();
             },
             isIconRight: false,
-            icon: Icons.arrow_forward_ios,
           ),
         ),
         const Spacer(
