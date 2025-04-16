@@ -431,8 +431,9 @@ class Scenario {
   void getRecommendedScenario() {
     inGameRoles = [];
     inGameLastMoveCards = [];
-    Map<String, int> recommendedScenario =
+    Map<String, int>? recommendedScenario =
         RecommendedScenario.getRecommendedScenario();
+    recommendedScenario ??= RecommendedScenario.generateRecommendedScenario();
     recommendedScenario.forEach((key, value) {
       Role? role;
       LastMoveCard? lastMoveCard;

@@ -37,11 +37,39 @@ class RecommendedScenario {
     }
   }
 
-  static Map<String, int> getRecommendedScenario() {
+  static Map<String, int>? getRecommendedScenario() {
     if (Scenario.currentScenario is GodfatherScenario) {
-      return recommendedScenario['godfather']![Player.inGamePlayers.length]!;
+      return recommendedScenario['godfather']![Player.inGamePlayers.length];
     } else {
       return recommendedScenario['godfather']![Player.inGamePlayers.length]!;
+    }
+  }
+  static Map<String, int> generateRecommendedScenario() {
+    if (Scenario.currentScenario is GodfatherScenario) {
+      int numberOfPlayers = Player.inGamePlayers.length;
+      int numberOfMafia = (numberOfPlayers ~/ 3) - 3;
+      int numberOfCitizen = numberOfPlayers - numberOfMafia - 8;
+      int numberOfHandcuff = numberOfPlayers % 4 == 0 ? (numberOfPlayers ~/ 4) - 2 : (numberOfPlayers ~/ 4) - 1;
+      int numberOfSilence = numberOfPlayers % 4 == 3 ? (numberOfPlayers ~/ 4) - 1 : (numberOfPlayers ~/ 4) - 2;
+      return {
+        "godfather": 1,
+        "saul_goodman": 1,
+        "matador": 1,
+        "mafia": numberOfMafia,
+        "nostradamus": 1,
+        "doctor_watson": 1,
+        "leon": 1,
+        "citizen_kane": 1,
+        "constantine": 1,
+        "citizen": numberOfCitizen,
+        "beautiful_mind": 1,
+        "face_off": 1,
+        "handcuffs": numberOfHandcuff,
+        "reveal_identity": 1,
+        "silence_of_the_lambs": numberOfSilence,
+      };
+    } else {
+      return {};
     }
   }
 }
