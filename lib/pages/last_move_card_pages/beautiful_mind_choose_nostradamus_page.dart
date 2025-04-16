@@ -6,7 +6,6 @@ import 'package:mafia_killer/components/voting_tile.dart';
 import 'package:mafia_killer/databases/game_state_manager.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/databases/scenario.dart';
-import 'package:mafia_killer/models/player_status.dart';
 import 'package:mafia_killer/models/scenarios/godfather/last_move_cards/beautiful_mind.dart';
 import 'package:mafia_killer/pages/last_move_card_page.dart';
 import 'package:mafia_killer/utils/custom_snackbar.dart';
@@ -42,9 +41,7 @@ class _BeautifulMindChooseNostradamusPageState
     });
   }
 
-  List<Player> alivePlayers = Player.inGamePlayers
-      .where((player) => (player.playerStatus == PlayerStatus.active))
-      .toList();
+  List<Player> alivePlayers = Player.getAliveInGamePlayers();
 
   bool isConfirmed = false;
 

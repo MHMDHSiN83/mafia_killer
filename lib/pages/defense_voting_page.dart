@@ -7,6 +7,7 @@ import 'package:mafia_killer/components/page_frame.dart';
 import 'package:mafia_killer/components/voting_tile.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/databases/scenario.dart';
+import 'package:mafia_killer/models/player_status.dart';
 import 'package:mafia_killer/utils/audio_manager.dart';
 import 'package:mafia_killer/models/scenarios/godfather/godfather_scenario.dart';
 import 'package:mafia_killer/utils/settings_page.dart';
@@ -21,16 +22,13 @@ class DefenseVotingPage extends StatefulWidget {
 class _DefenseVotingPageState extends State<DefenseVotingPage> {
   bool isDeathLotterySelected = false;
   bool isCleared = false;
+  bool isChaos = false;
 
   List<Player> selectedPlayers = [];
 
   Map<Player, bool> playerBoxStatus = {};
 
   void addPlayer(Player player) {
-    // if ((selectedPlayers.isEmpty && !isDeathLotterySelected) ||
-    //     (selectedPlayers.length < 2 && isDeathLotterySelected)) {
-    //   selectedPlayers.add(player);
-    // }
     setState(() {
       selectedPlayers.add(player);
       if ((selectedPlayers.length == 2 && !isDeathLotterySelected) ||
@@ -48,9 +46,11 @@ class _DefenseVotingPageState extends State<DefenseVotingPage> {
     });
   }
 
-
   @override
   void initState() {
+    if (Player.getAliveInGamePlayers().length == 3) {
+      isChaos = true;
+    }
     for (Player player in Scenario.currentScenario.defendingPlayers) {
       playerBoxStatus[player] = false;
     }
@@ -66,7 +66,7 @@ class _DefenseVotingPageState extends State<DefenseVotingPage> {
         reloadContentOfPage: () {
           setState(() {});
         },
-        settingsPage:  () {
+        settingsPage: () {
           return settingsPage(context, 5);
         },
         leftButtonText: "صحبت دفاعیه",
@@ -91,10 +91,21 @@ class _DefenseVotingPageState extends State<DefenseVotingPage> {
                 .resetSilencedPlayersBeforeLastMoveCardPage();
           }
           AudioManager.playNextPageEffect();
-          Navigator.pushNamed(
-            context,
-            (selectedPlayers.isEmpty) ? '/night_page' : '/last_move_card_page',
-          );
+          if (isChaos) {
+            if (selectedPlayers.length == 1) {
+              selectedPlayers[0].playerStatus = PlayerStatus.dead;
+              Navigator.pushNamed(context, '/end_game_page');
+            } else {
+              return;
+            }
+          } else {
+            Navigator.pushNamed(
+              context,
+              (selectedPlayers.isEmpty)
+                  ? '/night_page'
+                  : '/last_move_card_page',
+            );
+          }
         },
         child: Column(
           children: [
@@ -130,30 +141,31 @@ class _DefenseVotingPageState extends State<DefenseVotingPage> {
                 ),
               ),
             ),
-            Expanded(
-              flex: 1,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: CallRole(
-                  text:
-                      "اگه دو نفر تعداد رای‌هاشون یکسان شد از قرعه مرگ استفاده کن",
-                  buttonText: "قرعه مرگ",
-                  onPressed: () {
-                    isDeathLotterySelected = true;
-                    showDialog(
-                      context: context,
-                      builder: (context) {
-                        return MessageDialogbox(
-                          message:
-                              'حالا دو نفر رو انتخاب کن بعدی رو بزن تا به صورت تصادفی یه نفر بره به مرحله کارت حرکت آخر',
-                          onSave: () => Navigator.of(context).pop(),
-                        );
-                      },
-                    );
-                  },
+            if (!isChaos)
+              Expanded(
+                flex: 1,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: CallRole(
+                    text:
+                        "اگه دو نفر تعداد رای‌هاشون یکسان شد از قرعه مرگ استفاده کن",
+                    buttonText: "قرعه مرگ",
+                    onPressed: () {
+                      isDeathLotterySelected = true;
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return MessageDialogbox(
+                            message:
+                                'حالا دو نفر رو انتخاب کن بعدی رو بزن تا به صورت تصادفی یه نفر بره به مرحله کارت حرکت آخر',
+                            onSave: () => Navigator.of(context).pop(),
+                          );
+                        },
+                      );
+                    },
+                  ),
                 ),
-              ),
-            )
+              )
           ],
         ),
       ),

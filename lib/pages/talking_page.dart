@@ -28,15 +28,20 @@ class _TalkingPageState extends State<TalkingPage> {
   bool _isClockTickingPlaye = false;
 
   late TalkingPageScreenArguments args;
+  bool isChaos = false;
 
   @override
   void didChangeDependencies() {
     if (_start == -1) {
       args = ModalRoute.of(context)?.settings.arguments
           as TalkingPageScreenArguments;
-      _start = args.seconds.toDouble();
+      if (Player.getAliveInGamePlayers().length == 3) {
+        _start = 300.toDouble();
+        isChaos = true;
+      } else {
+        _start = args.seconds.toDouble();
+      }
     }
-
     super.didChangeDependencies();
   }
 
@@ -104,11 +109,19 @@ class _TalkingPageState extends State<TalkingPage> {
       if (_hasFinished) {
         _hasStarted = true;
         _hasFinished = false;
-        _start = args.seconds.toDouble();
+        if (isChaos) {
+          _start = 300.toDouble();
+        } else {
+          _start = args.seconds.toDouble();
+        }
         startTimer();
       } else {
         _hasStarted = false;
-        _start = args.seconds.toDouble();
+        if (isChaos) {
+          _start = 300.toDouble();
+        } else {
+          _start = args.seconds.toDouble();
+        }
         AudioManager.resetClockTicking();
       }
     });
@@ -148,7 +161,13 @@ class _TalkingPageState extends State<TalkingPage> {
             Scenario.currentScenario.goToNextStage();
           }
           AudioManager.playNextPageEffect();
-          Navigator.pushNamed(context, args.nextPagePath);
+          if (isChaos) {
+            Scenario.currentScenario.defendingPlayers =
+                Player.getAliveInGamePlayers();
+            Navigator.pushNamed(context, '/defense_voting_page');
+          } else {
+            Navigator.pushNamed(context, args.nextPagePath);
+          }
         },
         child: Column(
           children: [
@@ -269,7 +288,20 @@ class _TalkingPageState extends State<TalkingPage> {
                     onPressed: () {},
                   ),
                 ),
-              )
+              ),
+            if (isChaos)
+              Expanded(
+                flex: 1,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: CallRole(
+                    text:
+                        'بازیکنان پنج دقیقه فرصت دارند با هم صحبت کنند و در نهایت دو نفر با هم هم‌پیمان شوند',
+                    buttonText: "",
+                    onPressed: () {},
+                  ),
+                ),
+              ),
           ],
         ),
       ),
