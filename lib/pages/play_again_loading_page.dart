@@ -1,29 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:mafia_killer/models/database.dart';
-import 'package:mafia_killer/utils/app_info.dart';
-import 'package:mafia_killer/utils/update_checker.dart';
+import 'package:mafia_killer/databases/player.dart';
 
-class LoadingPage extends StatefulWidget {
-  const LoadingPage({super.key});
+class PlayAgainLoadingPage extends StatefulWidget {
+  PlayAgainLoadingPage({super.key});
   @override
-  State<LoadingPage> createState() => _LoadingPageState();
+  State<PlayAgainLoadingPage> createState() => _PlayAgainLoadingPageState();
 }
 
-class _LoadingPageState extends State<LoadingPage> {
+class _PlayAgainLoadingPageState extends State<PlayAgainLoadingPage> {
   void setInitialValues() async {
-    await AppInfo.loadAppInfo();
-    await UpdateChecker.checkUpdate(context);
     await precacheImage(
         AssetImage("lib/images/backgrounds/background-image-edited.png"),
         context);
-    await Database.setInitialValues();
-    Navigator.of(context).pushReplacementNamed('/intro_page');
+    await Player.freePlayers();
+    Navigator.of(context).pushReplacementNamed('/players_page');
   }
 
   @override
   void didChangeDependencies() {
-
     setInitialValues();
     super.didChangeDependencies();
   }

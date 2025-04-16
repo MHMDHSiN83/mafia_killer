@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mafia_killer/models/role.dart';
-import 'package:mafia_killer/themes/app_color.dart';
 import 'package:mafia_killer/utils/determine_color.dart';
 
 class RoleGuideTile extends StatelessWidget {

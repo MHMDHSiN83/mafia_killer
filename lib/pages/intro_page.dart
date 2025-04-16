@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:mafia_killer/components/dialogboxes/update_dialogbox.dart';
 import 'package:mafia_killer/themes/app_color.dart';
 import 'package:mafia_killer/utils/audio_manager.dart';
-import 'package:page_transition/page_transition.dart';
+import 'package:mafia_killer/utils/update_checker.dart';
 
 class IntroPage extends StatefulWidget {
   const IntroPage({super.key});
@@ -115,8 +116,22 @@ class _IntroPageState extends State<IntroPage> with WidgetsBindingObserver {
                     child: InkWell(
                       splashColor: Theme.of(context).colorScheme.inversePrimary,
                       onTap: () {
-                        //AudioManager.stopMusic();
-                        Navigator.pushNamed(context, '/players_page');
+                        AudioManager.stopMusic();
+                        if (UpdateChecker.isUpdateAvilable) {
+                          showDialog(
+                            context: context,
+                            builder: (context) => UpdateDialogbox(
+                              onSave: () {
+                                UpdateChecker.openBazaarPage(context);
+                              },
+                              onCancel: () {
+                                Navigator.pop(context);
+                              },
+                            ),
+                          );
+                        } else {
+                          Navigator.pushNamed(context, '/players_page');
+                        }
                       },
                       child: Container(
                         decoration: BoxDecoration(

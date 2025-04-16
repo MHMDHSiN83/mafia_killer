@@ -2,14 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:mafia_killer/components/last_move_card_selection_tile.dart';
 import 'package:mafia_killer/components/page_frame.dart';
 import 'package:mafia_killer/components/role_selection_tile.dart';
-import 'package:mafia_killer/databases/game_settings.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/models/role.dart';
 import 'package:mafia_killer/models/role_side.dart';
 import 'package:mafia_killer/models/scenarios/godfather/godfather_scenario.dart';
-import 'package:mafia_killer/models/talking_page_screen_arguments.dart';
 import 'package:mafia_killer/themes/app_color.dart';
+import 'package:mafia_killer/utils/ad_manager.dart';
 import 'package:mafia_killer/utils/audio_manager.dart';
 import 'package:mafia_killer/utils/custom_snackbar.dart';
 
@@ -29,6 +28,7 @@ class RoleSelectionPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    AdManager.prepareAd();
     getRoles();
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -78,28 +78,28 @@ class RoleSelectionPage extends StatelessWidget {
           }
           (Scenario.currentScenario as GodfatherScenario)
               .shuffleLastMoveCards();
-          List<Role> roles =
-              Role.copyList(Scenario.currentScenario.inGameRoles);
+          // List<Role> roles =
+          //     Role.copyList(Scenario.currentScenario.inGameRoles);
 
-          roles.shuffle();
-          for (int i = 0; i < Player.inGamePlayers.length; i++) {
-            Player.inGamePlayers[i].role = roles[i];
-          }
-          (Scenario.currentScenario as GodfatherScenario)
-              .setNostradamusInquiryNumber();
+          // roles.shuffle();
+          // for (int i = 0; i < Player.inGamePlayers.length; i++) {
+          //   Player.inGamePlayers[i].role = roles[i];
+          // }
+          // (Scenario.currentScenario as GodfatherScenario)
+          //     .setNostradamusInquiryNumber();
           AudioManager.playNextPageEffect();
           Scenario.currentScenario.resetDayes();
-          // Navigator.pushNamed(context, '/role_distribution_page');
-          Navigator.pushNamed(
-            context,
-            '/talking_page',
-            arguments: TalkingPageScreenArguments(
-                nextPagePath: '/intro_night_page',
-                seconds: GameSettings.currentGameSettings.introTime,
-                rightButtonText: "شب معارفه",
-                leftButtonText: "تقسیم نقش",
-                isDefense: false),
-          );
+          Navigator.pushNamed(context, '/role_distribution_page');
+          // Navigator.pushNamed(
+          //   context,
+          //   '/talking_page',
+          //   arguments: TalkingPageScreenArguments(
+          //       nextPagePath: '/intro_night_page',
+          //       seconds: GameSettings.currentGameSettings.introTime,
+          //       rightButtonText: "شب معارفه",
+          //       leftButtonText: "تقسیم نقش",
+          //       isDefense: false),
+          // );
         },
         child: ListView(
           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),

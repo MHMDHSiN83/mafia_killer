@@ -51,7 +51,6 @@ class Matador extends Role {
 
   @override
   String sleepRoleText() {
-    // TODO: implement sleepRoleText
     return "تیم مافیا بخوابه";
   }
 

@@ -15,6 +15,7 @@ import 'package:mafia_killer/pages/last_move_card_pages/silence_of_the_lambs_pag
 import 'package:mafia_killer/pages/loading_page.dart';
 import 'package:mafia_killer/pages/night_events_page.dart';
 import 'package:mafia_killer/pages/night_page.dart';
+import 'package:mafia_killer/pages/play_again_loading_page.dart';
 import 'package:mafia_killer/pages/players_page.dart';
 import 'package:mafia_killer/pages/regular_voting_page.dart';
 import 'package:mafia_killer/pages/role_distribution_page.dart';
@@ -23,7 +24,7 @@ import 'package:mafia_killer/pages/scenario_guide_page.dart';
 import 'package:mafia_killer/pages/talking_page.dart';
 import 'package:mafia_killer/themes/dark_mode.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-
+import 'package:mafia_killer/utils/ad_manager.dart';
 
 void main() {
   runApp(
@@ -32,6 +33,9 @@ void main() {
       child: MyApp(),
     ),
   );
+
+  AdManager.initialize();
+
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
   ]);
@@ -81,6 +85,7 @@ class MyApp extends StatelessWidget {
             BeautifulMindChooseNostradamusPage(),
         '/end_game_page': (context) => EndGamePage(),
         '/scenario_guid_page': (context) => ScenarioGuidPage(),
+        '/play_again_loading_page': (context) => PlayAgainLoadingPage(),
       },
     );
   }

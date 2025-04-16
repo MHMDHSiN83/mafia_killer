@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:mafia_killer/components/dialogboxes/confirmation_dialogbox.dart';
 import 'package:mafia_killer/components/end_game_player_tile.dart';
 import 'package:mafia_killer/components/page_frame.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/models/role_side.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/nostradamus.dart';
+import 'package:mafia_killer/utils/audio_manager.dart';
 
 class EndGamePage extends StatelessWidget {
   EndGamePage({super.key});
@@ -22,15 +25,22 @@ class EndGamePage extends StatelessWidget {
               (x.role! as Nostradamus).inGameRoleSide == RoleSide.citizen))
       .toList();
   final Player? independentPlayer = Player.inGamePlayers
-      .where((x) => x.role?.roleSide == RoleSide.independant).isNotEmpty ? Player.inGamePlayers
-      .where((x) => x.role?.roleSide == RoleSide.independant).first : null;
+          .where((x) => x.role?.roleSide == RoleSide.independant)
+          .isNotEmpty
+      ? Player.inGamePlayers
+          .where((x) => x.role?.roleSide == RoleSide.independant)
+          .first
+      : null;
 
   final RoleSide whoWon = Scenario.currentScenario.whichTeamWon();
 
   @override
   Widget build(BuildContext context) {
-    List<Player> winingPlayers =
-        (whoWon == RoleSide.citizen) ? citizenPlayers : (whoWon == RoleSide.independant) ? [independentPlayer!] : mafiaPlayers;
+    List<Player> winingPlayers = (whoWon == RoleSide.citizen)
+        ? citizenPlayers
+        : (whoWon == RoleSide.independant)
+            ? [independentPlayer!]
+            : mafiaPlayers;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: PageFrame(
@@ -40,10 +50,24 @@ class EndGamePage extends StatelessWidget {
         leftButtonText: "خروج",
         rightButtonText: "بازی مجدد",
         leftButtonOnTap: () {
-          Navigator.pop(context);
+          AudioManager.playClickEffect();
+          showDialog(
+            context: context,
+            builder: (context) => ConfirmationDialogbox(
+              onSave: () {
+                SystemNavigator.pop();
+              },
+              onCancel: () {
+                AudioManager.playClickEffect();
+                Navigator.pop(context);
+              },
+            ),
+          );
         },
         rightButtonOnTap: () {
-          Navigator.pushNamed(context, '/intro_page');
+          Navigator.pushNamedAndRemoveUntil(
+              context, '/intro_page', (route) => false);
+          Navigator.pushNamed(context, '/play_again_loading_page');
         },
         child: Align(
             alignment: Alignment.topCenter,

@@ -254,22 +254,6 @@ class _IntroNightPageState extends State<IntroNightPage> with WidgetsBindingObse
                   text: text,
                   onPressed: () {
                     AudioManager.playClickEffect();
-                    // if (IntroNightPage.targetPlayers.length == 3) {
-                    //   //TODO build a function to generate nostradamus choice
-                    //   if (IntroNightPage.isNostradamusSelecting) {
-                    //     nostradamusBox(
-                    //       (Scenario.currentScenario as GodfatherScenario)
-                    //           .resultOfNostradamusGuess(
-                    //               IntroNightPage.targetPlayers),
-                    //     );
-                    //   } else {
-                    //     setState(() {
-                    //       if (iterator.moveNext()) {
-                    //         text = iterator.current;
-                    //       }
-                    //     });
-                    //   }
-                    // }
                     if (IntroNightPage.isNostradamusSelecting) {
                       if (IntroNightPage.targetPlayers.length ==
                           (Player.getPlayerByRoleType(Nostradamus)!.role
