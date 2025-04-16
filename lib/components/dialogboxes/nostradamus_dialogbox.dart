@@ -47,20 +47,7 @@ class NostradamusDialogbox extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  // MaterialButton(
-                  //   onPressed: () {
-                  //     AudioManager.playClickEffect();
-                  //     Navigator.of(context).pop();
-                  //   },
-                  //   color: AppColors.brownColor,
-                  //   child: Text(
-                  //     "بازگشت",
-                  //     style: TextStyle(
-                  //       color: Theme.of(context).colorScheme.inversePrimary,
-                  //       fontWeight: FontWeight.bold,
-                  //     ),
-                  //   ),
-                  // ),
+
                   Spacer(
                     flex: 9,
                   ),

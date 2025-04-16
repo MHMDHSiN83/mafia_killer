@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:html/parser.dart' show parse;
 import 'package:http/http.dart' as http;
+import 'package:mafia_killer/components/dialogboxes/connection_error_dialogbox.dart';
 import 'package:mafia_killer/utils/app_info.dart';
 import 'package:mafia_killer/utils/custom_snackbar.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -18,7 +20,7 @@ class UpdateChecker {
     }
   }
 
-  static Future<String> getLatestVersion() async {
+  static Future<String?> getLatestVersion(BuildContext context) async {
     final url = Uri.parse('https://mhmdhsin83.github.io/');
     try {
       final response = await http.get(url);
@@ -27,15 +29,38 @@ class UpdateChecker {
         final h1 = document.querySelector('h1');
         return h1!.text;
       } else {
-        throw Exception();
+        throw Exception('something went wrong');
       }
     } catch (e) {
-      throw Exception();
+      bool tryAgain = false;
+
+      tryAgain = await showDialog<bool>(
+            context: context,
+            builder: (context) {
+              return ConnectionErrorDialogbox(
+                onCancel: () {
+                Navigator.of(context).pop(false);
+                SystemNavigator.pop();
+                },
+                onSave: () {
+                   Navigator.of(context).pop(true); // Return true to retry
+                },
+              );
+            },
+          ) ??
+          false; // Default to false if the dialog is closed without selecting any button
+
+      // Retry fetching the version if user clicked "Check Again"
+      if (tryAgain) {
+        return await getLatestVersion(context);
+      } else {
+        return ''; // Return an empty string or handle this fallback as needed
+      }
     }
   }
 
-  static Future<bool> checkUpdate() async {
-    String version = await getLatestVersion();
+  static Future<bool> checkUpdate(BuildContext context) async {
+    String? version = await getLatestVersion(context);
     if (version == AppInfo.fullVersion) {
       isUpdateAvilable = false;
     } else {

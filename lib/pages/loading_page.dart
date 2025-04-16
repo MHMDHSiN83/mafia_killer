@@ -13,7 +13,7 @@ class LoadingPage extends StatefulWidget {
 class _LoadingPageState extends State<LoadingPage> {
   void setInitialValues() async {
     await AppInfo.loadAppInfo();
-    await UpdateChecker.checkUpdate();
+    await UpdateChecker.checkUpdate(context);
     await precacheImage(
         AssetImage("lib/images/backgrounds/background-image-edited.png"),
         context);
