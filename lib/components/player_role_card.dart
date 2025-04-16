@@ -20,99 +20,97 @@ class PlayerRoleCard extends StatefulWidget {
 }
 
 class _PlayerRoleCardState extends State<PlayerRoleCard> {
-
   @override
   Widget build(BuildContext context) {
     Color color = determineColorForRoleCard(widget.player.role!);
     return GestureDetector(
       onTap: () {
-        showDialog(
-            context: context,
-            barrierDismissible: false,
-            builder: (context) {
-              return Dialog(
-                child: Container(
-                    height: 500,
+        if (!widget.player.seenRole) {
+          showDialog(
+              context: context,
+              barrierDismissible: false,
+              builder: (context) {
+                return Dialog(
+                  child: Container(
+                      height: 500,
 
-                    //margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
-                    padding: EdgeInsets.zero,
-                    decoration: BoxDecoration(
-                        color: Colors.black,
-                        borderRadius: BorderRadius.circular(5),
-                        border: Border.all(
-                          color: color,
-                          width: 2.5,
-                        )),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Container(
-                          margin: const EdgeInsets.symmetric(
-                            vertical: 10,
-                          ),
-                          width: 280,
-                          child: Image(
-                            image: AssetImage(
-                              widget.player.role!.cardImagePath,
-                            ),
-                          ),
-                        ),
-                        AutoSizeText(
-                          minFontSize: 8,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          widget.player.name,
-                          style: TextStyle(
-                            fontSize: 23,
-                            fontWeight: FontWeight.bold,
+                      //margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
+                      padding: EdgeInsets.zero,
+                      decoration: BoxDecoration(
+                          color: Colors.black,
+                          borderRadius: BorderRadius.circular(5),
+                          border: Border.all(
                             color: color,
-                          ),
-                        ),
-                        ElevatedButton(
-                          onPressed: () {
-                            widget.onTap();
-                            Navigator.pop(context);
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor:
-                                (widget.player.role!.roleSide == RoleSide.mafia)
-                                    ? AppColors.redColor
-                                    : (widget.player.role!.roleSide ==
-                                            RoleSide.citizen)
-                                        ? AppColors.blueColor
-                                        : AppColors.darkYellowColor,
-                            elevation: 12.0,
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 10, vertical: 8),
-                            child: Text(
-                              'متوجه شدم',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18,
-                                color: Theme.of(context)
-                                    .colorScheme
-                                    .inversePrimary,
+                            width: 2.5,
+                          )),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Container(
+                            margin: const EdgeInsets.symmetric(
+                              vertical: 10,
+                            ),
+                            width: 280,
+                            child: Image(
+                              image: AssetImage(
+                                widget.player.role!.cardImagePath,
                               ),
                             ),
                           ),
-                        ),
-                      ],
-                    )),
-              );
-            }).then((value) {
-          widget.onTap;
-          setState(() {
-            widget.player.seenRole = true;
+                          AutoSizeText(
+                            minFontSize: 8,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            widget.player.name,
+                            style: TextStyle(
+                              fontSize: 23,
+                              fontWeight: FontWeight.bold,
+                              color: color,
+                            ),
+                          ),
+                          ElevatedButton(
+                            onPressed: () {
+                              widget.onTap();
+                              Navigator.pop(context);
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: (widget.player.role!.roleSide ==
+                                      RoleSide.mafia)
+                                  ? AppColors.redColor
+                                  : (widget.player.role!.roleSide ==
+                                          RoleSide.citizen)
+                                      ? AppColors.blueColor
+                                      : AppColors.darkYellowColor,
+                              elevation: 12.0,
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 10, vertical: 8),
+                              child: Text(
+                                'متوجه شدم',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18,
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .inversePrimary,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      )),
+                );
+              }).then((value) {
+            widget.onTap;
+            setState(() {
+              widget.player.seenRole = true;
+            });
           });
-        });
+        }
       },
-      child: Visibility(
-        visible: !widget.player.seenRole,
-        maintainSize: true,
-        maintainAnimation: true,
-        maintainState: true,
+      child: Opacity(
+        opacity: widget.player.seenRole ? 0.5 : 1,
         child: Container(
           width: 150,
           height: 150,
