@@ -19,7 +19,7 @@ class TalkingPage extends StatefulWidget {
 }
 
 class _TalkingPageState extends State<TalkingPage> {
-  late double _start;
+  double _start = -1;
   int cnt = 0;
   late Timer _timer;
   bool _isRunning = false;
@@ -31,9 +31,11 @@ class _TalkingPageState extends State<TalkingPage> {
 
   @override
   void didChangeDependencies() {
-    args = ModalRoute.of(context)?.settings.arguments
-        as TalkingPageScreenArguments;
-    _start = args.seconds.toDouble();
+    if (_start == -1) {
+      args = ModalRoute.of(context)?.settings.arguments
+          as TalkingPageScreenArguments;
+      _start = args.seconds.toDouble();
+    }
 
     super.didChangeDependencies();
   }
