@@ -1,8 +1,10 @@
 import 'package:tapsell_plus/tapsell_plus.dart';
 
 class AdManager {
-  static final String appId = "alsoatsrtrotpqacegkehkaiieckldhrgsbspqtgqnbrrfccrtbdomgjtahflchkqtqosa";
-  static final String zoneId = "5cfaa942e8d17f0001ffb292";
+  // static final String appId = "alsoatsrtrotpqacegkehkaiieckldhrgsbspqtgqnbrrfccrtbdomgjtahflchkqtqosa";
+  static final String appId = "msqitnpjphtfimfqgpagsslegimfajmkbfpliciekakkpjnhpgqngjfkfdmmjkfsdaqhla";
+  // static final String zoneId = "5cfaa942e8d17f0001ffb292";
+  static final String zoneId = "67ffc2e563943b49f700b750";
   static String response = "";
 
   static void initialize() {
@@ -12,13 +14,13 @@ class AdManager {
   }
 
   static void prepareAd() {
-    TapsellPlus.instance.requestInterstitialAd(zoneId).then((responseId) {
+    TapsellPlus.instance.requestRewardedVideoAd(zoneId).then((responseId) {
       response = responseId;
     });
   }
 
   static void showAd() {
-    TapsellPlus.instance.showInterstitialAd(response,
+    TapsellPlus.instance.showRewardedVideoAd(response,
         onOpened: (map) {
           // Ad opened
         }, onError: (map) {
