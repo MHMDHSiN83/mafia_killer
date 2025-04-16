@@ -40,7 +40,7 @@ class PageFrame extends StatefulWidget {
   final Widget? child;
   final bool isInGame;
   final Function? reloadContentOfPage;
-  
+
   final Function? settingsPage;
 
   @override
@@ -279,13 +279,12 @@ class _PageFrameState extends State<PageFrame> {
         Expanded(
           flex: 40,
           child: MyOutlinedButton(
-            text: widget.rightButtonText,
-            color: AppColors.greenColor,
-            hasIcon: true,
-            isIconRight: true,
-            onTap: () => widget.rightButtonOnTap(),
-            icon: widget.rightButtonIcon,
-          ),
+              text: widget.rightButtonText,
+              color: AppColors.greenColor,
+              hasIcon: true,
+              isIconRight: true,
+              onTap: () => widget.rightButtonOnTap(),
+              icon: Icons.arrow_back_ios),
         ),
         const Spacer(
           flex: 2,
@@ -301,7 +300,7 @@ class _PageFrameState extends State<PageFrame> {
               widget.leftButtonOnTap();
             },
             isIconRight: false,
-            icon: widget.leftButtonIcon,
+            icon: Icons.arrow_forward_ios,
           ),
         ),
         const Spacer(
@@ -347,7 +346,7 @@ class _PageFrameState extends State<PageFrame> {
                           reloadPage: widget.reloadContentOfPage == null
                               ? () {}
                               : widget.reloadContentOfPage!,
-                            outerContext: context,
+                          outerContext: context,
                         );
                       });
                 },

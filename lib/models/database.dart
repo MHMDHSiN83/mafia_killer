@@ -33,7 +33,7 @@ class Database {
     gameSettingsDataFilePath = '$directoryPath/game_settings.json';
     //TODO: fix this with loading
     Player.freePlayers();
-    AudioManager.playIntroMusic();
+    //AudioManager.playIntroMusic();
     AudioManager.setPlayerAsset();
   }
 

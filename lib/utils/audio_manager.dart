@@ -55,6 +55,14 @@ class AudioManager {
     await _musicPlayer.stop();
   }
 
+  static Future<void> pauseMusic() async {
+    await _musicPlayer.pause();
+  }
+
+  static Future<void> resumeMusic() async {
+    await _musicPlayer.play();
+  }
+
   static void savePosition() {
     _savedPosition = _clockTickingPlayer.position;
   }
@@ -77,7 +85,7 @@ class AudioManager {
   }
 
   static Future<void> playDeleteEffect() async {
-    await _playEffect('assets/audios/delete.mp3');
+    await _playEffect('assets/audios/Delete_button_sound_effect_3.mp3');
   }
 
   static Future<void> playUpCounterEffect() async {

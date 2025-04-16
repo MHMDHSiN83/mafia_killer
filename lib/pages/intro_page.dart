@@ -1,9 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:mafia_killer/themes/app_color.dart';
 import 'package:mafia_killer/utils/audio_manager.dart';
+import 'package:page_transition/page_transition.dart';
 
-class IntroPage extends StatelessWidget {
+class IntroPage extends StatefulWidget {
   const IntroPage({super.key});
+
+  @override
+  State<IntroPage> createState() => _IntroPageState();
+}
+
+class _IntroPageState extends State<IntroPage> with WidgetsBindingObserver {
+
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+
+    AudioManager.playIntroMusic();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.paused) {
+      AudioManager.pauseMusic();
+    } else if (state == AppLifecycleState.resumed) {
+      AudioManager.resumeMusic(); 
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +56,7 @@ class IntroPage extends StatelessWidget {
               Expanded(
                 flex: 6,
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(right: 8),
@@ -40,23 +65,23 @@ class IntroPage extends StatelessWidget {
                           Navigator.pushNamed(context, '/scenario_guid_page');
                         },
                         icon: const Icon(
-                          Icons.lightbulb_outline,
+                          Icons.menu_book,
                           color: AppColors.redColor,
                           size: 60,
                         ),
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 8),
-                      child: IconButton(
-                        onPressed: () {},
-                        icon: const Icon(
-                          Icons.settings,
-                          color: AppColors.redColor,
-                          size: 60,
-                        ),
-                      ),
-                    ),
+                    // Padding(
+                    //   padding: const EdgeInsets.only(left: 8),
+                    //   child: IconButton(
+                    //     onPressed: () {},
+                    //     icon: const Icon(
+                    //       Icons.settings,
+                    //       color: AppColors.redColor,
+                    //       size: 60,
+                    //     ),
+                    //   ),
+                    // ),
                   ],
                 ),
               ),
@@ -69,14 +94,14 @@ class IntroPage extends StatelessWidget {
                       "مافیا",
                       style: TextStyle(
                           color: Theme.of(context).colorScheme.inversePrimary,
-                          fontSize: 120,
+                          fontSize: 130,
                           fontFamily: 'DigiGaf'),
                     ),
                     const Text(
                       "کُش",
                       style: TextStyle(
                           color: AppColors.redColor,
-                          fontSize: 120,
+                          fontSize: 130,
                           fontFamily: 'DigiGaf'),
                     ),
                   ],
@@ -90,7 +115,7 @@ class IntroPage extends StatelessWidget {
                     child: InkWell(
                       splashColor: Theme.of(context).colorScheme.inversePrimary,
                       onTap: () {
-                        AudioManager.stopMusic();
+                        //AudioManager.stopMusic();
                         Navigator.pushNamed(context, '/players_page');
                       },
                       child: Container(
@@ -110,36 +135,39 @@ class IntroPage extends StatelessWidget {
                   ),
                 ),
               ),
-              Expanded(
+              Spacer(
                 flex: 9,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(right: 8),
-                      child: IconButton(
-                        onPressed: () {},
-                        icon: const Icon(
-                          Icons.attach_money_rounded,
-                          color: AppColors.redColor,
-                          size: 60,
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 8),
-                      child: IconButton(
-                        onPressed: () {},
-                        icon: const Icon(
-                          Icons.shopping_cart_rounded,
-                          color: AppColors.redColor,
-                          size: 60,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
               ),
+              // Expanded(
+              //   flex: 9,
+              //   child: Row(
+              //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //     children: [
+              //       Padding(
+              //         padding: const EdgeInsets.only(right: 8),
+              //         child: IconButton(
+              //           onPressed: () {},
+              //           icon: const Icon(
+              //             Icons.attach_money_rounded,
+              //             color: AppColors.redColor,
+              //             size: 60,
+              //           ),
+              //         ),
+              //       ),
+              //       Padding(
+              //         padding: const EdgeInsets.only(left: 8),
+              //         child: IconButton(
+              //           onPressed: () {},
+              //           icon: const Icon(
+              //             Icons.shopping_cart_rounded,
+              //             color: AppColors.redColor,
+              //             size: 60,
+              //           ),
+              //         ),
+              //       ),
+              //     ],
+              //   ),
+              // ),
             ],
           ),
         ),

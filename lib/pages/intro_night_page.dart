@@ -30,7 +30,7 @@ class IntroNightPage extends StatefulWidget {
   State<IntroNightPage> createState() => _IntroNightPageState();
 }
 
-class _IntroNightPageState extends State<IntroNightPage> {
+class _IntroNightPageState extends State<IntroNightPage> with WidgetsBindingObserver{
   late String text;
   Map<Player, bool> playerCheckboxStatus = {};
   late Iterator<String> iterator;
@@ -153,8 +153,10 @@ class _IntroNightPageState extends State<IntroNightPage> {
   @override
   void initState() {
     resetNight();
-    AudioManager.playNightMusic();
+    
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
+    AudioManager.playNightMusic();
   }
 
   @override
@@ -162,6 +164,16 @@ class _IntroNightPageState extends State<IntroNightPage> {
     AudioManager.stopMusic();
     super.dispose();
   }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.paused) {
+      AudioManager.pauseMusic();
+    } else if (state == AppLifecycleState.resumed) {
+      AudioManager.resumeMusic(); 
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {

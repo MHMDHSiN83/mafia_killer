@@ -36,6 +36,7 @@ class _PlayersPageState extends State<PlayersPage> {
   }
 
   void removePlayer(Player player) {
+    AudioManager.playDeleteEffect();
     setState(() {
       Player.deletePlayer(player);
     });
@@ -87,7 +88,14 @@ class _PlayersPageState extends State<PlayersPage> {
           rightButtonOnTap: () {
             Player.fetchInGamePlayers();
             AudioManager.playNextPageEffect();
-            Navigator.pushNamed(context, '/game_settings_page');
+            if (numberOfInGamePlayers >= 5) {
+              Navigator.pushNamed(context, '/game_settings_page');
+            } else {
+              customSnackBar(
+                  context,
+                  "تعداد بازیکنان نمی‌تواند کمتر از ${Language.toPersian("5")} باشه.",
+                  true);
+            }
           },
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -173,8 +181,9 @@ class _PlayersPageState extends State<PlayersPage> {
                         margin: const EdgeInsets.fromLTRB(0, 10, 0, 0),
                         child: PlayerTile(
                           player: reversedPlayersList[index],
-                          removePlayer: () =>
-                              removePlayer(reversedPlayersList[index]),
+                          removePlayer: () {
+                            removePlayer(reversedPlayersList[index]);
+                          },
                           updateInGame: () {
                             setState(() {});
                           },
