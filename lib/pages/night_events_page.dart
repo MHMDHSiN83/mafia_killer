@@ -44,66 +44,67 @@ class _NightEventsPage extends State<NightEventsPage> {
       (Scenario.currentScenario as GodfatherScenario).nostradamusRevealed();
     }
 
+    showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (context) {
+        return NewInquiryDialogbox(
+          inquiry:
+              "${Language.toPersian(Scenario.currentScenario.numberOfDeadPlayersBySide(RoleSide.citizen).toString())} شهروند | ${Language.toPersian(Scenario.currentScenario.numberOfDeadPlayersBySide(RoleSide.mafia).toString())} مافیا | ${Language.toPersian(Scenario.currentScenario.numberOfDeadPlayersBySide(RoleSide.independant).toString())} نوستراداموس \n از بازی خارج شدند.",
+          // child: Column(
+          //   children: [
+          //     Text(
+          //       '${Scenario.currentScenario.numberOfDeadPlayersBySide(RoleSide.citizen)} شهروند',
+          //       style: TextStyle(
+          //         fontSize: 20,
+          //         color: Theme.of(context).colorScheme.inversePrimary,
+          //         fontWeight: FontWeight.bold,
+          //       ),
+          //     ),
+          //     const SizedBox(
+          //       height: 10,
+          //     ),
+          //     Text(
+          //       '${Scenario.currentScenario.numberOfDeadPlayersBySide(RoleSide.mafia)} مافیا',
+          //       style: TextStyle(
+          //         fontSize: 20,
+          //         color: Theme.of(context).colorScheme.inversePrimary,
+          //         fontWeight: FontWeight.bold,
+          //       ),
+          //     ),
+          //     const SizedBox(
+          //       height: 10,
+          //     ),
+          //     Text(
+          //       '${Scenario.currentScenario.numberOfDeadPlayersBySide(RoleSide.independant)} نوستراداموس',
+          //       style: TextStyle(
+          //         fontSize: 20,
+          //         color: Theme.of(context).colorScheme.inversePrimary,
+          //         fontWeight: FontWeight.bold,
+          //       ),
+          //     ),
+          //     const SizedBox(
+          //       height: 10,
+          //     ),
+          //     Text(
+          //       'از بازی خارج شدند.',
+          //       style: TextStyle(
+          //         fontSize: 20,
+          //         color: Theme.of(context).colorScheme.inversePrimary,
+          //         fontWeight: FontWeight.bold,
+          //       ),
+          //     ),
+          //   ],
+          // ),
+        );
+      },
+    );
+
     setState(() {
       if (!doesPressInquiry) {
         GameSettings.currentGameSettings.inquiry--;
         doesPressInquiry = true;
       }
-      showDialog(
-        barrierDismissible: false,
-        context: context,
-        builder: (context) {
-          return NewInquiryDialogbox(
-            inquiry:
-                "${Language.toPersian(Scenario.currentScenario.numberOfDeadPlayersBySide(RoleSide.citizen).toString())} شهروند | ${Language.toPersian(Scenario.currentScenario.numberOfDeadPlayersBySide(RoleSide.mafia).toString())} مافیا | ${Language.toPersian(Scenario.currentScenario.numberOfDeadPlayersBySide(RoleSide.independant).toString())} نوستراداموس \n از بازی خارج شدند.",
-            // child: Column(
-            //   children: [
-            //     Text(
-            //       '${Scenario.currentScenario.numberOfDeadPlayersBySide(RoleSide.citizen)} شهروند',
-            //       style: TextStyle(
-            //         fontSize: 20,
-            //         color: Theme.of(context).colorScheme.inversePrimary,
-            //         fontWeight: FontWeight.bold,
-            //       ),
-            //     ),
-            //     const SizedBox(
-            //       height: 10,
-            //     ),
-            //     Text(
-            //       '${Scenario.currentScenario.numberOfDeadPlayersBySide(RoleSide.mafia)} مافیا',
-            //       style: TextStyle(
-            //         fontSize: 20,
-            //         color: Theme.of(context).colorScheme.inversePrimary,
-            //         fontWeight: FontWeight.bold,
-            //       ),
-            //     ),
-            //     const SizedBox(
-            //       height: 10,
-            //     ),
-            //     Text(
-            //       '${Scenario.currentScenario.numberOfDeadPlayersBySide(RoleSide.independant)} نوستراداموس',
-            //       style: TextStyle(
-            //         fontSize: 20,
-            //         color: Theme.of(context).colorScheme.inversePrimary,
-            //         fontWeight: FontWeight.bold,
-            //       ),
-            //     ),
-            //     const SizedBox(
-            //       height: 10,
-            //     ),
-            //     Text(
-            //       'از بازی خارج شدند.',
-            //       style: TextStyle(
-            //         fontSize: 20,
-            //         color: Theme.of(context).colorScheme.inversePrimary,
-            //         fontWeight: FontWeight.bold,
-            //       ),
-            //     ),
-            //   ],
-            // ),
-          );
-        },
-      );
     });
   }
 
@@ -261,18 +262,7 @@ class _NightEventsPage extends State<NightEventsPage> {
                                   flex: 2,
                                   child: MaterialButton(
                                     onPressed: () {
-                                      showDialog(
-                                          context: context,
-                                          builder: (builder) {
-                                            return ConfirmationDialogbox(
-                                              onCancel: () =>
-                                                  Navigator.pop(context),
-                                              onSave: () {
-                                                Navigator.pop(context);
-                                                showInquiryDialog(context);
-                                              },
-                                            );
-                                          });
+                                      showInquiryDialog(context);
                                     },
                                     color: AppColors.brownColor,
                                     child: Padding(

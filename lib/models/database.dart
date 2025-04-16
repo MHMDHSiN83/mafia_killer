@@ -32,7 +32,7 @@ class Database {
     scenariosDataFilePath = '$directoryPath/scenarios.json';
     gameSettingsDataFilePath = '$directoryPath/game_settings.json';
     Player.freePlayers();
-    AudioManager.playIntroMusic();
+    //AudioManager.playIntroMusic();
     AudioManager.setPlayerAsset();
   }
 

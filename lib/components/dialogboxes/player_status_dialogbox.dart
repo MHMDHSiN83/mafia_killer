@@ -32,12 +32,12 @@ class _PlayerStatusDialogboxState extends State<PlayerStatusDialogbox> {
                   style: TextStyle(color: AppColors.redColor, fontSize: 17),
                 )),
           ),
-          GestureDetector(
-            onTap: () {
-              setState(() {});
-            },
-            child: Text("data"),
-          ),
+          // GestureDetector(
+          //   onTap: () {
+          //     setState(() {});
+          //   },
+          //   child: Text("data"),
+          // ),
         ],
         content: Container(
           decoration: const BoxDecoration(

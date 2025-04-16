@@ -79,7 +79,7 @@ class MyOutlinedButton extends StatelessWidget {
         side: BorderSide(width: broderWidth ?? 4, color: color),
       ),
       icon: Transform.scale(
-        scale: 2.8,
+        scale: 2.2,
         child: (icon == null)
             ? null
             : Transform.flip(

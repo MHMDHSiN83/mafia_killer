@@ -31,6 +31,13 @@ class AudioManager {
     }
   }
 
+  static Future<void> resetMusicPlayer() async {
+    await _musicPlayer.setAudioSource(
+      ConcatenatingAudioSource(children: []),
+      preload: false,
+    );
+  }
+
   static Future<void> _playClockTicking(String assetPath) async {
     if (GameSettings.currentGameSettings.playMusic) {
       if (_clockTickingPlayer.processingState == ProcessingState.completed) {
@@ -55,6 +62,14 @@ class AudioManager {
     await _musicPlayer.stop();
   }
 
+  static Future<void> pauseMusic() async {
+    await _musicPlayer.pause();
+  }
+
+  static Future<void> resumeMusic() async {
+    await _musicPlayer.play();
+  }
+
   static void savePosition() {
     _savedPosition = _clockTickingPlayer.position;
   }
@@ -77,7 +92,7 @@ class AudioManager {
   }
 
   static Future<void> playDeleteEffect() async {
-    await _playEffect('assets/audios/delete.mp3');
+    await _playEffect('assets/audios/Delete_button_sound_effect_3.mp3');
   }
 
   static Future<void> playUpCounterEffect() async {

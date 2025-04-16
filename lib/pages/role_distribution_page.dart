@@ -117,6 +117,8 @@ class _RoleDistributionPageState extends State<RoleDistributionPage> {
             (Scenario.currentScenario as GodfatherScenario)
                 .setNostradamusInquiryNumber();
             AudioManager.playNextPageEffect();
+            AudioManager.stopMusic();
+            AudioManager.resetMusicPlayer();
 
             Navigator.pushNamed(
               context,
