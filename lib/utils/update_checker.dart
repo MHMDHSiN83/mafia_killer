@@ -32,30 +32,29 @@ class UpdateChecker {
         throw Exception('something went wrong');
       }
     } catch (e) {
-      bool tryAgain = false;
+      return AppInfo.fullVersion;
+      // bool tryAgain = false;
 
-      tryAgain = await showDialog<bool>(
-            context: context,
-            builder: (context) {
-              return ConnectionErrorDialogbox(
-                onCancel: () {
-                Navigator.of(context).pop(false);
-                SystemNavigator.pop();
-                },
-                onSave: () {
-                   Navigator.of(context).pop(true); // Return true to retry
-                },
-              );
-            },
-          ) ??
-          false; // Default to false if the dialog is closed without selecting any button
-
-      // Retry fetching the version if user clicked "Check Again"
-      if (tryAgain) {
-        return await getLatestVersion(context);
-      } else {
-        return ''; // Return an empty string or handle this fallback as needed
-      }
+      // tryAgain = await showDialog<bool>(
+      //       context: context,
+      //       builder: (context) {
+      //         return ConnectionErrorDialogbox(
+      //           onCancel: () {
+      //           Navigator.of(context).pop(false);
+      //           SystemNavigator.pop();
+      //           },
+      //           onSave: () {
+      //              Navigator.of(context).pop(true); // Return true to retry
+      //           },
+      //         );
+      //       },
+      //     ) ??
+      //     false;
+      // if (tryAgain) {
+      //   return await getLatestVersion(context);
+      // } else {
+      //   return '';
+      // }
     }
   }
 

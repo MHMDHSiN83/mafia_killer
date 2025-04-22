@@ -32,6 +32,8 @@ class _LastMoveCardSelectionTileState extends State<LastMoveCardSelectionTile> {
     }
     setState(() {
       if(widget.counter <= Scenario.currentScenario.getRecommendedLastMoveCard(widget.lastMoveCard)) {
+        customSnackBar(
+            context, 'تعداد کارت حرکت آخر نمی‌تونه از مقدار پیش فرض کمتر باشه', true);
         return;
       }
       widget.counter--;
@@ -41,7 +43,6 @@ class _LastMoveCardSelectionTileState extends State<LastMoveCardSelectionTile> {
 
   @override
   Widget build(BuildContext context) {
-    // Color color = determineColor();
     Color color = AppColors.darkgreenColor;
     return Container(
       width: 200,
