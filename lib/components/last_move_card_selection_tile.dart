@@ -31,6 +31,9 @@ class _LastMoveCardSelectionTileState extends State<LastMoveCardSelectionTile> {
       return;
     }
     setState(() {
+      if(widget.counter <= Scenario.currentScenario.getRecommendedLastMoveCard(widget.lastMoveCard)) {
+        return;
+      }
       widget.counter--;
     });
     Scenario.removeLastMoveCard(widget.lastMoveCard);

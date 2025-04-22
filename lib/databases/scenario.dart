@@ -36,6 +36,8 @@ class Scenario {
   late List<Role> roles;
   List<LastMoveCard> lastMoveCards = [];
   List<LastMoveCard> inGameLastMoveCards = [];
+  //TODO: temp, this should be fixed
+  List<LastMoveCard> recommendedLastMoveCards = [];
   List<Role> inGameRoles = [];
   static List<Scenario> scenarios = [];
   static late Scenario currentScenario;
@@ -431,6 +433,7 @@ class Scenario {
   void getRecommendedScenario() {
     inGameRoles = [];
     inGameLastMoveCards = [];
+    recommendedLastMoveCards = [];
     Map<String, int>? recommendedScenario =
         RecommendedScenario.getRecommendedScenario();
     recommendedScenario ??= RecommendedScenario.generateRecommendedScenario();
@@ -490,6 +493,9 @@ class Scenario {
       for (int i = 0; i < value; i++) {
         addLastMoveCard(lastMoveCard);
       }
+      for (int i = 0; i < value; i++) {
+        addRecommendedLastMoveCard(lastMoveCard);
+      }
     });
   }
 
@@ -500,5 +506,24 @@ class Scenario {
     killedInDayPlayer = null;
     silencedPlayerDuringDay = [];
     report = [];
+  }
+
+  //TODO: temp, this should be fixed
+  int getRecommendedLastMoveCard(LastMoveCard lastMoveCard) {
+    int counter = 0;
+    for (LastMoveCard l in currentScenario.recommendedLastMoveCards) {
+      if (l.title == lastMoveCard.title) {
+        counter++;
+      }
+    }
+    return counter;
+  }
+
+  void addRecommendedLastMoveCard(LastMoveCard? lastMoveCard) {
+    if (lastMoveCard == null) {
+      return;
+    }
+    currentScenario.recommendedLastMoveCards.add(
+        LastMoveCard.fromJson(jsonDecode(jsonEncode(lastMoveCard.toJson()))));
   }
 }

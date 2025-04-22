@@ -167,29 +167,41 @@ class _PlayersPageState extends State<PlayersPage> {
                   ]),
                 ),
               ),
-              Expanded(
-                flex: 8,
-                child: SizedBox(
-                  child: ListView.builder(
-                    padding: const EdgeInsets.symmetric(horizontal: 15),
-                    itemCount: Player.players.length,
-                    itemBuilder: (context, index) {
-                      return Container(
-                        margin: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-                        child: PlayerTile(
-                          player: reversedPlayersList[index],
-                          removePlayer: () {
-                            removePlayer(reversedPlayersList[index]);
-                          },
-                          updateInGame: () {
-                            setState(() {});
-                          },
-                        ),
-                      );
-                    },
+              if (numberOfPlayers != 0)
+                Expanded(
+                  flex: 8,
+                  child: SizedBox(
+                    child: ListView.builder(
+                      padding: const EdgeInsets.symmetric(horizontal: 15),
+                      itemCount: Player.players.length,
+                      itemBuilder: (context, index) {
+                        return Container(
+                          margin: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                          child: PlayerTile(
+                            player: reversedPlayersList[index],
+                            removePlayer: () {
+                              removePlayer(reversedPlayersList[index]);
+                            },
+                            updateInGame: () {
+                              setState(() {});
+                            },
+                          ),
+                        );
+                      },
+                    ),
                   ),
                 ),
-              ),
+              if (numberOfPlayers == 0)
+                Expanded(
+                  flex: 8,
+                  child: SizedBox(
+                    child: Center(
+                      child: Text(
+                        'هنوز هیچ بازیکنی ثبت نشده...',
+                      ),
+                    ),
+                  ),
+                ),
               Expanded(
                 flex: 2,
                 child: Padding(
