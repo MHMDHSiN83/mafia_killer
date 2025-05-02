@@ -1,4 +1,7 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 import 'package:mafia_killer/components/dialogboxes/update_dialogbox.dart';
 import 'package:mafia_killer/themes/app_color.dart';
 import 'package:mafia_killer/utils/audio_manager.dart';
@@ -12,8 +15,6 @@ class IntroPage extends StatefulWidget {
 }
 
 class _IntroPageState extends State<IntroPage> with WidgetsBindingObserver {
-
-
   @override
   void initState() {
     super.initState();
@@ -27,7 +28,7 @@ class _IntroPageState extends State<IntroPage> with WidgetsBindingObserver {
     if (state == AppLifecycleState.paused) {
       AudioManager.pauseMusic();
     } else if (state == AppLifecycleState.resumed) {
-      AudioManager.resumeMusic(); 
+      AudioManager.resumeMusic();
     }
   }
 
@@ -39,6 +40,16 @@ class _IntroPageState extends State<IntroPage> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
+    int f1 = 6;
+    int f2 = 15;
+    int f3 = 14;
+    int f4 = 9;
+    final safeAreaHeight = MediaQuery.of(context).size.height -
+        MediaQuery.of(context).padding.top -
+        MediaQuery.of(context).padding.bottom;
+    final double playButtonSize = min(safeAreaHeight * f3 / (f1 + f2 + f3 + f4),
+        MediaQuery.of(context).size.width);
+
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
@@ -61,7 +72,7 @@ class _IntroPageState extends State<IntroPage> with WidgetsBindingObserver {
           child: Column(
             children: [
               Expanded(
-                flex: 6,
+                flex: f1,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
@@ -93,7 +104,7 @@ class _IntroPageState extends State<IntroPage> with WidgetsBindingObserver {
                 ),
               ),
               Expanded(
-                flex: 15,
+                flex: f2,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -115,41 +126,47 @@ class _IntroPageState extends State<IntroPage> with WidgetsBindingObserver {
                 ),
               ),
               Expanded(
-                flex: 14,
-                child: ClipOval(
-                  child: Material(
-                    color: Colors.transparent,
-                    child: InkWell(
-                      splashColor: Theme.of(context).colorScheme.inversePrimary,
-                      onTap: () {
-                        //AudioManager.stopMusic();
-                        if (UpdateChecker.isUpdateAvilable) {
-                          showDialog(
-                            context: context,
-                            builder: (context) => UpdateDialogbox(
-                              onSave: () {
-                                UpdateChecker.openBazaarPage(context);
-                              },
-                              onCancel: () {
-                                Navigator.pop(context);
-                              },
+                flex: f3,
+                child: Center(
+                  child: ClipOval(
+                    child: Material(
+                      color: Colors.transparent,
+                      child: InkWell(
+                        splashColor:
+                            Theme.of(context).colorScheme.inversePrimary,
+                        onTap: () {
+                          //AudioManager.stopMusic();
+                          if (UpdateChecker.isUpdateAvilable) {
+                            showDialog(
+                              context: context,
+                              builder: (context) => UpdateDialogbox(
+                                onSave: () {
+                                  UpdateChecker.openBazaarPage(context);
+                                },
+                                onCancel: () {
+                                  Navigator.pop(context);
+                                },
+                              ),
+                            );
+                          } else {
+                            Navigator.pushNamed(context, '/players_page');
+                          }
+                        },
+                        child: Container(
+                          width: playButtonSize,
+                          height: playButtonSize,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            border: Border.all(
+                              color:
+                                  Theme.of(context).colorScheme.inversePrimary,
+                              width: 12,
                             ),
-                          );
-                        } else {
-                          Navigator.pushNamed(context, '/players_page');
-                        }
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          border: Border.all(
-                            color: Theme.of(context).colorScheme.inversePrimary,
-                            width: 15,
                           ),
-                        ),
-                        child: const Icon(
-                          Icons.play_arrow_rounded,
-                          size: 240,
+                          child: Icon(
+                            Icons.play_arrow_rounded,
+                            size: playButtonSize * 0.9,
+                          ),
                         ),
                       ),
                     ),
@@ -157,7 +174,7 @@ class _IntroPageState extends State<IntroPage> with WidgetsBindingObserver {
                 ),
               ),
               Spacer(
-                flex: 9,
+                flex: f4,
               ),
               // Expanded(
               //   flex: 9,

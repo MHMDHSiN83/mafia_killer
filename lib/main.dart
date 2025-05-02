@@ -25,8 +25,10 @@ import 'package:mafia_killer/pages/talking_page.dart';
 import 'package:mafia_killer/themes/dark_mode.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:mafia_killer/utils/ad_manager.dart';
+import 'package:wakelock_plus/wakelock_plus.dart';
 
 void main() {
+  WakelockPlus.enable();
   runApp(
     const Directionality(
       textDirection: TextDirection.rtl,
