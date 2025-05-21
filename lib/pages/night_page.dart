@@ -223,7 +223,7 @@ class _NightPageState extends State<NightPage> with WidgetsBindingObserver {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              'شروع مجدد شب ${Scenario.currentScenario.dayAndNightNumber()}',
+              'شروع مجدد شب ${GameStateManager.getCurrentStateNumber()}',
               style: TextStyle(
                 color: Theme.of(context).colorScheme.primary,
                 fontWeight: FontWeight.bold,
@@ -267,7 +267,8 @@ class _NightPageState extends State<NightPage> with WidgetsBindingObserver {
   @override
   void initState() {
     GameStateManager.addState(
-        lastMoveCards: Scenario.currentScenario.lastMoveCards,
+        // lastMoveCards: Scenario.currentScenario.lastMoveCards,
+        lastMoveCards: Scenario.currentScenario.inGameLastMoveCards,
         silencedPlayerDuringDay:
             Scenario.currentScenario.silencedPlayerDuringDay);
     resetUIBeforeNight();
@@ -292,16 +293,15 @@ class _NightPageState extends State<NightPage> with WidgetsBindingObserver {
     return Scaffold(
       body: PageFrame(
         label: '/night_page',
-        pageTitle: 'شب ${Scenario.currentScenario.dayAndNightNumber()}',
+        pageTitle: 'شب ${GameStateManager.getCurrentStateNumber()}',
         reloadContentOfPage: () {
           setState(() {});
         },
         settingsPage: settingsPage,
         rightButtonText: 'اتفاقات شب',
         leftButtonText:
-            "روز ${Scenario.currentScenario.dayAndNightNumber(number: Scenario.currentScenario.dayNumber - 1)}",
+            "روز ${GameStateManager.getPreviousStateNumber()}",
         leftButtonOnTap: () {
-          Scenario.currentScenario.backToLastStage();
           resetNight();
           GameStateManager.goToPreviousState();
           Navigator.pop(context);

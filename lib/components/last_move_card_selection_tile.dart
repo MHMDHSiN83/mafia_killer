@@ -31,11 +31,11 @@ class _LastMoveCardSelectionTileState extends State<LastMoveCardSelectionTile> {
       return;
     }
     setState(() {
-      if(widget.counter <= Scenario.currentScenario.getRecommendedLastMoveCard(widget.lastMoveCard)) {
-        customSnackBar(
-            context, 'تعداد کارت حرکت آخر نمی‌تونه از مقدار پیش فرض کمتر باشه', true);
-        return;
-      }
+      // if(widget.counter <= Scenario.currentScenario.getRecommendedLastMoveCard(widget.lastMoveCard)) {
+      //   customSnackBar(
+      //       context, 'تعداد کارت حرکت آخر نمی‌تونه از مقدار پیش فرض کمتر باشه', true);
+      //   return;
+      // }
       widget.counter--;
     });
     Scenario.removeLastMoveCard(widget.lastMoveCard);

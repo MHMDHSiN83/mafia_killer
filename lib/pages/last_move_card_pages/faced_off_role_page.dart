@@ -41,7 +41,7 @@ class FacedOffRolePage extends StatelessWidget {
           },
           leftButtonText: "کارت حرکت آخر",
           rightButtonText:
-              'شب ${Scenario.currentScenario.dayAndNightNumber(number: Scenario.currentScenario.nightNumber)}',
+              'شب ${GameStateManager.getNextStateNumber()}',
           leftButtonOnTap: () => Navigator.pop(context),
           rightButtonOnTap: () {
             GameStateManager.addLastMoveCardAction([
@@ -53,7 +53,6 @@ class FacedOffRolePage extends StatelessWidget {
                   Scenario.currentScenario.killedInDayPlayer!.name),
               Player.getPlayerByName(FaceOffPage.selectedPlayers[0].name),
             ]);
-            Scenario.currentScenario.goToNextStage();
 
             if (Scenario.currentScenario.isGameOver()) {
               AudioManager.playNextPageEffect();

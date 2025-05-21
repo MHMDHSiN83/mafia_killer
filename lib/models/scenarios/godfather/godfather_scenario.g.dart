@@ -18,12 +18,13 @@ GodfatherScenario _$GodfatherScenarioFromJson(Map<String, dynamic> json) =>
       ..inGameLastMoveCards = (json['inGameLastMoveCards'] as List<dynamic>)
           .map((e) => LastMoveCard.fromJson(e as Map<String, dynamic>))
           .toList()
+      ..recommendedLastMoveCards =
+          (json['recommendedLastMoveCards'] as List<dynamic>)
+              .map((e) => LastMoveCard.fromJson(e as Map<String, dynamic>))
+              .toList()
       ..inGameRoles = (json['inGameRoles'] as List<dynamic>)
           .map((e) => Role.fromJson(e as Map<String, dynamic>))
           .toList()
-      ..nightNumber = (json['nightNumber'] as num).toInt()
-      ..dayNumber = (json['dayNumber'] as num).toInt()
-      ..isNight = json['isNight'] as bool
       ..nightEvents = (json['nightEvents'] as Map<String, dynamic>).map(
         (k, e) => MapEntry($enumDecode(_$NightEventEnumMap, k),
             e == null ? null : Player.fromJson(e as Map<String, dynamic>)),
@@ -47,10 +48,8 @@ Map<String, dynamic> _$GodfatherScenarioToJson(GodfatherScenario instance) =>
       'roles': instance.roles,
       'lastMoveCards': instance.lastMoveCards,
       'inGameLastMoveCards': instance.inGameLastMoveCards,
+      'recommendedLastMoveCards': instance.recommendedLastMoveCards,
       'inGameRoles': instance.inGameRoles,
-      'nightNumber': instance.nightNumber,
-      'dayNumber': instance.dayNumber,
-      'isNight': instance.isNight,
       'nightEvents': instance.nightEvents
           .map((k, e) => MapEntry(_$NightEventEnumMap[k]!, e)),
       'defendingPlayers': instance.defendingPlayers,

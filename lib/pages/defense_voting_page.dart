@@ -1,10 +1,11 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 import 'package:mafia_killer/components/call_role.dart';
 import 'package:mafia_killer/components/dialogboxes/message_dialogbox.dart';
 import 'package:mafia_killer/components/page_frame.dart';
 import 'package:mafia_killer/components/voting_tile.dart';
+import 'package:mafia_killer/databases/game_state_manager.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/models/player_status.dart';
@@ -55,6 +56,7 @@ class _DefenseVotingPageState extends State<DefenseVotingPage> {
       playerBoxStatus[player] = false;
     }
     super.initState();
+    
   }
 
   @override
@@ -71,7 +73,7 @@ class _DefenseVotingPageState extends State<DefenseVotingPage> {
         },
         leftButtonText: "صحبت دفاعیه",
         rightButtonText:
-            'شب ${Scenario.currentScenario.dayAndNightNumber(number: Scenario.currentScenario.nightNumber)}',
+            'شب ${GameStateManager.getNextStateNumber()}',
         leftButtonOnTap: () => Navigator.pop(context),
         rightButtonOnTap: () {
           switch (selectedPlayers.length) {
@@ -99,6 +101,9 @@ class _DefenseVotingPageState extends State<DefenseVotingPage> {
               return;
             }
           } else {
+            if(selectedPlayers.isEmpty) {
+
+            }
             Navigator.pushNamed(
               context,
               (selectedPlayers.isEmpty)

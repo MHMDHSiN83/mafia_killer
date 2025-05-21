@@ -26,6 +26,7 @@ class RoleSelectionPage extends StatelessWidget {
         Scenario.currentScenario.getRolesBySide(RoleSide.independant);
   }
 
+  
   @override
   Widget build(BuildContext context) {
     AdManager.prepareAd();
@@ -88,7 +89,6 @@ class RoleSelectionPage extends StatelessWidget {
           // (Scenario.currentScenario as GodfatherScenario)
           //     .setNostradamusInquiryNumber();
           AudioManager.playNextPageEffect();
-          Scenario.currentScenario.resetDayes();
           Navigator.pushNamed(context, '/role_distribution_page');
           // Navigator.pushNamed(
           //   context,

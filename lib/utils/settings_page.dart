@@ -13,7 +13,7 @@ Widget? settingsPage(BuildContext context, int l) {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            'شروع مجدد روز ${Scenario.currentScenario.dayAndNightNumber()}',
+            'شروع مجدد روز ${GameStateManager.getCurrentStateNumber()}',
             style: TextStyle(
               color: Theme.of(context).colorScheme.primary,
               fontWeight: FontWeight.bold,

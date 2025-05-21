@@ -53,7 +53,7 @@ class _HandcuffsPageState extends State<HandcuffsPage> {
         },
         leftButtonText: "کارت حرکت آخر",
         rightButtonText:
-            'شب ${Scenario.currentScenario.dayAndNightNumber(number: Scenario.currentScenario.nightNumber)}',
+            'شب ${GameStateManager.getNextStateNumber()}',
         leftButtonOnTap: () {
           Navigator.pop(context);
         },
@@ -70,7 +70,6 @@ class _HandcuffsPageState extends State<HandcuffsPage> {
               Player.getPlayerByName(widget.selectedPlayers[0].name),
             ]);
 
-            Scenario.currentScenario.goToNextStage();
 
             if (Scenario.currentScenario.isGameOver()) {
               AudioManager.playNextPageEffect();

@@ -27,8 +27,11 @@ class Player extends ChangeNotifier {
   // @Enumerated(EnumType.ordinal32)
   UIPlayerStatus uiPlayerStatus = UIPlayerStatus.targetable; // it's for UI
 
+  @JsonKey(fromJson: _userStatusFromJson, toJson: _userStatusToJson)
   PlayerStatus playerStatus = PlayerStatus.active;
 
+  static PlayerStatus _userStatusFromJson(String status) => PlayerStatus.values.firstWhere((e) => e.name == status);
+  static String _userStatusToJson(PlayerStatus status) => status.name;
   // @ignore
   bool seenRole = false;
 

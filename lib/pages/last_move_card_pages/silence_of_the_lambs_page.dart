@@ -63,7 +63,7 @@ class _SilenceOfTheLambsPageState extends State<SilenceOfTheLambsPage> {
         },
         leftButtonText: "کارت حرکت آخر",
         rightButtonText:
-            'شب ${Scenario.currentScenario.dayAndNightNumber(number: Scenario.currentScenario.nightNumber)}',
+            'شب ${GameStateManager.getNextStateNumber()}',
         leftButtonOnTap: () => Navigator.pop(context),
         rightButtonOnTap: () {
           if ((widget.selectedPlayers.length == 2 && isTwoSilenced) ||
@@ -86,8 +86,6 @@ class _SilenceOfTheLambsPageState extends State<SilenceOfTheLambsPage> {
                 Player.getPlayerByName(widget.selectedPlayers[0].name),
               ]);
             }
-
-            Scenario.currentScenario.goToNextStage();
 
             if (Scenario.currentScenario.isGameOver()) {
               AudioManager.playNextPageEffect();

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:mafia_killer/databases/player.dart';
+import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/models/scenarios/godfather/last_move_cards/beautiful_mind.dart';
 import 'package:mafia_killer/models/scenarios/godfather/last_move_cards/face_off.dart';
 import 'package:mafia_killer/models/scenarios/godfather/last_move_cards/handcuffs.dart';
@@ -50,6 +51,10 @@ class LastMoveCard {
 
   static List<LastMoveCard> copyList(List<LastMoveCard> lastMoveCards) {
     return lastMoveCards.map((lastMoveCard) => LastMoveCard.copy(lastMoveCard)).toList();
+  }
+
+  static LastMoveCard getPlayerByTitle(String title) {
+    return Scenario.currentScenario.inGameLastMoveCards.where((lastMoveCard) => lastMoveCard.title == title).first;
   }
 
   double titleVerticalPadding() {

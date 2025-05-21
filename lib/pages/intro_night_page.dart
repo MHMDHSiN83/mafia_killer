@@ -186,11 +186,10 @@ class _IntroNightPageState extends State<IntroNightPage>
         },
         settingsPage: settingsPage,
         rightButtonText:
-            "روز ${Scenario.currentScenario.dayAndNightNumber(number: Scenario.currentScenario.dayNumber)}",
+            'روز اول',
         leftButtonText:
-            "روز ${Scenario.currentScenario.dayAndNightNumber(number: Scenario.currentScenario.dayNumber - 1)}",
+            'روز معارفه',
         leftButtonOnTap: () {
-          Scenario.currentScenario.backToLastStage();
           IntroNightPage.targetPlayers = [];
           Navigator.pop(context);
         },
@@ -198,7 +197,6 @@ class _IntroNightPageState extends State<IntroNightPage>
           if (IntroNightPage.isNightOver) {
             AudioManager.stopMusic();
             AudioManager.resetMusicPlayer();
-            Scenario.currentScenario.goToNextStage();
             // resetNight();
             AudioManager.playNextPageEffect();
             Navigator.pushNamed(
@@ -209,12 +207,13 @@ class _IntroNightPageState extends State<IntroNightPage>
                 seconds: GameSettings.currentGameSettings.mainSpeakTime,
                 rightButtonText: 'رای گیری',
                 leftButtonText:
-                    'شب ${Scenario.currentScenario.dayAndNightNumber(number: Scenario.currentScenario.nightNumber - 1)}',
+                    'شب معارفه',
                 isDefense: false,
               ),
             );
             GameStateManager.addState(
-                lastMoveCards: Scenario.currentScenario.lastMoveCards);
+                lastMoveCards: Scenario.currentScenario.inGameLastMoveCards);
+                // lastMoveCards: Scenario.currentScenario.lastMoveCards);
           } else {
             customSnackBar(context, 'تمام اکت‌های شب باید انجام بشه', true);
           }

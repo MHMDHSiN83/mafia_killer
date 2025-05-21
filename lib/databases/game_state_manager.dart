@@ -1,7 +1,9 @@
 import 'package:mafia_killer/databases/game_settings.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/databases/scenario.dart';
+import 'package:mafia_killer/models/language.dart';
 import 'package:mafia_killer/models/last_move_card.dart';
+import 'package:mafia_killer/pages/last_move_card_page.dart';
 import 'package:mafia_killer/utils/game_state.dart';
 import 'package:mafia_killer/utils/last_move_card_action.dart';
 
@@ -109,7 +111,22 @@ class GameStateManager {
       lastMoveCardAction.lastMoveCard.undoLastMoveCardAction(
           Player.getPlayersByName(
               Player.getPlayerNames(lastMoveCardAction.players)));
+      LastMoveCardPage.selectedLastMoveCard = LastMoveCard.getPlayerByTitle(lastMoveCardAction.lastMoveCard.title);
       lastMoveCardActions.remove(currentState);
     }
   }
+
+  static String getCurrentStateNumber() {
+    return Language.getPersianOrdinal(int.parse(currentState[1]));
+  }
+
+
+  static String getNextStateNumber() {
+    return Language.getPersianOrdinal(int.parse(getNextState()[1]));
+  }
+
+  static String getPreviousStateNumber() {
+    return Language.getPersianOrdinal(int.parse(getPreviousState()[1]));
+  }
+
 }

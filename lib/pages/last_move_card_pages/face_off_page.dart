@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mafia_killer/components/call_role.dart';
 import 'package:mafia_killer/components/page_frame.dart';
 import 'package:mafia_killer/components/voting_tile.dart';
+import 'package:mafia_killer/databases/game_state_manager.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/pages/last_move_card_page.dart';
@@ -53,7 +54,7 @@ class _FaceOffPageState extends State<FaceOffPage> {
         },
         leftButtonText: "کارت حرکت آخر",
         rightButtonText:
-            'شب ${Scenario.currentScenario.dayAndNightNumber(number: Scenario.currentScenario.nightNumber)}',
+            'شب ${GameStateManager.getNextStateNumber()}',
         leftButtonOnTap: () => Navigator.pop(context),
         rightButtonOnTap: () {
           if (FaceOffPage.selectedPlayers.length == 1) {

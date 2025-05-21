@@ -173,9 +173,9 @@ class _NightEventsPage extends State<NightEventsPage> {
         pageTitle: "اتفاقات شب",
         settingsPage: settingsPage,
         leftButtonText:
-            "شب ${Scenario.currentScenario.dayAndNightNumber(number: Scenario.currentScenario.nightNumber)}",
+            "شب ${GameStateManager.getCurrentStateNumber()}",
         rightButtonText:
-            "روز ${Scenario.currentScenario.dayAndNightNumber(number: Scenario.currentScenario.dayNumber)}",
+            "روز ${GameStateManager.getNextStateNumber()}",
         leftButtonOnTap: () {
           if (doesPressInquiry) {
             GameSettings.currentGameSettings.inquiry += 1;
@@ -184,11 +184,11 @@ class _NightEventsPage extends State<NightEventsPage> {
         },
         rightButtonOnTap: () {
           GameStateManager.addState(
-              lastMoveCards: Scenario.currentScenario.lastMoveCards,
+              // lastMoveCards: Scenario.currentScenario.lastMoveCards,
+              lastMoveCards: Scenario.currentScenario.inGameLastMoveCards,
               silencedPlayerDuringDay:
                   Scenario.currentScenario.silencedPlayerDuringDay,
               nightReport: Scenario.currentScenario.report);
-          Scenario.currentScenario.goToNextStage();
           Scenario.currentScenario.resetDataAfterNight();
           if (Scenario.currentScenario.isGameOver()) {
             AudioManager.playNextPageEffect();
@@ -202,7 +202,7 @@ class _NightEventsPage extends State<NightEventsPage> {
                 nextPagePath: '/regular_voting_page',
                 seconds: GameSettings.currentGameSettings.mainSpeakTime,
                 leftButtonText:
-                    'شب ${Scenario.currentScenario.dayAndNightNumber(number: Scenario.currentScenario.nightNumber - 1)}',
+                    'شب ${GameStateManager.getPreviousStateNumber()}',
                 rightButtonText: 'رای گیری',
                 isDefense: false,
               ),

@@ -59,7 +59,7 @@ class _BeautifulMindChooseNostradamusPageState
         },
         leftButtonText: "کارت حرکت آخر",
         rightButtonText:
-            'شب ${Scenario.currentScenario.dayAndNightNumber(number: Scenario.currentScenario.nightNumber)}',
+            'شب ${GameStateManager.getNextStateNumber()}',
         leftButtonOnTap: () => Navigator.pop(context),
         rightButtonOnTap: () {
           if (isConfirmed && selectedPlayers.length == 1) {
@@ -72,7 +72,6 @@ class _BeautifulMindChooseNostradamusPageState
                   Scenario.currentScenario.killedInDayPlayer!.name),
               Player.getPlayerByName(selectedPlayers[0].name)
             ]);
-            Scenario.currentScenario.goToNextStage();
 
             // in case the game ended
             if (Scenario.currentScenario.isGameOver()) {

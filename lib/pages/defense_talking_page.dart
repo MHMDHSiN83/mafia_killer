@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:mafia_killer/components/page_frame.dart';
+import 'package:mafia_killer/databases/game_state_manager.dart';
 import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/models/language.dart';
 import 'package:mafia_killer/models/talking_page_screen_arguments.dart';
@@ -95,17 +96,15 @@ class _DefenseTalkingPageState extends State<DefenseTalkingPage> {
       resizeToAvoidBottomInset: false,
       body: PageFrame(
         label: ModalRoute.of(context)!.settings.name!,
-        pageTitle: 'روز ${Scenario.currentScenario.dayAndNightNumber()}',
+        pageTitle: 'روز ${GameStateManager.getCurrentStateNumber()}',
         leftButtonText:
-            'شب ${Scenario.currentScenario.dayAndNightNumber(number: Scenario.currentScenario.nightNumber - 1)}',
+            'شب ${GameStateManager.getPreviousState()}',
         rightButtonText: 'رای گیری',
         leftButtonOnTap: () {
-          Scenario.currentScenario.backToLastStage();
           Navigator.pop(context);
         },
         rightButtonOnTap: () {
           AudioManager.playNextPageEffect();
-          Scenario.currentScenario.goToNextStage();
           Navigator.pushNamed(context, args.nextPagePath);
         },
         child: Column(

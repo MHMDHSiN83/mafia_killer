@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/services.dart';
+import 'package:logger/logger.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/databases/recommended_scenario.dart';
 import 'package:mafia_killer/models/player_status.dart';
@@ -42,9 +43,6 @@ class Scenario {
   static List<Scenario> scenarios = [];
   static late Scenario currentScenario;
   static late String filePath;
-  int nightNumber = 0;
-  int dayNumber = 0;
-  bool isNight = false;
 
   Map<NightEvent, Player?> nightEvents = {};
   List<Player> defendingPlayers = [];
@@ -301,64 +299,6 @@ class Scenario {
       }
     }
     return null;
-  }
-
-  String dayAndNightNumber({int? number}) {
-    number ??= isNight ? nightNumber : dayNumber;
-    switch (number) {
-      case 0:
-        return 'معارفه';
-      case 1:
-        return 'اول';
-      case 2:
-        return 'دوم';
-      case 3:
-        return 'سوم';
-      case 4:
-        return 'چهارم';
-      case 5:
-        return 'پنجم';
-      case 6:
-        return 'ششم';
-      case 7:
-        return 'هفتم';
-      case 8:
-        return 'هشتم';
-      case 9:
-        return 'نهم';
-      case 10:
-        return 'دهم';
-      default:
-        return 'not enough';
-    }
-  }
-
-  void goToNextStage() {
-    if (isNight) {
-      nightNumber++;
-    } else {
-      dayNumber++;
-    }
-    isNight = !isNight;
-  }
-
-  void backToLastStage() {
-    if (isNight) {
-      dayNumber--;
-    } else {
-      nightNumber--;
-    }
-    isNight = !isNight;
-  }
-
-  void resetDayes() {
-    dayNumber = 0;
-    nightNumber = 0;
-    isNight = false;
-  }
-
-  bool isIntroDay() {
-    return dayNumber == 0;
   }
 
   Iterable<String> callRolesIntroNight() sync* {}

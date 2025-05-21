@@ -69,7 +69,6 @@ class _RegularVotingPageState extends State<RegularVotingPage> {
               ),
             );
           } else {
-            Scenario.currentScenario.goToNextStage();
             Navigator.pushNamed(context, '/night_page');
           }
         },

@@ -144,23 +144,19 @@ class _TalkingPageState extends State<TalkingPage> {
         label: args.isDefense ? '/defense_talking_page' : '/talking_page',
         pageTitle: args.isDefense
             ? 'صحبت دفاعیه'
-            : 'روز ${Scenario.currentScenario.dayAndNightNumber()}',
+            : 'روز ${GameStateManager.getCurrentStateNumber()}',
         settingsPage: () {
           return settingsPage(context, args.isDefense ? 4 : 2);
         },
         leftButtonText: args.leftButtonText,
         rightButtonText: args.rightButtonText,
         leftButtonOnTap: () {
-          if (!args.isDefense && !Scenario.currentScenario.isIntroDay()) {
-            Scenario.currentScenario.backToLastStage();
+          if (!args.isDefense) {
             GameStateManager.goToPreviousState();
           }
           Navigator.pop(context);
         },
         rightButtonOnTap: () {
-          if (Scenario.currentScenario.isIntroDay()) {
-            Scenario.currentScenario.goToNextStage();
-          }
           AudioManager.playNextPageEffect();
           if (isChaos) {
             Scenario.currentScenario.defendingPlayers =
