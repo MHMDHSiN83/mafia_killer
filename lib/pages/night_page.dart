@@ -271,6 +271,8 @@ class _NightPageState extends State<NightPage> with WidgetsBindingObserver {
         lastMoveCards: Scenario.currentScenario.inGameLastMoveCards,
         silencedPlayerDuringDay:
             Scenario.currentScenario.silencedPlayerDuringDay);
+    Scenario.currentScenario.killedInDayPlayer = null;
+
     resetUIBeforeNight();
 
     super.initState();

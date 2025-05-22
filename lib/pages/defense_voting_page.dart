@@ -1,6 +1,5 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:logger/logger.dart';
 import 'package:mafia_killer/components/call_role.dart';
 import 'package:mafia_killer/components/dialogboxes/message_dialogbox.dart';
 import 'package:mafia_killer/components/page_frame.dart';
@@ -56,7 +55,6 @@ class _DefenseVotingPageState extends State<DefenseVotingPage> {
       playerBoxStatus[player] = false;
     }
     super.initState();
-    
   }
 
   @override
@@ -72,8 +70,7 @@ class _DefenseVotingPageState extends State<DefenseVotingPage> {
           return settingsPage(context, 5);
         },
         leftButtonText: "صحبت دفاعیه",
-        rightButtonText:
-            'شب ${GameStateManager.getNextStateNumber()}',
+        rightButtonText: 'شب ${GameStateManager.getNextStateNumber()}',
         leftButtonOnTap: () => Navigator.pop(context),
         rightButtonOnTap: () {
           switch (selectedPlayers.length) {
@@ -101,15 +98,18 @@ class _DefenseVotingPageState extends State<DefenseVotingPage> {
               return;
             }
           } else {
-            if(selectedPlayers.isEmpty) {
-
+            if (selectedPlayers.isEmpty) {
+              Navigator.pushNamed(context, '/night_page');
+            } else {
+              if (Scenario.currentScenario.hasUnusedCards()) {
+                Navigator.pushNamed(context, '/last_move_card_page');
+              } else {
+                Player.getPlayerByName(
+                        Scenario.currentScenario.killedInDayPlayer!.name)
+                    .playerStatus = PlayerStatus.dead;
+                Navigator.pushNamed(context, '/night_page');
+              }
             }
-            Navigator.pushNamed(
-              context,
-              (selectedPlayers.isEmpty)
-                  ? '/night_page'
-                  : '/last_move_card_page',
-            );
           }
         },
         child: Column(

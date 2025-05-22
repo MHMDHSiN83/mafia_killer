@@ -53,7 +53,7 @@ class LastMoveCard {
     return lastMoveCards.map((lastMoveCard) => LastMoveCard.copy(lastMoveCard)).toList();
   }
 
-  static LastMoveCard getPlayerByTitle(String title) {
+  static LastMoveCard getLastMoveCardByTitle(String title) {
     return Scenario.currentScenario.inGameLastMoveCards.where((lastMoveCard) => lastMoveCard.title == title).first;
   }
 

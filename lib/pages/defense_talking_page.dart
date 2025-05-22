@@ -2,7 +2,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:mafia_killer/components/page_frame.dart';
 import 'package:mafia_killer/databases/game_state_manager.dart';
-import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/models/language.dart';
 import 'package:mafia_killer/models/talking_page_screen_arguments.dart';
 import 'package:mafia_killer/themes/app_color.dart';

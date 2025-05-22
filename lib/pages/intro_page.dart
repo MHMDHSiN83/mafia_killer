@@ -1,7 +1,5 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:logger/logger.dart';
 import 'package:mafia_killer/components/dialogboxes/update_dialogbox.dart';
 import 'package:mafia_killer/themes/app_color.dart';
 import 'package:mafia_killer/utils/audio_manager.dart';

@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/services.dart';
-import 'package:logger/logger.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/databases/recommended_scenario.dart';
 import 'package:mafia_killer/models/player_status.dart';
@@ -465,5 +464,15 @@ class Scenario {
     }
     currentScenario.recommendedLastMoveCards.add(
         LastMoveCard.fromJson(jsonDecode(jsonEncode(lastMoveCard.toJson()))));
+  }
+
+  bool hasUnusedCards() {
+    bool result = false;
+    for (LastMoveCard lastMoveCard in inGameLastMoveCards) {
+      if(lastMoveCard.isUsed == false) {
+        result = true;
+      }
+    }
+    return result;
   }
 }

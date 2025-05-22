@@ -3,6 +3,7 @@ import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/models/language.dart';
 import 'package:mafia_killer/models/last_move_card.dart';
+import 'package:mafia_killer/models/player_status.dart';
 import 'package:mafia_killer/pages/last_move_card_page.dart';
 import 'package:mafia_killer/utils/game_state.dart';
 import 'package:mafia_killer/utils/last_move_card_action.dart';
@@ -25,7 +26,7 @@ class GameStateManager {
       stateKilledInDayPlayer =
           Player.copy(Scenario.currentScenario.killedInDayPlayer!);
     }
-    
+
     statePlayers = Player.copyList(Player.inGamePlayers);
 
     nightReport ??= [];
@@ -88,6 +89,12 @@ class GameStateManager {
         gameStates[currentState]!.killedInDayPlayer == null
             ? null
             : Player.copy(gameStates[currentState]!.killedInDayPlayer);
+
+    if (Scenario.currentScenario.killedInDayPlayer != null) {
+      Player.getPlayerByName(Scenario.currentScenario.killedInDayPlayer!.name)
+          .playerStatus = PlayerStatus.active;
+    }
+
     Scenario.currentScenario.silencedPlayerDuringDay =
         Player.copyList(gameStates[currentState]!.silencedPlayerDuringDay);
     undoLastMoveCardAction();
@@ -111,7 +118,9 @@ class GameStateManager {
       lastMoveCardAction.lastMoveCard.undoLastMoveCardAction(
           Player.getPlayersByName(
               Player.getPlayerNames(lastMoveCardAction.players)));
-      LastMoveCardPage.selectedLastMoveCard = LastMoveCard.getPlayerByTitle(lastMoveCardAction.lastMoveCard.title);
+      LastMoveCardPage.selectedLastMoveCard =
+          LastMoveCard.getLastMoveCardByTitle(
+              lastMoveCardAction.lastMoveCard.title);
       lastMoveCardActions.remove(currentState);
     }
   }
@@ -120,7 +129,6 @@ class GameStateManager {
     return Language.getPersianOrdinal(int.parse(currentState[1]));
   }
 
-
   static String getNextStateNumber() {
     return Language.getPersianOrdinal(int.parse(getNextState()[1]));
   }
@@ -128,5 +136,4 @@ class GameStateManager {
   static String getPreviousStateNumber() {
     return Language.getPersianOrdinal(int.parse(getPreviousState()[1]));
   }
-
 }
