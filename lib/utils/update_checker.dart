@@ -22,7 +22,7 @@ class UpdateChecker {
     final url = Uri.parse('https://mhmdhsin83.github.io/');
     try {
       final response = await http.get(url).timeout(
-        const Duration(milliseconds: 200),
+        const Duration(seconds: 3),
         onTimeout: () {
           throw Exception('Request timed out');
         },

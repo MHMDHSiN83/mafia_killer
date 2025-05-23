@@ -88,31 +88,34 @@ class Scenario {
     return null;
   }
 
+  static Future<void> loadScenariosFromString(String jsonString) async {
+    final List<dynamic> jsonData = jsonDecode(jsonString);
+    scenarios = jsonData.map((s) => Scenario.fromJson(s)).toList();
+  }
+
   static Future<void> getScenariosFromDatabase() async {
     filePath = await getFilePath();
     final file = File(filePath);
-    if (!(await file.exists())) {
-      print('Asset copied to $filePath');
-      String jsonString =
-          await rootBundle.loadString('lib/assets/scenarios.json');
-      List<dynamic> jsonData = jsonDecode(jsonString);
-      scenarios =
-          jsonData.map((scenario) => Scenario.fromJson(scenario)).toList();
-      await file.writeAsString(jsonString);
-    } else {
-      print('scenario already exists in internal storage');
-      List<dynamic> jsonData;
+    if (await file.exists()) {
+      // print('Scenario already exists in internal storage');
       try {
-        String jsonString = await file.readAsString();
-        jsonData = jsonDecode(jsonString);
+        final jsonString = await file.readAsString();
+        await loadScenariosFromString(jsonString);
       } catch (e) {
-        String jsonString =
+        // print('Failed to read from file. Reloading from assets.');
+        final assetJson =
             await rootBundle.loadString('lib/assets/scenarios.json');
-        jsonData = jsonDecode(jsonString);
+        await loadScenariosFromString(assetJson);
+        await file.writeAsString(assetJson);
       }
-      scenarios = jsonData.map((player) => Scenario.fromJson(player)).toList();
+    } else {
+      // print('Asset copied to $filePath');
+      final assetJson =
+          await rootBundle.loadString('lib/assets/scenarios.json');
+      await loadScenariosFromString(assetJson);
+      await file.writeAsString(assetJson);
     }
-    currentScenario = scenarios[0];
+    currentScenario = scenarios.first;
   }
 
   List<Role> getRolesBySide(RoleSide side) {
@@ -469,7 +472,7 @@ class Scenario {
   bool hasUnusedCards() {
     bool result = false;
     for (LastMoveCard lastMoveCard in inGameLastMoveCards) {
-      if(lastMoveCard.isUsed == false) {
+      if (lastMoveCard.isUsed == false) {
         result = true;
       }
     }

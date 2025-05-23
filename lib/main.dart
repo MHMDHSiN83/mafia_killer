@@ -28,13 +28,13 @@ import 'package:mafia_killer/utils/ad_manager.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
 
 void main() {
-  WakelockPlus.enable();
   runApp(
     const Directionality(
       textDirection: TextDirection.rtl,
       child: MyApp(),
     ),
   );
+  WakelockPlus.enable();
 
   AdManager.initialize();
 
