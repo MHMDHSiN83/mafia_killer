@@ -55,4 +55,14 @@ class DoctorWatson extends Role {
   List<String> roleDetails() {
     return ["نجات خود: $selfHeal"];
   }
+
+  @override
+  Map<String, int> roleAbilities() {
+    return {'نجات خود': selfHeal};
+  }
+
+  @override
+  void saveAbilities(Map<String, int> abilities) {
+    selfHeal = abilities['نجات خود']!;
+  }
 }

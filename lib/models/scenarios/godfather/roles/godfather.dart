@@ -59,4 +59,15 @@ class Godfather extends Role {
   List<String> roleDetails() {
     return ["حس ششم: $remainingAbility", "زره در شب: $shield"];
   }
+
+  @override
+  Map<String, int> roleAbilities() {
+    return {'حس ششم': remainingAbility, 'زره در شب' : shield};
+  }
+
+  @override
+  void saveAbilities(Map<String, int> abilities) {
+    remainingAbility = abilities['حس ششم']!;
+    shield = abilities['زره در شب']!;
+  }
 }

@@ -110,4 +110,12 @@ class Role {
   List<String> roleDetails() {
     return [""];
   }
+
+  Map<String, int> roleAbilities() {
+    return {};
+  }
+
+  void saveAbilities(Map<String, int> abilities) {
+    
+  }
 }

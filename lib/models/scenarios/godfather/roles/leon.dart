@@ -55,4 +55,15 @@ class Leon extends Role {
   List<String> roleDetails() {
     return ["زره در شب: $shield", "تیر: $remainingAbility"];
   }
+
+  @override
+  Map<String, int> roleAbilities() {
+    return {'تیر': remainingAbility, 'زره در شب' : shield};
+  }
+
+  @override
+  void saveAbilities(Map<String, int> abilities) {
+    remainingAbility = abilities['تیر']!; 
+    shield = abilities['زره در شب']!; 
+  }
 }

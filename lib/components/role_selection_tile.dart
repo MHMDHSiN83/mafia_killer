@@ -20,8 +20,6 @@ class RoleSelectionTile extends StatefulWidget {
 }
 
 class _RoleSelectionTileState extends State<RoleSelectionTile> {
-  
-
   void increaseNumber() {
     if (Player.inGamePlayers.length <=
         Scenario.currentScenario.inGameRoles.length) {
@@ -81,7 +79,9 @@ class _RoleSelectionTileState extends State<RoleSelectionTile> {
                     context: context,
                     builder: (context) {
                       return Dialog(
-                        child: RoleDescriptionTile(role: widget.role),
+                        child: RoleDescriptionTile(
+                          role: widget.role,
+                        ),
                       );
                     });
               },

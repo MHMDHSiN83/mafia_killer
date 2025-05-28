@@ -30,7 +30,8 @@ class CitizenKane extends Role {
 
   @override
   void nightAction(Player? player) {
-    Scenario.currentScenario.nightEvents[NightEvent.inquiryByCitizenKane] = player;
+    Scenario.currentScenario.nightEvents[NightEvent.inquiryByCitizenKane] =
+        player;
   }
 
   @override
@@ -50,5 +51,15 @@ class CitizenKane extends Role {
   @override
   List<String> roleDetails() {
     return ["استعلام: $remainingAbility"];
+  }
+
+  @override
+  Map<String, int> roleAbilities() {
+    return {'استعلام': remainingAbility};
+  }
+
+  @override
+  void saveAbilities(Map<String, int> abilities) {
+    remainingAbility = abilities['استعلام']!;
   }
 }

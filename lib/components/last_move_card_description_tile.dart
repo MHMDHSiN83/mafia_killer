@@ -66,12 +66,12 @@ class LastMoveCardsDescriptionTile extends StatelessWidget {
               elevation: 12.0,
             ),
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
               child: Text(
                 'متوجه شدم',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  fontSize: 18,
+                  fontSize: 16,
                   color: Theme.of(context).colorScheme.inversePrimary,
                 ),
               ),

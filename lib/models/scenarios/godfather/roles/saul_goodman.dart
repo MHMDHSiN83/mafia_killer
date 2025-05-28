@@ -56,4 +56,14 @@ class SaulGoodman extends Role {
   List<String> roleDetails() {
     return ["خریداری: $remainingAbility"];
   }
+
+  @override
+  Map<String, int> roleAbilities() {
+    return {'خریداری': remainingAbility};
+  }
+
+  @override
+  void saveAbilities(Map<String, int> abilities) {
+    remainingAbility = abilities['خریداری']!; 
+  }
 }

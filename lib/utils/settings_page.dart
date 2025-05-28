@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:mafia_killer/components/dialogboxes/confirmation_dialogbox.dart';
 import 'package:mafia_killer/components/my_divider.dart';
 import 'package:mafia_killer/databases/game_state_manager.dart';
-import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/themes/app_color.dart';
 import 'package:mafia_killer/utils/audio_manager.dart';
 

@@ -478,4 +478,13 @@ class Scenario {
     }
     return result;
   }
+
+  static void applyChangesToAllRoles(Role role) {
+    for(Role r in currentScenario.inGameRoles) {
+      if(r.name == role.name) {
+        currentScenario.inGameRoles.remove(r);
+        addRole(role);
+      }
+    }
+  }
 }

@@ -57,4 +57,14 @@ class Constantine extends Role {
   List<String> roleDetails() {
     return ["زنده کردن: $remainingAbility"];
   }
+
+  @override
+  Map<String, int> roleAbilities() {
+    return {'زنده کردن': remainingAbility};
+  }
+
+  @override
+  void saveAbilities(Map<String, int> abilities) {
+    remainingAbility = abilities['زنده کردن']!;    
+  }
 }
