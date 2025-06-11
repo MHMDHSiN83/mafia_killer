@@ -18,7 +18,8 @@ class RemovePlayerTile extends StatelessWidget {
     return Opacity(
       opacity: isPlayerAlive ? 1 : 0.6,
       child: GestureDetector(
-        onTap: (isPlayerAlive) ? confirmAction : () {},
+        onTap: confirmAction,
+        // onTap: (isPlayerAlive) ? confirmAction : () {},
         child: Container(
           color: AppColors.darkBrownColor,
           child: Column(

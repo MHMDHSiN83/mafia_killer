@@ -33,9 +33,9 @@ class MyOutlinedButton extends StatelessWidget {
   final double? horizontalPadding;
 
   final Map<String, double> buttonFontsizes = {
-    "small": 18,
-    "medium": 20,
-    "large": 24
+    "small": 16,
+    "medium": 18,
+    "large": 22
   };
   double determineButtonFontsize() {
     double len = text.length.toDouble();
@@ -61,16 +61,19 @@ class MyOutlinedButton extends StatelessWidget {
               : IconAlignment.end,
       label: Padding(
         padding: EdgeInsets.symmetric(horizontal: horizontalPadding ?? 4),
-        child: AutoSizeText(
-          minFontSize: 10,
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-          textAlign: TextAlign.center,
-          text,
-          style: TextStyle(
-              color: textColor ?? color,
-              fontWeight: FontWeight.bold,
-              fontSize: fontSize ?? determineButtonFontsize()),
+        child: Container(
+          // margin: EdgeInsets.only(right: isIconRight! ? 0 : 10),
+          child: AutoSizeText(
+            minFontSize: 10,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            textAlign: TextAlign.center,
+            text,
+            style: TextStyle(
+                color: textColor ?? color,
+                fontWeight: FontWeight.bold,
+                fontSize: fontSize ?? determineButtonFontsize()),
+          ),
         ),
       ),
       style: OutlinedButton.styleFrom(

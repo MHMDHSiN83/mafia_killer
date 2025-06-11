@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mafia_killer/components/dialogboxes/confirmation_dialogbox.dart';
 import 'package:mafia_killer/components/remove_player_tile.dart';
 import 'package:mafia_killer/databases/player.dart';
+import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/models/player_status.dart';
 import 'package:mafia_killer/themes/app_color.dart';
 import 'package:mafia_killer/utils/audio_manager.dart';
@@ -72,17 +73,31 @@ class _RemovePlayerDialogboxState extends State<RemovePlayerDialogbox> {
                   confirmAction: () {
                     showDialog(
                         context: context,
-                        builder: (context) => ConfirmationDialogbox(onSave: () {
-                              AudioManager.playDeleteEffect();
-                              Navigator.pop(context);
-                              setState(() {
-                                allPlayers[index].playerStatus =
-                                    PlayerStatus.removed;
-                              });
-                            }, onCancel: () {
-                              AudioManager.playClickEffect();
-                              Navigator.pop(context);
-                            }));
+                        builder: (context) => ConfirmationDialogbox(
+                              onSave: () {
+                                AudioManager.playDeleteEffect();
+                                Navigator.pop(context);
+                                setState(() {
+                                  if (allPlayers[index].playerStatus ==
+                                      PlayerStatus.active) {
+                                    allPlayers[index].playerStatus =
+                                        PlayerStatus.removed;
+                                    if (Scenario.currentScenario.isGameOver()) {
+                                      AudioManager.playNextPageEffect();
+                                      Navigator.pushNamed(
+                                          context, '/end_game_page');
+                                    }
+                                  } else {
+                                    allPlayers[index].playerStatus =
+                                        PlayerStatus.active;
+                                  }
+                                });
+                              },
+                              onCancel: () {
+                                AudioManager.playClickEffect();
+                                Navigator.pop(context);
+                              },
+                            ));
                   });
             },
           ),

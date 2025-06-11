@@ -273,9 +273,7 @@ class _PageFrameState extends State<PageFrame> {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const Spacer(
-          flex: 1,
-        ),
+        const Spacer(flex: 1),
         Expanded(
           flex: 40,
           child: MyOutlinedButton(
@@ -283,28 +281,28 @@ class _PageFrameState extends State<PageFrame> {
             color: AppColors.greenColor,
             hasIcon: true,
             isIconRight: true,
+            icon: Icons.arrow_back,
+            iconSize: 13,
             onTap: () => widget.rightButtonOnTap(),
           ),
         ),
-        const Spacer(
-          flex: 2,
-        ),
+        const Spacer(flex: 2),
         Expanded(
           flex: 40,
           child: MyOutlinedButton(
             text: widget.leftButtonText,
             hasIcon: true,
+            isIconRight: false,
+            icon: Icons.arrow_forward,
+            iconSize: 13,
             color: AppColors.redColor,
             onTap: () {
               AudioManager.playPrePageEffect();
               widget.leftButtonOnTap();
             },
-            isIconRight: false,
           ),
         ),
-        const Spacer(
-          flex: 1,
-        ),
+        const Spacer(flex: 1),
       ],
     );
   }
