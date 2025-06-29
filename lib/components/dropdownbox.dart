@@ -16,8 +16,8 @@ class DropdownBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    options.add("کلاسیک (به‌زودی)");
     options.add("زودیاک (به‌زودی)");
+    options.add("ال‌کلاسیکو (به‌زودی)");
     return SizedBox(
       width: 140,
       height: 40,
@@ -43,7 +43,7 @@ class DropdownBox extends StatelessWidget {
           items: options.asMap().entries.map<DropdownMenuItem<String>>((entry) {
             int index = entry.key;
             String value = entry.value;
-            bool isDisabled = index > 0;
+            bool isDisabled = index > 1;
             return DropdownMenuItem<String>(
               value: isDisabled ? null : value,
               enabled: !isDisabled,

@@ -133,5 +133,84 @@
                 "isUsed": false
             }
         ]
+    },
+    {
+        "name": "کلاسیک",
+        "inGameRoles": [],
+        "inGameLastMoveCards": [],
+        "recommendedLastMoveCards": [],
+        "nightEvents": {},
+        "defendingPlayers": [],
+        "silencedPlayerDuringDay": [],
+        "report": [],
+        "roles": [
+            {
+                "name": "پدرخوانده",
+                "description": "او یک بار از شلیک شب لئون در امان است، یک جلیقه دارد. تعیین شلیک شب از طرف گروه به عهده پدرخوانده است و اگر از بازی خارج شود دیگر اعضا به جای او شلیک می‌کنند. پدرخوانده دارای توانایی حس ششم است است و اگر در شب تصمیم بگیرد به جای شلیک از حس ششم استفاده کند باید نقش بازیکنی را درست حدس بزند و توسط گرداننده تایید شود. بازیکنی که پدرخوانده نقش او را درست حدس زده است سلاخی می‌شود، یعنی اگر سپر داشته باشد یا دکتر او را سیو کرده باشد بازهم از بازی خارج می‌شود و آن شب توانایی وی اعمال نخواهد شد و پس از خروج از بازی توسط کنستانتین قابل احضار نمی‌باشد. استعلام پدرخوانده برای نوستراداموس شهروندی بوده ولی برای همشهری کین مافیایی و مثبت خواهد بود.",
+                "roleSide": "mafia",
+                "cardImagePath": "lib/images/roles/role_cards/godfather.jpg",
+                "characterImagePath": "lib/images/roles/role_characters/godfather.png",
+                "remainingAbility": 1,
+                "shield": 1
+            },
+            {
+                "name": "ساول گودمن",
+                "description": "اگر فردی از گروه مافیا خارج شود ساول می‌تواند جای شلیک شب، معامله و خریداری انجام دهد. ساول گودمن فقط یکبار می‌تواند یکی از شهروندان ساده را به یک مافیای ساده تبدیل کند. با علامت او همان شب گرداننده آن فرد را از نقش جدیدش یعنی مافیای ساده مطلع می‌کند و وی را بیدار می‌کند تا هم تیمی های خود را بشناسد. اگر ساول گودمن شهروند غیرساده یا نوستراداموس را انتخاب کند با ضربدر گرداننده مواجه شده و گرداننده نشانش را بیدار نمی‌کند. توانمندی ساول و شلیک آن شب مافیا نیز از بین می‌رود.",
+                "roleSide": "mafia",
+                "cardImagePath": "lib/images/roles/role_cards/saul_goodman.jpg",
+                "characterImagePath": "lib/images/roles/role_characters/saul_goodman.png",
+                "remainingAbility": 1
+            },
+            {
+                "name": "ماتادور",
+                "description": "شب ها با تیم مافیا بیدار می‌شود و هر شب از توانایی خود استفاده می‌کند. در شب هر بازیکنی را نشان دهد توانایی شب او را آن شب از وی خواهد گرفت و فرد نشان شده اگر بیدار شود با ضربدر گرداننده مواجه می‌شود اما فردا مجدد می‌تواند از توانایی‌اش استفاده کند. ماتادور دو شب متوالی نمی‌تواند یک بازیکن را نشان کند.",
+                "roleSide": "mafia",
+                "cardImagePath": "lib/images/roles/role_cards/matador.jpg",
+                "characterImagePath": "lib/images/roles/role_characters/matador.png"
+            },
+            {
+                "name": "مافیا ساده",
+                "description": "مافیا ساده یکی از اعضای تیم مافیاست که در شب به یارانش مشورت می‌دهد و در روز تلاش میکند تا اتهامات را از یارانش بردارد و شهروندان را از بازی خارج کند. این نقش جز کمک به تیم مافیا توانایی دیگری ندارد.",
+                "roleSide": "mafia",
+                "cardImagePath": "lib/images/roles/role_cards/the_mafia.jpg",
+                "characterImagePath": "lib/images/roles/role_characters/mafia.png"
+            },
+            {
+                "name": "نوستراداموس",
+                "description": "در شب معارفه گرداننده او را بیدار می‌کند. نوستراداموس به انتخاب خود سه بازیکن را به گرداننده نشان می‌دهد. سپس گرداننده به او تعداد مافیاهای موجود در میان این سه را اعلام می‌کند و پیش بینی او مبنی بر پیروزی یکی از دو ساید را از او می‌پرسد. نوستراداموس پیش بینی می‌کند شهروندان برنده خواهند شد یا مافیاها. از پس او برای برنده شدن سایدی که انتخاب کرده است تلاش می‎کند. بدون آنکه دیگر افراد بدانند وی به چه سایدی پیوسته است. اگر ساید مورد انتخابش برنده شد او نیز برنده است و اگر ساید مورد انتخابش بازنده شد او نیز بازنده خواهد شد. شلیک هیچ یک از دو ساید برا او موثر نخواهد بود و در شب کشته نخواهد شد. مگر با حس ششم پدرخوانده اما در روز با رای‌گیری از بازی خارج خواهد شد. استعلام پدرخوانده برای وی شهروندی خواهد بود.",
+                "roleSide": "independant",
+                "cardImagePath": "lib/images/roles/role_cards/nostradamus.jpg",
+                "characterImagePath": "lib/images/roles/role_characters/nostradamus.png",
+                "inGameRoleSide": "independant",
+                "shield": true,
+                "inquiryNumber": 0
+            },
+            {
+                "name": "دکتر واتسون",
+                "description": "هر شب می‌تواند جان یک نفر چه عضو مافیا و چه عضو شهروندی را نجات دهد. جان خودش را یکبار می‌تواند در طول بازی نجات دهد ولی در نجات جان دیگران محدودیتی ندارد.",
+                "roleSide": "citizen",
+                "cardImagePath": "lib/images/roles/role_cards/doctor_watson.jpg",
+                "characterImagePath": "lib/images/roles/role_characters/doctor_watson.png",
+                "selfHeal": 2
+            },
+            {
+                "name": "لئون حرفه‌ای",
+                "description": "هر شبی که بخواهد می‌تواند به یکی از اعضای تیم مافیا شلیک کند. اما با شلیک اشتباه به شهروندان به مجازات، خودش کشته می‌شود و دکتر نمی‌تواند او را نجات دهد. لئون یک جلیقه دارد که یکبار از تیر نجات پیدا می‌کند. حداکثر دو شلیک دارد.",
+                "roleSide": "citizen",
+                "cardImagePath": "lib/images/roles/role_cards/leon.jpg",
+                "characterImagePath": "lib/images/roles/role_characters/leon.png",
+                "remainingAbility": 2,
+                "shield": 1
+            },
+            {
+                "name": "شهروند ساده",
+                "description": "نقش شهروند ساده کمک به هم تیمی های خود در تشخیص مافیا به درستی است و رای دادن با زرنگی به اعضای مافیاست. او در شب نقش خاصی را ایفا نمی‌کند و بیشتر به روند بازی و تیم شهروندی در پیروز شدن کمک می‌کند.",
+                "roleSide": "citizen",
+                "cardImagePath": "lib/images/roles/role_cards/citizen.jpg",
+                "characterImagePath": "lib/images/roles/role_characters/citizen.png"
+            }
+        ],
+        "lastMoveCards": [
+        ]
     }
 ]

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 import 'package:mafia_killer/components/last_move_card_selection_tile.dart';
 import 'package:mafia_killer/components/page_frame.dart';
 import 'package:mafia_killer/components/role_selection_tile.dart';
@@ -26,7 +27,6 @@ class RoleSelectionPage extends StatelessWidget {
         Scenario.currentScenario.getRolesBySide(RoleSide.independant);
   }
 
-  
   @override
   Widget build(BuildContext context) {
     AdManager.prepareAd();
@@ -206,40 +206,42 @@ class RoleSelectionPage extends StatelessWidget {
             const SizedBox(
               height: 30,
             ),
-            Text(
-              "کارت حرکت آخر",
-              style: TextStyle(
-                fontSize: 38,
-                shadows: [
-                  Shadow(
-                    color: AppColors.darkgreenColor,
-                    offset: Offset(0, -12),
-                  )
-                ],
-                color: Colors.transparent,
-                //decoration: TextDecoration.underline,
-                decorationColor: AppColors.darkgreenColor,
-                decorationThickness: 2,
+            if (Scenario.currentScenario.lastMoveCards.isNotEmpty)
+              Text(
+                "کارت حرکت آخر",
+                style: TextStyle(
+                  fontSize: 38,
+                  shadows: [
+                    Shadow(
+                      color: AppColors.darkgreenColor,
+                      offset: Offset(0, -12),
+                    )
+                  ],
+                  color: Colors.transparent,
+                  //decoration: TextDecoration.underline,
+                  decorationColor: AppColors.darkgreenColor,
+                  decorationThickness: 2,
+                ),
               ),
-            ),
-            SizedBox(
-              height: 160,
-              child: ListView.builder(
-                itemCount: Scenario.currentScenario.lastMoveCards.length,
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.only(left: 10),
-                    child: LastMoveCardSelectionTile(
-                      lastMoveCard:
-                          Scenario.currentScenario.lastMoveCards[index],
-                      counter: Scenario.currentScenario.numberOfLastMoveCards(
-                          Scenario.currentScenario.lastMoveCards[index]),
-                    ),
-                  );
-                },
+            if (Scenario.currentScenario.lastMoveCards.isNotEmpty)
+              SizedBox(
+                height: 160,
+                child: ListView.builder(
+                  itemCount: Scenario.currentScenario.lastMoveCards.length,
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (context, index) {
+                    return Padding(
+                      padding: const EdgeInsets.only(left: 10),
+                      child: LastMoveCardSelectionTile(
+                        lastMoveCard:
+                            Scenario.currentScenario.lastMoveCards[index],
+                        counter: Scenario.currentScenario.numberOfLastMoveCards(
+                            Scenario.currentScenario.lastMoveCards[index]),
+                      ),
+                    );
+                  },
+                ),
               ),
-            ),
             SizedBox(
               height: 30,
             ),

@@ -96,7 +96,8 @@ class Scenario {
   static Future<void> getScenariosFromDatabase() async {
     filePath = await getFilePath();
     final file = File(filePath);
-    if (await file.exists()) {
+    final bool useAsset = true;
+    if (await file.exists() & !useAsset) {
       // print('Scenario already exists in internal storage');
       try {
         final jsonString = await file.readAsString();
