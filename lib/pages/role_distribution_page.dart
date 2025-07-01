@@ -114,8 +114,7 @@ class _RoleDistributionPageState extends State<RoleDistributionPage> {
         rightButtonOnTap: () {
           if (_hasEveryoneSeen()) {
             Player.updateInGamePlayers(players);
-            (Scenario.currentScenario as GodfatherScenario)
-                .setNostradamusInquiryNumber();
+            Scenario.currentScenario.setRoleAttributes();
             AudioManager.playNextPageEffect();
             AudioManager.stopMusic();
             AudioManager.resetMusicPlayer();
@@ -124,11 +123,12 @@ class _RoleDistributionPageState extends State<RoleDistributionPage> {
               context,
               '/talking_page',
               arguments: TalkingPageScreenArguments(
-                  nextPagePath: '/intro_night_page',
-                  seconds: GameSettings.currentGameSettings.introTime,
-                  rightButtonText: "شب معارفه",
-                  leftButtonText: "تقسیم نقش",
-                  isDefense: false),
+                nextPagePath: '/intro_night_page',
+                seconds: GameSettings.currentGameSettings.introTime,
+                rightButtonText: "شب معارفه",
+                leftButtonText: "تقسیم نقش",
+                isDefense: false,
+              ),
             );
           } else {
             customSnackBar(
