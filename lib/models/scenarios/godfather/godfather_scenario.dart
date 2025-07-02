@@ -409,10 +409,6 @@ class GodfatherScenario extends Scenario {
     return counter;
   }
 
-  void shuffleLastMoveCards() {
-    Scenario.currentScenario.inGameLastMoveCards.shuffle();
-  }
-
   @override
   void resetRemainingAbility() {
     Player? savedByDoctor = nightEvents[NightEvent.savedByDoctor];
@@ -453,11 +449,40 @@ class GodfatherScenario extends Scenario {
     }
   }
 
+  @override
+  void setRoleAttributes() {
+    setNostradamusInquiryNumber();
+  }
+
   void setNostradamusInquiryNumber() {
     Player? nostradamusPlayer = Player.getPlayerByRoleType(Nostradamus);
     if (nostradamusPlayer == null) {
       return;
     }
     (nostradamusPlayer.role! as Nostradamus).setInquiryNumber();
+  }
+
+  @override
+  String validateConditions() {
+    String error = super.validateConditions();
+
+    if (error != '') {
+      return error;
+    }
+
+    int mafiaCount = getNumberOfRoleBySide(RoleSide.mafia);
+    int citizenCount = getNumberOfRoleBySide(RoleSide.citizen);
+    int independantCount = getNumberOfRoleBySide(RoleSide.independant);
+
+    if (citizenCount + independantCount <= mafiaCount) {
+      error = 'تعداد مافیاها باید از مجموع شهروندها و نوستراداموس کمتر باشه';
+      return error;
+    }
+
+    if (!doesNostradamusParticipate() && doesBeautifulMindParticipate()) {
+      error = 'وقتی نوستراداموس توی بازی نیست، کارت ذهن زیبا قابل استفاده نیست';
+      return error;
+    }
+    return error;
   }
 }

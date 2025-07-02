@@ -96,7 +96,8 @@ class Scenario {
   static Future<void> getScenariosFromDatabase() async {
     filePath = await getFilePath();
     final file = File(filePath);
-    if (await file.exists()) {
+    final bool useAsset = true;
+    if (await file.exists() & !useAsset) {
       // print('Scenario already exists in internal storage');
       try {
         final jsonString = await file.readAsString();
@@ -480,11 +481,40 @@ class Scenario {
   }
 
   static void applyChangesToAllRoles(Role role) {
-    for(Role r in currentScenario.inGameRoles) {
-      if(r.name == role.name) {
+    for (Role r in currentScenario.inGameRoles) {
+      if (r.name == role.name) {
         currentScenario.inGameRoles.remove(r);
         addRole(role);
       }
     }
   }
+
+  String validateConditions() {
+    String error = '';
+
+    int roleLength = inGameRoles.length;
+    if (Player.inGamePlayers.length != roleLength) {
+      error = 'تعداد نقش‌ها با تعداد بازیکن‌ها برابر نیست';
+      return error;
+    }
+
+    if (Player.inGamePlayers.length < 5) {
+      error = 'تعداد بازیکن‌ها نمی‌تونه از پنج کمتر باشه';
+      return error;
+    }
+
+    int mafiaCount =
+        Scenario.currentScenario.getNumberOfRoleBySide(RoleSide.mafia);
+    if (mafiaCount == 0) {
+      error = 'تعداد مافیا ها نمی‌تونه صفر باشه';
+      return error;
+    }
+    return error;
+  }
+
+  void shuffleLastMoveCards() {
+    inGameLastMoveCards.shuffle();
+  }
+
+  void setRoleAttributes() {}
 }

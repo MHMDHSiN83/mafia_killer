@@ -1,3 +1,4 @@
+import 'package:logger/logger.dart';
 import 'package:mafia_killer/databases/game_settings.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/databases/scenario.dart';
@@ -78,6 +79,9 @@ class GameStateManager {
   }
 
   static void goToPreviousState() {
+    if(currentState == 'n0') {
+      return;
+    }
     currentState = getPreviousState();
     Player.inGamePlayers = Player.copyList(gameStates[currentState]!.players);
     Scenario.currentScenario.inGameLastMoveCards =

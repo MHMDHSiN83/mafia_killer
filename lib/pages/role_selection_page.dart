@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 import 'package:mafia_killer/components/last_move_card_selection_tile.dart';
 import 'package:mafia_killer/components/page_frame.dart';
 import 'package:mafia_killer/components/role_selection_tile.dart';
@@ -26,7 +27,6 @@ class RoleSelectionPage extends StatelessWidget {
         Scenario.currentScenario.getRolesBySide(RoleSide.independant);
   }
 
-  
   @override
   Widget build(BuildContext context) {
     AdManager.prepareAd();
@@ -41,44 +41,13 @@ class RoleSelectionPage extends StatelessWidget {
         rightButtonText: "توزیع نقش‌ها",
         leftButtonOnTap: () => Navigator.pop(context),
         rightButtonOnTap: () {
-          int roleLength = Scenario.currentScenario.inGameRoles.length;
-          if (Player.inGamePlayers.length != roleLength) {
-            customSnackBar(
-                context, 'تعداد نقش‌ها با تعداد بازیکن‌ها برابر نیست', true);
+          String error = Scenario.currentScenario.validateConditions();
+          if (error != '') {
+            customSnackBar(context, error, true);
             return;
-          } else {
-            int mafiaCount =
-                Scenario.currentScenario.getNumberOfRoleBySide(RoleSide.mafia);
-            int citizenCount = Scenario.currentScenario
-                .getNumberOfRoleBySide(RoleSide.citizen);
-            int independantCount = Scenario.currentScenario
-                .getNumberOfRoleBySide(RoleSide.independant);
-            if (mafiaCount == 0) {
-              customSnackBar(context, 'تعداد مافیا ها نمی‌تونه صفر باشه', true);
-              return;
-            } else if (citizenCount + independantCount <= mafiaCount) {
-              customSnackBar(
-                  context,
-                  'تعداد مافیاها باید از مجموع شهروندها و نوستراداموس کمتر باشه',
-                  true);
-              return;
-            } else if (roleLength < 5) {
-              customSnackBar(
-                  context, 'تعداد بازیکن‌ها نمی‌تونه از پنج کمتر باشه', true);
-              return;
-            } else if (!(Scenario.currentScenario as GodfatherScenario)
-                    .doesNostradamusParticipate() &&
-                (Scenario.currentScenario as GodfatherScenario)
-                    .doesBeautifulMindParticipate()) {
-              customSnackBar(
-                  context,
-                  "وقتی نوستراداموس توی بازی نیست، کارت ذهن زیبا قابل استفاده نیست",
-                  true);
-              return;
-            }
           }
-          (Scenario.currentScenario as GodfatherScenario)
-              .shuffleLastMoveCards();
+         
+          Scenario.currentScenario.shuffleLastMoveCards();
           // List<Role> roles =
           //     Role.copyList(Scenario.currentScenario.inGameRoles);
 
@@ -172,6 +141,7 @@ class RoleSelectionPage extends StatelessWidget {
             const SizedBox(
               height: 30,
             ),
+            if (Scenario.currentScenario.inGameRoles.any((role) => role.roleSide == RoleSide.independant))
             const Text(
               "مستقل",
               style: TextStyle(
@@ -185,6 +155,7 @@ class RoleSelectionPage extends StatelessWidget {
                 decorationThickness: 2,
               ),
             ),
+            if (Scenario.currentScenario.roles.any((role) => role.roleSide == RoleSide.independant))
             SizedBox(
               height: 265,
               child: ListView.builder(
@@ -206,40 +177,42 @@ class RoleSelectionPage extends StatelessWidget {
             const SizedBox(
               height: 30,
             ),
-            Text(
-              "کارت حرکت آخر",
-              style: TextStyle(
-                fontSize: 38,
-                shadows: [
-                  Shadow(
-                    color: AppColors.darkgreenColor,
-                    offset: Offset(0, -12),
-                  )
-                ],
-                color: Colors.transparent,
-                //decoration: TextDecoration.underline,
-                decorationColor: AppColors.darkgreenColor,
-                decorationThickness: 2,
+            if (Scenario.currentScenario.lastMoveCards.isNotEmpty)
+              Text(
+                "کارت حرکت آخر",
+                style: TextStyle(
+                  fontSize: 38,
+                  shadows: [
+                    Shadow(
+                      color: AppColors.darkgreenColor,
+                      offset: Offset(0, -12),
+                    )
+                  ],
+                  color: Colors.transparent,
+                  //decoration: TextDecoration.underline,
+                  decorationColor: AppColors.darkgreenColor,
+                  decorationThickness: 2,
+                ),
               ),
-            ),
-            SizedBox(
-              height: 160,
-              child: ListView.builder(
-                itemCount: Scenario.currentScenario.lastMoveCards.length,
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.only(left: 10),
-                    child: LastMoveCardSelectionTile(
-                      lastMoveCard:
-                          Scenario.currentScenario.lastMoveCards[index],
-                      counter: Scenario.currentScenario.numberOfLastMoveCards(
-                          Scenario.currentScenario.lastMoveCards[index]),
-                    ),
-                  );
-                },
+            if (Scenario.currentScenario.lastMoveCards.isNotEmpty)
+              SizedBox(
+                height: 160,
+                child: ListView.builder(
+                  itemCount: Scenario.currentScenario.lastMoveCards.length,
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (context, index) {
+                    return Padding(
+                      padding: const EdgeInsets.only(left: 10),
+                      child: LastMoveCardSelectionTile(
+                        lastMoveCard:
+                            Scenario.currentScenario.lastMoveCards[index],
+                        counter: Scenario.currentScenario.numberOfLastMoveCards(
+                            Scenario.currentScenario.lastMoveCards[index]),
+                      ),
+                    );
+                  },
+                ),
               ),
-            ),
             SizedBox(
               height: 30,
             ),
