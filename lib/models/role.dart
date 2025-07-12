@@ -118,4 +118,12 @@ class Role {
   void saveAbilities(Map<String, int> abilities) {
     
   }
+
+  bool hasMultiSelection() {
+    return false;
+  }
+
+  bool hasAllSelected(int number) {
+    return number > 0;
+  }
 }

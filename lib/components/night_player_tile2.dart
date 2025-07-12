@@ -1,43 +1,38 @@
-import 'dart:async';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
+import 'package:mafia_killer/components/checkbox.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/models/player_status.dart';
+import 'package:mafia_killer/models/scenarios/godfather/roles/nostradamus.dart';
 import 'package:mafia_killer/models/ui_player_status.dart';
+import 'package:mafia_killer/pages/intro_night_page.dart';
 import 'package:mafia_killer/pages/night_page.dart';
 import 'package:mafia_killer/themes/app_color.dart';
+import 'package:mafia_killer/utils/audio_manager.dart';
 import 'package:mafia_killer/utils/determine_color.dart';
 
-class NightPlayerTile extends StatefulWidget {
-  const NightPlayerTile(
-      {super.key, required this.player, required this.confirmAction});
+class IntroNightPlayerTile2 extends StatefulWidget {
+  const IntroNightPlayerTile2({
+    super.key,
+    required this.player,
+    required this.isCheckBoxDisable,
+    required this.onChanged,
+    required this.selected,
+    required this.confirmAction,
+  });
+
   final Player player;
+  final bool isCheckBoxDisable;
+  final Function onChanged;
+  final bool selected;
   final VoidCallback confirmAction;
 
   @override
-  State<NightPlayerTile> createState() => _NightPlayerTileState();
+  State<IntroNightPlayerTile2> createState() => _IntroNightPlayerTile2State();
 }
 
-class _NightPlayerTileState extends State<NightPlayerTile> {
-  bool isSelected = false;
-  Timer? _timer;
-
-  @override
-  void initState() {
-    super.initState();
-    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      setState(() {
-        isSelected = !isSelected;
-      });
-    });
-  }
-
-  @override
-  void dispose() {
-    _timer?.cancel();
-    super.dispose();
-  }
-
+class _IntroNightPlayerTile2State extends State<IntroNightPlayerTile2> {
   String getTileIconPath() {
     if (widget.player.uiPlayerStatus == UIPlayerStatus.targetable) {
       return 'lib/images/icons/target.png';
@@ -55,15 +50,41 @@ class _NightPlayerTileState extends State<NightPlayerTile> {
       opacity:
           widget.player.uiPlayerStatus == UIPlayerStatus.targetable ? 1 : 0.6,
       child: GestureDetector(
-        onTap: widget.player.uiPlayerStatus == UIPlayerStatus.targetable &&
-                NightPage.ableToSelectTile
-            ? widget.confirmAction
+        // onTap: widget.player.uiPlayerStatus == UIPlayerStatus.targetable
+        // && NightPage.ableToSelectTile
+        // ? widget.confirmAction
+        // : () {},
+        onTap: !widget.isCheckBoxDisable
+            //TODO:use NightPage
+            ? () {
+                if (NightPage.currnetPlayer.role!.hasMultiSelection()) {
+                  AudioManager.playClickEffect();
+                  widget.onChanged(widget.player);
+                } else {
+                  Logger().d("here");
+                  widget.confirmAction();
+                }
+              }
             : () {},
-        child: Container(
-          color: AppColors.darkBrownColor,
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 250),
+          curve: Curves.easeInOut,
+          transform: Matrix4.identity()
+            ..translate(
+              0.0,
+              widget.selected ? -4.0 : 0.0,
+            ),
+          decoration: BoxDecoration(
+            color: widget.selected
+                ? const Color.fromARGB(255, 40, 50, 86)
+                : AppColors.darkBrownColor,
+            borderRadius: BorderRadius.circular(12),
+          ),
           child: Column(
             children: [
-              const Spacer(flex: 1),
+              const Spacer(
+                flex: 1,
+              ),
               Expanded(
                 flex: 6,
                 child: AutoSizeText(
@@ -86,7 +107,7 @@ class _NightPlayerTileState extends State<NightPlayerTile> {
                   widget.player.role!.name,
                   style: TextStyle(
                     color: determineColorForPlayerTile(widget.player.role!),
-                    fontSize: 12,
+                    fontSize: 11,
                   ),
                 ),
               ),
@@ -118,7 +139,7 @@ class _NightPlayerTileState extends State<NightPlayerTile> {
                     ),
                   ],
                 ),
-              )
+              ),
             ],
           ),
         ),

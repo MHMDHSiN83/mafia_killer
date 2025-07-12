@@ -1,17 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 import 'package:mafia_killer/components/call_role.dart';
 import 'package:mafia_killer/components/dialogboxes/confirmation_dialogbox.dart';
 import 'package:mafia_killer/components/dialogboxes/mafia_choice_dialogbox.dart';
 import 'package:mafia_killer/components/dialogboxes/message_dialogbox.dart';
 import 'package:mafia_killer/components/my_divider.dart';
 import 'package:mafia_killer/components/night_player_tile.dart';
+import 'package:mafia_killer/components/night_player_tile2.dart';
 import 'package:mafia_killer/components/page_frame.dart';
 import 'package:mafia_killer/components/dialogboxes/sixth_sense_dialogbox.dart';
 import 'package:mafia_killer/databases/game_state_manager.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/models/player_status.dart';
+import 'package:mafia_killer/models/role.dart';
+import 'package:mafia_killer/models/role_side.dart';
 import 'package:mafia_killer/models/scenarios/godfather/godfather_scenario.dart';
+import 'package:mafia_killer/models/scenarios/godfather/roles/godfather.dart';
+import 'package:mafia_killer/models/scenarios/godfather/roles/saul_goodman.dart';
 import 'package:mafia_killer/models/ui_player_status.dart';
 import 'package:mafia_killer/themes/app_color.dart';
 import 'package:mafia_killer/utils/audio_manager.dart';
@@ -19,7 +25,9 @@ import 'package:mafia_killer/utils/custom_snackbar.dart';
 
 class NightPage extends StatefulWidget {
   const NightPage({super.key});
-  static late Player? targetPlayer;
+  static List<Player> targetPlayers = [];
+  static Player currnetPlayer =
+      Player.getPlayersByRoleSide(RoleSide.independant)!.first; //TODO: wtf
   static int mafiaTeamChoice = 0;
   static String buttonText = 'بیدار شدند';
   static int typeOfConfirmation = 0;
@@ -32,8 +40,36 @@ class NightPage extends StatefulWidget {
 
 class _NightPageState extends State<NightPage> with WidgetsBindingObserver {
   late String text;
+  Map<Player, bool> playerCheckboxStatus = {};
 
   late Iterator<String> iterator;
+
+  bool isCheckBoxDisable(Player player) {
+    bool result = false;
+    if (NightPage.currnetPlayer.role!
+        .hasAllSelected(NightPage.targetPlayers.length)) {
+      Logger().d(NightPage.targetPlayers.length);
+      result = true;
+    }
+    for (Player p in NightPage.targetPlayers) {
+      if (p == player) {
+        result = false;
+      }
+    }
+    return result;
+  }
+
+  void onChanged(Player player) {
+    setState(() {
+      bool selected = !playerCheckboxStatus[player]!;
+      playerCheckboxStatus[player] = selected;
+      if (selected) {
+        NightPage.targetPlayers.add(player);
+      } else {
+        NightPage.targetPlayers.remove(player);
+      }
+    });
+  }
 
   void mafiaChoicBox() {
     showDialog(
@@ -45,6 +81,8 @@ class _NightPageState extends State<NightPage> with WidgetsBindingObserver {
             AudioManager.playClickEffect();
             setState(() {
               NightPage.mafiaTeamChoice = 0;
+              NightPage.currnetPlayer = Player.getPlayerByRoleType(
+                  Godfather)!; //TODO: essume godfather is always in the game
               (Scenario.currentScenario as GodfatherScenario)
                   .setMafiaTeamAvailablePlayers();
               text = (Scenario.currentScenario as GodfatherScenario)
@@ -56,6 +94,7 @@ class _NightPageState extends State<NightPage> with WidgetsBindingObserver {
             AudioManager.playClickEffect();
             setState(() {
               NightPage.mafiaTeamChoice = 1;
+              NightPage.currnetPlayer = Player.getPlayerByRoleType(Godfather)!;
               (Scenario.currentScenario as GodfatherScenario)
                   .setMafiaTeamAvailablePlayers();
               text = (Scenario.currentScenario as GodfatherScenario)
@@ -68,6 +107,8 @@ class _NightPageState extends State<NightPage> with WidgetsBindingObserver {
             AudioManager.playClickEffect();
             setState(() {
               NightPage.mafiaTeamChoice = 2;
+              NightPage.currnetPlayer =
+                  Player.getPlayerByRoleType(SaulGoodman)!;
               (Scenario.currentScenario as GodfatherScenario)
                   .setMafiaTeamAvailablePlayers();
               text = (Scenario.currentScenario as GodfatherScenario)
@@ -88,13 +129,14 @@ class _NightPageState extends State<NightPage> with WidgetsBindingObserver {
         return ConfirmationDialogbox(
           onSave: () {
             AudioManager.playClickEffect();
-            NightPage.targetPlayer = player;
+            NightPage.targetPlayers.add(player);
             Navigator.of(context).pop();
             setState(() {
               if (iterator.moveNext()) {
                 text = iterator.current;
               }
             });
+            NightPage.targetPlayers = [];
           },
           onCancel: () {
             AudioManager.playClickEffect();
@@ -112,16 +154,17 @@ class _NightPageState extends State<NightPage> with WidgetsBindingObserver {
         return SixthSenseDialogbox(
           player: player,
           guessedRight: () {
-            NightPage.targetPlayer = player;
+            NightPage.targetPlayers.add(player);
             Navigator.of(context).pop();
             setState(() {
               if (iterator.moveNext()) {
                 text = iterator.current;
               }
             });
+            NightPage.targetPlayers = [];
           },
           guessedWrong: () {
-            NightPage.targetPlayer = null;
+            NightPage.targetPlayers = [];
             Navigator.of(context).pop();
             setState(() {
               if (iterator.moveNext()) {
@@ -166,7 +209,7 @@ class _NightPageState extends State<NightPage> with WidgetsBindingObserver {
     iterator.moveNext();
     text = iterator.current;
 
-    NightPage.targetPlayer = null;
+    NightPage.targetPlayers = [];
     NightPage.mafiaTeamChoice = 0;
     NightPage.buttonText = 'بیدار شدند';
     NightPage.typeOfConfirmation = 0;
@@ -174,6 +217,10 @@ class _NightPageState extends State<NightPage> with WidgetsBindingObserver {
     NightPage.isNightOver = false;
     Scenario.currentScenario.nightEvents = {};
     Scenario.currentScenario.report = [];
+    NightPage.currnetPlayer = Player.inGamePlayers.first; // TODO: wtf
+    for (Player player in Player.inGamePlayers) {
+      playerCheckboxStatus[player] = false;
+    }
   }
 
   void resetNight() {
@@ -301,8 +348,7 @@ class _NightPageState extends State<NightPage> with WidgetsBindingObserver {
         },
         settingsPage: settingsPage,
         rightButtonText: 'اتفاقات شب',
-        leftButtonText:
-            "روز ${GameStateManager.getPreviousStateNumber()}",
+        leftButtonText: "روز ${GameStateManager.getPreviousStateNumber()}",
         leftButtonOnTap: () {
           resetNight();
           GameStateManager.goToPreviousState();
@@ -337,8 +383,13 @@ class _NightPageState extends State<NightPage> with WidgetsBindingObserver {
                     ),
                     itemCount: Player.inGamePlayers.length,
                     itemBuilder: (context, index) {
-                      return NightPlayerTile(
+                      return IntroNightPlayerTile2(
                         player: Player.inGamePlayers[index],
+                        selected:
+                            playerCheckboxStatus[Player.inGamePlayers[index]]!,
+                        isCheckBoxDisable:
+                            isCheckBoxDisable(Player.inGamePlayers[index]),
+                        onChanged: onChanged,
                         confirmAction: () {
                           switch (NightPage.typeOfConfirmation) {
                             case 0:
@@ -367,9 +418,17 @@ class _NightPageState extends State<NightPage> with WidgetsBindingObserver {
                   onPressed: () {
                     AudioManager.playClickEffect();
                     setState(() {
-                      if (iterator.moveNext()) {
-                        text = iterator.current;
-                        NightPage.targetPlayer = null;
+                      //TODO: wtf
+                      if (NightPage.buttonText != 'تائید' ||
+                          NightPage.currnetPlayer.role!
+                              .hasAllSelected(NightPage.targetPlayers.length)) {
+                        if (iterator.moveNext()) {
+                          text = iterator.current;
+                          NightPage.targetPlayers = [];
+                          for (Player player in Player.inGamePlayers) {
+                            playerCheckboxStatus[player] = false;
+                          }
+                        }
                       }
                     });
                   },

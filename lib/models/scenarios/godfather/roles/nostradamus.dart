@@ -20,6 +20,7 @@ class Nostradamus extends Role {
   late RoleSide inGameRoleSide;
   bool shield = true;
   late int inquiryNumber;
+  late int multiSelectionNumber;
 
   factory Nostradamus.fromJson(Map<String, dynamic> json) =>
       _$NostradamusFromJson(json);
@@ -69,5 +70,11 @@ class Nostradamus extends Role {
 
   void setInquiryNumber() {
     inquiryNumber = Player.getPlayersByRoleSide(RoleSide.mafia)!.length;
+    multiSelectionNumber = inquiryNumber;
+  }
+
+  @override
+  bool hasMultiSelection() {
+    return true;
   }
 }

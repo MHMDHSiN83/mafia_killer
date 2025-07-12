@@ -132,22 +132,20 @@ class GodfatherScenario extends Scenario {
     Player? saulGoodmanPlayer = Player.getPlayerByRoleType(SaulGoodman);
     switch (NightPage.mafiaTeamChoice) {
       case 0: // shot
-        nightEvents[NightEvent.shotByMafia] = NightPage.targetPlayer;
+        nightEvents[NightEvent.shotByMafia] = NightPage.targetPlayers[0];
         break;
       case 1:
-        godfatherPlayer?.role!.nightAction(NightPage.targetPlayer);
+        godfatherPlayer?.role!.nightAction(NightPage.targetPlayers[0]);
         // nightEvents[NightEvent.sixthSensedByGodfather] = NightPage.targetPlayer;
-        if (NightPage.targetPlayer != null) {
-          NightPage.targetPlayer!.playerStatus = PlayerStatus.disable;
-        }
+        NightPage.targetPlayers[0].playerStatus = PlayerStatus.disable;
         break;
       case 2: // buying
         NightPage.ableToSelectTile = false;
         NightPage.buttonText = 'اتمام';
-        saulGoodmanPlayer?.role!.nightAction(NightPage.targetPlayer);
-        if (NightPage.targetPlayer!.role is Citizen) {
+        saulGoodmanPlayer?.role!.nightAction(NightPage.targetPlayers[0]);
+        if (NightPage.targetPlayers[0].role is Citizen) {
           // nightEvents[NightEvent.boughtBySaulGoodman] = NightPage.targetPlayer;
-          NightPage.targetPlayer!.role = Role.copy(Scenario.currentScenario
+          NightPage.targetPlayers[0].role = Role.copy(Scenario.currentScenario
               .getRoleByType(Mafia, searchInGmaeRoles: false)!);
           yield 'خریداری موفقیت آمیز بود. فرد خریداری شده رو بیدار کن تا هم تیمیاشو ببینه';
         } else {
@@ -176,9 +174,16 @@ class GodfatherScenario extends Scenario {
           resetUIPlayerStatus();
           if (player.hasAbility()) {
             NightPage.buttonText = i <= 1 ? '' : "هیچکس";
+            NightPage.currnetPlayer = player;
             player.role!.setAvailablePlayers();
+            if (player.role!.hasMultiSelection()) {
+              NightPage.buttonText = "تائید";
+            } else {}
             yield player.role!.awakingRole();
-            player.role!.nightAction(NightPage.targetPlayer);
+            for (Player p in NightPage.targetPlayers) {
+              player.role!.nightAction(p);
+            }
+            // player.role!.nightAction(NightPage.targetPlayers);
             NightPage.ableToSelectTile = false;
             NightPage.buttonText = "خوابید";
             yield player.role!.sleepRoleText();

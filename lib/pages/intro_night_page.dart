@@ -4,6 +4,7 @@ import 'package:mafia_killer/components/dialogboxes/confirmation_dialogbox.dart'
 import 'package:mafia_killer/components/intro_night_player_tile.dart';
 import 'package:mafia_killer/components/dialogboxes/nostradamus_dialogbox.dart';
 import 'package:mafia_killer/components/my_divider.dart';
+import 'package:mafia_killer/components/night_player_tile2.dart';
 import 'package:mafia_killer/components/page_frame.dart';
 import 'package:mafia_killer/databases/game_settings.dart';
 import 'package:mafia_killer/databases/game_state_manager.dart';
@@ -185,10 +186,8 @@ class _IntroNightPageState extends State<IntroNightPage>
           setState(() {});
         },
         settingsPage: settingsPage,
-        rightButtonText:
-            'روز اول',
-        leftButtonText:
-            'روز معارفه',
+        rightButtonText: 'روز اول',
+        leftButtonText: 'روز معارفه',
         leftButtonOnTap: () {
           IntroNightPage.targetPlayers = [];
           Navigator.pop(context);
@@ -206,14 +205,13 @@ class _IntroNightPageState extends State<IntroNightPage>
                 nextPagePath: '/regular_voting_page',
                 seconds: GameSettings.currentGameSettings.mainSpeakTime,
                 rightButtonText: 'رای گیری',
-                leftButtonText:
-                    'شب معارفه',
+                leftButtonText: 'شب معارفه',
                 isDefense: false,
               ),
             );
             GameStateManager.addState(
                 lastMoveCards: Scenario.currentScenario.inGameLastMoveCards);
-                // lastMoveCards: Scenario.currentScenario.lastMoveCards);
+            // lastMoveCards: Scenario.currentScenario.lastMoveCards);
           } else {
             customSnackBar(context, 'تمام اکت‌های شب باید انجام بشه', true);
           }
@@ -236,13 +234,14 @@ class _IntroNightPageState extends State<IntroNightPage>
                     ),
                     itemCount: Player.inGamePlayers.length,
                     itemBuilder: (context, index) {
-                      return IntroNightPlayerTile(
+                      return IntroNightPlayerTile2(
                         player: Player.inGamePlayers[index],
                         selected:
                             playerCheckboxStatus[Player.inGamePlayers[index]]!,
                         isCheckBoxDisable:
                             isCheckBoxDisable(Player.inGamePlayers[index]),
                         onChanged: onChanged,
+                        confirmAction: () {},
                       );
                     },
                   ),

@@ -11,6 +11,7 @@ part 'doctor_watson.g.dart';
 @JsonSerializable()
 class DoctorWatson extends Role {
   int selfHeal = 2;
+  int multiSelectionNumber = 2;
 
   DoctorWatson() {
     name = "دکتر واتسون";
@@ -64,5 +65,15 @@ class DoctorWatson extends Role {
   @override
   void saveAbilities(Map<String, int> abilities) {
     selfHeal = abilities['نجات خود']!;
+  }
+
+  @override
+  bool hasMultiSelection() {
+    return multiSelectionNumber > 1;
+  }
+
+  @override
+  bool hasAllSelected(int number) {
+    return number == multiSelectionNumber;
   }
 }

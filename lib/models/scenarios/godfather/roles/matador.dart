@@ -17,7 +17,7 @@ class Matador extends Role {
     roleSide = RoleSide.mafia;
     cardImagePath = "lib/images/roles/matador.jpg";
   }
-
+  int multiSelectionNumber = 2;
   String? lastPlayerName;
 
   factory Matador.fromJson(Map<String, dynamic> json) =>
@@ -62,5 +62,15 @@ class Matador extends Role {
   @override
   List<String> roleDetails() {
     return (lastPlayerName == null) ? [] : ["بازیکن قبلی: \n $lastPlayerName"];
+  }
+
+  @override
+  bool hasMultiSelection() {
+    return multiSelectionNumber > 1;
+  }
+
+  @override
+  bool hasAllSelected(int number) {
+    return number == multiSelectionNumber;
   }
 }

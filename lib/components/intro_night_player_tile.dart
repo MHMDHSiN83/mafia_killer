@@ -21,14 +21,13 @@ class IntroNightPlayerTile extends StatefulWidget {
   final bool isCheckBoxDisable;
   final Function onChanged;
   final bool selected;
+  
   @override
   State<IntroNightPlayerTile> createState() => _IntroNightPlayerTileState();
 }
 
 class _IntroNightPlayerTileState extends State<IntroNightPlayerTile> {
   bool selected = false;
-
-  
 
   @override
   Widget build(BuildContext context) {

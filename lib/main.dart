@@ -22,6 +22,7 @@ import 'package:mafia_killer/pages/role_distribution_page.dart';
 import 'package:mafia_killer/pages/role_selection_page.dart';
 import 'package:mafia_killer/pages/scenario_guide_page.dart';
 import 'package:mafia_killer/pages/talking_page.dart';
+import 'package:mafia_killer/test.dart';
 import 'package:mafia_killer/themes/dark_mode.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:mafia_killer/utils/ad_manager.dart';
@@ -95,6 +96,7 @@ class MyApp extends StatelessWidget {
         '/end_game_page': (context) => EndGamePage(),
         '/scenario_guid_page': (context) => ScenarioGuidPage(),
         '/play_again_loading_page': (context) => PlayAgainLoadingPage(),
+        '/test': (context) => SelectTileTestApp(),
       },
     );
   }
