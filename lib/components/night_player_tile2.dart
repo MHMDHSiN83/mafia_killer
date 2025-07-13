@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:mafia_killer/components/checkbox.dart';
 import 'package:mafia_killer/databases/player.dart';
+import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/models/player_status.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/nostradamus.dart';
 import 'package:mafia_killer/models/ui_player_status.dart';
@@ -55,9 +56,8 @@ class _IntroNightPlayerTile2State extends State<IntroNightPlayerTile2> {
         // ? widget.confirmAction
         // : () {},
         onTap: !widget.isCheckBoxDisable
-            //TODO:use NightPage
             ? () {
-                if (NightPage.currnetPlayer.role!.hasMultiSelection()) {
+                if (Scenario.currentScenario.currentPlayerAtNight.role!.hasMultiSelection()) {
                   AudioManager.playClickEffect();
                   widget.onChanged(widget.player);
                 } else {

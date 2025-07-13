@@ -174,11 +174,11 @@ class GodfatherScenario extends Scenario {
           resetUIPlayerStatus();
           if (player.hasAbility()) {
             NightPage.buttonText = i <= 1 ? '' : "هیچکس";
-            NightPage.currnetPlayer = player;
+            currentPlayerAtNight = player;
             player.role!.setAvailablePlayers();
             if (player.role!.hasMultiSelection()) {
               NightPage.buttonText = "تائید";
-            } else {}
+            }
             yield player.role!.awakingRole();
             for (Player p in NightPage.targetPlayers) {
               player.role!.nightAction(p);

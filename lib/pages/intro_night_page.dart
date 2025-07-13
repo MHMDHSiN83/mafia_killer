@@ -102,6 +102,8 @@ class _IntroNightPageState extends State<IntroNightPage>
     for (Player player in Player.inGamePlayers) {
       playerCheckboxStatus[player] = false;
     }
+
+    Scenario.currentScenario.currentPlayerAtNight = Player.getPlayersByRoleSide(RoleSide.independant)!.first; // TODO: wtf
   }
 
   Widget? settingsPage() {

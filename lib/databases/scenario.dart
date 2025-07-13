@@ -42,6 +42,7 @@ class Scenario {
   static List<Scenario> scenarios = [];
   static late Scenario currentScenario;
   static late String filePath;
+  late Player currentPlayerAtNight;
 
   Map<NightEvent, Player?> nightEvents = {};
   List<Player> defendingPlayers = [];
