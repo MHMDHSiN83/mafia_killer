@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:logger/logger.dart';
 import 'package:mafia_killer/components/call_role.dart';
 import 'package:mafia_killer/components/dialogboxes/confirmation_dialogbox.dart';
 import 'package:mafia_killer/components/dialogboxes/mafia_choice_dialogbox.dart';
 import 'package:mafia_killer/components/dialogboxes/message_dialogbox.dart';
 import 'package:mafia_killer/components/my_divider.dart';
-import 'package:mafia_killer/components/night_player_tile.dart';
 import 'package:mafia_killer/components/night_player_tile2.dart';
 import 'package:mafia_killer/components/page_frame.dart';
 import 'package:mafia_killer/components/dialogboxes/sixth_sense_dialogbox.dart';
@@ -13,8 +11,6 @@ import 'package:mafia_killer/databases/game_state_manager.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/models/player_status.dart';
-import 'package:mafia_killer/models/role.dart';
-import 'package:mafia_killer/models/role_side.dart';
 import 'package:mafia_killer/models/scenarios/godfather/godfather_scenario.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/godfather.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/saul_goodman.dart';
@@ -45,7 +41,6 @@ class _NightPageState extends State<NightPage> with WidgetsBindingObserver {
     bool result = false;
     if (Scenario.currentScenario.currentPlayerAtNight!.role!
         .hasAllSelected(NightPage.targetPlayers.length)) {
-      Logger().d(NightPage.targetPlayers.length);
       result = true;
     }
     for (Player p in NightPage.targetPlayers) {

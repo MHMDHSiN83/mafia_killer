@@ -1,14 +1,9 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:logger/logger.dart';
-import 'package:mafia_killer/components/checkbox.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/models/player_status.dart';
-import 'package:mafia_killer/models/scenarios/godfather/roles/nostradamus.dart';
 import 'package:mafia_killer/models/ui_player_status.dart';
-import 'package:mafia_killer/pages/intro_night_page.dart';
-import 'package:mafia_killer/pages/night_page.dart';
 import 'package:mafia_killer/themes/app_color.dart';
 import 'package:mafia_killer/utils/audio_manager.dart';
 import 'package:mafia_killer/utils/determine_color.dart';
@@ -64,7 +59,6 @@ class _IntroNightPlayerTile2State extends State<IntroNightPlayerTile2> {
                   AudioManager.playClickEffect();
                   widget.onChanged(widget.player);
                 } else {
-                  Logger().d("here");
                   widget.confirmAction();
                 }
               }
