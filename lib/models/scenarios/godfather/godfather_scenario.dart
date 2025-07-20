@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/databases/scenario.dart';
@@ -7,8 +6,6 @@ import 'package:mafia_killer/models/player_status.dart';
 import 'package:mafia_killer/models/role.dart';
 import 'package:mafia_killer/models/role_side.dart';
 import 'package:mafia_killer/models/scenarios/godfather/last_move_cards/beautiful_mind.dart';
-import 'package:mafia_killer/models/scenarios/godfather/roles/constantine.dart';
-import 'package:mafia_killer/models/scenarios/godfather/roles/doctor_watson.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/godfather.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/mafia.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/nostradamus.dart';
@@ -53,6 +50,7 @@ class GodfatherScenario extends Scenario {
       Player? nostradamusPlayer = Player.getPlayerByRoleType(Nostradamus);
 
       yield nostradamusPlayer!.role!.introAwakingRole();
+      ableToSelectTile = false;
       yield nostradamusPlayer.role!.introSleepRoleText();
     }
     List<String> introMafiaTeamAwakingTexts =
@@ -123,7 +121,7 @@ class GodfatherScenario extends Scenario {
     ];
 
     yield "تیم مافیا از خواب بیدار شه";
-    NightPage.ableToSelectTile = true;
+    ableToSelectTile = true;
     NightPage.buttonText = '';
     mafiaChoiceBox!();
     yield mafiaTeamAct[NightPage.mafiaTeamChoice];
@@ -132,7 +130,7 @@ class GodfatherScenario extends Scenario {
     Player? saulGoodmanPlayer = Player.getPlayerByRoleType(SaulGoodman);
     switch (NightPage.mafiaTeamChoice) {
       case 0: // shot
-        nightEvents[NightEvent.shotByMafia] = NightPage.targetPlayers[0];
+        nightEvents[NightEvent.shotByMafia] = [NightPage.targetPlayers[0]];
         break;
       case 1:
         godfatherPlayer?.role!.nightAction(NightPage.targetPlayers[0]);
@@ -140,7 +138,7 @@ class GodfatherScenario extends Scenario {
         NightPage.targetPlayers[0].playerStatus = PlayerStatus.disable;
         break;
       case 2: // buying
-        NightPage.ableToSelectTile = false;
+        ableToSelectTile = false;
         NightPage.buttonText = 'اتمام';
         saulGoodmanPlayer?.role!.nightAction(NightPage.targetPlayers[0]);
         if (NightPage.targetPlayers[0].role is Citizen) {
@@ -170,7 +168,7 @@ class GodfatherScenario extends Scenario {
     for (int i = 0; i < constantRoleOrder.length; i++) {
       for (Player player in Player.inGamePlayers) {
         if (player.role!.name == constantRoleOrder[i]) {
-          NightPage.ableToSelectTile = true;
+          ableToSelectTile = true;
           resetUIPlayerStatus();
           if (player.hasAbility()) {
             NightPage.buttonText = i <= 1 ? '' : "هیچکس";
@@ -184,7 +182,7 @@ class GodfatherScenario extends Scenario {
               player.role!.nightAction(p);
             }
             // player.role!.nightAction(NightPage.targetPlayers);
-            NightPage.ableToSelectTile = false;
+            ableToSelectTile = false;
             NightPage.buttonText = "خوابید";
             yield player.role!.sleepRoleText();
           } else {
@@ -227,20 +225,25 @@ class GodfatherScenario extends Scenario {
 
   @override
   void nightReport() {
-    Player? shotByMafia = nightEvents[NightEvent.shotByMafia];
-    Player? savedByDoctor = nightEvents[NightEvent.savedByDoctor];
-    Player? shotByLeon = nightEvents[NightEvent.shotByLeon];
-    Player? revivedByConstantine = nightEvents[NightEvent.revivedByConstantine];
-    Player? inquiryByCitizenKane = nightEvents[NightEvent.inquiryByCitizenKane];
+    Player? shotByMafia = getFirstPlayer(NightEvent.shotByMafia);
+    Player? shotByLeon = getFirstPlayer(NightEvent.shotByLeon);
+    Player? revivedByConstantine =
+        getFirstPlayer(NightEvent.revivedByConstantine);
+    Player? inquiryByCitizenKane =
+        getFirstPlayer(NightEvent.inquiryByCitizenKane);
     Player? sixthSensedByGodfather =
-        nightEvents[NightEvent.sixthSensedByGodfather];
+        getFirstPlayer(NightEvent.sixthSensedByGodfather);
+
+    List<Player> savedByDoctor = nightEvents[NightEvent.savedByDoctor] ?? [];
 
     Player? leon = Player.getPlayerByRoleType(Leon);
     Player? citizenKane = Player.getPlayerByRoleType(CitizenKane);
 
     // mafia shot process -> Done
     if (shotByMafia != null) {
-      if (savedByDoctor?.name != shotByMafia.name &&
+      bool isSaved = savedByDoctor.any((p) => p.name == shotByMafia.name);
+
+      if (!isSaved &&
           (shotByMafia.role is! Leon ||
               (shotByMafia.role is Leon &&
                   (shotByMafia.role as Leon).shield <= 0)) &&
@@ -254,7 +257,6 @@ class GodfatherScenario extends Scenario {
         (shotByMafia.role as Leon).shield--;
       }
     }
-
     // mafia sixth sense -> Done
     if (sixthSensedByGodfather != null) {
       // if it isn't null it means it succeeded
@@ -265,6 +267,7 @@ class GodfatherScenario extends Scenario {
 
     // leon shot process -> Done
     if (shotByLeon != null) {
+      bool isSaved = savedByDoctor.any((p) => p.name == shotByLeon.name);
       if (shotByLeon.role!.roleSide == RoleSide.citizen) {
         leon!.playerStatus = PlayerStatus.dead;
         report.add("${leon.name} کشته شد.");
@@ -272,9 +275,9 @@ class GodfatherScenario extends Scenario {
           (shotByLeon.role is! Godfather ||
               (shotByLeon.role is Godfather &&
                   (shotByLeon.role as Godfather).shield <= 0)) &&
-          shotByLeon.name != savedByDoctor?.name) {
+          !isSaved) {
         shotByLeon.playerStatus = PlayerStatus.dead;
-        report.add("${shotByLeon.name} کشته شد.)");
+        report.add("${shotByLeon.name} کشته شد.");
       } else if (shotByLeon.role is Godfather &&
           (shotByLeon.role as Godfather).shield == 1) {
         (shotByLeon.role as Godfather).shield--;
@@ -285,7 +288,7 @@ class GodfatherScenario extends Scenario {
     if ((citizenKane != null) &&
         (citizenKane.role as CitizenKane).remainingAbility == 0) {
       citizenKane.playerStatus = PlayerStatus.dead;
-      report.add("${citizenKane.name} کشته شد.)");
+      report.add("${citizenKane.name} کشته شد.");
     }
     if (inquiryByCitizenKane != null) {
       if (citizenKane!.playerStatus == PlayerStatus.active &&
@@ -416,42 +419,42 @@ class GodfatherScenario extends Scenario {
 
   @override
   void resetRemainingAbility() {
-    Player? savedByDoctor = nightEvents[NightEvent.savedByDoctor];
-    Player? shotByLeon = nightEvents[NightEvent.shotByLeon];
-    Player? revivedByConstantine = nightEvents[NightEvent.revivedByConstantine];
-    Player? inquiryByCitizenKane = nightEvents[NightEvent.inquiryByCitizenKane];
-    Player? sixthSensedByGodfather =
-        nightEvents[NightEvent.sixthSensedByGodfather];
-    Player? boughtBySaulGoodman = nightEvents[NightEvent.boughtBySaulGoodman];
+    // Player? savedByDoctor = nightEvents[NightEvent.savedByDoctor];
+    // Player? shotByLeon = nightEvents[NightEvent.shotByLeon];
+    // Player? revivedByConstantine = nightEvents[NightEvent.revivedByConstantine];
+    // Player? inquiryByCitizenKane = nightEvents[NightEvent.inquiryByCitizenKane];
+    // Player? sixthSensedByGodfather =
+    //     nightEvents[NightEvent.sixthSensedByGodfather];
+    // Player? boughtBySaulGoodman = nightEvents[NightEvent.boughtBySaulGoodman];
 
-    Player? godfatherPlayer = Player.getPlayerByRoleType(Godfather);
-    Player? saulGoodmanPlayer = Player.getPlayerByRoleType(SaulGoodman);
-    Player? leonPlayer = Player.getPlayerByRoleType(Leon);
-    Player? constantinePlayer = Player.getPlayerByRoleType(Constantine);
-    Player? citizenKanePlayer = Player.getPlayerByRoleType(CitizenKane);
-    Player? doctorPlayer = Player.getPlayerByRoleType(DoctorWatson);
-    if (sixthSensedByGodfather != null) {
-      (godfatherPlayer!.role as Godfather).remainingAbility += 1;
-    }
-    if (shotByLeon != null) {
-      (leonPlayer!.role as Leon).remainingAbility += 1;
-    }
-    if (revivedByConstantine != null) {
-      (constantinePlayer!.role as Constantine).remainingAbility += 1;
-    }
-    if (inquiryByCitizenKane != null) {
-      (citizenKanePlayer!.role as CitizenKane).remainingAbility += 1;
-    }
-    if (boughtBySaulGoodman != null) {
-      (saulGoodmanPlayer!.role as SaulGoodman).remainingAbility += 1;
-      boughtBySaulGoodman.role = Role.fromJson(jsonDecode(jsonEncode(Scenario
-          .currentScenario
-          .getRoleByType(Citizen, searchInGmaeRoles: false)!
-          .toJson())));
-    }
-    if (doctorPlayer == savedByDoctor && savedByDoctor != null) {
-      (doctorPlayer!.role as DoctorWatson).selfHeal += 1;
-    }
+    // Player? godfatherPlayer = Player.getPlayerByRoleType(Godfather);
+    // Player? saulGoodmanPlayer = Player.getPlayerByRoleType(SaulGoodman);
+    // Player? leonPlayer = Player.getPlayerByRoleType(Leon);
+    // Player? constantinePlayer = Player.getPlayerByRoleType(Constantine);
+    // Player? citizenKanePlayer = Player.getPlayerByRoleType(CitizenKane);
+    // Player? doctorPlayer = Player.getPlayerByRoleType(DoctorWatson);
+    // if (sixthSensedByGodfather != null) {
+    //   (godfatherPlayer!.role as Godfather).remainingAbility += 1;
+    // }
+    // if (shotByLeon != null) {
+    //   (leonPlayer!.role as Leon).remainingAbility += 1;
+    // }
+    // if (revivedByConstantine != null) {
+    //   (constantinePlayer!.role as Constantine).remainingAbility += 1;
+    // }
+    // if (inquiryByCitizenKane != null) {
+    //   (citizenKanePlayer!.role as CitizenKane).remainingAbility += 1;
+    // }
+    // if (boughtBySaulGoodman != null) {
+    //   (saulGoodmanPlayer!.role as SaulGoodman).remainingAbility += 1;
+    //   boughtBySaulGoodman.role = Role.fromJson(jsonDecode(jsonEncode(Scenario
+    //       .currentScenario
+    //       .getRoleByType(Citizen, searchInGmaeRoles: false)!
+    //       .toJson())));
+    // }
+    // if (doctorPlayer == savedByDoctor && savedByDoctor != null) {
+    //   (doctorPlayer!.role as DoctorWatson).selfHeal += 1;
+    // }
   }
 
   @override

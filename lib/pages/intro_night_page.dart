@@ -40,6 +40,9 @@ class _IntroNightPageState extends State<IntroNightPage>
       GameSettings.currentGameSettings.getSettingsInMap();
 
   bool isCheckBoxDisable(Player player) {
+    if (player.role is Nostradamus) {
+      return true;
+    }
     bool result = false;
     if ((Scenario.currentScenario as GodfatherScenario)
             .doesNostradamusParticipate() &&
@@ -82,6 +85,9 @@ class _IntroNightPageState extends State<IntroNightPage>
             setState(() {
               iterator.moveNext();
               text = iterator.current;
+              for (Player player in Player.inGamePlayers) {
+                playerCheckboxStatus[player] = false;
+              }
             });
           },
         );
@@ -96,6 +102,7 @@ class _IntroNightPageState extends State<IntroNightPage>
         (Scenario.currentScenario as GodfatherScenario)
             .doesNostradamusParticipate();
     IntroNightPage.isNightOver = false;
+    Scenario.currentScenario.ableToSelectTile = true;
     iterator = Scenario.currentScenario.callRolesIntroNight().iterator;
     iterator.moveNext();
     text = iterator.current;
@@ -103,7 +110,8 @@ class _IntroNightPageState extends State<IntroNightPage>
       playerCheckboxStatus[player] = false;
     }
 
-    Scenario.currentScenario.currentPlayerAtNight = Player.getPlayersByRoleSide(RoleSide.independant)!.first; // TODO: wtf
+    Scenario.currentScenario.currentPlayerAtNight =
+        Player.getPlayersByRoleSide(RoleSide.independant)!.first; // TODO: wtf
   }
 
   Widget? settingsPage() {
@@ -270,6 +278,9 @@ class _IntroNightPageState extends State<IntroNightPage>
                       setState(() {
                         if (iterator.moveNext()) {
                           text = iterator.current;
+                          for (Player player in Player.inGamePlayers) {
+                            playerCheckboxStatus[player] = false;
+                          }
                         }
                       });
                     }

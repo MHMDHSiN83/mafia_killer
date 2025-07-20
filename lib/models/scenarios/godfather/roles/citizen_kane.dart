@@ -30,8 +30,11 @@ class CitizenKane extends Role {
 
   @override
   void nightAction(Player? player) {
-    Scenario.currentScenario.nightEvents[NightEvent.inquiryByCitizenKane] =
-        player;
+    if (player != null) {
+      Scenario.currentScenario.nightEvents[NightEvent.inquiryByCitizenKane] = [
+        player
+      ];
+    }
   }
 
   @override

@@ -42,9 +42,10 @@ class Scenario {
   static List<Scenario> scenarios = [];
   static late Scenario currentScenario;
   static late String filePath;
-  late Player currentPlayerAtNight;
+  Player? currentPlayerAtNight;
+  bool ableToSelectTile = false;
 
-  Map<NightEvent, Player?> nightEvents = {};
+  Map<NightEvent, List<Player>> nightEvents = {};
   List<Player> defendingPlayers = [];
   Player? killedInDayPlayer;
   List<Player> silencedPlayerDuringDay = [];
@@ -518,4 +519,14 @@ class Scenario {
   }
 
   void setRoleAttributes() {}
+
+  Player? getFirstPlayer(NightEvent event) {
+    final list = nightEvents[event];
+    return (list != null && list.isNotEmpty) ? list.first : null;
+  }
+
+  void addPlayerToNightEvent(NightEvent event, Player player) {
+    nightEvents.putIfAbsent(event, () => []);
+    nightEvents[event]!.add(player);
+  }
 }

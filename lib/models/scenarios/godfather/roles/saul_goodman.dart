@@ -33,7 +33,7 @@ class SaulGoodman extends Role {
   @override
   void nightAction(Player? player) {
     if (player!.role is Citizen) {
-      Scenario.currentScenario.nightEvents[NightEvent.boughtBySaulGoodman] = player;
+      Scenario.currentScenario.nightEvents[NightEvent.boughtBySaulGoodman] = [player];
     }
     remainingAbility--;
   }

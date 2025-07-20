@@ -55,8 +55,8 @@ class _NightPlayerTileState extends State<NightPlayerTile> {
       opacity:
           widget.player.uiPlayerStatus == UIPlayerStatus.targetable ? 1 : 0.6,
       child: GestureDetector(
-        onTap: widget.player.uiPlayerStatus == UIPlayerStatus.targetable &&
-                NightPage.ableToSelectTile
+        onTap: widget.player.uiPlayerStatus == UIPlayerStatus.targetable 
+        // && NightPage.ableToSelectTile
             ? widget.confirmAction
             : () {},
         child: Container(

@@ -31,8 +31,8 @@ class Leon extends Role {
 
   @override
   void nightAction(Player? player) {
-    Scenario.currentScenario.nightEvents[NightEvent.shotByLeon] = player;
     if (player != null) {
+      Scenario.currentScenario.nightEvents[NightEvent.shotByLeon] = [player];
       remainingAbility--;
     }
   }

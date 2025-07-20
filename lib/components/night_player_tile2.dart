@@ -55,9 +55,12 @@ class _IntroNightPlayerTile2State extends State<IntroNightPlayerTile2> {
         // && NightPage.ableToSelectTile
         // ? widget.confirmAction
         // : () {},
-        onTap: !widget.isCheckBoxDisable
+        onTap: !widget.isCheckBoxDisable &&
+                widget.player.uiPlayerStatus == UIPlayerStatus.targetable &&
+                Scenario.currentScenario.ableToSelectTile
             ? () {
-                if (Scenario.currentScenario.currentPlayerAtNight.role!.hasMultiSelection()) {
+                if (Scenario.currentScenario.currentPlayerAtNight!.role!
+                    .hasMultiSelection()) {
                   AudioManager.playClickEffect();
                   widget.onChanged(widget.player);
                 } else {

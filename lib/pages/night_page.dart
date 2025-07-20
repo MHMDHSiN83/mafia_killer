@@ -29,7 +29,6 @@ class NightPage extends StatefulWidget {
   static int mafiaTeamChoice = 0;
   static String buttonText = 'بیدار شدند';
   static int typeOfConfirmation = 0;
-  static bool ableToSelectTile = false;
   static bool isNightOver = false;
 
   @override
@@ -44,7 +43,7 @@ class _NightPageState extends State<NightPage> with WidgetsBindingObserver {
 
   bool isCheckBoxDisable(Player player) {
     bool result = false;
-    if (Scenario.currentScenario.currentPlayerAtNight.role!
+    if (Scenario.currentScenario.currentPlayerAtNight!.role!
         .hasAllSelected(NightPage.targetPlayers.length)) {
       Logger().d(NightPage.targetPlayers.length);
       result = true;
@@ -79,8 +78,9 @@ class _NightPageState extends State<NightPage> with WidgetsBindingObserver {
             AudioManager.playClickEffect();
             setState(() {
               NightPage.mafiaTeamChoice = 0;
-              Scenario.currentScenario.currentPlayerAtNight = Player.getPlayerByRoleType(
-                  Godfather)!; //TODO: essume godfather is always in the game
+              Scenario.currentScenario.currentPlayerAtNight =
+                  Player.getPlayerByRoleType(
+                      Godfather)!; //TODO: essume godfather is always in the game
               (Scenario.currentScenario as GodfatherScenario)
                   .setMafiaTeamAvailablePlayers();
               text = (Scenario.currentScenario as GodfatherScenario)
@@ -92,7 +92,8 @@ class _NightPageState extends State<NightPage> with WidgetsBindingObserver {
             AudioManager.playClickEffect();
             setState(() {
               NightPage.mafiaTeamChoice = 1;
-              Scenario.currentScenario.currentPlayerAtNight = Player.getPlayerByRoleType(Godfather)!;
+              Scenario.currentScenario.currentPlayerAtNight =
+                  Player.getPlayerByRoleType(Godfather)!;
               (Scenario.currentScenario as GodfatherScenario)
                   .setMafiaTeamAvailablePlayers();
               text = (Scenario.currentScenario as GodfatherScenario)
@@ -211,11 +212,12 @@ class _NightPageState extends State<NightPage> with WidgetsBindingObserver {
     NightPage.mafiaTeamChoice = 0;
     NightPage.buttonText = 'بیدار شدند';
     NightPage.typeOfConfirmation = 0;
-    NightPage.ableToSelectTile = false;
+    Scenario.currentScenario.ableToSelectTile = false;
     NightPage.isNightOver = false;
     Scenario.currentScenario.nightEvents = {};
     Scenario.currentScenario.report = [];
-    Scenario.currentScenario.currentPlayerAtNight = Player.inGamePlayers.first; // TODO: wtf
+    Scenario.currentScenario.currentPlayerAtNight =
+        Player.inGamePlayers.first; // TODO: wtf
     for (Player player in Player.inGamePlayers) {
       playerCheckboxStatus[player] = false;
     }
@@ -418,7 +420,7 @@ class _NightPageState extends State<NightPage> with WidgetsBindingObserver {
                     setState(() {
                       //TODO: wtf
                       if (NightPage.buttonText != 'تائید' ||
-                          Scenario.currentScenario.currentPlayerAtNight.role!
+                          Scenario.currentScenario.currentPlayerAtNight!.role!
                               .hasAllSelected(NightPage.targetPlayers.length)) {
                         if (iterator.moveNext()) {
                           text = iterator.current;

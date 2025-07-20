@@ -1,5 +1,6 @@
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/databases/scenario.dart';
+import 'package:mafia_killer/models/language.dart';
 import 'package:mafia_killer/models/player_status.dart';
 import 'package:mafia_killer/models/ui_player_status.dart';
 import 'package:mafia_killer/models/night_event.dart';
@@ -27,8 +28,9 @@ class Matador extends Role {
   Map<String, dynamic> toJson() => _$MatadorToJson(this);
   @override
   void nightAction(Player? player) {
-    Scenario.currentScenario.nightEvents[NightEvent.disabledByMatador] = player;
     if (player != null) {
+      Scenario.currentScenario
+          .addPlayerToNightEvent(NightEvent.disabledByMatador, player);
       player.playerStatus = PlayerStatus.disable;
       lastPlayerName = player.name;
     }
@@ -46,7 +48,7 @@ class Matador extends Role {
 
   @override
   String awakingRole() {
-    return "ماتادور توانایی یک نفر رو امشب ازش بگیره";
+    return "ماتادور توانایی ${Language.getPersianNumberWord(multiSelectionNumber)} نفر رو امشب ازش بگیره";
   }
 
   @override
