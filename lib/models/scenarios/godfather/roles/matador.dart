@@ -67,6 +67,16 @@ class Matador extends Role {
   }
 
   @override
+  Map<String, int> roleAbilities() {
+    return {'هدف در هر شب': multiSelectionNumber};
+  }
+
+  @override
+  void saveAbilities(Map<String, int> abilities) {
+    multiSelectionNumber = abilities['هدف در هر شب']!;
+  }
+
+  @override
   bool hasMultiSelection() {
     return multiSelectionNumber > 1;
   }

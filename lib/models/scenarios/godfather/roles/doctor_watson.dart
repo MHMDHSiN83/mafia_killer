@@ -62,12 +62,13 @@ class DoctorWatson extends Role {
 
   @override
   Map<String, int> roleAbilities() {
-    return {'نجات خود': selfHeal};
+    return {'نجات خود': selfHeal, 'نجات در هر شب': multiSelectionNumber};
   }
 
   @override
   void saveAbilities(Map<String, int> abilities) {
     selfHeal = abilities['نجات خود']!;
+    multiSelectionNumber = abilities['نجات در هر شب']!;
   }
 
   @override
