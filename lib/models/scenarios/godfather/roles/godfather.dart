@@ -34,9 +34,10 @@ class Godfather extends Role {
 
   @override
   void nightAction(Player? player) {
-
-    Scenario.currentScenario.nightEvents[NightEvent.sixthSensedByGodfather] =
-        [player!];
+    if(player != null) {
+      Scenario.currentScenario.nightEvents[NightEvent.sixthSensedByGodfather] =
+          [player];
+    }
     remainingAbility--;
   }
 

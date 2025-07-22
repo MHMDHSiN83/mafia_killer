@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:logger/web.dart';
 import 'package:mafia_killer/components/call_role.dart';
 import 'package:mafia_killer/components/dialogboxes/confirmation_dialogbox.dart';
 import 'package:mafia_killer/components/dialogboxes/mafia_choice_dialogbox.dart';
@@ -78,8 +79,9 @@ class _NightPageState extends State<NightPage> with WidgetsBindingObserver {
                       Godfather)!; //TODO: essume godfather is always in the game
               (Scenario.currentScenario as GodfatherScenario)
                   .setMafiaTeamAvailablePlayers();
-              text = (Scenario.currentScenario as GodfatherScenario)
-                  .setMafiaChoiceText();
+              if (iterator.moveNext()) {
+                text = iterator.current;
+              }
               Navigator.of(context).pop();
             });
           },
@@ -91,8 +93,9 @@ class _NightPageState extends State<NightPage> with WidgetsBindingObserver {
                   Player.getPlayerByRoleType(Godfather)!;
               (Scenario.currentScenario as GodfatherScenario)
                   .setMafiaTeamAvailablePlayers();
-              text = (Scenario.currentScenario as GodfatherScenario)
-                  .setMafiaChoiceText();
+              if (iterator.moveNext()) {
+                text = iterator.current;
+              }
               NightPage.typeOfConfirmation = 1;
               Navigator.of(context).pop();
             });
@@ -105,8 +108,9 @@ class _NightPageState extends State<NightPage> with WidgetsBindingObserver {
                   Player.getPlayerByRoleType(SaulGoodman)!;
               (Scenario.currentScenario as GodfatherScenario)
                   .setMafiaTeamAvailablePlayers();
-              text = (Scenario.currentScenario as GodfatherScenario)
-                  .setMafiaChoiceText();
+              if (iterator.moveNext()) {
+                text = iterator.current;
+              }
               NightPage.typeOfConfirmation = 2;
               Navigator.of(context).pop();
             });
@@ -124,6 +128,7 @@ class _NightPageState extends State<NightPage> with WidgetsBindingObserver {
           onSave: () {
             AudioManager.playClickEffect();
             NightPage.targetPlayers.add(player);
+            Logger().d("confirmmm");
             Navigator.of(context).pop();
             setState(() {
               if (iterator.moveNext()) {
@@ -211,36 +216,12 @@ class _NightPageState extends State<NightPage> with WidgetsBindingObserver {
     NightPage.isNightOver = false;
     Scenario.currentScenario.nightEvents = {};
     Scenario.currentScenario.report = [];
-    Scenario.currentScenario.currentPlayerAtNight =
-        Player.inGamePlayers.first; // TODO: wtf
     for (Player player in Player.inGamePlayers) {
       playerCheckboxStatus[player] = false;
     }
   }
 
   void resetNight() {
-    // Scenario.currentScenario.resetRemainingAbility();
-    // if (Scenario.currentScenario is GodfatherScenario) {
-    //   iterator = Scenario.currentScenario
-    //       .callRolesRegularNight(
-    //           mafiaChoiceBox: mafiaChoicBox, noAbilityBox: noAbilityBox)
-    //       .iterator;
-    // } else {
-    //   UnimplementedError("error");
-    // }
-    // iterator.moveNext();
-    // text = iterator.current;
-    // NightPage.targetPlayer = null;
-    // NightPage.mafiaTeamChoice = 0;
-    // NightPage.buttonText = 'بیدار شدند';
-    // NightPage.typeOfConfirmation = 0;
-    // NightPage.ableToSelectTile = false;
-    // NightPage.isNightOver = false;
-    // Scenario.currentScenario.nightEvents = {};
-    // resetTiles();
-    // Scenario.currentScenario.resetDataAfterNight();
-    // Scenario.currentScenario.resetRemainingAbility();
-
     Player.inGamePlayers = Player.copyList(GameStateManager
         .gameStates[GameStateManager.getPreviousState()]!.players);
 

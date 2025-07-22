@@ -10,7 +10,6 @@ import 'package:mafia_killer/databases/game_state_manager.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/models/role_side.dart';
-import 'package:mafia_killer/models/scenarios/godfather/godfather_scenario.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/nostradamus.dart';
 import 'package:mafia_killer/models/talking_page_screen_arguments.dart';
 import 'package:mafia_killer/themes/app_color.dart';
@@ -21,9 +20,6 @@ class IntroNightPage extends StatefulWidget {
   const IntroNightPage({super.key});
   static List<Player> targetPlayers = [];
   static String buttonText = 'بیدار شد';
-  static bool isNostradamusSelecting =
-      (Scenario.currentScenario as GodfatherScenario)
-          .doesNostradamusParticipate();
   static bool isNightOver = false;
 
   @override
@@ -39,15 +35,9 @@ class _IntroNightPageState extends State<IntroNightPage>
       GameSettings.currentGameSettings.getSettingsInMap();
 
   bool isCheckBoxDisable(Player player) {
-    if (player.role is Nostradamus) {
-      return true;
-    }
     bool result = false;
-    if ((Scenario.currentScenario as GodfatherScenario)
-            .doesNostradamusParticipate() &&
-        (IntroNightPage.targetPlayers.length ==
-            (Player.getPlayerByRoleType(Nostradamus)!.role as Nostradamus)
-                .inquiryNumber)) {
+    if (Scenario.currentScenario.currentPlayerAtNight!.role!
+        .hasAllSelected(IntroNightPage.targetPlayers.length)) {
       result = true;
     }
     for (Player p in IntroNightPage.targetPlayers) {
@@ -79,11 +69,8 @@ class _IntroNightPageState extends State<IntroNightPage>
           chooseSide: (RoleSide roleSide) {
             (Player.getPlayerByRoleType(Nostradamus)!.role as Nostradamus)
                 .setNostradamusRole(roleSide);
-            IntroNightPage.isNostradamusSelecting = false;
             Navigator.of(context).pop();
             setState(() {
-              iterator.moveNext();
-              text = iterator.current;
               for (Player player in Player.inGamePlayers) {
                 playerCheckboxStatus[player] = false;
               }
@@ -97,20 +84,16 @@ class _IntroNightPageState extends State<IntroNightPage>
   void resetNight() {
     IntroNightPage.targetPlayers = [];
     IntroNightPage.buttonText = 'بیدار شد';
-    IntroNightPage.isNostradamusSelecting =
-        (Scenario.currentScenario as GodfatherScenario)
-            .doesNostradamusParticipate();
     IntroNightPage.isNightOver = false;
     Scenario.currentScenario.ableToSelectTile = true;
-    iterator = Scenario.currentScenario.callRolesIntroNight().iterator;
+    iterator = Scenario.currentScenario
+        .callRolesIntroNight(independantBox: nostradamusBox)
+        .iterator;
     iterator.moveNext();
     text = iterator.current;
     for (Player player in Player.inGamePlayers) {
       playerCheckboxStatus[player] = false;
     }
-
-    Scenario.currentScenario.currentPlayerAtNight =
-        Player.getPlayersByRoleSide(RoleSide.independant)!.first; // TODO: wtf
   }
 
   Widget? settingsPage() {
@@ -262,27 +245,11 @@ class _IntroNightPageState extends State<IntroNightPage>
                   text: text,
                   onPressed: () {
                     AudioManager.playClickEffect();
-                    if (IntroNightPage.isNostradamusSelecting) {
-                      if (IntroNightPage.targetPlayers.length ==
-                          (Player.getPlayerByRoleType(Nostradamus)!.role
-                                  as Nostradamus)
-                              .inquiryNumber) {
-                        nostradamusBox(
-                          (Scenario.currentScenario as GodfatherScenario)
-                              .resultOfNostradamusGuess(
-                                  IntroNightPage.targetPlayers),
-                        );
+                    setState(() {
+                      if (iterator.moveNext()) {
+                        text = iterator.current;
                       }
-                    } else {
-                      setState(() {
-                        if (iterator.moveNext()) {
-                          text = iterator.current;
-                          for (Player player in Player.inGamePlayers) {
-                            playerCheckboxStatus[player] = false;
-                          }
-                        }
-                      });
-                    }
+                    });
                   },
                   buttonText: IntroNightPage.buttonText,
                 ),

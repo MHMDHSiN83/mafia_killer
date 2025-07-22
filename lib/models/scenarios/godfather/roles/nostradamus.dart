@@ -77,4 +77,9 @@ class Nostradamus extends Role {
   bool hasMultiSelection() {
     return true;
   }
+
+  @override
+  bool hasAllSelected(int number) {
+    return number == multiSelectionNumber;
+  }
 }

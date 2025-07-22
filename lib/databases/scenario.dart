@@ -306,9 +306,7 @@ class Scenario {
     return null;
   }
 
-  Iterable<String> callRolesIntroNight() sync* {}
-
-  void resetRemainingAbility() {}
+  Iterable<String> callRolesIntroNight({Function? independantBox}) sync* {}
 
   void resetUIPlayerStatus() {
     for (Player player in Player.inGamePlayers) {
