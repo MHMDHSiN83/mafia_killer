@@ -9,6 +9,7 @@ import 'package:mafia_killer/models/role_side.dart';
 import 'package:mafia_killer/models/scenarios/godfather/last_move_cards/beautiful_mind.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/godfather.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/mafia.dart';
+import 'package:mafia_killer/models/scenarios/godfather/roles/matador.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/nostradamus.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/saul_goodman.dart';
 import 'package:mafia_killer/models/ui_player_status.dart';
@@ -161,11 +162,10 @@ class GodfatherScenario extends Scenario {
       case 0: // shot
         nightEvents[NightEvent.shotByMafia] = [NightPage.targetPlayers[0]];
         break;
-      case 1:
+      case 1: // sixth sense
         godfatherPlayer?.role!.nightAction(
           NightPage.targetPlayers.isEmpty ? null : NightPage.targetPlayers[0],
         );
-        // nightEvents[NightEvent.sixthSensedByGodfather] = NightPage.targetPlayer;
         if (NightPage.targetPlayers.isNotEmpty) {
           NightPage.targetPlayers[0].playerStatus = PlayerStatus.disable;
         }
@@ -175,7 +175,6 @@ class GodfatherScenario extends Scenario {
         NightPage.buttonText = 'اتمام';
         saulGoodmanPlayer?.role!.nightAction(NightPage.targetPlayers[0]);
         if (NightPage.targetPlayers[0].role is Citizen) {
-          // nightEvents[NightEvent.boughtBySaulGoodman] = NightPage.targetPlayer;
           NightPage.targetPlayers[0].role = Role.copy(Scenario.currentScenario
               .getRoleByType(Mafia, searchInGmaeRoles: false)!);
           yield 'خریداری موفقیت آمیز بود. فرد خریداری شده رو بیدار کن تا هم تیمیاشو ببینه';
@@ -183,6 +182,11 @@ class GodfatherScenario extends Scenario {
           yield 'خریداری موفقیت امیز نبود. کمی راه برو و اتمام رو بزن';
         }
         break;
+    }
+    if (Player.getPlayerByRoleType(Matador) == null) {
+      NightPage.buttonText = 'خوابید';
+      ableToSelectTile = false;
+      yield 'تیم مافیا بخوابه';
     }
   }
 
