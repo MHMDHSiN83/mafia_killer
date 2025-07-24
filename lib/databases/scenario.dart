@@ -191,92 +191,20 @@ class Scenario {
     return roles.where((role) => role.name == name).firstOrNull;
   }
 
-  List<String> getConstantRoleOrder() {
-    List<String> constantRoleOrder = [];
-    for (Role role in inGameRoles) {
-      if (role is Matador) {
-        constantRoleOrder.add("ماتادور");
-        break;
-      }
-    }
-    for (Role role in inGameRoles) {
-      if (role is DoctorWatson) {
-        constantRoleOrder.add("دکتر واتسون");
-        break;
-      }
-    }
-    for (Role role in inGameRoles) {
-      if (role is Leon) {
-        constantRoleOrder.add("لئون حرفه‌ای");
-        break;
-      }
-    }
-    for (Role role in inGameRoles) {
-      if (role is CitizenKane) {
-        constantRoleOrder.add("همشهری کین");
-        break;
-      }
-    }
-    for (Role role in inGameRoles) {
-      if (role is Constantine) {
-        constantRoleOrder.add("کنستانتین");
-        break;
-      }
-    }
-    return constantRoleOrder;
+  List<String> getMafiaRoleOrder() {
+    return [];
+  }
+
+  List<String> getOtherRoleOrder() {
+    return [];
   }
 
   List<String> getIntroMafiaTeamAwakingTexts() {
-    List<String> introMafiaTeamAwakingTexts = [
-      "تیم مافیا بیدار شن و همدیگه رو بشناسن",
-    ];
-    Role? godfather = getRoleByType(Godfather);
-    Role? matador = getRoleByType(Matador);
-    Role? saulGoodman = getRoleByType(SaulGoodman);
-    Role? theMafia = getRoleByType(Mafia);
-    if (godfather != null) {
-      introMafiaTeamAwakingTexts.add(godfather.introAwakingRole());
-    }
-    if (matador != null) {
-      introMafiaTeamAwakingTexts.add(matador.introAwakingRole());
-    }
-    if (saulGoodman != null) {
-      introMafiaTeamAwakingTexts.add(saulGoodman.introAwakingRole());
-    }
-    if (theMafia != null) {
-      introMafiaTeamAwakingTexts.add(theMafia.introAwakingRole());
-    }
-    introMafiaTeamAwakingTexts.add("تیم مافیا بخوابه");
-    return introMafiaTeamAwakingTexts;
+    return [];
   }
 
   List<Role> getIntroCitizenTeamRoles() {
-    List<Role> citizenRoles = [];
-    for (Role role in inGameRoles) {
-      if (role is DoctorWatson) {
-        citizenRoles.add(role);
-        break;
-      }
-    }
-    for (Role role in inGameRoles) {
-      if (role is Leon) {
-        citizenRoles.add(role);
-        break;
-      }
-    }
-    for (Role role in inGameRoles) {
-      if (role is CitizenKane) {
-        citizenRoles.add(role);
-        break;
-      }
-    }
-    for (Role role in inGameRoles) {
-      if (role is Constantine) {
-        citizenRoles.add(role);
-        break;
-      }
-    }
-    return citizenRoles;
+    return [];
   }
 
   Role? getRoleByType(Type type, {searchInGmaeRoles = true}) {
@@ -307,6 +235,19 @@ class Scenario {
   }
 
   Iterable<String> callRolesIntroNight({Function? independantBox}) sync* {}
+
+
+  bool isAnyMaifaDead() {
+    for (Player player in Player.inGamePlayers) {
+      if (player.role!.roleSide == RoleSide.mafia &&
+          (player.playerStatus == PlayerStatus.dead ||
+              player.playerStatus == PlayerStatus.removed)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
 
   void resetUIPlayerStatus() {
     for (Player player in Player.inGamePlayers) {

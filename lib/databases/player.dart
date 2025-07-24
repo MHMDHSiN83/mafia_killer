@@ -30,7 +30,8 @@ class Player extends ChangeNotifier {
   @JsonKey(fromJson: _userStatusFromJson, toJson: _userStatusToJson)
   PlayerStatus playerStatus = PlayerStatus.active;
 
-  static PlayerStatus _userStatusFromJson(String status) => PlayerStatus.values.firstWhere((e) => e.name == status);
+  static PlayerStatus _userStatusFromJson(String status) =>
+      PlayerStatus.values.firstWhere((e) => e.name == status);
   static String _userStatusToJson(PlayerStatus status) => status.name;
   // @ignore
   bool seenRole = false;
@@ -221,5 +222,12 @@ class Player extends ChangeNotifier {
         .where((p) =>
             (p.playerStatus == PlayerStatus.active && player.name != p.name))
         .toList();
+  }
+
+  static Player? getPlayerByRoleName(String roleName) {
+    for (var player in Player.inGamePlayers) {
+      if (player.role?.name == roleName) return player;
+    }
+    return null;
   }
 }

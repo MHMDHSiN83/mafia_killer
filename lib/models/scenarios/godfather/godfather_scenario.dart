@@ -7,6 +7,8 @@ import 'package:mafia_killer/models/player_status.dart';
 import 'package:mafia_killer/models/role.dart';
 import 'package:mafia_killer/models/role_side.dart';
 import 'package:mafia_killer/models/scenarios/godfather/last_move_cards/beautiful_mind.dart';
+import 'package:mafia_killer/models/scenarios/godfather/roles/constantine.dart';
+import 'package:mafia_killer/models/scenarios/godfather/roles/doctor_watson.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/godfather.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/mafia.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/matador.dart';
@@ -74,8 +76,7 @@ class GodfatherScenario extends Scenario {
     if (doesNostradamusParticipate()) {
       Player? nostradamusPlayer = Player.getPlayerByRoleType(Nostradamus);
       nostradamusPlayer!.role!.setAvailablePlayers();
-      currentPlayerAtNight =
-          Player.getPlayersByRoleSide(RoleSide.independant)!.first; // TODO: wtf
+      currentPlayerAtNight = nostradamusPlayer;
       while (true) {
         yield nostradamusPlayer.role!.introAwakingRole();
         if (IntroNightPage.targetPlayers.length ==
@@ -88,6 +89,9 @@ class GodfatherScenario extends Scenario {
       ableToSelectTile = false;
       yield nostradamusPlayer.role!.introSleepRoleText();
     }
+
+    ableToSelectTile = false;
+    currentPlayerAtNight = Player.inGamePlayers.first;
     resetUIPlayerStatus();
 
     List<String> introMafiaTeamAwakingTexts = getIntroMafiaTeamAwakingTexts();
@@ -110,6 +114,61 @@ class GodfatherScenario extends Scenario {
     IntroNightPage.isNightOver = true;
     IntroNightPage.buttonText = "";
     yield "همه بیدار شن";
+  }
+
+  @override
+  List<String> getIntroMafiaTeamAwakingTexts() {
+    List<String> introMafiaTeamAwakingTexts = [
+      "تیم مافیا بیدار شن و همدیگه رو بشناسن",
+    ];
+    Role? godfather = getRoleByType(Godfather);
+    Role? matador = getRoleByType(Matador);
+    Role? saulGoodman = getRoleByType(SaulGoodman);
+    Role? theMafia = getRoleByType(Mafia);
+    if (godfather != null) {
+      introMafiaTeamAwakingTexts.add(godfather.introAwakingRole());
+    }
+    if (matador != null) {
+      introMafiaTeamAwakingTexts.add(matador.introAwakingRole());
+    }
+    if (saulGoodman != null) {
+      introMafiaTeamAwakingTexts.add(saulGoodman.introAwakingRole());
+    }
+    if (theMafia != null) {
+      introMafiaTeamAwakingTexts.add(theMafia.introAwakingRole());
+    }
+    introMafiaTeamAwakingTexts.add("تیم مافیا بخوابه");
+    return introMafiaTeamAwakingTexts;
+  }
+
+  @override
+  List<Role> getIntroCitizenTeamRoles() {
+    List<Role> citizenRoles = [];
+    for (Role role in inGameRoles) {
+      if (role is DoctorWatson) {
+        citizenRoles.add(role);
+        break;
+      }
+    }
+    for (Role role in inGameRoles) {
+      if (role is Leon) {
+        citizenRoles.add(role);
+        break;
+      }
+    }
+    for (Role role in inGameRoles) {
+      if (role is CitizenKane) {
+        citizenRoles.add(role);
+        break;
+      }
+    }
+    for (Role role in inGameRoles) {
+      if (role is Constantine) {
+        citizenRoles.add(role);
+        break;
+      }
+    }
+    return citizenRoles;
   }
 
   @override
@@ -191,9 +250,7 @@ class GodfatherScenario extends Scenario {
   }
 
   @override
-  Iterable<String> otherRolesAction({Function? noAbilityBox}) sync* {
-    // List<String> constantRoleOrder =
-    //     Scenario.currentScenario.getConstantRoleOrder();
+  List<String> getOtherRoleOrder() {
     List<String> constantRoleOrder = [
       'ماتادور',
       'دکتر واتسون',
@@ -201,40 +258,46 @@ class GodfatherScenario extends Scenario {
       'همشهری کین',
       'کنستانتین'
     ];
+    return constantRoleOrder;
+  }
+
+  @override
+  Iterable<String> otherRolesAction({Function? noAbilityBox}) sync* {
+    List<String> constantRoleOrder = getOtherRoleOrder();
     NightPage.buttonText = 'خوابید';
 
     for (int i = 0; i < constantRoleOrder.length; i++) {
-      for (Player player in Player.inGamePlayers) {
-        if (player.role!.name == constantRoleOrder[i]) {
-          ableToSelectTile = true;
-          resetUIPlayerStatus();
-          if (player.hasAbility()) {
-            NightPage.buttonText = i <= 1 ? '' : "هیچکس";
-            currentPlayerAtNight = player;
-            player.role!.setAvailablePlayers();
-            if (player.role!.hasMultiSelection()) {
-              NightPage.buttonText = "تائید";
-            }
-            yield player.role!.awakingRole();
-            for (Player p in NightPage.targetPlayers) {
-              player.role!.nightAction(p);
-            }
-            ableToSelectTile = false;
-            NightPage.buttonText = "خوابید";
-            yield player.role!.sleepRoleText();
-          } else {
-            setPlayersToUntargetable();
-            if (player.playerStatus == PlayerStatus.disable) {
-              noAbilityBox!(player.role!.disabledText());
-            } else if (!player.role!.hasAbility()) {
-              noAbilityBox!(player.role!.ranOutOfAbilityText());
-            } else {
-              noAbilityBox!(player.role!.deadOrRemovedText());
-            }
-            yield player.role!.sleepRoleText();
-          }
-          break;
+      Player? player = Player.getPlayerByRoleName(constantRoleOrder[i]);
+      if (player == null) {
+        continue;
+      }
+
+      ableToSelectTile = true;
+      resetUIPlayerStatus();
+      if (player.hasAbility()) {
+        NightPage.buttonText = i <= 1 ? '' : "هیچکس";
+        currentPlayerAtNight = player;
+        player.role!.setAvailablePlayers();
+        if (player.role!.hasMultiSelection()) {
+          NightPage.buttonText = "تائید";
         }
+        yield player.role!.awakingRole();
+        for (Player p in NightPage.targetPlayers) {
+          player.role!.nightAction(p);
+        }
+        ableToSelectTile = false;
+        NightPage.buttonText = "خوابید";
+        yield player.role!.sleepRoleText();
+      } else {
+        setPlayersToUntargetable();
+        if (player.playerStatus == PlayerStatus.disable) {
+          noAbilityBox!(player.role!.disabledText());
+        } else if (!player.role!.hasAbility()) {
+          noAbilityBox!(player.role!.ranOutOfAbilityText());
+        } else {
+          noAbilityBox!(player.role!.deadOrRemovedText());
+        }
+        yield player.role!.sleepRoleText();
       }
     }
   }
@@ -242,8 +305,7 @@ class GodfatherScenario extends Scenario {
   @override
   Iterable<String> callRolesRegularNight(
       {Function? mafiaChoiceBox, Function? noAbilityBox}) sync* {
-    Scenario.currentScenario.currentPlayerAtNight =
-        Player.inGamePlayers.first; // TODO: wtf
+    Scenario.currentScenario.currentPlayerAtNight = Player.inGamePlayers.first;
     final iterator = mafiaTeamAction(mafiaChoiceBox: mafiaChoiceBox!).iterator;
 
     while (iterator.moveNext()) {
@@ -387,17 +449,6 @@ class GodfatherScenario extends Scenario {
     if (godfather.playerStatus == PlayerStatus.active &&
         godfather.hasAbility()) {
       return true;
-    }
-    return false;
-  }
-
-  bool isAnyMaifaDead() {
-    for (Player player in Player.inGamePlayers) {
-      if (player.role!.roleSide == RoleSide.mafia &&
-          (player.playerStatus == PlayerStatus.dead ||
-              player.playerStatus == PlayerStatus.removed)) {
-        return true;
-      }
     }
     return false;
   }

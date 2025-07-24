@@ -29,6 +29,7 @@ GodfatherScenario _$GodfatherScenarioFromJson(Map<String, dynamic> json) =>
           ? null
           : Player.fromJson(
               json['currentPlayerAtNight'] as Map<String, dynamic>)
+      ..ableToSelectTile = json['ableToSelectTile'] as bool
       ..nightEvents = (json['nightEvents'] as Map<String, dynamic>).map(
         (k, e) => MapEntry(
             $enumDecode(_$NightEventEnumMap, k),
@@ -58,6 +59,7 @@ Map<String, dynamic> _$GodfatherScenarioToJson(GodfatherScenario instance) =>
       'recommendedLastMoveCards': instance.recommendedLastMoveCards,
       'inGameRoles': instance.inGameRoles,
       'currentPlayerAtNight': instance.currentPlayerAtNight,
+      'ableToSelectTile': instance.ableToSelectTile,
       'nightEvents': instance.nightEvents
           .map((k, e) => MapEntry(_$NightEventEnumMap[k]!, e)),
       'defendingPlayers': instance.defendingPlayers,
@@ -75,4 +77,9 @@ const _$NightEventEnumMap = {
   NightEvent.inquiryByCitizenKane: 'inquiryByCitizenKane',
   NightEvent.boughtBySaulGoodman: 'boughtBySaulGoodman',
   NightEvent.disabledByMatador: 'disabledByMatador',
+  NightEvent.inquiryByDetective: 'inquiryByDetective',
+  NightEvent.savedByDoctorLecter: 'savedByDoctorLecter',
+  NightEvent.oppositedByJoker: 'oppositedByJoker',
+  NightEvent.shotByProfessional: 'shotByProfessional',
+  NightEvent.silencedByTherapist: 'silencedByTherapist',
 };

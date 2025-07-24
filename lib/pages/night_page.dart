@@ -128,7 +128,6 @@ class _NightPageState extends State<NightPage> with WidgetsBindingObserver {
           onSave: () {
             AudioManager.playClickEffect();
             NightPage.targetPlayers.add(player);
-            Logger().d("confirmmm");
             Navigator.of(context).pop();
             setState(() {
               if (iterator.moveNext()) {

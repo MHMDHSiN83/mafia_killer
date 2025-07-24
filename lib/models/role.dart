@@ -6,7 +6,8 @@ import 'package:mafia_killer/models/scenarios/godfather/roles/citizen.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/citizen_kane.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/constantine.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/doctor_watson.dart';
-import 'package:mafia_killer/models/scenarios/godfather/roles/godfather.dart';
+import 'package:mafia_killer/models/scenarios/godfather/roles/godfather.dart' as godfather;
+import 'package:mafia_killer/models/scenarios/classic/roles/godfather.dart' as classic;
 import 'package:mafia_killer/models/scenarios/godfather/roles/leon.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/mafia.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/matador.dart';
@@ -33,7 +34,7 @@ class Role {
   factory Role.fromJson(Map<String, dynamic> json) {
     switch (json['name']) {
       case 'پدرخوانده':
-        return Godfather.fromJson(json);
+        return godfather.Godfather.fromJson(json);
       case 'ساول گودمن':
         return SaulGoodman.fromJson(json);
       case 'ماتادور':
