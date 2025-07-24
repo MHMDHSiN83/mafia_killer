@@ -12,6 +12,7 @@ Professional _$ProfessionalFromJson(Map<String, dynamic> json) => Professional()
   ..cardImagePath = json['cardImagePath'] as String
   ..characterImagePath = json['characterImagePath'] as String
   ..roleSide = $enumDecode(_$RoleSideEnumMap, json['roleSide'])
+  ..slug = json['slug'] as String
   ..remainingAbility = (json['remainingAbility'] as num).toInt();
 
 Map<String, dynamic> _$ProfessionalToJson(Professional instance) =>
@@ -21,6 +22,7 @@ Map<String, dynamic> _$ProfessionalToJson(Professional instance) =>
       'cardImagePath': instance.cardImagePath,
       'characterImagePath': instance.characterImagePath,
       'roleSide': _$RoleSideEnumMap[instance.roleSide]!,
+      'slug': instance.slug,
       'remainingAbility': instance.remainingAbility,
     };
 

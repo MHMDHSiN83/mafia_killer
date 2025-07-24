@@ -1,18 +1,34 @@
 import 'dart:convert';
-
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/models/role_side.dart';
-import 'package:mafia_killer/models/scenarios/godfather/roles/citizen.dart';
+import 'package:mafia_killer/models/scenarios/classic/roles/detective.dart';
+import 'package:mafia_killer/models/scenarios/classic/roles/die_hard.dart';
+import 'package:mafia_killer/models/scenarios/classic/roles/doctor.dart';
+import 'package:mafia_killer/models/scenarios/classic/roles/doctor_lecter.dart';
+import 'package:mafia_killer/models/scenarios/classic/roles/joker.dart';
+import 'package:mafia_killer/models/scenarios/classic/roles/mayor.dart';
+import 'package:mafia_killer/models/scenarios/classic/roles/professional.dart';
+import 'package:mafia_killer/models/scenarios/classic/roles/therapist.dart';
+import 'package:mafia_killer/models/scenarios/classic/roles/mafia.dart'
+    as classic;
+import 'package:mafia_killer/models/scenarios/classic/roles/citizen.dart'
+    as classic;
+import 'package:mafia_killer/models/scenarios/classic/roles/godfather.dart'
+    as classic;
+
 import 'package:mafia_killer/models/scenarios/godfather/roles/citizen_kane.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/constantine.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/doctor_watson.dart';
-import 'package:mafia_killer/models/scenarios/godfather/roles/godfather.dart' as godfather;
-import 'package:mafia_killer/models/scenarios/classic/roles/godfather.dart' as classic;
 import 'package:mafia_killer/models/scenarios/godfather/roles/leon.dart';
-import 'package:mafia_killer/models/scenarios/godfather/roles/mafia.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/matador.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/nostradamus.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/saul_goodman.dart';
+import 'package:mafia_killer/models/scenarios/godfather/roles/godfather.dart'
+    as godfather;
+import 'package:mafia_killer/models/scenarios/godfather/roles/mafia.dart'
+    as godfather;
+import 'package:mafia_killer/models/scenarios/godfather/roles/citizen.dart'
+    as godfather;
 import 'package:mafia_killer/pages/intro_night_page.dart';
 
 class Role {
@@ -21,6 +37,7 @@ class Role {
   late String cardImagePath;
   late String characterImagePath;
   late RoleSide roleSide;
+  late String slug;
 
   Role();
 
@@ -31,30 +48,54 @@ class Role {
   static List<Role> copyList(List<Role> roles) {
     return roles.map((role) => Role.copy(role)).toList();
   }
+
   factory Role.fromJson(Map<String, dynamic> json) {
-    switch (json['name']) {
-      case 'پدرخوانده':
+    switch (json['slug']) {
+      case 'godfather.godfather':
         return godfather.Godfather.fromJson(json);
-      case 'ساول گودمن':
+      case 'godfather.saulgoodman':
         return SaulGoodman.fromJson(json);
-      case 'ماتادور':
+      case 'godfather.matador':
         return Matador.fromJson(json);
-      case 'مافیا ساده':
-        return Mafia.fromJson(json);
-      case 'نوستراداموس':
+      case 'godfather.mafia':
+        return godfather.Mafia.fromJson(json);
+      case 'godfather.nostradamus':
         return Nostradamus.fromJson(json);
-      case 'دکتر واتسون':
+      case 'godfather.doctor_watson':
         return DoctorWatson.fromJson(json);
-      case 'لئون حرفه‌ای':
+      case 'godfather.leon':
         return Leon.fromJson(json);
-      case 'کنستانتین':
+      case 'godfather.constantine':
         return Constantine.fromJson(json);
-      case 'همشهری کین':
+      case 'godfather.citizen_kane':
         return CitizenKane.fromJson(json);
-      case 'شهروند ساده':
-        return Citizen.fromJson(json);
+      case 'godfather.citizen':
+        return godfather.Citizen.fromJson(json);
+
+      case 'classic.godfather':
+        return classic.Godfather.fromJson(json);
+      case 'classic.doctor_lecter':
+        return DoctorLecter.fromJson(json);
+      case 'classic.joker':
+        return Joker.fromJson(json);
+      case 'classic.mafia':
+        return classic.Mafia.fromJson(json);
+      case 'classic.doctor':
+        return Doctor.fromJson(json);
+      case 'classic.professional':
+        return Professional.fromJson(json);
+      case 'classic.mayor':
+        return Mayor.fromJson(json);
+      case 'classic.detective':
+        return Detective.fromJson(json);
+      case 'classic.therapist':
+        return Therapist.fromJson(json);
+      case 'classic.die_hard':
+        return DieHard.fromJson(json);
+      case 'classic.citizen':
+        return classic.Citizen.fromJson(json);
       default:
-        return Role(); 
+        return Role();
     }
   }
 
@@ -116,9 +157,7 @@ class Role {
     return {};
   }
 
-  void saveAbilities(Map<String, int> abilities) {
-    
-  }
+  void saveAbilities(Map<String, int> abilities) {}
 
   bool hasMultiSelection() {
     return false;

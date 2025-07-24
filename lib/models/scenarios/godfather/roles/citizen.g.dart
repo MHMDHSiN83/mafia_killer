@@ -11,7 +11,8 @@ Citizen _$CitizenFromJson(Map<String, dynamic> json) => Citizen()
   ..description = json['description'] as String
   ..cardImagePath = json['cardImagePath'] as String
   ..characterImagePath = json['characterImagePath'] as String
-  ..roleSide = $enumDecode(_$RoleSideEnumMap, json['roleSide']);
+  ..roleSide = $enumDecode(_$RoleSideEnumMap, json['roleSide'])
+  ..slug = json['slug'] as String;
 
 Map<String, dynamic> _$CitizenToJson(Citizen instance) => <String, dynamic>{
       'name': instance.name,
@@ -19,6 +20,7 @@ Map<String, dynamic> _$CitizenToJson(Citizen instance) => <String, dynamic>{
       'cardImagePath': instance.cardImagePath,
       'characterImagePath': instance.characterImagePath,
       'roleSide': _$RoleSideEnumMap[instance.roleSide]!,
+      'slug': instance.slug,
     };
 
 const _$RoleSideEnumMap = {

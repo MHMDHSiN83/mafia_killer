@@ -12,6 +12,7 @@ Nostradamus _$NostradamusFromJson(Map<String, dynamic> json) => Nostradamus()
   ..cardImagePath = json['cardImagePath'] as String
   ..characterImagePath = json['characterImagePath'] as String
   ..roleSide = $enumDecode(_$RoleSideEnumMap, json['roleSide'])
+  ..slug = json['slug'] as String
   ..inGameRoleSide = $enumDecode(_$RoleSideEnumMap, json['inGameRoleSide'])
   ..shield = json['shield'] as bool
   ..inquiryNumber = (json['inquiryNumber'] as num).toInt()
@@ -24,6 +25,7 @@ Map<String, dynamic> _$NostradamusToJson(Nostradamus instance) =>
       'cardImagePath': instance.cardImagePath,
       'characterImagePath': instance.characterImagePath,
       'roleSide': _$RoleSideEnumMap[instance.roleSide]!,
+      'slug': instance.slug,
       'inGameRoleSide': _$RoleSideEnumMap[instance.inGameRoleSide]!,
       'shield': instance.shield,
       'inquiryNumber': instance.inquiryNumber,

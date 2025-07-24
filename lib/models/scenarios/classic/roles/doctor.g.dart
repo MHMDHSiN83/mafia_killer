@@ -12,6 +12,7 @@ Doctor _$DoctorFromJson(Map<String, dynamic> json) => Doctor()
   ..cardImagePath = json['cardImagePath'] as String
   ..characterImagePath = json['characterImagePath'] as String
   ..roleSide = $enumDecode(_$RoleSideEnumMap, json['roleSide'])
+  ..slug = json['slug'] as String
   ..selfHeal = (json['selfHeal'] as num).toInt()
   ..multiSelectionNumber = (json['multiSelectionNumber'] as num).toInt();
 
@@ -21,6 +22,7 @@ Map<String, dynamic> _$DoctorToJson(Doctor instance) => <String, dynamic>{
       'cardImagePath': instance.cardImagePath,
       'characterImagePath': instance.characterImagePath,
       'roleSide': _$RoleSideEnumMap[instance.roleSide]!,
+      'slug': instance.slug,
       'selfHeal': instance.selfHeal,
       'multiSelectionNumber': instance.multiSelectionNumber,
     };

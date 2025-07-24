@@ -12,6 +12,7 @@ Godfather _$GodfatherFromJson(Map<String, dynamic> json) => Godfather()
   ..cardImagePath = json['cardImagePath'] as String
   ..characterImagePath = json['characterImagePath'] as String
   ..roleSide = $enumDecode(_$RoleSideEnumMap, json['roleSide'])
+  ..slug = json['slug'] as String
   ..remainingAbility = (json['remainingAbility'] as num).toInt()
   ..shield = (json['shield'] as num).toInt();
 
@@ -21,6 +22,7 @@ Map<String, dynamic> _$GodfatherToJson(Godfather instance) => <String, dynamic>{
       'cardImagePath': instance.cardImagePath,
       'characterImagePath': instance.characterImagePath,
       'roleSide': _$RoleSideEnumMap[instance.roleSide]!,
+      'slug': instance.slug,
       'remainingAbility': instance.remainingAbility,
       'shield': instance.shield,
     };
