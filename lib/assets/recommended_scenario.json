@@ -2,23 +2,23 @@
     {
         "name": "godfather",
         "roles": [
-            "godfather",
-            "saul_goodman",
-            "matador",
-            "mafia",
-            "nostradamus",
-            "doctor_watson",
-            "leon",
-            "citizen_kane",
-            "constantine",
-            "citizen"
+            "godfather.godfather",
+            "godfather.saul_goodman",
+            "godfather.matador",
+            "godfather.mafia",
+            "godfather.nostradamus",
+            "godfather.doctor_watson",
+            "godfather.leon",
+            "godfather.citizen_kane",
+            "godfather.constantine",
+            "godfather.citizen"
         ],
         "last_move_cards": [
-            "beautiful_mind",
-            "face_off",
-            "handcuffs",
-            "reveal_identity",
-            "silence_of_the_lambs"
+            "godfather.beautiful_mind",
+            "godfather.face_off",
+            "godfather.handcuffs",
+            "godfather.reveal_identity",
+            "godfather.silence_of_the_lambs"
         ],
         "role_distributions": {
             "5": [1, 0, 0, 0, 0, 1, 0, 0, 0, 3],
@@ -60,19 +60,26 @@
     {
         "name": "classic",
         "roles": [
-            "godfather",
-            "saul_goodman",
-            "matador",
-            "mafia",
-            "doctor_watson",
-            "leon",
-            "citizen"
+            "classic.godfather",
+            "classic.doctor_lecter",
+            "classic.joker",
+            "classic.mafia",
+            "classic.doctor",
+            "classic.professional",
+            "classic.mayor",
+            "classic.detective",
+            "classic.therapist",
+            "classic.die_hard",
+            "classic.citizen"
         ],
         "last_move_cards": [
-            "silence_of_the_lambs",
-            "face_off",
-            "handcuffs",
-            "reveal_identity"
+            "classic.insomnia",
+            "classic.vertigo",
+            "classic.red_carpet",
+            "classic.green_mile",
+            "classic.final_shot",
+            "classic.beautiful_mind",
+            "classic.great_lie"
         ],
         "role_distributions": {
             "5": [1, 0, 0, 0, 1, 0, 3],
