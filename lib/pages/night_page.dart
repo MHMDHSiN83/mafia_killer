@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:logger/web.dart';
 import 'package:mafia_killer/components/call_role.dart';
 import 'package:mafia_killer/components/dialogboxes/confirmation_dialogbox.dart';
+import 'package:mafia_killer/components/dialogboxes/detective_dialogbox.dart';
+import 'package:mafia_killer/components/dialogboxes/information_dialogbox.dart';
 import 'package:mafia_killer/components/dialogboxes/mafia_choice_dialogbox.dart';
+import 'package:mafia_killer/components/dialogboxes/die_hard_dialogbox.dart';
 import 'package:mafia_killer/components/dialogboxes/message_dialogbox.dart';
 import 'package:mafia_killer/components/my_divider.dart';
 import 'package:mafia_killer/components/night_player_tile2.dart';
@@ -12,6 +15,7 @@ import 'package:mafia_killer/databases/game_state_manager.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/models/player_status.dart';
+import 'package:mafia_killer/models/scenarios/classic/roles/detective.dart';
 import 'package:mafia_killer/models/scenarios/godfather/godfather_scenario.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/godfather.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/saul_goodman.dart';
@@ -194,15 +198,61 @@ class _NightPageState extends State<NightPage> with WidgetsBindingObserver {
     );
   }
 
+  void detectiveAction(Player player) {
+    NightPage.targetPlayers = [];
+    NightPage.targetPlayers.add(player);
+    Player.getPlayerByRoleType(Detective)!
+        .role!
+        .nightAction(NightPage.targetPlayers[0]);
+    showDialog(
+      context: context,
+      builder: (context) {
+        return DetectiveDialogbox(
+          text: Scenario.currentScenario.immediateResponse!,
+          onSave: () {
+            Navigator.of(context).pop();
+          },
+        );
+      },
+    );
+  }
+
+  void dieHardAction() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return DieHardDialogbox(
+          takeInquiry: () {
+            Scenario.currentScenario.takeInquiry = true;
+            Navigator.of(context).pop();
+            setState(() {
+              if (iterator.moveNext()) {
+                text = iterator.current;
+              }
+            });
+          },
+          notTakeInquiry: () {
+            Scenario.currentScenario.takeInquiry = false;
+            Navigator.of(context).pop();
+            setState(() {
+              if (iterator.moveNext()) {
+                text = iterator.current;
+              }
+            });
+          },
+        );
+      },
+    );
+  }
+
   void resetUIBeforeNight() {
-    if (Scenario.currentScenario is GodfatherScenario) {
-      iterator = Scenario.currentScenario
-          .callRolesRegularNight(
-              mafiaChoiceBox: mafiaChoicBox, noAbilityBox: noAbilityBox)
-          .iterator;
-    } else {
-      UnimplementedError("error");
-    }
+    iterator = Scenario.currentScenario
+        .callRolesRegularNight(
+            mafiaChoiceBox: mafiaChoicBox,
+            noAbilityBox: noAbilityBox,
+            dieHardBox: dieHardAction)
+        .iterator;
+
     resetTiles();
     iterator.moveNext();
     text = iterator.current;
@@ -375,7 +425,9 @@ class _NightPageState extends State<NightPage> with WidgetsBindingObserver {
                               break;
                             case 2:
                               buyingAction(Player.inGamePlayers[index]);
-
+                              break;
+                            case 3:
+                              detectiveAction(Player.inGamePlayers[index]);
                               break;
                             default:
                           }

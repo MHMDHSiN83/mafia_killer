@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:logger/logger.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/models/last_move_card.dart';
@@ -161,10 +162,11 @@ class ClassicScenario extends Scenario {
     yield "تیم مافیا از خواب بیدار شه";
     ableToSelectTile = true;
     NightPage.buttonText = '';
-    yield "تیم مافیا از خواب بیدار شه";
+    currentPlayerAtNight =
+        Player.getPlayersByRoleSide(RoleSide.mafia)!.first; // TODO: wtf
     yield 'تیم مافیا به یکی شلیک کنه'; // TODO: probable move to godfather role(?)
     ableToSelectTile = true;
-
+    nightEvents[NightEvent.shotByMafia] = [NightPage.targetPlayers[0]];
     List<String> constantRoleOrder = getMafiaRoleOrder();
 
     for (int i = 0; i < constantRoleOrder.length; i++) {
@@ -173,6 +175,7 @@ class ClassicScenario extends Scenario {
         continue;
       }
       ableToSelectTile = true;
+      Logger().d("hellooooo");
       resetUIPlayerStatus();
       NightPage.buttonText = '';
       currentPlayerAtNight = player;
@@ -197,17 +200,19 @@ class ClassicScenario extends Scenario {
   @override
   List<String> getOtherRoleOrder() {
     List<String> constantRoleOrder = [
-      'ماتادور',
-      'دکتر واتسون',
-      'لئون حرفه‌ای',
-      'همشهری کین',
-      'کنستانتین'
+      'دکتر',
+      'کارآگاه',
+      'شهردار',
+      'جان سخت',
+      'حرفه‌ای',
+      'روان‌پزشک',
     ];
     return constantRoleOrder;
   }
 
   @override
-  Iterable<String> otherRolesAction({Function? noAbilityBox}) sync* {
+  Iterable<String> otherRolesAction(
+      {Function? noAbilityBox, Function? dieHardBox}) sync* {
     List<String> constantRoleOrder = getOtherRoleOrder();
     NightPage.buttonText = 'خوابید';
 
@@ -226,7 +231,15 @@ class ClassicScenario extends Scenario {
         if (player.role!.hasMultiSelection()) {
           NightPage.buttonText = "تائید";
         }
+        if (player.role! is Detective) {
+          NightPage.typeOfConfirmation = 3;
+          NightPage.buttonText = "تائید";
+        }
+        if(player.role! is DieHard) {
+          dieHardBox!();
+        }
         yield player.role!.awakingRole();
+          NightPage.typeOfConfirmation = 0;
         for (Player p in NightPage.targetPlayers) {
           player.role!.nightAction(p);
         }
@@ -249,16 +262,19 @@ class ClassicScenario extends Scenario {
 
   @override
   Iterable<String> callRolesRegularNight(
-      {Function? mafiaChoiceBox, Function? noAbilityBox}) sync* {
+      {Function? mafiaChoiceBox,
+      Function? noAbilityBox,
+      Function? dieHardBox}) sync* {
     Scenario.currentScenario.currentPlayerAtNight = Player.inGamePlayers.first;
-    final iterator = mafiaTeamAction(mafiaChoiceBox: mafiaChoiceBox!).iterator;
+    final iterator = mafiaTeamAction(mafiaChoiceBox: null).iterator;
 
     while (iterator.moveNext()) {
       yield iterator.current;
     }
 
-    final otherRolesIterator =
-        otherRolesAction(noAbilityBox: noAbilityBox!).iterator;
+    final otherRolesIterator = otherRolesAction(
+            noAbilityBox: noAbilityBox!, dieHardBox: dieHardBox)
+        .iterator;
 
     while (otherRolesIterator.moveNext()) {
       yield otherRolesIterator.current;
@@ -269,90 +285,56 @@ class ClassicScenario extends Scenario {
     nightReport();
   }
 
-  // @override
-  // void nightReport() {
-  //   Player? shotByMafia = getFirstPlayer(NightEvent.shotByMafia);
-  //   Player? shotByLeon = getFirstPlayer(NightEvent.shotByLeon);
-  //   Player? revivedByConstantine =
-  //       getFirstPlayer(NightEvent.revivedByConstantine);
-  //   Player? inquiryByCitizenKane =
-  //       getFirstPlayer(NightEvent.inquiryByCitizenKane);
-  //   Player? sixthSensedByGodfather =
-  //       getFirstPlayer(NightEvent.sixthSensedByGodfather);
+  @override
+  void nightReport() {
+    Player? shotByMafia = getFirstPlayer(NightEvent.shotByMafia);
+    Player? shotByProfessional = getFirstPlayer(NightEvent.shotByProfessional);
+    Player? savedByDoctorLecter =
+        getFirstPlayer(NightEvent.savedByDoctorLecter);
+    Player? silencedByTherapist =
+        getFirstPlayer(NightEvent.silencedByTherapist);
 
-  //   List<Player> savedByDoctor = nightEvents[NightEvent.savedByDoctor] ?? [];
+    List<Player> savedByDoctor = nightEvents[NightEvent.savedByDoctor] ?? [];
+    Player? professional = Player.getPlayerByRoleType(Professional);
 
-  //   Player? leon = Player.getPlayerByRoleType(Leon);
-  //   Player? citizenKane = Player.getPlayerByRoleType(CitizenKane);
+    // mafia shot process -> Done
+    if (shotByMafia != null) {
+      bool isSaved = savedByDoctor.any((p) => p.name == shotByMafia.name);
 
-  //   // mafia shot process -> Done
-  //   if (shotByMafia != null) {
-  //     bool isSaved = savedByDoctor.any((p) => p.name == shotByMafia.name);
+      if (!isSaved &&
+          (shotByMafia.role is! DieHard ||
+              (shotByMafia.role is DieHard &&
+                  (shotByMafia.role as DieHard).shield <= 0))) {
+        shotByMafia.playerStatus = PlayerStatus.dead;
+        report.add("${shotByMafia.name} کشته شد.");
+      } else if (shotByMafia.role is DieHard &&
+          (shotByMafia.role as DieHard).shield > 0) {
+        (shotByMafia.role as DieHard).shield--;
+      }
+    }
 
-  //     if (!isSaved &&
-  //         (shotByMafia.role is! Leon ||
-  //             (shotByMafia.role is Leon &&
-  //                 (shotByMafia.role as Leon).shield <= 0)) &&
-  //         (shotByMafia.role is! Nostradamus ||
-  //             (shotByMafia.role is Nostradamus &&
-  //                 !(shotByMafia.role as Nostradamus).shield))) {
-  //       shotByMafia.playerStatus = PlayerStatus.dead;
-  //       report.add("${shotByMafia.name} کشته شد.");
-  //     } else if (shotByMafia.role is Leon &&
-  //         (shotByMafia.role as Leon).shield == 1) {
-  //       (shotByMafia.role as Leon).shield--;
-  //     }
-  //   }
-  //   // mafia sixth sense -> Done
-  //   if (sixthSensedByGodfather != null) {
-  //     // if it isn't null it means it succeeded
-  //     sixthSensedByGodfather.playerStatus = PlayerStatus.removed;
-  //     report.add(
-  //         "${sixthSensedByGodfather.name} سلاخی شد و از بازی به طور کامل خارج میشود");
-  //   }
+    // professional shot process -> Done
+    if (shotByProfessional != null) {
+      bool isSaved =
+          savedByDoctor.any((p) => p.name == shotByProfessional.name);
+      if (shotByProfessional.role!.roleSide == RoleSide.citizen) {
+        professional!.playerStatus = PlayerStatus.dead;
+        report.add("${professional.name} کشته شد.");
+      } else if (!isSaved &&
+          (savedByDoctorLecter == null ||
+              (savedByDoctorLecter.name != shotByProfessional.name))) {
+        shotByProfessional.playerStatus = PlayerStatus.dead;
+        report.add("${shotByProfessional.name} کشته شد.");
+      }
+    }
 
-  //   // leon shot process -> Done
-  //   if (shotByLeon != null) {
-  //     bool isSaved = savedByDoctor.any((p) => p.name == shotByLeon.name);
-  //     if (shotByLeon.role!.roleSide == RoleSide.citizen) {
-  //       leon!.playerStatus = PlayerStatus.dead;
-  //       report.add("${leon.name} کشته شد.");
-  //     } else if (shotByLeon.role is! Nostradamus &&
-  //         (shotByLeon.role is! Godfather ||
-  //             (shotByLeon.role is Godfather &&
-  //                 (shotByLeon.role as Godfather).shield <= 0)) &&
-  //         !isSaved) {
-  //       shotByLeon.playerStatus = PlayerStatus.dead;
-  //       report.add("${shotByLeon.name} کشته شد.");
-  //     } else if (shotByLeon.role is Godfather &&
-  //         (shotByLeon.role as Godfather).shield == 1) {
-  //       (shotByLeon.role as Godfather).shield--;
-  //     }
-  //   }
+    if (silencedByTherapist != null) {
+      silencedPlayerDuringDay = [silencedByTherapist];
+      report.add("${silencedByTherapist.name} امروز نمی‌تونه حرف بزنه.");
+    }
 
-  //   // citizen kane inquiry -> player has to die the next day
-  //   if ((citizenKane != null) &&
-  //       (citizenKane.role as CitizenKane).remainingAbility == 0) {
-  //     citizenKane.playerStatus = PlayerStatus.dead;
-  //     report.add("${citizenKane.name} کشته شد.");
-  //   }
-  //   if (inquiryByCitizenKane != null) {
-  //     if (citizenKane!.playerStatus == PlayerStatus.active &&
-  //         inquiryByCitizenKane.playerStatus == PlayerStatus.active) {
-  //       if (inquiryByCitizenKane.role!.roleSide == RoleSide.mafia) {
-  //         report.add("${inquiryByCitizenKane.name} مافیای بازی است");
-  //       }
-  //       (citizenKane.role as CitizenKane).remainingAbility--;
-  //     }
-  //   }
-  //   // constantine reviving
-  //   if (revivedByConstantine != null) {
-  //     revivedByConstantine.playerStatus = PlayerStatus.active;
-  //     report.add("${revivedByConstantine.name} متولد شد.");
-  //   }
-
-  //   if (report.isEmpty) {
-  //     report.add("توی شبی که گذشت هیچکس کشته نشد!");
-  //   }
-  // }
+    if (report.isEmpty) {
+      report.add("توی شبی که گذشت هیچکس کشته نشد!");
+    }
+  }
 }

@@ -28,7 +28,9 @@ class DoctorLecter extends Role {
   @override
   void nightAction(Player? player) {
     if (player != null) {
-      Scenario.currentScenario.nightEvents[NightEvent.savedByDoctorLecter] = [player];
+      Scenario.currentScenario.nightEvents[NightEvent.savedByDoctorLecter] = [
+        player
+      ];
       if (player.role!.name == 'دکتر لکتر') {
         selfHeal--;
       }
@@ -38,7 +40,7 @@ class DoctorLecter extends Role {
   @override
   void setAvailablePlayers() {
     for (Player player in Player.inGamePlayers) {
-      if (player.role!.roleSide == RoleSide.mafia) {
+      if ((player.role!.name == name && selfHeal <= 0) || player.role!.roleSide == RoleSide.citizen) {
         player.uiPlayerStatus = UIPlayerStatus.untargetable;
       }
     }
@@ -47,6 +49,11 @@ class DoctorLecter extends Role {
   @override
   String introAwakingRole() {
     return 'دکتر لکتر لایک نشون بده';
+  }
+
+  @override
+  String awakingRole() {
+    return 'دکتر لکتر بیدار شه و یکی از اعضای مافیا رو نجات بده';
   }
 
   @override
@@ -61,6 +68,6 @@ class DoctorLecter extends Role {
 
   @override
   void saveAbilities(Map<String, int> abilities) {
-    selfHeal = abilities['نجات خود']!; 
+    selfHeal = abilities['نجات خود']!;
   }
 }

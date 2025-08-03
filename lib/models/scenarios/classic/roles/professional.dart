@@ -31,7 +31,7 @@ class Professional extends Role {
   @override
   void nightAction(Player? player) {
     if (player != null) {
-      Scenario.currentScenario.nightEvents[NightEvent.shotByLeon] = [player];
+      Scenario.currentScenario.nightEvents[NightEvent.shotByProfessional] = [player];
       remainingAbility--;
     }
   }

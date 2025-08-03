@@ -17,7 +17,7 @@ class Joker extends Role {
     cardImagePath = "lib/images/roles/matador.jpg";
   }
 
-  String? lastPlayerName; // need this?
+  String? lastPlayerName; // TODO: need this?
 
   factory Joker.fromJson(Map<String, dynamic> json) =>
       _$JokerFromJson(json);

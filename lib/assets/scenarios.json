@@ -177,7 +177,7 @@
                 "slug": "classic.doctor_lecter",
                 "description": "اگر فردی از گروه مافیا خارج شود ساول می‌تواند جای شلیک شب، معامله و خریداری انجام دهد. ساول گودمن فقط یکبار می‌تواند یکی از شهروندان ساده را به یک مافیای ساده تبدیل کند. با علامت او همان شب گرداننده آن فرد را از نقش جدیدش یعنی مافیای ساده مطلع می‌کند و وی را بیدار می‌کند تا هم تیمی های خود را بشناسد. اگر ساول گودمن شهروند غیرساده یا نوستراداموس را انتخاب کند با ضربدر گرداننده مواجه شده و گرداننده نشانش را بیدار نمی‌کند. توانمندی ساول و شلیک آن شب مافیا نیز از بین می‌رود.",
                 "roleSide": "mafia",
-                "cardImagePath": "lib/images/roles/role_cards/saul_goodman.jpg",
+                "cardImagePath": "lib/images/roles/role_cards/doctor_lecter.png",
                 "characterImagePath": "lib/images/roles/role_characters/saul_goodman.png",
                 "selfHeal": 1
             },
@@ -186,7 +186,7 @@
                 "slug": "classic.joker",
                 "description": "اگر فردی از گروه مافیا خارج شود ساول می‌تواند جای شلیک شب، معامله و خریداری انجام دهد. ساول گودمن فقط یکبار می‌تواند یکی از شهروندان ساده را به یک مافیای ساده تبدیل کند. با علامت او همان شب گرداننده آن فرد را از نقش جدیدش یعنی مافیای ساده مطلع می‌کند و وی را بیدار می‌کند تا هم تیمی های خود را بشناسد. اگر ساول گودمن شهروند غیرساده یا نوستراداموس را انتخاب کند با ضربدر گرداننده مواجه شده و گرداننده نشانش را بیدار نمی‌کند. توانمندی ساول و شلیک آن شب مافیا نیز از بین می‌رود.",
                 "roleSide": "mafia",
-                "cardImagePath": "lib/images/roles/role_cards/saul_goodman.jpg",
+                "cardImagePath": "lib/images/roles/role_cards/joker.png",
                 "characterImagePath": "lib/images/roles/role_characters/saul_goodman.png"
             },
             {
@@ -221,7 +221,7 @@
                 "slug": "classic.mayor",
                 "description": "هر شبی که بخواهد می‌تواند به یکی از اعضای تیم مافیا شلیک کند. اما با شلیک اشتباه به شهروندان به مجازات، خودش کشته می‌شود و دکتر نمی‌تواند او را نجات دهد. لئون یک جلیقه دارد که یکبار از تیر نجات پیدا می‌کند. حداکثر دو شلیک دارد.",
                 "roleSide": "citizen",
-                "cardImagePath": "lib/images/roles/role_cards/leon.jpg",
+                "cardImagePath": "lib/images/roles/role_cards/mayor.png",
                 "characterImagePath": "lib/images/roles/role_characters/leon.png",
                 "remainingAbility": 2
             },
@@ -230,7 +230,7 @@
                 "slug": "classic.detective",
                 "description": "هر شبی که بخواهد می‌تواند به یکی از اعضای تیم مافیا شلیک کند. اما با شلیک اشتباه به شهروندان به مجازات، خودش کشته می‌شود و دکتر نمی‌تواند او را نجات دهد. لئون یک جلیقه دارد که یکبار از تیر نجات پیدا می‌کند. حداکثر دو شلیک دارد.",
                 "roleSide": "citizen",
-                "cardImagePath": "lib/images/roles/role_cards/leon.jpg",
+                "cardImagePath": "lib/images/roles/role_cards/detective.png",
                 "characterImagePath": "lib/images/roles/role_characters/leon.png"
             },
             {
@@ -238,7 +238,7 @@
                 "slug": "classic.therapist",
                 "description": "هر شبی که بخواهد می‌تواند به یکی از اعضای تیم مافیا شلیک کند. اما با شلیک اشتباه به شهروندان به مجازات، خودش کشته می‌شود و دکتر نمی‌تواند او را نجات دهد. لئون یک جلیقه دارد که یکبار از تیر نجات پیدا می‌کند. حداکثر دو شلیک دارد.",
                 "roleSide": "citizen",
-                "cardImagePath": "lib/images/roles/role_cards/leon.jpg",
+                "cardImagePath": "lib/images/roles/role_cards/therapist.png",
                 "characterImagePath": "lib/images/roles/role_characters/leon.png",
                 "remainingAbility": 2
             },
@@ -247,7 +247,7 @@
                 "slug": "classic.die_hard",
                 "description": "هر شبی که بخواهد می‌تواند به یکی از اعضای تیم مافیا شلیک کند. اما با شلیک اشتباه به شهروندان به مجازات، خودش کشته می‌شود و دکتر نمی‌تواند او را نجات دهد. لئون یک جلیقه دارد که یکبار از تیر نجات پیدا می‌کند. حداکثر دو شلیک دارد.",
                 "roleSide": "citizen",
-                "cardImagePath": "lib/images/roles/role_cards/leon.jpg",
+                "cardImagePath": "lib/images/roles/role_cards/die_hard.png",
                 "characterImagePath": "lib/images/roles/role_characters/leon.png",
                 "remainingAbility": 2,
                 "shield": 1
@@ -266,7 +266,7 @@
                 "title": "بی‌خوابی",
                 "slug": "classic.insomnia",
                 "description": "بازیکن اخراجی با کارت دستبند هرکس را نشان کند، توانمندی‌های آن شب را از وی می‌گیرد. توانایی شلیک مختص به تیم مافیا است و این کارت مانع آن نمی‌شود.",
-                "selectionImagePath": "lib/images/last_move_cards/Handcuffs-LastMoveCard.png",
+                "selectionImagePath": "lib/images/last_move_cards/insomnia.png",
                 "flippedImagePath": "lib/images/last_move_cards/Handcuffs-LastMoveCard-Flipped.png",
                 "imagePath": "lib/images/last_move_cards/Handcuffs-LastMoveCard-old.png",
                 "isUsed": false
@@ -275,7 +275,7 @@
                 "title": "سرگیجه",
                 "slug": "classic.vertigo",
                 "description": " گرداننده بدون نیاز به استعلام جمعی نقش دقیق بازیکن اخراجی  را فاش می‌کند و او از بازی بیرون می‌رود. در این حالت امکان بازگشت به بازی توسط کنستانتین را ندارد.",
-                "selectionImagePath": "lib/images/last_move_cards/RevealIdentity-LastMoveCard.png",
+                "selectionImagePath": "lib/images/last_move_cards/vertigo.png",
                 "flippedImagePath": "lib/images/last_move_cards/RevealIdentity-LastMoveCard-Flipped.png",
                 "imagePath": "lib/images/last_move_cards/RevealIdentity-LastMoveCard-old.png",
                 "isUsed": false
@@ -284,7 +284,7 @@
                 "title": "فرش قرمز",
                 "slug": "classic.red_carpet",
                 "description": "بازیکن قبل از خروج کارت نقش خود را با یکی از بازیکنان عوض می‌کند.",
-                "selectionImagePath": "lib/images/last_move_cards/FaceOff-LastMoveCard.png",
+                "selectionImagePath": "lib/images/last_move_cards/red_carpet.png",
                 "flippedImagePath": "lib/images/last_move_cards/FaceOff-LastMoveCard-Flipped.png",
                 "imagePath": "lib/images/last_move_cards/FaceOff-LastMoveCard-old.png",
                 "isUsed": false
@@ -293,7 +293,7 @@
                 "title": "مسیر سبز",
                 "slug": "classic.green_mile",
                 "description": "بازیکن اخراجی با کارت دستبند هرکس را نشان کند، توانمندی‌های آن شب را از وی می‌گیرد. توانایی شلیک مختص به تیم مافیا است و این کارت مانع آن نمی‌شود.",
-                "selectionImagePath": "lib/images/last_move_cards/SilenceOfTheLambs-LastMoveCard.png",
+                "selectionImagePath": "lib/images/last_move_cards/green_mile.png",
                 "flippedImagePath": "lib/images/last_move_cards/SilenceOfTheLambs-LastMoveCard-Flipped.png",
                 "imagePath": "lib/images/last_move_cards/SilenceOfTheLambs-LastMoveCard-old.png",
                 "isUsed": false
@@ -302,25 +302,25 @@
                 "title": "شلیک نهایی",
                 "slug": "classic.final_shot",
                 "description": "بازیکن اخراجی با کارت دستبند هرکس را نشان کند، توانمندی‌های آن شب را از وی می‌گیرد. توانایی شلیک مختص به تیم مافیا است و این کارت مانع آن نمی‌شود.",
-                "selectionImagePath": "lib/images/last_move_cards/Handcuffs-LastMoveCard.png",
+                "selectionImagePath": "lib/images/last_move_cards/final_shot.png",
                 "flippedImagePath": "lib/images/last_move_cards/Handcuffs-LastMoveCard-Flipped.png",
                 "imagePath": "lib/images/last_move_cards/Handcuffs-LastMoveCard-old.png",
                 "isUsed": false
             },
             {
                 "title": "ذهن زیبا",
-                "slug": "classic.beautiful_mind",
-                "description": "بازیکن اخراجی با کارت دستبند هرکس را نشان کند، توانمندی‌های آن شب را از وی می‌گیرد. توانایی شلیک مختص به تیم مافیا است و این کارت مانع آن نمی‌شود.",
-                "selectionImagePath": "lib/images/last_move_cards/Handcuffs-LastMoveCard.png",
-                "flippedImagePath": "lib/images/last_move_cards/Handcuffs-LastMoveCard-Flipped.png",
-                "imagePath": "lib/images/last_move_cards/Handcuffs-LastMoveCard-old.png",
+                "slug": "godfather.beautiful_mind",
+                "description": "اگر صاحب کارت بتواند نوستراداموس را در بازی شناسایی کند، به بازی برمی‌گردد و نوستراداموس از بازی خارج می‌شود. اگر نوستراداموس این کارت را انتخاب کند، او به بازی برمی‌گردد ولی سپرش از بین می‌رود.",
+                "selectionImagePath": "lib/images/last_move_cards/BeautifulMind-LastMoveCard.png",
+                "flippedImagePath": "lib/images/last_move_cards/BeautifulMind-LastMoveCard-Flipped.png",
+                "imagePath": "lib/images/last_move_cards/BeautifulMind-LastMoveCard-old.png",
                 "isUsed": false
             },
             {
                 "title": "دروغ بزرگ",
                 "slug": "classic.great_lie",
                 "description": "بازیکن اخراجی با کارت دستبند هرکس را نشان کند، توانمندی‌های آن شب را از وی می‌گیرد. توانایی شلیک مختص به تیم مافیا است و این کارت مانع آن نمی‌شود.",
-                "selectionImagePath": "lib/images/last_move_cards/Handcuffs-LastMoveCard.png",
+                "selectionImagePath": "lib/images/last_move_cards/great_lie.png",
                 "flippedImagePath": "lib/images/last_move_cards/Handcuffs-LastMoveCard-Flipped.png",
                 "imagePath": "lib/images/last_move_cards/Handcuffs-LastMoveCard-old.png",
                 "isUsed": false

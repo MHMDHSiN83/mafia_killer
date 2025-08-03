@@ -41,7 +41,7 @@ class Therapist extends Role {
   @override
   void setAvailablePlayers() {
     for (Player player in Player.inGamePlayers) {
-      if (player.role!.name == 'همشهری کین') {
+      if (player.role!.name == 'روان‌پزشک') {
         player.uiPlayerStatus = UIPlayerStatus.untargetable;
       }
     }

@@ -304,7 +304,7 @@ class GodfatherScenario extends Scenario {
 
   @override
   Iterable<String> callRolesRegularNight(
-      {Function? mafiaChoiceBox, Function? noAbilityBox}) sync* {
+      {Function? mafiaChoiceBox, Function? noAbilityBox, Function? dieHardBox}) sync* {
     Scenario.currentScenario.currentPlayerAtNight = Player.inGamePlayers.first;
     final iterator = mafiaTeamAction(mafiaChoiceBox: mafiaChoiceBox!).iterator;
 
@@ -354,7 +354,7 @@ class GodfatherScenario extends Scenario {
         shotByMafia.playerStatus = PlayerStatus.dead;
         report.add("${shotByMafia.name} کشته شد.");
       } else if (shotByMafia.role is Leon &&
-          (shotByMafia.role as Leon).shield == 1) {
+          (shotByMafia.role as Leon).shield > 0) {
         (shotByMafia.role as Leon).shield--;
       }
     }
@@ -380,7 +380,7 @@ class GodfatherScenario extends Scenario {
         shotByLeon.playerStatus = PlayerStatus.dead;
         report.add("${shotByLeon.name} کشته شد.");
       } else if (shotByLeon.role is Godfather &&
-          (shotByLeon.role as Godfather).shield == 1) {
+          (shotByLeon.role as Godfather).shield > 0) {
         (shotByLeon.role as Godfather).shield--;
       }
     }

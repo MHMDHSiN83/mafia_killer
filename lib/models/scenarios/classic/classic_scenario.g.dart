@@ -30,6 +30,7 @@ ClassicScenario _$ClassicScenarioFromJson(Map<String, dynamic> json) =>
           : Player.fromJson(
               json['currentPlayerAtNight'] as Map<String, dynamic>)
       ..ableToSelectTile = json['ableToSelectTile'] as bool
+      ..immediateResponse = json['immediateResponse'] as String?
       ..nightEvents = (json['nightEvents'] as Map<String, dynamic>).map(
         (k, e) => MapEntry(
             $enumDecode(_$NightEventEnumMap, k),
@@ -60,6 +61,7 @@ Map<String, dynamic> _$ClassicScenarioToJson(ClassicScenario instance) =>
       'inGameRoles': instance.inGameRoles,
       'currentPlayerAtNight': instance.currentPlayerAtNight,
       'ableToSelectTile': instance.ableToSelectTile,
+      'immediateResponse': instance.immediateResponse,
       'nightEvents': instance.nightEvents
           .map((k, e) => MapEntry(_$NightEventEnumMap[k]!, e)),
       'defendingPlayers': instance.defendingPlayers,
@@ -77,7 +79,6 @@ const _$NightEventEnumMap = {
   NightEvent.inquiryByCitizenKane: 'inquiryByCitizenKane',
   NightEvent.boughtBySaulGoodman: 'boughtBySaulGoodman',
   NightEvent.disabledByMatador: 'disabledByMatador',
-  NightEvent.inquiryByDetective: 'inquiryByDetective',
   NightEvent.savedByDoctorLecter: 'savedByDoctorLecter',
   NightEvent.oppositedByJoker: 'oppositedByJoker',
   NightEvent.shotByProfessional: 'shotByProfessional',

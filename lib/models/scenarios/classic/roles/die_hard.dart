@@ -53,7 +53,7 @@ class DieHard extends Role {
 
   @override
   String awakingRole() {
-    return "کنستانتین بیدار شه و یک نفر را به بازی برگردونه";
+    return "جان سخت بیدار شه و بگه که میخواد از استعلامش استفاده کنه یا نه";
   }
 
   @override

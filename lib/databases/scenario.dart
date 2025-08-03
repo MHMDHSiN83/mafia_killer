@@ -24,24 +24,32 @@ import 'package:mafia_killer/models/scenarios/classic/roles/joker.dart';
 import 'package:mafia_killer/models/scenarios/classic/roles/mayor.dart';
 import 'package:mafia_killer/models/scenarios/classic/roles/professional.dart';
 import 'package:mafia_killer/models/scenarios/classic/roles/therapist.dart';
-import 'package:mafia_killer/models/scenarios/classic/last_move_cards/beautiful_mind.dart' as classic;
-import 'package:mafia_killer/models/scenarios/classic/roles/citizen.dart' as classic;
-import 'package:mafia_killer/models/scenarios/classic/roles/mafia.dart' as classic;
-import 'package:mafia_killer/models/scenarios/classic/roles/godfather.dart' as classic;
+import 'package:mafia_killer/models/scenarios/classic/last_move_cards/beautiful_mind.dart'
+    as classic;
+import 'package:mafia_killer/models/scenarios/classic/roles/citizen.dart'
+    as classic;
+import 'package:mafia_killer/models/scenarios/classic/roles/mafia.dart'
+    as classic;
+import 'package:mafia_killer/models/scenarios/classic/roles/godfather.dart'
+    as classic;
 
 import 'package:mafia_killer/models/scenarios/godfather/godfather_scenario.dart';
-import 'package:mafia_killer/models/scenarios/godfather/last_move_cards/beautiful_mind.dart' as godfather;
+import 'package:mafia_killer/models/scenarios/godfather/last_move_cards/beautiful_mind.dart'
+    as godfather;
 import 'package:mafia_killer/models/scenarios/godfather/last_move_cards/face_off.dart';
 import 'package:mafia_killer/models/scenarios/godfather/last_move_cards/handcuffs.dart';
 import 'package:mafia_killer/models/scenarios/godfather/last_move_cards/reveal_identity.dart';
 import 'package:mafia_killer/models/scenarios/godfather/last_move_cards/silence_of_the_lambs.dart';
-import 'package:mafia_killer/models/scenarios/godfather/roles/citizen.dart' as godfather;
+import 'package:mafia_killer/models/scenarios/godfather/roles/citizen.dart'
+    as godfather;
 import 'package:mafia_killer/models/scenarios/godfather/roles/citizen_kane.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/constantine.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/doctor_watson.dart';
-import 'package:mafia_killer/models/scenarios/godfather/roles/godfather.dart' as godfather;
+import 'package:mafia_killer/models/scenarios/godfather/roles/godfather.dart'
+    as godfather;
 import 'package:mafia_killer/models/scenarios/godfather/roles/leon.dart';
-import 'package:mafia_killer/models/scenarios/godfather/roles/mafia.dart' as godfather;
+import 'package:mafia_killer/models/scenarios/godfather/roles/mafia.dart'
+    as godfather;
 import 'package:mafia_killer/models/scenarios/godfather/roles/matador.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/nostradamus.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/saul_goodman.dart';
@@ -63,6 +71,8 @@ class Scenario {
   static late String filePath;
   Player? currentPlayerAtNight;
   bool ableToSelectTile = false;
+  String? immediateResponse;
+  bool takeInquiry = false;
 
   Map<NightEvent, List<Player>> nightEvents = {};
   List<Player> defendingPlayers = [];
@@ -290,7 +300,7 @@ class Scenario {
   Iterable<String> otherRolesAction({Function? noAbilityBox}) sync* {}
 
   Iterable<String> callRolesRegularNight(
-      {Function? mafiaChoiceBox, Function? noAbilityBox}) sync* {}
+      {Function? mafiaChoiceBox, Function? noAbilityBox, Function? dieHardBox}) sync* {}
 
   void nightReport() {}
 

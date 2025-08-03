@@ -8,7 +8,6 @@ enum NightEvent {
   boughtBySaulGoodman,
   disabledByMatador,
 
-  inquiryByDetective,
   savedByDoctorLecter,
   oppositedByJoker,
   shotByProfessional,
