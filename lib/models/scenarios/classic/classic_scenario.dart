@@ -1,5 +1,4 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:logger/logger.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/models/last_move_card.dart';
@@ -175,7 +174,6 @@ class ClassicScenario extends Scenario {
         continue;
       }
       ableToSelectTile = true;
-      Logger().d("hellooooo");
       resetUIPlayerStatus();
       NightPage.buttonText = '';
       currentPlayerAtNight = player;
@@ -183,8 +181,6 @@ class ClassicScenario extends Scenario {
       yield player.role!.awakingRole();
       player.role!.nightAction(NightPage.targetPlayers[0]);
       ableToSelectTile = false;
-      // NightPage.buttonText = "خوابید";
-      // yield player.role!.sleepRoleText();
     }
     NightPage.buttonText = 'خوابید';
     ableToSelectTile = false;
@@ -336,5 +332,37 @@ class ClassicScenario extends Scenario {
     if (report.isEmpty) {
       report.add("توی شبی که گذشت هیچکس کشته نشد!");
     }
+  }
+
+  @override
+  bool isGameOver() {
+    int mafiaCounter = 0, citizenCounter = 0;
+    for (Player player in Player.inGamePlayers) {
+      if (player.playerStatus != PlayerStatus.dead &&
+          player.playerStatus != PlayerStatus.removed) {
+        if (player.role!.roleSide == RoleSide.mafia) {
+          mafiaCounter++;
+        } else {
+          citizenCounter++;
+        }
+      }
+    }
+
+    if (mafiaCounter == 0 || mafiaCounter >= citizenCounter) {
+      return true;
+    }
+    return false;
+  }
+
+  @override
+  RoleSide whichTeamWon() {
+    for (Player player in Player.inGamePlayers) {
+      if (player.playerStatus != PlayerStatus.dead &&
+          player.playerStatus != PlayerStatus.removed &&
+          player.role!.roleSide == RoleSide.mafia) {
+        return RoleSide.mafia;
+      }
+    }
+    return RoleSide.citizen;
   }
 }

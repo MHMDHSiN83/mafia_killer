@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:flutter/services.dart';
-import 'package:logger/logger.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/models/scenarios/classic/classic_scenario.dart';
@@ -43,9 +42,7 @@ class RecommendedScenario {
     if (Scenario.currentScenario is GodfatherScenario) {
       return recommendedScenario['godfather']![Player.inGamePlayers.length];
     } else if(Scenario.currentScenario is ClassicScenario){
-      Logger().d("hereeee");
       return recommendedScenario['classic']![Player.inGamePlayers.length]!;
-      
     }
   }
   static Map<String, int> generateRecommendedScenario() {

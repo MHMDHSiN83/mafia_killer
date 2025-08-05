@@ -10,10 +10,12 @@ import 'package:mafia_killer/databases/game_state_manager.dart';
 import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/models/language.dart';
 import 'package:mafia_killer/models/role_side.dart';
+import 'package:mafia_killer/models/scenarios/classic/classic_scenario.dart';
 import 'package:mafia_killer/models/scenarios/godfather/godfather_scenario.dart';
 import 'package:mafia_killer/models/talking_page_screen_arguments.dart';
 import 'package:mafia_killer/themes/app_color.dart';
 import 'package:mafia_killer/utils/audio_manager.dart';
+import 'package:mafia_killer/utils/custom_snackbar.dart';
 
 class NightEventsPage extends StatefulWidget {
   const NightEventsPage({super.key});
@@ -163,6 +165,20 @@ class _NightEventsPage extends State<NightEventsPage> {
     );
   }
 
+  bool takeInquiryIfNecessary() {
+    if (Scenario.currentScenario.takeInquiry && !doesPressInquiry) {
+      if (Scenario.currentScenario is ClassicScenario) {
+        customSnackBar(
+          context,
+          "جان سخت استعلام خواسته پس باید حتما استعلام شهر رو بگیری",
+          true,
+        );
+      }
+      return false;
+    }
+    return true;
+  }
+
   @override
   Widget build(BuildContext context) {
     calculateSizeOfImage();
@@ -172,10 +188,8 @@ class _NightEventsPage extends State<NightEventsPage> {
         label: '/night_events_page',
         pageTitle: "اتفاقات شب",
         settingsPage: settingsPage,
-        leftButtonText:
-            "شب ${GameStateManager.getCurrentStateNumber()}",
-        rightButtonText:
-            "روز ${GameStateManager.getNextStateNumber()}",
+        leftButtonText: "شب ${GameStateManager.getCurrentStateNumber()}",
+        rightButtonText: "روز ${GameStateManager.getNextStateNumber()}",
         leftButtonOnTap: () {
           if (doesPressInquiry) {
             GameSettings.currentGameSettings.inquiry += 1;
@@ -183,30 +197,32 @@ class _NightEventsPage extends State<NightEventsPage> {
           Navigator.pop(context);
         },
         rightButtonOnTap: () {
-          GameStateManager.addState(
-              // lastMoveCards: Scenario.currentScenario.lastMoveCards,
-              lastMoveCards: Scenario.currentScenario.inGameLastMoveCards,
-              silencedPlayerDuringDay:
-                  Scenario.currentScenario.silencedPlayerDuringDay,
-              nightReport: Scenario.currentScenario.report);
-          Scenario.currentScenario.resetDataAfterNight();
-          if (Scenario.currentScenario.isGameOver()) {
-            AudioManager.playNextPageEffect();
-            Navigator.pushNamed(context, '/end_game_page');
-          } else {
-            AudioManager.playNextPageEffect();
-            Navigator.pushNamed(
-              context,
-              '/talking_page',
-              arguments: TalkingPageScreenArguments(
-                nextPagePath: '/regular_voting_page',
-                seconds: GameSettings.currentGameSettings.mainSpeakTime,
-                leftButtonText:
-                    'شب ${GameStateManager.getPreviousStateNumber()}',
-                rightButtonText: 'رای گیری',
-                isDefense: false,
-              ),
-            );
+          if (takeInquiryIfNecessary()) {
+            GameStateManager.addState(
+                // lastMoveCards: Scenario.currentScenario.lastMoveCards,
+                lastMoveCards: Scenario.currentScenario.inGameLastMoveCards,
+                silencedPlayerDuringDay:
+                    Scenario.currentScenario.silencedPlayerDuringDay,
+                nightReport: Scenario.currentScenario.report);
+            Scenario.currentScenario.resetDataAfterNight();
+            if (Scenario.currentScenario.isGameOver()) {
+              AudioManager.playNextPageEffect();
+              Navigator.pushNamed(context, '/end_game_page');
+            } else {
+              AudioManager.playNextPageEffect();
+              Navigator.pushNamed(
+                context,
+                '/talking_page',
+                arguments: TalkingPageScreenArguments(
+                  nextPagePath: '/regular_voting_page',
+                  seconds: GameSettings.currentGameSettings.mainSpeakTime,
+                  leftButtonText:
+                      'شب ${GameStateManager.getPreviousStateNumber()}',
+                  rightButtonText: 'رای گیری',
+                  isDefense: false,
+                ),
+              );
+            }
           }
         },
         child: Column(

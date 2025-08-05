@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:logger/web.dart';
 import 'package:mafia_killer/components/call_role.dart';
 import 'package:mafia_killer/components/dialogboxes/confirmation_dialogbox.dart';
 import 'package:mafia_killer/components/dialogboxes/detective_dialogbox.dart';
-import 'package:mafia_killer/components/dialogboxes/information_dialogbox.dart';
 import 'package:mafia_killer/components/dialogboxes/mafia_choice_dialogbox.dart';
 import 'package:mafia_killer/components/dialogboxes/die_hard_dialogbox.dart';
 import 'package:mafia_killer/components/dialogboxes/message_dialogbox.dart';
