@@ -1,5 +1,6 @@
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/databases/scenario.dart';
+import 'package:mafia_killer/models/night_event.dart';
 import 'package:mafia_killer/models/scenarios/classic/roles/godfather.dart';
 import 'package:mafia_killer/models/ui_player_status.dart';
 import 'package:mafia_killer/models/role.dart';
@@ -24,16 +25,21 @@ class Detective extends Role {
 
   @override
   void nightAction(Player? player) {
-    if (player != null) {
-      if (player.role!.roleSide == RoleSide.mafia &&
-          player.role! is! Godfather) {
-        Scenario.currentScenario.immediateResponse =
-            'با یک لایک به کارآگاه نشون بده که بازیکن مافیا است';
-      } else {
-        Scenario.currentScenario.immediateResponse =
-            'با یک دیس‌لایک به کارآگاه نشون بده که بازیکن شهروند است';
-      }
-    }
+    if (player == null) return;
+
+    final isOppositedByJoker = Scenario.currentScenario
+            .nightEvents[NightEvent.oppositedByJoker]?.first.name ==
+        player.name;
+
+    final isMafiaButNotGodfather =
+        player.role!.roleSide == RoleSide.mafia && player.role! is! Godfather;
+
+    final isMafiaView =
+        isOppositedByJoker ? !isMafiaButNotGodfather : isMafiaButNotGodfather;
+
+    Scenario.currentScenario.immediateResponse = isMafiaView
+        ? 'با یک لایک به کارآگاه نشون بده که بازیکن مافیا است'
+        : 'با یک دیس‌لایک به کارآگاه نشون بده که بازیکن شهروند است';
   }
 
   @override
