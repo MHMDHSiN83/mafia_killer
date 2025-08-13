@@ -19,6 +19,7 @@ import 'package:mafia_killer/models/scenarios/classic/roles/therapist.dart';
 import 'package:mafia_killer/models/ui_player_status.dart';
 import 'package:mafia_killer/pages/intro_night_page.dart';
 import 'package:mafia_killer/pages/night_page.dart';
+import 'package:mafia_killer/pages/noon_nap_page.dart';
 
 part 'classic_scenario.g.dart';
 
@@ -231,11 +232,11 @@ class ClassicScenario extends Scenario {
           NightPage.typeOfConfirmation = 3;
           NightPage.buttonText = "تائید";
         }
-        if(player.role! is DieHard) {
+        if (player.role! is DieHard) {
           dieHardBox!();
         }
         yield player.role!.awakingRole();
-          NightPage.typeOfConfirmation = 0;
+        NightPage.typeOfConfirmation = 0;
         for (Player p in NightPage.targetPlayers) {
           player.role!.nightAction(p);
         }
@@ -268,9 +269,9 @@ class ClassicScenario extends Scenario {
       yield iterator.current;
     }
 
-    final otherRolesIterator = otherRolesAction(
-            noAbilityBox: noAbilityBox!, dieHardBox: dieHardBox)
-        .iterator;
+    final otherRolesIterator =
+        otherRolesAction(noAbilityBox: noAbilityBox!, dieHardBox: dieHardBox)
+            .iterator;
 
     while (otherRolesIterator.moveNext()) {
       yield otherRolesIterator.current;
@@ -365,4 +366,84 @@ class ClassicScenario extends Scenario {
     }
     return RoleSide.citizen;
   }
+
+  String getNoonNapChoiceText() {
+    List<String> mafiaTeamAct = [
+      "تیم مافیا به یک نفر شلیک کنه",
+      "پدرخوانده کسی که میخواد امشب سلاخی کنه رو نشون بده و نقششو حدس بزنه",
+      "ساول گودمن یک نفر رو خریداره کنه",
+    ];
+    return mafiaTeamAct[NightPage.mafiaTeamChoice];
+  }
+
+  Iterable<String> noonNapAction({Function? mayorChoiceBox}) sync* {
+    NoonNapPage.buttonText = 'خوابیدن';
+    yield "وقت خواب نیم‌روزی رسیده و همه بخوابن";
+    NoonNapPage.buttonText = 'بیدار شد';
+    yield "شهردار از خواب بیدار شه";
+    mayorChoiceBox!();
+    yield "test";
+    Player? mayorPlayer = Player.getPlayerByRoleType(Mayor);
+
+    NoonNapPage.buttonText = 'خوابید';
+    switch (NoonNapPage.mayorChoice) {
+      case 0: // nothing
+
+        break;
+      case 1: // veto
+        mayorPlayer?.role!.nightAction(null);
+        Scenario.currentScenario.killedInDayPlayer = null;
+        yield 'شهردار رای‌گیری رو ملغی کرد، شهردار بخوابه';
+        break;
+      case 2: // killPlayer
+        NoonNapPage.buttonText = 'انتخاب کرد';
+        yield 'شهردار کسی که میخواد از بازی بره بیرون رو انتخاب کنه';
+        mayorPlayer?.role!.nightAction(NoonNapPage.targetPlayers[0]);
+        
+    }
+    NoonNapPage.isNapOver = true;
+    NoonNapPage.buttonText = '';
+  }
+
+  // Iterable<String> test({Function? mafiaChoiceBox}) sync* {
+  //   yield "تیم مافیا از خواب بیدار شه";
+  //   ableToSelectTile = true;
+  //   NightPage.buttonText = '';
+  //   mafiaChoiceBox!();
+  //   yield "تیم مافیا از خواب بیدار شه";
+  //   yield getMafiaChoiceText();
+  //   NightPage.typeOfConfirmation = 0;
+  //   Player? godfatherPlayer = Player.getPlayerByRoleType(Godfather);
+  //   Player? saulGoodmanPlayer = Player.getPlayerByRoleType(SaulGoodman);
+  //   switch (NightPage.mafiaTeamChoice) {
+  //     case 0: // shot
+  //       nightEvents[NightEvent.shotByMafia] = [NightPage.targetPlayers[0]];
+  //       break;
+  //     case 1: // sixth sense
+  //       godfatherPlayer?.role!.nightAction(
+  //         NightPage.targetPlayers.isEmpty ? null : NightPage.targetPlayers[0],
+  //       );
+  //       if (NightPage.targetPlayers.isNotEmpty) {
+  //         NightPage.targetPlayers[0].playerStatus = PlayerStatus.disable;
+  //       }
+  //       break;
+  //     case 2: // buying
+  //       ableToSelectTile = false;
+  //       NightPage.buttonText = 'اتمام';
+  //       saulGoodmanPlayer?.role!.nightAction(NightPage.targetPlayers[0]);
+  //       if (NightPage.targetPlayers[0].role is Citizen) {
+  //         NightPage.targetPlayers[0].role = Role.copy(Scenario.currentScenario
+  //             .getRoleByType(Mafia, searchInGmaeRoles: false)!);
+  //         yield 'خریداری موفقیت آمیز بود. فرد خریداری شده رو بیدار کن تا هم تیمیاشو ببینه';
+  //       } else {
+  //         yield 'خریداری موفقیت امیز نبود. کمی راه برو و اتمام رو بزن';
+  //       }
+  //       break;
+  //   }
+  //   if (Player.getPlayerByRoleType(Matador) == null) {
+  //     NightPage.buttonText = 'خوابید';
+  //     ableToSelectTile = false;
+  //     yield 'تیم مافیا بخوابه';
+  //   }
+  // }
 }

@@ -8,6 +8,7 @@ import 'package:mafia_killer/databases/game_state_manager.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/models/player_status.dart';
+import 'package:mafia_killer/models/scenarios/classic/classic_scenario.dart';
 import 'package:mafia_killer/utils/audio_manager.dart';
 import 'package:mafia_killer/models/scenarios/godfather/godfather_scenario.dart';
 import 'package:mafia_killer/utils/settings_page.dart';
@@ -21,7 +22,6 @@ class DefenseVotingPage extends StatefulWidget {
 
 class _DefenseVotingPageState extends State<DefenseVotingPage> {
   bool isDeathLotterySelected = false;
-  bool isCleared = false;
   bool isChaos = false;
 
   List<Player> selectedPlayers = [];
@@ -98,16 +98,20 @@ class _DefenseVotingPageState extends State<DefenseVotingPage> {
               return;
             }
           } else {
-            if (selectedPlayers.isEmpty) {
-              Navigator.pushNamed(context, '/night_page');
+            if (Scenario.currentScenario is ClassicScenario) {
+              Navigator.pushNamed(context, '/noon_nap_page'); // TODO: check if mayor doesn't have ability
             } else {
-              if (Scenario.currentScenario.hasUnusedCards()) {
-                Navigator.pushNamed(context, '/last_move_card_page');
-              } else {
-                Player.getPlayerByName(
-                        Scenario.currentScenario.killedInDayPlayer!.name)
-                    .playerStatus = PlayerStatus.dead;
+              if (selectedPlayers.isEmpty) {
                 Navigator.pushNamed(context, '/night_page');
+              } else {
+                if (Scenario.currentScenario.hasUnusedCards()) {
+                  Navigator.pushNamed(context, '/last_move_card_page');
+                } else {
+                  Player.getPlayerByName(
+                          Scenario.currentScenario.killedInDayPlayer!.name)
+                      .playerStatus = PlayerStatus.dead;
+                  Navigator.pushNamed(context, '/night_page');
+                }
               }
             }
           }

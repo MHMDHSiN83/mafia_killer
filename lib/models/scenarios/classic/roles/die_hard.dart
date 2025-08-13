@@ -58,16 +58,16 @@ class DieHard extends Role {
 
   @override
   List<String> roleDetails() {
-    return ["زنده کردن: $remainingAbility"];
+    return ["استعلام: $remainingAbility"];
   }
 
   @override
   Map<String, int> roleAbilities() {
-    return {'زنده کردن': remainingAbility};
+    return {'اسعتلام': remainingAbility};
   }
 
   @override
   void saveAbilities(Map<String, int> abilities) {
-    remainingAbility = abilities['زنده کردن']!;
+    remainingAbility = abilities['اسعتلام']!;
   }
 }

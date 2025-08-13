@@ -1,4 +1,5 @@
 import 'package:mafia_killer/databases/player.dart';
+import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/models/ui_player_status.dart';
 import 'package:mafia_killer/models/role.dart';
 import 'package:mafia_killer/models/role_side.dart';
@@ -28,11 +29,10 @@ class Mayor extends Role {
 
   @override
   void nightAction(Player? player) {
-    // if (player != null) {
-    //   Scenario.currentScenario.nightEvents[NightEvent.inquiryByMayor] = [
-    //     player
-    //   ];
-    // }
+    remainingAbility--;
+    if (player != null) {
+      Scenario.currentScenario.killedInDayPlayer = player;
+    }
   }
 
   @override
@@ -46,21 +46,21 @@ class Mayor extends Role {
 
   @override
   String awakingRole() {
-    return "شهردار بیدار شه و استعلام یک نفر رو از من بگیره";
+    return "شهردار بیدار شه و تصمیم بگیره میخواد رای‌گیری رو لغو کنه یا یکی رو مستقیما اخراج کنه";
   }
 
   @override
   List<String> roleDetails() {
-    return ["استعلام: $remainingAbility"];
+    return ["دخالت در رای‌گیری: $remainingAbility"];
   }
 
   @override
   Map<String, int> roleAbilities() {
-    return {'استعلام': remainingAbility};
+    return {'دخالت در رای‌گیری': remainingAbility};
   }
 
   @override
   void saveAbilities(Map<String, int> abilities) {
-    remainingAbility = abilities['استعلام']!;
+    remainingAbility = abilities['دخالت در رای‌گیری']!;
   }
 }

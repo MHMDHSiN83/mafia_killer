@@ -15,6 +15,7 @@ import 'package:mafia_killer/pages/last_move_card_pages/silence_of_the_lambs_pag
 import 'package:mafia_killer/pages/loading_page.dart';
 import 'package:mafia_killer/pages/night_events_page.dart';
 import 'package:mafia_killer/pages/night_page.dart';
+import 'package:mafia_killer/pages/noon_nap_page.dart';
 import 'package:mafia_killer/pages/play_again_loading_page.dart';
 import 'package:mafia_killer/pages/players_page.dart';
 import 'package:mafia_killer/pages/regular_voting_page.dart';
@@ -82,6 +83,7 @@ class MyApp extends StatelessWidget {
         '/defense_talking_page': (context) => const TalkingPage(),
         '/regular_voting_page': (context) => RegularVotingPage(),
         '/defense_voting_page': (context) => DefenseVotingPage(),
+        '/noon_nap_page': (context) => NoonNapPage(),
         '/night_events_page': (context) => const NightEventsPage(),
         '/night_page': (context) => const NightPage(),
         '/intro_night_page': (context) => const IntroNightPage(),
