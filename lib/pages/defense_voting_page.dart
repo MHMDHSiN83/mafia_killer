@@ -98,8 +98,8 @@ class _DefenseVotingPageState extends State<DefenseVotingPage> {
               return;
             }
           } else {
-            if (Scenario.currentScenario is ClassicScenario) {
-              Navigator.pushNamed(context, '/noon_nap_page'); // TODO: check if mayor doesn't have ability
+            if (Scenario.currentScenario is ClassicScenario && (Scenario.currentScenario as ClassicScenario).doesMayorHaveAbility()) {
+              Navigator.pushNamed(context, '/noon_nap_page');
             } else {
               if (selectedPlayers.isEmpty) {
                 Navigator.pushNamed(context, '/night_page');

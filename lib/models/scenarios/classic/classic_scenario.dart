@@ -382,13 +382,13 @@ class ClassicScenario extends Scenario {
     NoonNapPage.buttonText = 'بیدار شد';
     yield "شهردار از خواب بیدار شه";
     mayorChoiceBox!();
-    yield "test";
+    yield "شهردار از خواب بیدار شه";
     Player? mayorPlayer = Player.getPlayerByRoleType(Mayor);
 
     NoonNapPage.buttonText = 'خوابید';
     switch (NoonNapPage.mayorChoice) {
       case 0: // nothing
-
+        yield 'شهردار تصمیم گرفت هیچ‌کاری نکنه، شهردار بخوابه';
         break;
       case 1: // veto
         mayorPlayer?.role!.nightAction(null);
@@ -399,51 +399,20 @@ class ClassicScenario extends Scenario {
         NoonNapPage.buttonText = 'انتخاب کرد';
         yield 'شهردار کسی که میخواد از بازی بره بیرون رو انتخاب کنه';
         mayorPlayer?.role!.nightAction(NoonNapPage.targetPlayers[0]);
-        
+        NoonNapPage.buttonText = 'خوابید';
+        yield 'شهردار بخوابه';
     }
     NoonNapPage.isNapOver = true;
     NoonNapPage.buttonText = '';
   }
 
-  // Iterable<String> test({Function? mafiaChoiceBox}) sync* {
-  //   yield "تیم مافیا از خواب بیدار شه";
-  //   ableToSelectTile = true;
-  //   NightPage.buttonText = '';
-  //   mafiaChoiceBox!();
-  //   yield "تیم مافیا از خواب بیدار شه";
-  //   yield getMafiaChoiceText();
-  //   NightPage.typeOfConfirmation = 0;
-  //   Player? godfatherPlayer = Player.getPlayerByRoleType(Godfather);
-  //   Player? saulGoodmanPlayer = Player.getPlayerByRoleType(SaulGoodman);
-  //   switch (NightPage.mafiaTeamChoice) {
-  //     case 0: // shot
-  //       nightEvents[NightEvent.shotByMafia] = [NightPage.targetPlayers[0]];
-  //       break;
-  //     case 1: // sixth sense
-  //       godfatherPlayer?.role!.nightAction(
-  //         NightPage.targetPlayers.isEmpty ? null : NightPage.targetPlayers[0],
-  //       );
-  //       if (NightPage.targetPlayers.isNotEmpty) {
-  //         NightPage.targetPlayers[0].playerStatus = PlayerStatus.disable;
-  //       }
-  //       break;
-  //     case 2: // buying
-  //       ableToSelectTile = false;
-  //       NightPage.buttonText = 'اتمام';
-  //       saulGoodmanPlayer?.role!.nightAction(NightPage.targetPlayers[0]);
-  //       if (NightPage.targetPlayers[0].role is Citizen) {
-  //         NightPage.targetPlayers[0].role = Role.copy(Scenario.currentScenario
-  //             .getRoleByType(Mafia, searchInGmaeRoles: false)!);
-  //         yield 'خریداری موفقیت آمیز بود. فرد خریداری شده رو بیدار کن تا هم تیمیاشو ببینه';
-  //       } else {
-  //         yield 'خریداری موفقیت امیز نبود. کمی راه برو و اتمام رو بزن';
-  //       }
-  //       break;
-  //   }
-  //   if (Player.getPlayerByRoleType(Matador) == null) {
-  //     NightPage.buttonText = 'خوابید';
-  //     ableToSelectTile = false;
-  //     yield 'تیم مافیا بخوابه';
-  //   }
-  // }
+  bool doesMayorHaveAbility() {
+    Player? mayorPlayer = Player.getPlayerByRoleType(Mayor);
+    if(mayorPlayer == null) {
+      return false;
+    }
+    return mayorPlayer.hasAbility();
+  }
+
+
 }

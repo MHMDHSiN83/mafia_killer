@@ -132,26 +132,15 @@ class _NoonNapPageState extends State<NoonNapPage> {
         rightButtonText: 'شب ${GameStateManager.getNextStateNumber()}',
         leftButtonOnTap: () => Navigator.pop(context),
         rightButtonOnTap: () {
-          switch (NoonNapPage.targetPlayers.length) {
-            case 1:
-              Scenario.currentScenario.killedInDayPlayer =
-                  NoonNapPage.targetPlayers[0];
-              break;
-            case 2:
-              final random = Random();
-              int randomNumber = random.nextInt(2);
-              Scenario.currentScenario.killedInDayPlayer =
-                  NoonNapPage.targetPlayers[randomNumber];
-              break;
-          }
-
           if (Scenario.currentScenario is GodfatherScenario) {
             (Scenario.currentScenario as GodfatherScenario)
                 .resetSilencedPlayersBeforeLastMoveCardPage();
           }
           AudioManager.playNextPageEffect();
-          // TODO
-          if (NoonNapPage.targetPlayers.isEmpty) {
+          if (!NoonNapPage.isNapOver) {
+            return;
+          }
+          if (NoonNapPage.mayorChoice == 1) {
             Navigator.pushNamed(context, '/night_page');
           } else {
             if (Scenario.currentScenario.hasUnusedCards()) {
