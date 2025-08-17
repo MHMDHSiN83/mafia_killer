@@ -1,3 +1,4 @@
+import 'package:logger/logger.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/models/player_status.dart';
@@ -32,12 +33,7 @@ class DieHard extends Role {
 
   @override
   void nightAction(Player? player) {
-    if (player != null) {
-      Scenario.currentScenario.nightEvents[NightEvent.revivedByConstantine] = [
-        player
-      ];
-      remainingAbility--;
-    }
+    remainingAbility--;
   }
 
   @override

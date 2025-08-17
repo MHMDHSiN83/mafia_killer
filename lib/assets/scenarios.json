@@ -309,7 +309,7 @@
             },
             {
                 "title": "ذهن زیبا",
-                "slug": "godfather.beautiful_mind",
+                "slug": "classic.beautiful_mind",
                 "description": "اگر صاحب کارت بتواند نوستراداموس را در بازی شناسایی کند، به بازی برمی‌گردد و نوستراداموس از بازی خارج می‌شود. اگر نوستراداموس این کارت را انتخاب کند، او به بازی برمی‌گردد ولی سپرش از بین می‌رود.",
                 "selectionImagePath": "lib/images/last_move_cards/BeautifulMind-LastMoveCard.png",
                 "flippedImagePath": "lib/images/last_move_cards/BeautifulMind-LastMoveCard-Flipped.png",

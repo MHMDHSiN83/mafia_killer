@@ -7,6 +7,7 @@ import 'package:mafia_killer/pages/intro_night_page.dart';
 import 'package:mafia_killer/pages/intro_page.dart';
 import 'package:mafia_killer/pages/last_move_card_page.dart';
 import 'package:mafia_killer/pages/last_move_card_pages/beautiful_mind_choose_nostradamus_page.dart';
+import 'package:mafia_killer/pages/last_move_card_pages/beautiful_mind_choose_role_page.dart';
 import 'package:mafia_killer/pages/last_move_card_pages/face_off_page.dart';
 import 'package:mafia_killer/pages/last_move_card_pages/faced_off_role_page.dart';
 import 'package:mafia_killer/pages/last_move_card_pages/handcuffs_page.dart';
@@ -95,6 +96,8 @@ class MyApp extends StatelessWidget {
         '/silence_of_the_lambs_page': (context) => SilenceOfTheLambsPage(),
         '/beautiful_mind_choose_nostradamus_page': (context) =>
             BeautifulMindChooseNostradamusPage(),
+        '/beautiful_mind_choose_role_page': (context) =>
+            BeautifulMindChooseRolePage(),
         '/end_game_page': (context) => EndGamePage(),
         '/scenario_guid_page': (context) => ScenarioGuidPage(),
         '/play_again_loading_page': (context) => PlayAgainLoadingPage(),

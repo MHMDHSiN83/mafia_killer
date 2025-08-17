@@ -1,5 +1,8 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:logger/logger.dart';
+import 'package:mafia_killer/databases/game_state_manager.dart';
 import 'package:mafia_killer/databases/player.dart';
+import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/models/last_move_card.dart';
 import 'package:mafia_killer/models/player_status.dart';
 
@@ -27,15 +30,20 @@ class Insomnia extends LastMoveCard {
 
   @override
   void lastMoveCardAction(List<Player> players) {
-    for (int i = 0; i < players.length; i++) {
-      players[i].playerStatus = PlayerStatus.disable;
-    }
-    players[0].playerStatus = PlayerStatus.dead;
+    Logger().d("action");
+    Player.getPlayerByName(players[0].name).playerStatus = PlayerStatus.dead;
+    // players[0].playerStatus = PlayerStatus.dead;
+    GameStateManager.addState(
+        lastMoveCards: Scenario.currentScenario.inGameLastMoveCards,
+        silencedPlayerDuringDay:
+            Scenario.currentScenario.silencedPlayerDuringDay);
   }
 
   @override
   void undoLastMoveCardAction(List<Player> players) {
-    players[0].playerStatus = PlayerStatus.active;
-    players[1].playerStatus = PlayerStatus.active;
+    Logger().d("undo");
+    Player.getPlayerByName(players[0].name).playerStatus = PlayerStatus.active;
+    // players[0].playerStatus = PlayerStatus.active;
+    GameStateManager.goToPreviousState();
   }
 }

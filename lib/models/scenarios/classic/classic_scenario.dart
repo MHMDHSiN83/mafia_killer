@@ -27,6 +27,10 @@ part 'classic_scenario.g.dart';
 class ClassicScenario extends Scenario {
   ClassicScenario() : super();
 
+
+
+  bool hasGuessedRightForBeautifulMind = false;
+
   factory ClassicScenario.fromJson(Map<String, dynamic> json) =>
       _$ClassicScenarioFromJson(json);
 
@@ -233,7 +237,7 @@ class ClassicScenario extends Scenario {
           NightPage.buttonText = "تائید";
         }
         if (player.role! is DieHard) {
-          dieHardBox!();
+          dieHardBox!(player);
         }
         yield player.role!.awakingRole();
         NightPage.typeOfConfirmation = 0;
@@ -413,6 +417,5 @@ class ClassicScenario extends Scenario {
     }
     return mayorPlayer.hasAbility();
   }
-
 
 }
