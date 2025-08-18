@@ -287,6 +287,15 @@ class Scenario {
     }
   }
 
+  bool isAnyTargetable() {
+    for (Player player in Player.inGamePlayers) {
+      if (player.uiPlayerStatus == UIPlayerStatus.targetable) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   void setPlayersToUntargetable() {
     for (Player player in Player.inGamePlayers) {
       player.uiPlayerStatus = UIPlayerStatus.untargetable;
@@ -295,7 +304,7 @@ class Scenario {
 
   void setMafiaTeamAvailablePlayers() {}
 
-  Iterable<String> mafiaTeamAction({Function? mafiaChoiceBox}) sync* {}
+  Iterable<String> mafiaTeamAction({Function? mafiaChoiceBox, Function? noAbilityBox}) sync* {}
 
   Iterable<String> otherRolesAction({Function? noAbilityBox}) sync* {}
 

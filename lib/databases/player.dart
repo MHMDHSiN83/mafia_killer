@@ -167,7 +167,7 @@ class Player extends ChangeNotifier {
   }
 
   bool hasAbility() {
-    return playerStatus == PlayerStatus.active && role!.hasAbility();
+    return playerStatus == PlayerStatus.active && role!.hasAbility() && Scenario.currentScenario.isAnyTargetable();
   }
 
   static Player? getPlayerByRoleType(Type type) {

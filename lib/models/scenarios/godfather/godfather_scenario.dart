@@ -206,7 +206,7 @@ class GodfatherScenario extends Scenario {
   }
 
   @override
-  Iterable<String> mafiaTeamAction({Function? mafiaChoiceBox}) sync* {
+  Iterable<String> mafiaTeamAction({Function? mafiaChoiceBox, Function? noAbilityBox}) sync* {
     yield "تیم مافیا از خواب بیدار شه";
     ableToSelectTile = true;
     NightPage.buttonText = '';
@@ -273,10 +273,10 @@ class GodfatherScenario extends Scenario {
 
       ableToSelectTile = true;
       resetUIPlayerStatus();
+      player.role!.setAvailablePlayers();
       if (player.hasAbility()) {
         NightPage.buttonText = i <= 1 ? '' : "هیچکس";
         currentPlayerAtNight = player;
-        player.role!.setAvailablePlayers();
         if (player.role!.hasMultiSelection()) {
           NightPage.buttonText = "تائید";
         }
@@ -303,7 +303,9 @@ class GodfatherScenario extends Scenario {
 
   @override
   Iterable<String> callRolesRegularNight(
-      {Function? mafiaChoiceBox, Function? noAbilityBox, Function? dieHardBox}) sync* {
+      {Function? mafiaChoiceBox,
+      Function? noAbilityBox,
+      Function? dieHardBox}) sync* {
     Scenario.currentScenario.currentPlayerAtNight = Player.inGamePlayers.first;
     final iterator = mafiaTeamAction(mafiaChoiceBox: mafiaChoiceBox!).iterator;
 

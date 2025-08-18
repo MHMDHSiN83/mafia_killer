@@ -149,6 +149,10 @@ class Role {
     return '${awakingRole()}(بازیکن از بازی خارج شده کمی راه برو و وانمود کن نقش هنوز تو بازیه)';
   }
 
+  String notAnyTargetableText() {
+    return '${awakingRole()}(بازیکن هیچکس رو نمی‌تونه انتخاب کنه کمی راه برو و وانمود کن می‌تونه)';
+  }
+
   List<String> roleDetails() {
     return [""];
   }

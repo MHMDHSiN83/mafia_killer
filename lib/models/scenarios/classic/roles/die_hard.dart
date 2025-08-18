@@ -36,11 +36,7 @@ class DieHard extends Role {
   @override
   void setAvailablePlayers() {
     for (Player player in Player.inGamePlayers) {
-      if (player.playerStatus == PlayerStatus.dead) {
-        player.uiPlayerStatus = UIPlayerStatus.targetable;
-      } else {
-        player.uiPlayerStatus = UIPlayerStatus.untargetable;
-      }
+      player.uiPlayerStatus = UIPlayerStatus.targetable;
     }
   }
 

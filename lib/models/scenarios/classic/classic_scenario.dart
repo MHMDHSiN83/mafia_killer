@@ -165,7 +165,8 @@ class ClassicScenario extends Scenario {
   }
 
   @override
-  Iterable<String> mafiaTeamAction({Function? mafiaChoiceBox}) sync* {
+  Iterable<String> mafiaTeamAction(
+      {Function? mafiaChoiceBox, Function? noAbilityBox}) sync* {
     yield "تیم مافیا از خواب بیدار شه";
     ableToSelectTile = true;
     NightPage.buttonText = '';
@@ -181,14 +182,27 @@ class ClassicScenario extends Scenario {
       if (player == null) {
         continue;
       }
+
       ableToSelectTile = true;
       resetUIPlayerStatus();
+      player.role!.setAvailablePlayers();
       NightPage.buttonText = '';
       currentPlayerAtNight = player;
-      player.role!.setAvailablePlayers();
-      yield player.role!.awakingRole();
-      player.role!.nightAction(NightPage.targetPlayers[0]);
-      ableToSelectTile = false;
+      if (player.hasAbility()) {
+        yield player.role!.awakingRole();
+        player.role!.nightAction(NightPage.targetPlayers[0]);
+        ableToSelectTile = false;
+      } else {
+        if (!isAnyTargetable()) {
+          noAbilityBox!(player.role!.notAnyTargetableText());
+          NightPage.buttonText = 'هیچکس';
+          yield player.role!.awakingRole();
+        } else {
+          setPlayersToUntargetable();
+          noAbilityBox!(player.role!.deadOrRemovedText());
+          yield player.role!.sleepRoleText();
+        }
+      }
     }
     NightPage.buttonText = 'خوابید';
     ableToSelectTile = false;
@@ -228,10 +242,10 @@ class ClassicScenario extends Scenario {
 
       ableToSelectTile = true;
       resetUIPlayerStatus();
+      player.role!.setAvailablePlayers();
       if (player.hasAbility()) {
         NightPage.buttonText = i <= 1 ? '' : "هیچکس";
         currentPlayerAtNight = player;
-        player.role!.setAvailablePlayers();
         if (player.role!.hasMultiSelection()) {
           NightPage.buttonText = "تائید";
         }
@@ -256,6 +270,8 @@ class ClassicScenario extends Scenario {
           noAbilityBox!(player.role!.disabledText());
         } else if (!player.role!.hasAbility()) {
           noAbilityBox!(player.role!.ranOutOfAbilityText());
+        } else if (!isAnyTargetable()) {
+          noAbilityBox!(player.role!.notAnyTargetableText());
         } else {
           noAbilityBox!(player.role!.deadOrRemovedText());
         }
@@ -270,7 +286,9 @@ class ClassicScenario extends Scenario {
       Function? noAbilityBox,
       Function? dieHardBox}) sync* {
     Scenario.currentScenario.currentPlayerAtNight = Player.inGamePlayers.first;
-    final iterator = mafiaTeamAction(mafiaChoiceBox: null).iterator;
+    final iterator =
+        mafiaTeamAction(mafiaChoiceBox: null, noAbilityBox: noAbilityBox)
+            .iterator;
 
     while (iterator.moveNext()) {
       yield iterator.current;
