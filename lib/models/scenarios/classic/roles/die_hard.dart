@@ -1,9 +1,6 @@
-import 'package:logger/logger.dart';
 import 'package:mafia_killer/databases/player.dart';
-import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/models/player_status.dart';
 import 'package:mafia_killer/models/ui_player_status.dart';
-import 'package:mafia_killer/models/night_event.dart';
 import 'package:mafia_killer/models/role.dart';
 import 'package:mafia_killer/models/role_side.dart';
 import 'package:json_annotation/json_annotation.dart';

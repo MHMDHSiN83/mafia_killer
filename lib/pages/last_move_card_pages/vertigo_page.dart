@@ -10,14 +10,14 @@ import 'package:mafia_killer/utils/custom_snackbar.dart';
 import 'package:mafia_killer/utils/audio_manager.dart';
 import 'package:mafia_killer/utils/settings_page.dart';
 
-class GreenMilePage extends StatefulWidget {
-  GreenMilePage({super.key});
+class VertigoPage extends StatefulWidget {
+  VertigoPage({super.key});
   List<Player> selectedPlayers = [];
   @override
-  State<GreenMilePage> createState() => _GreenMilePageState();
+  State<VertigoPage> createState() => _VertigoPageState();
 }
 
-class _GreenMilePageState extends State<GreenMilePage> {
+class _VertigoPageState extends State<VertigoPage> {
   void addPlayer(Player player) {
     setState(() {
       widget.selectedPlayers.add(player);
@@ -43,8 +43,8 @@ class _GreenMilePageState extends State<GreenMilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: PageFrame(
-        label: '/green_mile_page',
-        pageTitle: "مسیر سبز",
+        label: '/handcuffs_page',
+        pageTitle: "دستبند",
         settingsPage: () {
           if (LastMoveCardPage.selectedLastMoveCard != null) {
             LastMoveCardPage.selectedLastMoveCard!.isUsed = false;
@@ -59,7 +59,6 @@ class _GreenMilePageState extends State<GreenMilePage> {
         },
         rightButtonOnTap: () {
           if (widget.selectedPlayers.length == 1) {
-            // widget.selectedPlayers.insert(0, killedInDayPlayer);
             GameStateManager.addLastMoveCardAction([
               Scenario.currentScenario.killedInDayPlayer!,
               widget.selectedPlayers[0]
@@ -99,7 +98,7 @@ class _GreenMilePageState extends State<GreenMilePage> {
                   itemCount: alivePlayers.length,
                   itemBuilder: (context, index) {
                     return VotingTile(
-                      stamp: "مسیر سبز",
+                      stamp: "سرگیجه",
                       player: alivePlayers[index],
                       addPlayer: () {
                         addPlayer(alivePlayers[index]);
@@ -120,7 +119,7 @@ class _GreenMilePageState extends State<GreenMilePage> {
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: CallRole(
                   text:
-                      "${killedInDayPlayer.name} یک نفر رو انتخاب کنه تا در روز بعدی به دفاعیه نره",
+                      "${killedInDayPlayer.name} توانایی یک نفر رو در شب بگیر.",
                   buttonText: "",
                   onPressed: () {},
                 ),

@@ -15,6 +15,7 @@ import 'package:mafia_killer/pages/last_move_card_pages/handcuffs_page.dart';
 import 'package:mafia_killer/pages/last_move_card_pages/red_carpet_page.dart';
 import 'package:mafia_killer/pages/last_move_card_pages/reveal_identity_page.dart';
 import 'package:mafia_killer/pages/last_move_card_pages/silence_of_the_lambs_page.dart';
+import 'package:mafia_killer/pages/last_move_card_pages/vertigo_page.dart';
 import 'package:mafia_killer/pages/loading_page.dart';
 import 'package:mafia_killer/pages/night_events_page.dart';
 import 'package:mafia_killer/pages/night_page.dart';
@@ -102,6 +103,7 @@ class MyApp extends StatelessWidget {
             BeautifulMindChooseRolePage(),
         '/green_mile_page': (context) => GreenMilePage(),
         '/red_carpet_page': (context) => RedCarpetPage(),
+        '/vertigo_page': (context) => VertigoPage(),
         '/end_game_page': (context) => EndGamePage(),
         '/scenario_guid_page': (context) => ScenarioGuidPage(),
         '/play_again_loading_page': (context) => PlayAgainLoadingPage(),

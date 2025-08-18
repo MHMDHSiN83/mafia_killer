@@ -118,7 +118,9 @@ class _LastMoveCardPageState extends State<LastMoveCardPage> {
             Navigator.pushNamed(context, '/beautiful_mind_choose_role_page');
           } else if (LastMoveCardPage.selectedLastMoveCard is RedCarpet) {
             Navigator.pushNamed(context, '/red_carpet_page');
-          } else if (LastMoveCardPage.selectedLastMoveCard is Vertigo) {}
+          } else if (LastMoveCardPage.selectedLastMoveCard is Vertigo) {
+            Navigator.pushNamed(context, '/vertigo_page');
+          }
         },
         isInGame: true,
         child: Column(

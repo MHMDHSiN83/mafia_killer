@@ -4,7 +4,6 @@ import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/models/last_move_card.dart';
 import 'package:mafia_killer/models/player_status.dart';
 import 'package:mafia_killer/models/scenarios/classic/classic_scenario.dart';
-import 'package:mafia_killer/models/scenarios/godfather/godfather_scenario.dart';
 
 part 'green_mile.g.dart';
 

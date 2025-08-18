@@ -14,10 +14,10 @@ class RedCarpetPage extends StatefulWidget {
   RedCarpetPage({super.key});
   List<Player> selectedPlayers = [];
   @override
-  State<RedCarpetPage> createState() => _HandcuffsPageState();
+  State<RedCarpetPage> createState() => _RedCarpetPageState();
 }
 
-class _HandcuffsPageState extends State<RedCarpetPage> {
+class _RedCarpetPageState extends State<RedCarpetPage> {
   void addPlayer(Player player) {
     setState(() {
       widget.selectedPlayers.add(player);
