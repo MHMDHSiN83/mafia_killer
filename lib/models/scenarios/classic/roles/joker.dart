@@ -44,7 +44,7 @@ class Joker extends Role {
 
   @override
   String awakingRole() {
-    return "جوکر توانایی یک نفر رو امشب ازش بگیره";
+    return "جوکر یک نفر رو انتخاب کنه تا استعلام کارآگاه رو برعکس کنه";
   }
 
   @override

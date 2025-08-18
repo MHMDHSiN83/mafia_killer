@@ -53,7 +53,7 @@ class DoctorLecter extends Role {
 
   @override
   String awakingRole() {
-    return 'دکتر لکتر بیدار شه و یکی از اعضای مافیا رو نجات بده';
+    return 'دکتر لکتر یکی از اعضای مافیا رو نجات بده';
   }
 
   @override

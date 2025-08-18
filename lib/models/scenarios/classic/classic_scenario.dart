@@ -200,7 +200,8 @@ class ClassicScenario extends Scenario {
         } else {
           setPlayersToUntargetable();
           noAbilityBox!(player.role!.deadOrRemovedText());
-          yield player.role!.sleepRoleText();
+          NightPage.buttonText = 'هیچکس';
+          yield player.role!.awakingRole();
         }
       }
     }
