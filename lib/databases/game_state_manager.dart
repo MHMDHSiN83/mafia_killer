@@ -78,7 +78,7 @@ class GameStateManager {
   }
 
   static void goToPreviousState() {
-    if(currentState == 'n0') {
+    if (currentState == 'n0') {
       return;
     }
     currentState = getPreviousState();
@@ -138,5 +138,11 @@ class GameStateManager {
 
   static String getPreviousStateNumber() {
     return Language.getPersianOrdinal(int.parse(getPreviousState()[1]));
+  }
+
+  static String? getPreviousLastMoveCardTitle() {
+    int? number = int.tryParse(currentState.substring(1));
+    String previousDayState = 'd${number! - 1}';
+    return lastMoveCardActions[previousDayState]?.lastMoveCard.title;
   }
 }

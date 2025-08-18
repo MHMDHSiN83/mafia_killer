@@ -300,7 +300,9 @@ class Scenario {
   Iterable<String> otherRolesAction({Function? noAbilityBox}) sync* {}
 
   Iterable<String> callRolesRegularNight(
-      {Function? mafiaChoiceBox, Function? noAbilityBox, Function? dieHardBox}) sync* {}
+      {Function? mafiaChoiceBox,
+      Function? noAbilityBox,
+      Function? dieHardBox}) sync* {}
 
   void nightReport() {}
 
@@ -551,4 +553,20 @@ class Scenario {
     nightEvents.putIfAbsent(event, () => []);
     nightEvents[event]!.add(player);
   }
+
+  List<Player> getPlayersForRegularVoting() {
+    List<Player> alivePlayers = Player.inGamePlayers
+        .where((player) =>
+            player.playerStatus != PlayerStatus.dead &&
+            player.playerStatus != PlayerStatus.removed)
+        .toList();
+    return alivePlayers;
+  }
+
+  void resetLastMoveCardData() {}
+
+  void undoLastMoveCardData() {}
+
+  void setLastMoveCardsAttribute() {}
+  
 }

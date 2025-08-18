@@ -153,6 +153,8 @@ class _TalkingPageState extends State<TalkingPage> {
         leftButtonOnTap: () {
           if (!args.isDefense) {
             GameStateManager.goToPreviousState();
+          } else {
+          Scenario.currentScenario.resetLastMoveCardData(); // TODO: ??
           }
           Navigator.pop(context);
         },

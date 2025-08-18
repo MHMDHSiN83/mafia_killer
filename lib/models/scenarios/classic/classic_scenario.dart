@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:mafia_killer/databases/game_state_manager.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/models/last_move_card.dart';
@@ -27,9 +28,11 @@ part 'classic_scenario.g.dart';
 class ClassicScenario extends Scenario {
   ClassicScenario() : super();
 
-
-
   bool hasGuessedRightForBeautifulMind = false;
+  String? redCarpetPlayerName;
+  String? greenMilePlayerName;
+  String? permanentRedCarpetPlayerName;
+  String? permanentGreenMilePlayerName;
 
   factory ClassicScenario.fromJson(Map<String, dynamic> json) =>
       _$ClassicScenarioFromJson(json);
@@ -412,10 +415,63 @@ class ClassicScenario extends Scenario {
 
   bool doesMayorHaveAbility() {
     Player? mayorPlayer = Player.getPlayerByRoleType(Mayor);
-    if(mayorPlayer == null) {
+    if (mayorPlayer == null) {
       return false;
     }
     return mayorPlayer.hasAbility();
   }
 
+  @override
+  List<Player> getPlayersForRegularVoting() {
+    List<Player> alivePlayers = Player.inGamePlayers
+        .where((player) =>
+            player.playerStatus != PlayerStatus.dead &&
+            player.playerStatus != PlayerStatus.removed &&
+            player.name != redCarpetPlayerName &&
+            player.name != greenMilePlayerName)
+        .toList();
+    return alivePlayers;
+  }
+
+  @override
+  void resetLastMoveCardData() {
+    redCarpetPlayerName = null;
+    greenMilePlayerName = null;
+  }
+
+  @override
+  void undoLastMoveCardData() {
+    String? previousLastMoveCardTitle =
+        GameStateManager.getPreviousLastMoveCardTitle();
+    if (previousLastMoveCardTitle == 'فرش قرمز') {
+      redCarpetPlayerName = permanentRedCarpetPlayerName;
+    } else if (previousLastMoveCardTitle == 'مسیر سبز') {
+      greenMilePlayerName = permanentGreenMilePlayerName;
+    }
+  }
+
+  @override
+  void storeDefendingPlayers(List<Player> players) {
+    defendingPlayers = players;
+    if (redCarpetPlayerName != null) {
+      bool alreadyInList =
+          defendingPlayers.any((p) => p.name == redCarpetPlayerName);
+      if (!alreadyInList) {
+        defendingPlayers.add(Player.getPlayerByName(redCarpetPlayerName!));
+      }
+    }
+  }
+
+  @override
+  void setLastMoveCardsAttribute() {
+    redCarpetPlayerName = null;
+    greenMilePlayerName = null;
+    String? previousLastMoveCardTitle =
+        GameStateManager.getPreviousLastMoveCardTitle();
+    if (previousLastMoveCardTitle == 'فرش قرمز') {
+      redCarpetPlayerName = permanentRedCarpetPlayerName;
+    } else if (previousLastMoveCardTitle == 'مسیر سبز') {
+      greenMilePlayerName = permanentGreenMilePlayerName;
+    }
+  }
 }

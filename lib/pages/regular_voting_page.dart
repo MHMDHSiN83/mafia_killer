@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 import 'package:mafia_killer/components/page_frame.dart';
 import 'package:mafia_killer/components/voting_tile.dart';
 import 'package:mafia_killer/databases/game_settings.dart';
@@ -31,12 +32,14 @@ class _RegularVotingPageState extends State<RegularVotingPage> {
     });
   }
 
+  List<Player> alivePlayers = [];
 
-  List<Player> alivePlayers = Player.inGamePlayers
-      .where((player) =>
-          player.playerStatus != PlayerStatus.dead &&
-          player.playerStatus != PlayerStatus.removed)
-      .toList();
+  @override
+  void initState() {
+    Scenario.currentScenario.setLastMoveCardsAttribute();
+    alivePlayers = Scenario.currentScenario.getPlayersForRegularVoting();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +57,9 @@ class _RegularVotingPageState extends State<RegularVotingPage> {
         rightButtonText: "صحبت دفاعیه",
         leftButtonOnTap: () => Navigator.pop(context),
         rightButtonOnTap: () {
+          // Scenario.currentScenario.setLastMoveCardsAttribute();
           Scenario.currentScenario.storeDefendingPlayers(defendingPlayers);
+          // Scenario.currentScenario.undoLastMoveCardData();
           AudioManager.playNextPageEffect();
           if (Scenario.currentScenario.defendingPlayers.isNotEmpty) {
             Navigator.pushNamed(

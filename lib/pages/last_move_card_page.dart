@@ -59,9 +59,7 @@ class _LastMoveCardPageState extends State<LastMoveCardPage> {
         },
         leftButtonOnTap: () {
           LastMoveCardPage.selectedLastMoveCard?.isUsed = false;
-          if (Scenario.currentScenario is GodfatherScenario) {
-            Scenario.currentScenario.inGameLastMoveCards.shuffle();
-          }
+          Scenario.currentScenario.inGameLastMoveCards.shuffle();
           Navigator.pop(context);
         },
         rightButtonOnTap: () {
@@ -89,15 +87,16 @@ class _LastMoveCardPageState extends State<LastMoveCardPage> {
               is godfather.BeautifulMind) {
             Navigator.pushNamed(
                 context, '/beautiful_mind_choose_nostradamus_page');
-          } else if (LastMoveCardPage.selectedLastMoveCard
-              is Insomnia) {
+          } else if (LastMoveCardPage.selectedLastMoveCard is Insomnia) {
             GameStateManager.addState(
                 lastMoveCards: Scenario.currentScenario.inGameLastMoveCards,
                 silencedPlayerDuringDay:
                     Scenario.currentScenario.silencedPlayerDuringDay);
             GameStateManager.addLastMoveCardAction(
-                [Scenario.currentScenario.killedInDayPlayer!], LastMoveCardPage.selectedLastMoveCard!);
-            LastMoveCardPage.selectedLastMoveCard!.lastMoveCardAction([Scenario.currentScenario.killedInDayPlayer!]);
+                [Scenario.currentScenario.killedInDayPlayer!],
+                LastMoveCardPage.selectedLastMoveCard!);
+            LastMoveCardPage.selectedLastMoveCard!.lastMoveCardAction(
+                [Scenario.currentScenario.killedInDayPlayer!]);
             Navigator.pushNamed(
               context,
               '/talking_page',
@@ -113,10 +112,12 @@ class _LastMoveCardPageState extends State<LastMoveCardPage> {
           } else if (LastMoveCardPage.selectedLastMoveCard is FinalShot) {
           } else if (LastMoveCardPage.selectedLastMoveCard is GreatLie) {
           } else if (LastMoveCardPage.selectedLastMoveCard is GreenMile) {
-          } else if (LastMoveCardPage.selectedLastMoveCard is classic.BeautifulMind) {
-            Navigator.pushNamed(
-                context, '/beautiful_mind_choose_role_page');
+            Navigator.pushNamed(context, '/green_mile_page');
+          } else if (LastMoveCardPage.selectedLastMoveCard
+              is classic.BeautifulMind) {
+            Navigator.pushNamed(context, '/beautiful_mind_choose_role_page');
           } else if (LastMoveCardPage.selectedLastMoveCard is RedCarpet) {
+            Navigator.pushNamed(context, '/red_carpet_page');
           } else if (LastMoveCardPage.selectedLastMoveCard is Vertigo) {}
         },
         isInGame: true,

@@ -3,6 +3,7 @@ import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/models/last_move_card.dart';
 import 'package:mafia_killer/models/player_status.dart';
+import 'package:mafia_killer/models/scenarios/classic/classic_scenario.dart';
 import 'package:mafia_killer/models/scenarios/godfather/godfather_scenario.dart';
 
 part 'green_mile.g.dart';
@@ -29,17 +30,15 @@ class GreenMile extends LastMoveCard {
 
   @override
   void lastMoveCardAction(List<Player> players) {
-    for (int i = 1; i < players.length; i++) {
-      (Scenario.currentScenario as GodfatherScenario)
-          .silencedPlayerDuringDay
-          .add(players[i]);
-    }
     players[0].playerStatus = PlayerStatus.dead;
+    (Scenario.currentScenario as ClassicScenario).permanentGreenMilePlayerName = players[1].name;
+    (Scenario.currentScenario as ClassicScenario).greenMilePlayerName = players[1].name;
   }
 
   @override
   void undoLastMoveCardAction(List<Player> players) {
-    (Scenario.currentScenario as GodfatherScenario).silencedPlayerDuringDay = [];
     players[0].playerStatus = PlayerStatus.active;
+    (Scenario.currentScenario as ClassicScenario).permanentGreenMilePlayerName = null;
+    (Scenario.currentScenario as ClassicScenario).greenMilePlayerName = null;
   }
 }

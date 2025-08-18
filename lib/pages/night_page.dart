@@ -376,6 +376,7 @@ class _NightPageState extends State<NightPage> with WidgetsBindingObserver {
         leftButtonOnTap: () {
           resetNight();
           GameStateManager.goToPreviousState();
+          Scenario.currentScenario.resetLastMoveCardData(); // TODO: ??
           Navigator.pop(context);
         },
         rightButtonOnTap: () {
