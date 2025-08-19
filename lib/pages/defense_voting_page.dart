@@ -98,7 +98,9 @@ class _DefenseVotingPageState extends State<DefenseVotingPage> {
               return;
             }
           } else {
-            if (Scenario.currentScenario is ClassicScenario && (Scenario.currentScenario as ClassicScenario).doesMayorHaveAbility()) {
+            if (Scenario.currentScenario is ClassicScenario &&
+                (Scenario.currentScenario as ClassicScenario)
+                    .doesMayorHaveAbility()) {
               Navigator.pushNamed(context, '/noon_nap_page');
             } else {
               if (selectedPlayers.isEmpty) {
@@ -110,7 +112,11 @@ class _DefenseVotingPageState extends State<DefenseVotingPage> {
                   Player.getPlayerByName(
                           Scenario.currentScenario.killedInDayPlayer!.name)
                       .playerStatus = PlayerStatus.dead;
-                  Navigator.pushNamed(context, '/night_page');
+                  if (Scenario.currentScenario.isGameOver()) {
+                    Navigator.pushNamed(context, '/end_game_page');
+                  } else {
+                    Navigator.pushNamed(context, '/night_page');
+                  }
                 }
               }
             }

@@ -147,7 +147,11 @@ class _NoonNapPageState extends State<NoonNapPage> {
               Player.getPlayerByName(
                       Scenario.currentScenario.killedInDayPlayer!.name)
                   .playerStatus = PlayerStatus.dead;
-              Navigator.pushNamed(context, '/night_page');
+              if (Scenario.currentScenario.isGameOver()) {
+                Navigator.pushNamed(context, '/end_game_page');
+              } else {
+                Navigator.pushNamed(context, '/night_page');
+              }
             }
           }
         },
