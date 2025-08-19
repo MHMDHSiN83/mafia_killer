@@ -26,21 +26,14 @@ class GreatLie extends LastMoveCard {
     return 11;
   }
 
+
   @override
   void lastMoveCardAction(List<Player> players) {
-    // the first element of the players list is the player that is going out of the game
-    players[0].playerStatus = PlayerStatus.removed;
-    Role tmp = players[1].role!;
-    players[1].role = players[0].role!;
-    players[0].role = tmp;
+    players[0].playerStatus = PlayerStatus.dead;
   }
 
   @override
   void undoLastMoveCardAction(List<Player> players) {
-    Role? temp = players[0].role;
-    players[0].role = players[1].role;
-    players[1].role = temp;
     players[0].playerStatus = PlayerStatus.active;
-    players[1].playerStatus = PlayerStatus.active;
   }
 }
