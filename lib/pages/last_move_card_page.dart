@@ -110,6 +110,7 @@ class _LastMoveCardPageState extends State<LastMoveCardPage> {
               ),
             );
           } else if (LastMoveCardPage.selectedLastMoveCard is FinalShot) {
+            Navigator.pushNamed(context, '/final_shot_page');
           } else if (LastMoveCardPage.selectedLastMoveCard is GreatLie) {
           } else if (LastMoveCardPage.selectedLastMoveCard is GreenMile) {
             Navigator.pushNamed(context, '/green_mile_page');

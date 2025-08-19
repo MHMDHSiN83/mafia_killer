@@ -10,6 +10,7 @@ import 'package:mafia_killer/pages/last_move_card_pages/beautiful_mind_choose_no
 import 'package:mafia_killer/pages/last_move_card_pages/beautiful_mind_choose_role_page.dart';
 import 'package:mafia_killer/pages/last_move_card_pages/face_off_page.dart';
 import 'package:mafia_killer/pages/last_move_card_pages/faced_off_role_page.dart';
+import 'package:mafia_killer/pages/last_move_card_pages/final_shot_page.dart';
 import 'package:mafia_killer/pages/last_move_card_pages/green_mile_page.dart';
 import 'package:mafia_killer/pages/last_move_card_pages/handcuffs_page.dart';
 import 'package:mafia_killer/pages/last_move_card_pages/red_carpet_page.dart';
@@ -104,6 +105,7 @@ class MyApp extends StatelessWidget {
         '/green_mile_page': (context) => GreenMilePage(),
         '/red_carpet_page': (context) => RedCarpetPage(),
         '/vertigo_page': (context) => VertigoPage(),
+        '/final_shot_page': (context) => FinalShotPage(),
         '/end_game_page': (context) => EndGamePage(),
         '/scenario_guid_page': (context) => ScenarioGuidPage(),
         '/play_again_loading_page': (context) => PlayAgainLoadingPage(),

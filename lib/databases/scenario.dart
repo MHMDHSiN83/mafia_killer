@@ -572,10 +572,6 @@ class Scenario {
     return alivePlayers;
   }
 
-  void resetLastMoveCardData() {}
-
-  void undoLastMoveCardData() {}
-
   void setLastMoveCardsAttribute() {}
   
 }

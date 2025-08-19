@@ -142,7 +142,12 @@ class GameStateManager {
 
   static String? getPreviousLastMoveCardTitle() {
     int? number = int.tryParse(currentState.substring(1));
-    String previousDayState = 'd${number! - 1}';
+    String previousDayState = '';
+    if (currentState[0] == 'd') {
+      previousDayState = 'd${number! - 1}';
+    } else {
+      previousDayState = 'd${number!}';
+    }
     return lastMoveCardActions[previousDayState]?.lastMoveCard.title;
   }
 }

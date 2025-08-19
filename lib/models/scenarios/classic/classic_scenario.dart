@@ -29,6 +29,8 @@ class ClassicScenario extends Scenario {
   ClassicScenario() : super();
 
   bool hasGuessedRightForBeautifulMind = false;
+  String? finalShotPlayerName;
+  String? permanentFinalShotPlayerName;
   String? redCarpetPlayerName;
   String? greenMilePlayerName;
   String? permanentRedCarpetPlayerName;
@@ -168,13 +170,23 @@ class ClassicScenario extends Scenario {
   Iterable<String> mafiaTeamAction(
       {Function? mafiaChoiceBox, Function? noAbilityBox}) sync* {
     yield "تیم مافیا از خواب بیدار شه";
-    ableToSelectTile = true;
-    NightPage.buttonText = '';
-    currentPlayerAtNight =
-        Player.getPlayersByRoleSide(RoleSide.mafia)!.first; // TODO: wtf
-    yield 'تیم مافیا به یکی شلیک کنه'; // TODO: probable move to godfather role(?)
-    ableToSelectTile = true;
-    nightEvents[NightEvent.shotByMafia] = [NightPage.targetPlayers[0]];
+    if (finalShotPlayerName == null) {
+      ableToSelectTile = true;
+      NightPage.buttonText = '';
+      currentPlayerAtNight =
+          Player.getPlayersByRoleSide(RoleSide.mafia)!.first; // TODO: wtf
+      yield 'تیم مافیا به یکی شلیک کنه'; // TODO: probable move to godfather role(?)
+      ableToSelectTile = true;
+      nightEvents[NightEvent.shotByMafia] = [NightPage.targetPlayers[0]];
+    } else {
+      nightEvents[NightEvent.shotByMafia] = [
+        Player.getPlayerByName(finalShotPlayerName!)
+      ];
+      currentPlayerAtNight =
+          Player.getPlayersByRoleSide(RoleSide.mafia)!.first; // TODO: wtf
+      NightPage.buttonText = '';
+      ableToSelectTile = true;
+    }
     List<String> constantRoleOrder = getMafiaRoleOrder();
 
     for (int i = 0; i < constantRoleOrder.length; i++) {
@@ -453,23 +465,6 @@ class ClassicScenario extends Scenario {
   }
 
   @override
-  void resetLastMoveCardData() {
-    redCarpetPlayerName = null;
-    greenMilePlayerName = null;
-  }
-
-  @override
-  void undoLastMoveCardData() {
-    String? previousLastMoveCardTitle =
-        GameStateManager.getPreviousLastMoveCardTitle();
-    if (previousLastMoveCardTitle == 'فرش قرمز') {
-      redCarpetPlayerName = permanentRedCarpetPlayerName;
-    } else if (previousLastMoveCardTitle == 'مسیر سبز') {
-      greenMilePlayerName = permanentGreenMilePlayerName;
-    }
-  }
-
-  @override
   void storeDefendingPlayers(List<Player> players) {
     defendingPlayers = players;
     if (redCarpetPlayerName != null) {
@@ -485,12 +480,15 @@ class ClassicScenario extends Scenario {
   void setLastMoveCardsAttribute() {
     redCarpetPlayerName = null;
     greenMilePlayerName = null;
+    finalShotPlayerName = null;
     String? previousLastMoveCardTitle =
         GameStateManager.getPreviousLastMoveCardTitle();
     if (previousLastMoveCardTitle == 'فرش قرمز') {
       redCarpetPlayerName = permanentRedCarpetPlayerName;
     } else if (previousLastMoveCardTitle == 'مسیر سبز') {
       greenMilePlayerName = permanentGreenMilePlayerName;
+    } else if (previousLastMoveCardTitle == 'شلیک نهایی') {
+      finalShotPlayerName = permanentFinalShotPlayerName;
     }
   }
 }

@@ -267,6 +267,8 @@ class _NightPageState extends State<NightPage> with WidgetsBindingObserver {
     for (Player player in Player.inGamePlayers) {
       playerCheckboxStatus[player] = false;
     }
+
+    Scenario.currentScenario.setLastMoveCardsAttribute();
   }
 
   void resetNight() {
@@ -376,7 +378,6 @@ class _NightPageState extends State<NightPage> with WidgetsBindingObserver {
         leftButtonOnTap: () {
           resetNight();
           GameStateManager.goToPreviousState();
-          Scenario.currentScenario.resetLastMoveCardData(); // TODO: ??
           Navigator.pop(context);
         },
         rightButtonOnTap: () {

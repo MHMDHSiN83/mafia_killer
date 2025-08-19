@@ -10,14 +10,14 @@ import 'package:mafia_killer/utils/custom_snackbar.dart';
 import 'package:mafia_killer/utils/audio_manager.dart';
 import 'package:mafia_killer/utils/settings_page.dart';
 
-class VertigoPage extends StatefulWidget {
-  VertigoPage({super.key});
+class FinalShotPage extends StatefulWidget {
+  FinalShotPage({super.key});
   List<Player> selectedPlayers = [];
   @override
-  State<VertigoPage> createState() => _VertigoPageState();
+  State<FinalShotPage> createState() => _FinalShotPageState();
 }
 
-class _VertigoPageState extends State<VertigoPage> {
+class _FinalShotPageState extends State<FinalShotPage> {
   void addPlayer(Player player) {
     setState(() {
       widget.selectedPlayers.add(player);
@@ -43,8 +43,8 @@ class _VertigoPageState extends State<VertigoPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: PageFrame(
-        label: '/vertigo_page',
-        pageTitle: "دستبند",
+        label: '/final_shot_page',
+        pageTitle: "شلیک نهایی",
         settingsPage: () {
           if (LastMoveCardPage.selectedLastMoveCard != null) {
             LastMoveCardPage.selectedLastMoveCard!.isUsed = false;
@@ -98,7 +98,7 @@ class _VertigoPageState extends State<VertigoPage> {
                   itemCount: alivePlayers.length,
                   itemBuilder: (context, index) {
                     return VotingTile(
-                      stamp: "سرگیجه",
+                      stamp: "شلیک نهایی",
                       player: alivePlayers[index],
                       addPlayer: () {
                         addPlayer(alivePlayers[index]);
@@ -119,7 +119,7 @@ class _VertigoPageState extends State<VertigoPage> {
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: CallRole(
                   text:
-                      "${killedInDayPlayer.name} توانایی یک نفر رو در شب بگیر.",
+                      "${killedInDayPlayer.name} به جای مافیا یک نفر رو برای شلیک امشب انتخاب کن.",
                   buttonText: "",
                   onPressed: () {},
                 ),
