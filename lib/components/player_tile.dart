@@ -23,6 +23,12 @@ class PlayerTile extends StatefulWidget {
 
 class _PlayerTileState extends State<PlayerTile> {
   TextEditingController controller = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   void onChanged(bool? value) async {
     setState(() {
       Player.changePlayerStatus(widget.player);
@@ -64,76 +70,86 @@ class _PlayerTileState extends State<PlayerTile> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.primary,
-          border: Border.all(
-              color: Theme.of(context).colorScheme.secondary, width: 3),
-          borderRadius: BorderRadius.circular(5)),
-      height: 60.0,
-      child: Padding(
-        padding: const EdgeInsets.all(5.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Expanded(
-              flex: 7,
-              child: Row(
-                children: [
-                  Expanded(
-                    flex: 1,
-                    child: MyCheckBox(
-                      isChecked: widget.player.doesParticipate,
-                      onChanged: onChanged,
-                      scale: 1.3,
-                    ),
-                  ),
-                  Expanded(
-                    flex: 3,
-                    child: AutoSizeText(
-                      minFontSize: 12,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      widget.player.name,
-                      style: TextStyle(
-                        color: Theme.of(context).colorScheme.inversePrimary,
-                        fontSize: 20,
+    return GestureDetector(
+      onTap: () {
+        onChanged(true);
+      },
+      child: Opacity(
+        opacity: widget.player.doesParticipate ? 1.0 : 0.6,
+        child: Container(
+          decoration: BoxDecoration(
+              color: Color(0xFF211C37),
+              border: Border.all(color: AppColors.redColor, width: 2),
+              borderRadius: BorderRadius.circular(15)),
+          height: 60.0,
+          child: Padding(
+            padding: const EdgeInsets.all(5.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  flex: 7,
+                  child: Row(
+                    children: [
+                      // Expanded(
+                      //   flex: 1,
+                      //   child: MyCheckBox(
+                      //     isChecked: widget.player.doesParticipate,
+                      //     onChanged: onChanged,
+                      //     scale: 1.3,
+                      //   ),
+                      // ),
+                      Spacer(
+                        flex: 1,
                       ),
-                    ),
+                      Expanded(
+                        flex: 4,
+                        child: AutoSizeText(
+                          minFontSize: 12,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          widget.player.name,
+                          style: TextStyle(
+                            color: Theme.of(context).colorScheme.inversePrimary,
+                            fontSize: 20,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                    ],
                   ),
-                  const SizedBox(
-                    width: 5,
+                ),
+                Expanded(
+                  flex: 3,
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      IconButton(
+                        padding: EdgeInsets.zero,
+                        onPressed: showEditDialog,
+                        icon: Icon(
+                          Icons.edit,
+                          size: 35,
+                          color: AppColors.greenColor,
+                        ),
+                      ),
+                      IconButton(
+                        padding: EdgeInsets.zero,
+                        onPressed: widget.removePlayer,
+                        icon: const Icon(
+                          Icons.delete,
+                          size: 35,
+                          color: AppColors.redColor,
+                        ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-            Expanded(
-              flex: 3,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  IconButton(
-                    padding: EdgeInsets.zero,
-                    onPressed: showEditDialog,
-                    icon: Icon(
-                      Icons.edit,
-                      size: 35,
-                      color: Theme.of(context).colorScheme.inversePrimary,
-                    ),
-                  ),
-                  IconButton(
-                    padding: EdgeInsets.zero,
-                    onPressed: widget.removePlayer,
-                    icon: const Icon(
-                      Icons.delete,
-                      size: 35,
-                      color: AppColors.redColor,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
+          ),
         ),
       ),
     );
