@@ -46,6 +46,7 @@ class RecommendedScenario {
     } else if(Scenario.currentScenario is ClassicScenario){
       return recommendedScenario['classic']![Player.inGamePlayers.length]!;
     }
+    return null;
   }
   static Map<String, int> generateRecommendedScenario() {
     if (Scenario.currentScenario is GodfatherScenario) {
