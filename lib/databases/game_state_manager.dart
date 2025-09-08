@@ -1,4 +1,3 @@
-import 'package:logger/logger.dart';
 import 'package:mafia_killer/databases/game_settings.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/databases/scenario.dart';
@@ -79,7 +78,7 @@ class GameStateManager {
   }
 
   static void goToPreviousState() {
-    if(currentState == 'n0') {
+    if (currentState == 'n0') {
       return;
     }
     currentState = getPreviousState();
@@ -139,5 +138,16 @@ class GameStateManager {
 
   static String getPreviousStateNumber() {
     return Language.getPersianOrdinal(int.parse(getPreviousState()[1]));
+  }
+
+  static String? getPreviousLastMoveCardTitle() {
+    int? number = int.tryParse(currentState.substring(1));
+    String previousDayState = '';
+    if (currentState[0] == 'd') {
+      previousDayState = 'd${number! - 1}';
+    } else {
+      previousDayState = 'd${number!}';
+    }
+    return lastMoveCardActions[previousDayState]?.lastMoveCard.title;
   }
 }

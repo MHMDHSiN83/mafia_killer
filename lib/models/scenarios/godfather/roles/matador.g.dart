@@ -12,6 +12,8 @@ Matador _$MatadorFromJson(Map<String, dynamic> json) => Matador()
   ..cardImagePath = json['cardImagePath'] as String
   ..characterImagePath = json['characterImagePath'] as String
   ..roleSide = $enumDecode(_$RoleSideEnumMap, json['roleSide'])
+  ..slug = json['slug'] as String
+  ..multiSelectionNumber = (json['multiSelectionNumber'] as num).toInt()
   ..lastPlayerName = json['lastPlayerName'] as String?;
 
 Map<String, dynamic> _$MatadorToJson(Matador instance) => <String, dynamic>{
@@ -20,6 +22,8 @@ Map<String, dynamic> _$MatadorToJson(Matador instance) => <String, dynamic>{
       'cardImagePath': instance.cardImagePath,
       'characterImagePath': instance.characterImagePath,
       'roleSide': _$RoleSideEnumMap[instance.roleSide]!,
+      'slug': instance.slug,
+      'multiSelectionNumber': instance.multiSelectionNumber,
       'lastPlayerName': instance.lastPlayerName,
     };
 

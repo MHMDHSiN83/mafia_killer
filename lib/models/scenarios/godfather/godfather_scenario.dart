@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/databases/scenario.dart';
@@ -11,6 +10,7 @@ import 'package:mafia_killer/models/scenarios/godfather/roles/constantine.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/doctor_watson.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/godfather.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/mafia.dart';
+import 'package:mafia_killer/models/scenarios/godfather/roles/matador.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/nostradamus.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/saul_goodman.dart';
 import 'package:mafia_killer/models/ui_player_status.dart';
@@ -33,6 +33,30 @@ class GodfatherScenario extends Scenario {
   @override
   Map<String, dynamic> toJson() => _$GodfatherScenarioToJson(this);
 
+  @override
+  String validateConditions() {
+    String error = super.validateConditions();
+
+    if (error != '') {
+      return error;
+    }
+
+    int mafiaCount = getNumberOfRoleBySide(RoleSide.mafia);
+    int citizenCount = getNumberOfRoleBySide(RoleSide.citizen);
+    int independantCount = getNumberOfRoleBySide(RoleSide.independant);
+
+    if (citizenCount + independantCount <= mafiaCount) {
+      error = 'تعداد مافیاها باید از مجموع شهروندها و نوستراداموس کمتر باشه';
+      return error;
+    }
+
+    if (!doesNostradamusParticipate() && doesBeautifulMindParticipate()) {
+      error = 'وقتی نوستراداموس توی بازی نیست، کارت ذهن زیبا قابل استفاده نیست';
+      return error;
+    }
+    return error;
+  }
+
   void nostradamusRevealed() {
     for (LastMoveCard lastMoveCard
         in Scenario.currentScenario.inGameLastMoveCards) {
@@ -47,18 +71,30 @@ class GodfatherScenario extends Scenario {
   }
 
   @override
-  Iterable<String> callRolesIntroNight() sync* {
-    if ((Scenario.currentScenario as GodfatherScenario)
-        .doesNostradamusParticipate()) {
+  Iterable<String> callRolesIntroNight({Function? independantBox}) sync* {
+    if (doesNostradamusParticipate()) {
       Player? nostradamusPlayer = Player.getPlayerByRoleType(Nostradamus);
-
-      yield nostradamusPlayer!.role!.introAwakingRole();
+      nostradamusPlayer!.role!.setAvailablePlayers();
+      currentPlayerAtNight = nostradamusPlayer;
+      while (true) {
+        yield nostradamusPlayer.role!.introAwakingRole();
+        if (IntroNightPage.targetPlayers.length ==
+            (nostradamusPlayer.role as Nostradamus).inquiryNumber) {
+          independantBox!(
+              resultOfNostradamusGuess(IntroNightPage.targetPlayers));
+          break;
+        }
+      }
+      ableToSelectTile = false;
       yield nostradamusPlayer.role!.introSleepRoleText();
     }
-    List<String> introMafiaTeamAwakingTexts =
-        Scenario.currentScenario.getIntroMafiaTeamAwakingTexts();
-    List<Role> introCitizenTeamRoles =
-        Scenario.currentScenario.getIntroCitizenTeamRoles();
+
+    ableToSelectTile = false;
+    currentPlayerAtNight = Player.inGamePlayers.first;
+    resetUIPlayerStatus();
+
+    List<String> introMafiaTeamAwakingTexts = getIntroMafiaTeamAwakingTexts();
+    List<Role> introCitizenTeamRoles = getIntroCitizenTeamRoles();
     IntroNightPage.buttonText = 'بیدار شدند';
 
     int l = introMafiaTeamAwakingTexts.length;
@@ -77,6 +113,61 @@ class GodfatherScenario extends Scenario {
     IntroNightPage.isNightOver = true;
     IntroNightPage.buttonText = "";
     yield "همه بیدار شن";
+  }
+
+  @override
+  List<String> getIntroMafiaTeamAwakingTexts() {
+    List<String> introMafiaTeamAwakingTexts = [
+      "تیم مافیا بیدار شن و همدیگه رو بشناسن",
+    ];
+    Role? godfather = getRoleByType(Godfather);
+    Role? matador = getRoleByType(Matador);
+    Role? saulGoodman = getRoleByType(SaulGoodman);
+    Role? theMafia = getRoleByType(Mafia);
+    if (godfather != null) {
+      introMafiaTeamAwakingTexts.add(godfather.introAwakingRole());
+    }
+    if (matador != null) {
+      introMafiaTeamAwakingTexts.add(matador.introAwakingRole());
+    }
+    if (saulGoodman != null) {
+      introMafiaTeamAwakingTexts.add(saulGoodman.introAwakingRole());
+    }
+    if (theMafia != null) {
+      introMafiaTeamAwakingTexts.add(theMafia.introAwakingRole());
+    }
+    introMafiaTeamAwakingTexts.add("تیم مافیا بخوابه");
+    return introMafiaTeamAwakingTexts;
+  }
+
+  @override
+  List<Role> getIntroCitizenTeamRoles() {
+    List<Role> citizenRoles = [];
+    for (Role role in inGameRoles) {
+      if (role is DoctorWatson) {
+        citizenRoles.add(role);
+        break;
+      }
+    }
+    for (Role role in inGameRoles) {
+      if (role is Leon) {
+        citizenRoles.add(role);
+        break;
+      }
+    }
+    for (Role role in inGameRoles) {
+      if (role is CitizenKane) {
+        citizenRoles.add(role);
+        break;
+      }
+    }
+    for (Role role in inGameRoles) {
+      if (role is Constantine) {
+        citizenRoles.add(role);
+        break;
+      }
+    }
+    return citizenRoles;
   }
 
   @override
@@ -105,7 +196,7 @@ class GodfatherScenario extends Scenario {
     }
   }
 
-  String setMafiaChoiceText() {
+  String getMafiaChoiceText() {
     List<String> mafiaTeamAct = [
       "تیم مافیا به یک نفر شلیک کنه",
       "پدرخوانده کسی که میخواد امشب سلاخی کنه رو نشون بده و نقششو حدس بزنه",
@@ -115,39 +206,34 @@ class GodfatherScenario extends Scenario {
   }
 
   @override
-  Iterable<String> mafiaTeamAction({Function? mafiaChoiceBox}) sync* {
-    List<String> mafiaTeamAct = [
-      "تیم مافیا به یک نفر شلیک کنه",
-      "پدرخوانده کسی که میخواد امشب سلاخی کنه رو نشون بده و نقششو حدس بزنه",
-      "ساول گودمن یک نفر رو خریداره کنه"
-    ];
-
+  Iterable<String> mafiaTeamAction({Function? mafiaChoiceBox, Function? noAbilityBox}) sync* {
     yield "تیم مافیا از خواب بیدار شه";
-    NightPage.ableToSelectTile = true;
+    ableToSelectTile = true;
     NightPage.buttonText = '';
     mafiaChoiceBox!();
-    yield mafiaTeamAct[NightPage.mafiaTeamChoice];
+    yield "تیم مافیا از خواب بیدار شه";
+    yield getMafiaChoiceText();
     NightPage.typeOfConfirmation = 0;
     Player? godfatherPlayer = Player.getPlayerByRoleType(Godfather);
     Player? saulGoodmanPlayer = Player.getPlayerByRoleType(SaulGoodman);
     switch (NightPage.mafiaTeamChoice) {
       case 0: // shot
-        nightEvents[NightEvent.shotByMafia] = NightPage.targetPlayer;
+        nightEvents[NightEvent.shotByMafia] = [NightPage.targetPlayers[0]];
         break;
-      case 1:
-        godfatherPlayer?.role!.nightAction(NightPage.targetPlayer);
-        // nightEvents[NightEvent.sixthSensedByGodfather] = NightPage.targetPlayer;
-        if (NightPage.targetPlayer != null) {
-          NightPage.targetPlayer!.playerStatus = PlayerStatus.disable;
+      case 1: // sixth sense
+        godfatherPlayer?.role!.nightAction(
+          NightPage.targetPlayers.isEmpty ? null : NightPage.targetPlayers[0],
+        );
+        if (NightPage.targetPlayers.isNotEmpty) {
+          NightPage.targetPlayers[0].playerStatus = PlayerStatus.disable;
         }
         break;
       case 2: // buying
-        NightPage.ableToSelectTile = false;
+        ableToSelectTile = false;
         NightPage.buttonText = 'اتمام';
-        saulGoodmanPlayer?.role!.nightAction(NightPage.targetPlayer);
-        if (NightPage.targetPlayer!.role is Citizen) {
-          // nightEvents[NightEvent.boughtBySaulGoodman] = NightPage.targetPlayer;
-          NightPage.targetPlayer!.role = Role.copy(Scenario.currentScenario
+        saulGoodmanPlayer?.role!.nightAction(NightPage.targetPlayers[0]);
+        if (NightPage.targetPlayers[0].role is Citizen) {
+          NightPage.targetPlayers[0].role = Role.copy(Scenario.currentScenario
               .getRoleByType(Mafia, searchInGmaeRoles: false)!);
           yield 'خریداری موفقیت آمیز بود. فرد خریداری شده رو بیدار کن تا هم تیمیاشو ببینه';
         } else {
@@ -155,12 +241,15 @@ class GodfatherScenario extends Scenario {
         }
         break;
     }
+    if (Player.getPlayerByRoleType(Matador) == null) {
+      NightPage.buttonText = 'خوابید';
+      ableToSelectTile = false;
+      yield 'تیم مافیا بخوابه';
+    }
   }
 
   @override
-  Iterable<String> otherRolesAction({Function? noAbilityBox}) sync* {
-    // List<String> constantRoleOrder =
-    //     Scenario.currentScenario.getConstantRoleOrder();
+  List<String> getOtherRoleOrder() {
     List<String> constantRoleOrder = [
       'ماتادور',
       'دکتر واتسون',
@@ -168,40 +257,56 @@ class GodfatherScenario extends Scenario {
       'همشهری کین',
       'کنستانتین'
     ];
+    return constantRoleOrder;
+  }
+
+  @override
+  Iterable<String> otherRolesAction({Function? noAbilityBox}) sync* {
+    List<String> constantRoleOrder = getOtherRoleOrder();
     NightPage.buttonText = 'خوابید';
+
     for (int i = 0; i < constantRoleOrder.length; i++) {
-      for (Player player in Player.inGamePlayers) {
-        if (player.role!.name == constantRoleOrder[i]) {
-          NightPage.ableToSelectTile = true;
-          resetUIPlayerStatus();
-          if (player.hasAbility()) {
-            NightPage.buttonText = i <= 1 ? '' : "هیچکس";
-            player.role!.setAvailablePlayers();
-            yield player.role!.awakingRole();
-            player.role!.nightAction(NightPage.targetPlayer);
-            NightPage.ableToSelectTile = false;
-            NightPage.buttonText = "خوابید";
-            yield player.role!.sleepRoleText();
-          } else {
-            setPlayersToUntargetable();
-            if (player.playerStatus == PlayerStatus.disable) {
-              noAbilityBox!(player.role!.disabledText());
-            } else if (!player.role!.hasAbility()) {
-              noAbilityBox!(player.role!.ranOutOfAbilityText());
-            } else {
-              noAbilityBox!(player.role!.deadOrRemovedText());
-            }
-            yield player.role!.sleepRoleText();
-          }
-          break;
+      Player? player = Player.getPlayerByRoleName(constantRoleOrder[i]);
+      if (player == null) {
+        continue;
+      }
+
+      ableToSelectTile = true;
+      resetUIPlayerStatus();
+      player.role!.setAvailablePlayers();
+      if (player.hasAbility()) {
+        NightPage.buttonText = i <= 1 ? '' : "هیچکس";
+        currentPlayerAtNight = player;
+        if (player.role!.hasMultiSelection()) {
+          NightPage.buttonText = "تائید";
         }
+        yield player.role!.awakingRole();
+        for (Player p in NightPage.targetPlayers) {
+          player.role!.nightAction(p);
+        }
+        ableToSelectTile = false;
+        NightPage.buttonText = "خوابید";
+        yield player.role!.sleepRoleText();
+      } else {
+        setPlayersToUntargetable();
+        if (player.playerStatus == PlayerStatus.disable) {
+          noAbilityBox!(player.role!.disabledText());
+        } else if (!player.role!.hasAbility()) {
+          noAbilityBox!(player.role!.ranOutOfAbilityText());
+        } else {
+          noAbilityBox!(player.role!.deadOrRemovedText());
+        }
+        yield player.role!.sleepRoleText();
       }
     }
   }
 
   @override
   Iterable<String> callRolesRegularNight(
-      {Function? mafiaChoiceBox, Function? noAbilityBox}) sync* {
+      {Function? mafiaChoiceBox,
+      Function? noAbilityBox,
+      Function? dieHardBox}) sync* {
+    Scenario.currentScenario.currentPlayerAtNight = Player.inGamePlayers.first;
     final iterator = mafiaTeamAction(mafiaChoiceBox: mafiaChoiceBox!).iterator;
 
     while (iterator.moveNext()) {
@@ -222,20 +327,25 @@ class GodfatherScenario extends Scenario {
 
   @override
   void nightReport() {
-    Player? shotByMafia = nightEvents[NightEvent.shotByMafia];
-    Player? savedByDoctor = nightEvents[NightEvent.savedByDoctor];
-    Player? shotByLeon = nightEvents[NightEvent.shotByLeon];
-    Player? revivedByConstantine = nightEvents[NightEvent.revivedByConstantine];
-    Player? inquiryByCitizenKane = nightEvents[NightEvent.inquiryByCitizenKane];
+    Player? shotByMafia = getFirstPlayer(NightEvent.shotByMafia);
+    Player? shotByLeon = getFirstPlayer(NightEvent.shotByLeon);
+    Player? revivedByConstantine =
+        getFirstPlayer(NightEvent.revivedByConstantine);
+    Player? inquiryByCitizenKane =
+        getFirstPlayer(NightEvent.inquiryByCitizenKane);
     Player? sixthSensedByGodfather =
-        nightEvents[NightEvent.sixthSensedByGodfather];
+        getFirstPlayer(NightEvent.sixthSensedByGodfather);
+
+    List<Player> savedByDoctor = nightEvents[NightEvent.savedByDoctor] ?? [];
 
     Player? leon = Player.getPlayerByRoleType(Leon);
     Player? citizenKane = Player.getPlayerByRoleType(CitizenKane);
 
     // mafia shot process -> Done
     if (shotByMafia != null) {
-      if (savedByDoctor?.name != shotByMafia.name &&
+      bool isSaved = savedByDoctor.any((p) => p.name == shotByMafia.name);
+
+      if (!isSaved &&
           (shotByMafia.role is! Leon ||
               (shotByMafia.role is Leon &&
                   (shotByMafia.role as Leon).shield <= 0)) &&
@@ -245,11 +355,10 @@ class GodfatherScenario extends Scenario {
         shotByMafia.playerStatus = PlayerStatus.dead;
         report.add("${shotByMafia.name} کشته شد.");
       } else if (shotByMafia.role is Leon &&
-          (shotByMafia.role as Leon).shield == 1) {
+          (shotByMafia.role as Leon).shield > 0) {
         (shotByMafia.role as Leon).shield--;
       }
     }
-
     // mafia sixth sense -> Done
     if (sixthSensedByGodfather != null) {
       // if it isn't null it means it succeeded
@@ -260,6 +369,7 @@ class GodfatherScenario extends Scenario {
 
     // leon shot process -> Done
     if (shotByLeon != null) {
+      bool isSaved = savedByDoctor.any((p) => p.name == shotByLeon.name);
       if (shotByLeon.role!.roleSide == RoleSide.citizen) {
         leon!.playerStatus = PlayerStatus.dead;
         report.add("${leon.name} کشته شد.");
@@ -267,11 +377,11 @@ class GodfatherScenario extends Scenario {
           (shotByLeon.role is! Godfather ||
               (shotByLeon.role is Godfather &&
                   (shotByLeon.role as Godfather).shield <= 0)) &&
-          shotByLeon.name != savedByDoctor?.name) {
+          !isSaved) {
         shotByLeon.playerStatus = PlayerStatus.dead;
-        report.add("${shotByLeon.name} کشته شد.)");
+        report.add("${shotByLeon.name} کشته شد.");
       } else if (shotByLeon.role is Godfather &&
-          (shotByLeon.role as Godfather).shield == 1) {
+          (shotByLeon.role as Godfather).shield > 0) {
         (shotByLeon.role as Godfather).shield--;
       }
     }
@@ -280,7 +390,7 @@ class GodfatherScenario extends Scenario {
     if ((citizenKane != null) &&
         (citizenKane.role as CitizenKane).remainingAbility == 0) {
       citizenKane.playerStatus = PlayerStatus.dead;
-      report.add("${citizenKane.name} کشته شد.)");
+      report.add("${citizenKane.name} کشته شد.");
     }
     if (inquiryByCitizenKane != null) {
       if (citizenKane!.playerStatus == PlayerStatus.active &&
@@ -344,17 +454,6 @@ class GodfatherScenario extends Scenario {
     return false;
   }
 
-  bool isAnyMaifaDead() {
-    for (Player player in Player.inGamePlayers) {
-      if (player.role!.roleSide == RoleSide.mafia &&
-          (player.playerStatus == PlayerStatus.dead ||
-              player.playerStatus == PlayerStatus.removed)) {
-        return true;
-      }
-    }
-    return false;
-  }
-
   bool ableToBuying() {
     if (doesSaulGoodmanParticipate()) {
       Player saulGoodman = Player.inGamePlayers
@@ -410,46 +509,6 @@ class GodfatherScenario extends Scenario {
   }
 
   @override
-  void resetRemainingAbility() {
-    Player? savedByDoctor = nightEvents[NightEvent.savedByDoctor];
-    Player? shotByLeon = nightEvents[NightEvent.shotByLeon];
-    Player? revivedByConstantine = nightEvents[NightEvent.revivedByConstantine];
-    Player? inquiryByCitizenKane = nightEvents[NightEvent.inquiryByCitizenKane];
-    Player? sixthSensedByGodfather =
-        nightEvents[NightEvent.sixthSensedByGodfather];
-    Player? boughtBySaulGoodman = nightEvents[NightEvent.boughtBySaulGoodman];
-
-    Player? godfatherPlayer = Player.getPlayerByRoleType(Godfather);
-    Player? saulGoodmanPlayer = Player.getPlayerByRoleType(SaulGoodman);
-    Player? leonPlayer = Player.getPlayerByRoleType(Leon);
-    Player? constantinePlayer = Player.getPlayerByRoleType(Constantine);
-    Player? citizenKanePlayer = Player.getPlayerByRoleType(CitizenKane);
-    Player? doctorPlayer = Player.getPlayerByRoleType(DoctorWatson);
-    if (sixthSensedByGodfather != null) {
-      (godfatherPlayer!.role as Godfather).remainingAbility += 1;
-    }
-    if (shotByLeon != null) {
-      (leonPlayer!.role as Leon).remainingAbility += 1;
-    }
-    if (revivedByConstantine != null) {
-      (constantinePlayer!.role as Constantine).remainingAbility += 1;
-    }
-    if (inquiryByCitizenKane != null) {
-      (citizenKanePlayer!.role as CitizenKane).remainingAbility += 1;
-    }
-    if (boughtBySaulGoodman != null) {
-      (saulGoodmanPlayer!.role as SaulGoodman).remainingAbility += 1;
-      boughtBySaulGoodman.role = Role.fromJson(jsonDecode(jsonEncode(Scenario
-          .currentScenario
-          .getRoleByType(Citizen, searchInGmaeRoles: false)!
-          .toJson())));
-    }
-    if (doctorPlayer == savedByDoctor && savedByDoctor != null) {
-      (doctorPlayer!.role as DoctorWatson).selfHeal += 1;
-    }
-  }
-
-  @override
   void setRoleAttributes() {
     setNostradamusInquiryNumber();
   }
@@ -460,29 +519,5 @@ class GodfatherScenario extends Scenario {
       return;
     }
     (nostradamusPlayer.role! as Nostradamus).setInquiryNumber();
-  }
-
-  @override
-  String validateConditions() {
-    String error = super.validateConditions();
-
-    if (error != '') {
-      return error;
-    }
-
-    int mafiaCount = getNumberOfRoleBySide(RoleSide.mafia);
-    int citizenCount = getNumberOfRoleBySide(RoleSide.citizen);
-    int independantCount = getNumberOfRoleBySide(RoleSide.independant);
-
-    if (citizenCount + independantCount <= mafiaCount) {
-      error = 'تعداد مافیاها باید از مجموع شهروندها و نوستراداموس کمتر باشه';
-      return error;
-    }
-
-    if (!doesNostradamusParticipate() && doesBeautifulMindParticipate()) {
-      error = 'وقتی نوستراداموس توی بازی نیست، کارت ذهن زیبا قابل استفاده نیست';
-      return error;
-    }
-    return error;
   }
 }

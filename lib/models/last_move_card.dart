@@ -2,7 +2,17 @@ import 'dart:convert';
 
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/databases/scenario.dart';
-import 'package:mafia_killer/models/scenarios/godfather/last_move_cards/beautiful_mind.dart';
+import 'package:mafia_killer/models/scenarios/classic/last_move_cards/final_shot.dart';
+import 'package:mafia_killer/models/scenarios/classic/last_move_cards/great_lie.dart';
+import 'package:mafia_killer/models/scenarios/classic/last_move_cards/green_mile.dart';
+import 'package:mafia_killer/models/scenarios/classic/last_move_cards/insomnia.dart';
+import 'package:mafia_killer/models/scenarios/classic/last_move_cards/red_carpet.dart';
+import 'package:mafia_killer/models/scenarios/classic/last_move_cards/vertigo.dart';
+import 'package:mafia_killer/models/scenarios/classic/last_move_cards/beautiful_mind.dart'
+    as classic;
+
+import 'package:mafia_killer/models/scenarios/godfather/last_move_cards/beautiful_mind.dart'
+    as godfather;
 import 'package:mafia_killer/models/scenarios/godfather/last_move_cards/face_off.dart';
 import 'package:mafia_killer/models/scenarios/godfather/last_move_cards/handcuffs.dart';
 import 'package:mafia_killer/models/scenarios/godfather/last_move_cards/reveal_identity.dart';
@@ -15,21 +25,37 @@ class LastMoveCard {
   late String flippedImagePath;
   late String selectionImagePath;
   bool isUsed = false;
+  late String slug;
 
   LastMoveCard();
 
   factory LastMoveCard.fromJson(Map<String, dynamic> json) {
-    switch (json['title']) {
-      case "سکوت بره‌ها":
+    switch (json['slug']) {
+      case "godfather.silence_of_the_lambs":
         return SilenceOfTheLambs.fromJson(json);
-      case "دستبند":
+      case "godfather.handcuffs":
         return Handcuffs.fromJson(json);
-      case "تغییر چهره":
+      case "godfather.face_off":
         return FaceOff.fromJson(json);
-      case "ذهن زیبا":
-        return BeautifulMind.fromJson(json);
-      case "افشای هویت":
+      case "godfather.beautiful_mind":
+        return godfather.BeautifulMind.fromJson(json);
+      case "godfather.reveal_identity":
         return RevealIdentity.fromJson(json);
+
+      case "classic.insomnia":
+        return Insomnia.fromJson(json);
+      case "classic.vertigo":
+        return Vertigo.fromJson(json);
+      case "classic.red_carpet":
+        return RedCarpet.fromJson(json);
+      case "classic.green_mile":
+        return GreenMile.fromJson(json);
+      case "classic.final_shot":
+        return FinalShot.fromJson(json);
+      case "classic.beautiful_mind":
+        return classic.BeautifulMind.fromJson(json);
+      case "classic.great_lie":
+        return GreatLie.fromJson(json);
     }
     throw Exception("salam");
   }
@@ -50,11 +76,15 @@ class LastMoveCard {
   }
 
   static List<LastMoveCard> copyList(List<LastMoveCard> lastMoveCards) {
-    return lastMoveCards.map((lastMoveCard) => LastMoveCard.copy(lastMoveCard)).toList();
+    return lastMoveCards
+        .map((lastMoveCard) => LastMoveCard.copy(lastMoveCard))
+        .toList();
   }
 
   static LastMoveCard getLastMoveCardByTitle(String title) {
-    return Scenario.currentScenario.inGameLastMoveCards.where((lastMoveCard) => lastMoveCard.title == title).first;
+    return Scenario.currentScenario.inGameLastMoveCards
+        .where((lastMoveCard) => lastMoveCard.title == title)
+        .first;
   }
 
   double titleVerticalPadding() {

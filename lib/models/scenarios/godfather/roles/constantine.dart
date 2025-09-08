@@ -31,8 +31,10 @@ class Constantine extends Role {
 
   @override
   void nightAction(Player? player) {
-    Scenario.currentScenario.nightEvents[NightEvent.revivedByConstantine] = player;
     if (player != null) {
+      Scenario.currentScenario.nightEvents[NightEvent.revivedByConstantine] = [
+        player
+      ];
       remainingAbility--;
     }
   }
@@ -65,6 +67,6 @@ class Constantine extends Role {
 
   @override
   void saveAbilities(Map<String, int> abilities) {
-    remainingAbility = abilities['زنده کردن']!;    
+    remainingAbility = abilities['زنده کردن']!;
   }
 }

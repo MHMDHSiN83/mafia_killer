@@ -1,6 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/databases/scenario.dart';
+import 'package:mafia_killer/models/language.dart';
 import 'package:mafia_killer/models/ui_player_status.dart';
 import 'package:mafia_killer/models/night_event.dart';
 import 'package:mafia_killer/models/role.dart';
@@ -11,6 +12,7 @@ part 'doctor_watson.g.dart';
 @JsonSerializable()
 class DoctorWatson extends Role {
   int selfHeal = 2;
+  int multiSelectionNumber = 2;
 
   DoctorWatson() {
     name = "دکتر واتسون";
@@ -28,8 +30,9 @@ class DoctorWatson extends Role {
 
   @override
   void nightAction(Player? player) {
-    Scenario.currentScenario.nightEvents[NightEvent.savedByDoctor] = player;
     if (player != null) {
+      Scenario.currentScenario
+          .addPlayerToNightEvent(NightEvent.savedByDoctor, player);
       if (player.role!.name == 'دکتر واتسون') {
         selfHeal--;
       }
@@ -48,7 +51,8 @@ class DoctorWatson extends Role {
   @override
   String awakingRole() {
     setAvailablePlayers();
-    return "دکتر بیدار شه و یک نفر را نجات بده";
+    return "دکتر بیدار شه و ${Language.getPersianNumberWord(multiSelectionNumber)}"
+        " نفر را نجات بده";
   }
 
   @override
@@ -58,11 +62,22 @@ class DoctorWatson extends Role {
 
   @override
   Map<String, int> roleAbilities() {
-    return {'نجات خود': selfHeal};
+    return {'نجات خود': selfHeal, 'نجات در هر شب': multiSelectionNumber};
   }
 
   @override
   void saveAbilities(Map<String, int> abilities) {
     selfHeal = abilities['نجات خود']!;
+    multiSelectionNumber = abilities['نجات در هر شب']!;
+  }
+
+  @override
+  bool hasMultiSelection() {
+    return multiSelectionNumber > 1;
+  }
+
+  @override
+  bool hasAllSelected(int number) {
+    return number == multiSelectionNumber;
   }
 }

@@ -6,5 +6,10 @@ enum NightEvent {
   revivedByConstantine,
   inquiryByCitizenKane,
   boughtBySaulGoodman,
-  disabledByMatador
+  disabledByMatador,
+
+  savedByDoctorLecter,
+  oppositedByJoker,
+  shotByProfessional,
+  silencedByTherapist,
 }

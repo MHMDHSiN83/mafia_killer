@@ -30,8 +30,12 @@ class CitizenKane extends Role {
 
   @override
   void nightAction(Player? player) {
-    Scenario.currentScenario.nightEvents[NightEvent.inquiryByCitizenKane] =
-        player;
+    if (player != null) {
+      Scenario.currentScenario.nightEvents[NightEvent.inquiryByCitizenKane] = [
+        player
+      ];
+      remainingAbility--;
+    }
   }
 
   @override
@@ -48,18 +52,18 @@ class CitizenKane extends Role {
     return "همشهری کین بیدار شه و استعلام یک نفر رو از من بگیره";
   }
 
-  @override
-  List<String> roleDetails() {
-    return ["استعلام: $remainingAbility"];
-  }
+  // @override
+  // List<String> roleDetails() {
+  //   return ["استعلام: $remainingAbility"];
+  // }
 
-  @override
-  Map<String, int> roleAbilities() {
-    return {'استعلام': remainingAbility};
-  }
+  // @override
+  // Map<String, int> roleAbilities() {
+  //   return {'استعلام': remainingAbility};
+  // }
 
-  @override
-  void saveAbilities(Map<String, int> abilities) {
-    remainingAbility = abilities['استعلام']!;
-  }
+  // @override
+  // void saveAbilities(Map<String, int> abilities) {
+  //   remainingAbility = abilities['استعلام']!;
+  // }
 }

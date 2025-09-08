@@ -2,15 +2,27 @@ import 'package:flutter/material.dart';
 import 'package:mafia_killer/components/call_role.dart';
 import 'package:mafia_killer/components/last_move_card_tile.dart';
 import 'package:mafia_killer/components/page_frame.dart';
+import 'package:mafia_killer/databases/game_settings.dart';
+import 'package:mafia_killer/databases/game_state_manager.dart';
 import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/models/last_move_card.dart';
+import 'package:mafia_killer/models/scenarios/classic/last_move_cards/final_shot.dart';
+import 'package:mafia_killer/models/scenarios/classic/last_move_cards/great_lie.dart';
+import 'package:mafia_killer/models/scenarios/classic/last_move_cards/green_mile.dart';
+import 'package:mafia_killer/models/scenarios/classic/last_move_cards/insomnia.dart';
+import 'package:mafia_killer/models/scenarios/classic/last_move_cards/red_carpet.dart';
+import 'package:mafia_killer/models/scenarios/classic/last_move_cards/vertigo.dart';
 import 'package:mafia_killer/models/scenarios/godfather/godfather_scenario.dart';
-import 'package:mafia_killer/models/scenarios/godfather/last_move_cards/beautiful_mind.dart';
+import 'package:mafia_killer/models/scenarios/godfather/last_move_cards/beautiful_mind.dart'
+    as godfather;
+import 'package:mafia_killer/models/scenarios/classic/last_move_cards/beautiful_mind.dart'
+    as classic;
 import 'package:mafia_killer/models/scenarios/godfather/last_move_cards/face_off.dart';
 import 'package:mafia_killer/models/scenarios/godfather/last_move_cards/handcuffs.dart';
 import 'package:mafia_killer/models/scenarios/godfather/last_move_cards/reveal_identity.dart';
 import 'package:mafia_killer/models/scenarios/godfather/last_move_cards/silence_of_the_lambs.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/nostradamus.dart';
+import 'package:mafia_killer/models/talking_page_screen_arguments.dart';
 import 'package:mafia_killer/utils/custom_snackbar.dart';
 import 'package:mafia_killer/utils/audio_manager.dart';
 import 'package:mafia_killer/utils/settings_page.dart';
@@ -47,38 +59,69 @@ class _LastMoveCardPageState extends State<LastMoveCardPage> {
         },
         leftButtonOnTap: () {
           LastMoveCardPage.selectedLastMoveCard?.isUsed = false;
-          if (Scenario.currentScenario is GodfatherScenario) {
-            Scenario.currentScenario.inGameLastMoveCards.shuffle();
-          }
+          Scenario.currentScenario.inGameLastMoveCards.shuffle();
           Navigator.pop(context);
         },
         rightButtonOnTap: () {
           if (LastMoveCardPage.selectedLastMoveCard == null) {
             customSnackBar(context, "یک کارت باید انتخاب بشه.", true);
+            return;
           }
           LastMoveCardPage.selectedLastMoveCard!.isUsed = true;
+          AudioManager.playNextPageEffect();
           if (LastMoveCardPage.selectedLastMoveCard is RevealIdentity) {
             if (Scenario.currentScenario.killedInDayPlayer!.role!
                 is Nostradamus) {
               (Scenario.currentScenario as GodfatherScenario)
                   .nostradamusRevealed();
             }
-            AudioManager.playNextPageEffect();
             Navigator.pushNamed(context, '/reveal_identity_page');
           } else if (LastMoveCardPage.selectedLastMoveCard is FaceOff) {
-            AudioManager.playNextPageEffect();
             Navigator.pushNamed(context, '/face_off_page');
           } else if (LastMoveCardPage.selectedLastMoveCard is Handcuffs) {
-            AudioManager.playNextPageEffect();
             Navigator.pushNamed(context, '/handcuffs_page');
           } else if (LastMoveCardPage.selectedLastMoveCard
               is SilenceOfTheLambs) {
-            AudioManager.playNextPageEffect();
             Navigator.pushNamed(context, '/silence_of_the_lambs_page');
-          } else if (LastMoveCardPage.selectedLastMoveCard is BeautifulMind) {
-            AudioManager.playNextPageEffect();
+          } else if (LastMoveCardPage.selectedLastMoveCard
+              is godfather.BeautifulMind) {
             Navigator.pushNamed(
                 context, '/beautiful_mind_choose_nostradamus_page');
+          } else if (LastMoveCardPage.selectedLastMoveCard is Insomnia) {
+            GameStateManager.addState(
+                lastMoveCards: Scenario.currentScenario.inGameLastMoveCards,
+                silencedPlayerDuringDay:
+                    Scenario.currentScenario.silencedPlayerDuringDay);
+            GameStateManager.addLastMoveCardAction(
+                [Scenario.currentScenario.killedInDayPlayer!],
+                LastMoveCardPage.selectedLastMoveCard!);
+            LastMoveCardPage.selectedLastMoveCard!.lastMoveCardAction(
+                [Scenario.currentScenario.killedInDayPlayer!]);
+            Navigator.pushNamed(
+              context,
+              '/talking_page',
+              arguments: TalkingPageScreenArguments(
+                nextPagePath: '/regular_voting_page',
+                seconds: GameSettings.currentGameSettings.mainSpeakTime,
+                leftButtonText:
+                    'روز ${GameStateManager.getPreviousStateNumber()}',
+                rightButtonText: 'رای گیری',
+                isDefense: false,
+              ),
+            );
+          } else if (LastMoveCardPage.selectedLastMoveCard is FinalShot) {
+            Navigator.pushNamed(context, '/final_shot_page');
+          } else if (LastMoveCardPage.selectedLastMoveCard is GreatLie) {
+            Navigator.pushNamed(context, '/great_lie_page');
+          } else if (LastMoveCardPage.selectedLastMoveCard is GreenMile) {
+            Navigator.pushNamed(context, '/green_mile_page');
+          } else if (LastMoveCardPage.selectedLastMoveCard
+              is classic.BeautifulMind) {
+            Navigator.pushNamed(context, '/beautiful_mind_choose_role_page');
+          } else if (LastMoveCardPage.selectedLastMoveCard is RedCarpet) {
+            Navigator.pushNamed(context, '/red_carpet_page');
+          } else if (LastMoveCardPage.selectedLastMoveCard is Vertigo) {
+            Navigator.pushNamed(context, '/vertigo_page');
           }
         },
         isInGame: true,

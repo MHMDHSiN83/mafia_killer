@@ -10,7 +10,7 @@ import 'package:mafia_killer/themes/app_color.dart';
 class ScenarioGuidPage extends StatelessWidget {
   ScenarioGuidPage({super.key});
 
-  //TODO all the things in this page are for godfather scenario
+  //TODO: all the things in this page are for godfather scenario
 
   Scenario selectedScenario = Scenario.scenarios.first;
   List<Widget> roleDescriptions() {

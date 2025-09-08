@@ -7,14 +7,21 @@ import 'package:mafia_killer/pages/intro_night_page.dart';
 import 'package:mafia_killer/pages/intro_page.dart';
 import 'package:mafia_killer/pages/last_move_card_page.dart';
 import 'package:mafia_killer/pages/last_move_card_pages/beautiful_mind_choose_nostradamus_page.dart';
+import 'package:mafia_killer/pages/last_move_card_pages/beautiful_mind_choose_role_page.dart';
 import 'package:mafia_killer/pages/last_move_card_pages/face_off_page.dart';
 import 'package:mafia_killer/pages/last_move_card_pages/faced_off_role_page.dart';
+import 'package:mafia_killer/pages/last_move_card_pages/final_shot_page.dart';
+import 'package:mafia_killer/pages/last_move_card_pages/great_lie_page.dart';
+import 'package:mafia_killer/pages/last_move_card_pages/green_mile_page.dart';
 import 'package:mafia_killer/pages/last_move_card_pages/handcuffs_page.dart';
+import 'package:mafia_killer/pages/last_move_card_pages/red_carpet_page.dart';
 import 'package:mafia_killer/pages/last_move_card_pages/reveal_identity_page.dart';
 import 'package:mafia_killer/pages/last_move_card_pages/silence_of_the_lambs_page.dart';
+import 'package:mafia_killer/pages/last_move_card_pages/vertigo_page.dart';
 import 'package:mafia_killer/pages/loading_page.dart';
 import 'package:mafia_killer/pages/night_events_page.dart';
 import 'package:mafia_killer/pages/night_page.dart';
+import 'package:mafia_killer/pages/noon_nap_page.dart';
 import 'package:mafia_killer/pages/play_again_loading_page.dart';
 import 'package:mafia_killer/pages/players_page.dart';
 import 'package:mafia_killer/pages/regular_voting_page.dart';
@@ -22,6 +29,7 @@ import 'package:mafia_killer/pages/role_distribution_page.dart';
 import 'package:mafia_killer/pages/role_selection_page.dart';
 import 'package:mafia_killer/pages/scenario_guide_page.dart';
 import 'package:mafia_killer/pages/talking_page.dart';
+import 'package:mafia_killer/test.dart';
 import 'package:mafia_killer/themes/dark_mode.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:mafia_killer/utils/ad_manager.dart';
@@ -81,6 +89,7 @@ class MyApp extends StatelessWidget {
         '/defense_talking_page': (context) => const TalkingPage(),
         '/regular_voting_page': (context) => RegularVotingPage(),
         '/defense_voting_page': (context) => DefenseVotingPage(),
+        '/noon_nap_page': (context) => NoonNapPage(),
         '/night_events_page': (context) => const NightEventsPage(),
         '/night_page': (context) => const NightPage(),
         '/intro_night_page': (context) => const IntroNightPage(),
@@ -92,9 +101,17 @@ class MyApp extends StatelessWidget {
         '/silence_of_the_lambs_page': (context) => SilenceOfTheLambsPage(),
         '/beautiful_mind_choose_nostradamus_page': (context) =>
             BeautifulMindChooseNostradamusPage(),
+        '/beautiful_mind_choose_role_page': (context) =>
+            BeautifulMindChooseRolePage(),
+        '/green_mile_page': (context) => GreenMilePage(),
+        '/red_carpet_page': (context) => RedCarpetPage(),
+        '/vertigo_page': (context) => VertigoPage(),
+        '/final_shot_page': (context) => FinalShotPage(),
+        '/great_lie_page': (context) => GreatLiePage(),
         '/end_game_page': (context) => EndGamePage(),
         '/scenario_guid_page': (context) => ScenarioGuidPage(),
         '/play_again_loading_page': (context) => PlayAgainLoadingPage(),
+        '/test': (context) => SelectTileTestApp(),
       },
     );
   }
