@@ -3,7 +3,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:mafia_killer/databases/player.dart';
 
 class PlayAgainLoadingPage extends StatefulWidget {
-  PlayAgainLoadingPage({super.key});
+  const PlayAgainLoadingPage({super.key});
   @override
   State<PlayAgainLoadingPage> createState() => _PlayAgainLoadingPageState();
 }
