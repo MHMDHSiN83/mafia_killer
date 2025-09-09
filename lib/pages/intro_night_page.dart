@@ -240,18 +240,21 @@ class _IntroNightPageState extends State<IntroNightPage>
                 ),
               ),
               Expanded(
-                flex: 4,
-                child: CallRole(
-                  text: text,
-                  onPressed: () {
-                    AudioManager.playClickEffect();
-                    setState(() {
-                      if (iterator.moveNext()) {
-                        text = iterator.current;
-                      }
-                    });
-                  },
-                  buttonText: IntroNightPage.buttonText,
+                flex: 5,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 25),
+                  child: CallRole(
+                    text: text,
+                    onPressed: () {
+                      AudioManager.playClickEffect();
+                      setState(() {
+                        if (iterator.moveNext()) {
+                          text = iterator.current;
+                        }
+                      });
+                    },
+                    buttonText: IntroNightPage.buttonText,
+                  ),
                 ),
               ),
             ],

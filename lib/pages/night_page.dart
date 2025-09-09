@@ -439,27 +439,30 @@ class _NightPageState extends State<NightPage> with WidgetsBindingObserver {
                 ),
               ),
               Expanded(
-                flex: 4,
-                child: CallRole(
-                  text: text,
-                  buttonText: NightPage.buttonText,
-                  onPressed: () {
-                    AudioManager.playClickEffect();
-                    setState(() {
-                      //TODO: wtf
-                      if (NightPage.buttonText != 'تائید' ||
-                          Scenario.currentScenario.currentPlayerAtNight!.role!
-                              .hasAllSelected(NightPage.targetPlayers.length)) {
-                        if (iterator.moveNext()) {
-                          text = iterator.current;
-                          NightPage.targetPlayers = [];
-                          for (Player player in Player.inGamePlayers) {
-                            playerCheckboxStatus[player] = false;
+                flex: 5,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 25),
+                  child: CallRole(
+                    text: text,
+                    buttonText: NightPage.buttonText,
+                    onPressed: () {
+                      AudioManager.playClickEffect();
+                      setState(() {
+                        //TODO: wtf
+                        if (NightPage.buttonText != 'تائید' ||
+                            Scenario.currentScenario.currentPlayerAtNight!.role!
+                                .hasAllSelected(NightPage.targetPlayers.length)) {
+                          if (iterator.moveNext()) {
+                            text = iterator.current;
+                            NightPage.targetPlayers = [];
+                            for (Player player in Player.inGamePlayers) {
+                              playerCheckboxStatus[player] = false;
+                            }
                           }
                         }
-                      }
-                    });
-                  },
+                      });
+                    },
+                  ),
                 ),
               ),
             ],
