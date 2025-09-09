@@ -15,65 +15,56 @@ class CallRole extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(top: 25),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Stack(
-            children: [
-              const Image(
-                image: AssetImage(
-                  'lib/images/backgrounds/wood-plank.png',
+      margin: const EdgeInsets.only(top: 35, bottom: 5),
+      decoration: BoxDecoration(
+        color: Color(0xFF211938),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(
+          color: Theme.of(context).colorScheme.inversePrimary,
+          width: 3,
+        ),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Expanded(
+              flex: 2,
+              child: Text(
+                text,
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.inversePrimary,
+                  fontSize: 15,
                 ),
               ),
-              Container(
-                // margin: const EdgeInsets.only(top: 7),
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                height: 368 * 191 / 1140,
-                width: 368,
-                // color: Colors.blue,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Expanded(
-                      flex: 2,
-                      child: Text(
-                        text,
-                        style: TextStyle(
-                          color: AppColors.brownColor,
-                          fontSize: 12,
-                        ),
+            ),
+            if (buttonText != '')
+              Expanded(
+                flex: 1,
+                child: OutlinedButton(
+                  style: OutlinedButton.styleFrom(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 0, vertical: 10),
+                    foregroundColor:
+                        Theme.of(context).colorScheme.inversePrimary,
+                    side: BorderSide(
+                      width: 3,
+                      color: Theme.of(context).colorScheme.inversePrimary,
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(
+                        8,
                       ),
                     ),
-                    if (buttonText != '')
-                      Expanded(
-                        flex: 1,
-                        child: OutlinedButton(
-                          style: OutlinedButton.styleFrom(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 0, vertical: 10),
-                            foregroundColor: AppColors.brownColor,
-                            side: const BorderSide(
-                              width: 3,
-                              color: AppColors.brownColor,
-                            ),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(
-                                8,
-                              ),
-                            ),
-                          ),
-                          onPressed: onPressed,
-                          child: Text(buttonText),
-                        ),
-                      ),
-                  ],
+                  ),
+                  onPressed: onPressed,
+                  child: Text(buttonText),
                 ),
               ),
-            ],
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
