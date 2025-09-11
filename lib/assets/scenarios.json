@@ -167,7 +167,7 @@
             {
                 "name": "پدرخوانده",
                 "slug": "classic.godfather",
-                "description": "او یک بار از شلیک شب لئون در امان است، یک جلیقه دارد. تعیین شلیک شب از طرف گروه به عهده پدرخوانده است و اگر از بازی خارج شود دیگر اعضا به جای او شلیک می‌کنند. پدرخوانده دارای توانایی حس ششم است است و اگر در شب تصمیم بگیرد به جای شلیک از حس ششم استفاده کند باید نقش بازیکنی را درست حدس بزند و توسط گرداننده تایید شود. بازیکنی که پدرخوانده نقش او را درست حدس زده است سلاخی می‌شود، یعنی اگر سپر داشته باشد یا دکتر او را سیو کرده باشد بازهم از بازی خارج می‌شود و آن شب توانایی وی اعمال نخواهد شد و پس از خروج از بازی توسط کنستانتین قابل احضار نمی‌باشد. استعلام پدرخوانده برای نوستراداموس شهروندی بوده ولی برای همشهری کین مافیایی و مثبت خواهد بود.",
+                "description": "پدرخوانده وظیفه رهبری تیم مافیا را بر عهده دارد. در هنگام شلیک در شب هدف نهایی را پدرخوانده اعلام می‌کن. همچنین پدرخوانده از استعلام کارآگاه در امان است و وضعیت او شهروند اعلام می‌شود.",
                 "roleSide": "mafia",
                 "cardImagePath": "lib/images/roles/role_cards/godfather.jpg",
                 "characterImagePath": "lib/images/roles/role_characters/godfather.png"
@@ -175,7 +175,7 @@
             {
                 "name": "دکتر لکتر",
                 "slug": "classic.doctor_lecter",
-                "description": "اگر فردی از گروه مافیا خارج شود ساول می‌تواند جای شلیک شب، معامله و خریداری انجام دهد. ساول گودمن فقط یکبار می‌تواند یکی از شهروندان ساده را به یک مافیای ساده تبدیل کند. با علامت او همان شب گرداننده آن فرد را از نقش جدیدش یعنی مافیای ساده مطلع می‌کند و وی را بیدار می‌کند تا هم تیمی های خود را بشناسد. اگر ساول گودمن شهروند غیرساده یا نوستراداموس را انتخاب کند با ضربدر گرداننده مواجه شده و گرداننده نشانش را بیدار نمی‌کند. توانمندی ساول و شلیک آن شب مافیا نیز از بین می‌رود.",
+                "description": "دکتر لکتر وظیفه نجات هر اعضای مافیا را بر عهده دارد. او هر شب یک نفر را از شلیک احتمالی حرفه‌ای نجات می‌دهد. دکتر لکتر خودش را فقط یک مرتبه می‌تواند نجات دهد.",
                 "roleSide": "mafia",
                 "cardImagePath": "lib/images/roles/role_cards/doctor_lecter.jpg",
                 "characterImagePath": "lib/images/roles/role_characters/doctor_lecter.png",
@@ -184,7 +184,7 @@
             {
                 "name": "جوکر",
                 "slug": "classic.joker",
-                "description": "اگر فردی از گروه مافیا خارج شود ساول می‌تواند جای شلیک شب، معامله و خریداری انجام دهد. ساول گودمن فقط یکبار می‌تواند یکی از شهروندان ساده را به یک مافیای ساده تبدیل کند. با علامت او همان شب گرداننده آن فرد را از نقش جدیدش یعنی مافیای ساده مطلع می‌کند و وی را بیدار می‌کند تا هم تیمی های خود را بشناسد. اگر ساول گودمن شهروند غیرساده یا نوستراداموس را انتخاب کند با ضربدر گرداننده مواجه شده و گرداننده نشانش را بیدار نمی‌کند. توانمندی ساول و شلیک آن شب مافیا نیز از بین می‌رود.",
+                "description": "جوکر در تیم مافیا است و وظیفه گمراه کردن کارآگاه را دارد. به این صورت که هر شب یک نفر را انتخاب می‌کند و در صورتی که کارآگاه نیز همان شخص را انتخاب کرده باشد، استعلام کارآگاه برعکس به او داده‌می‌شود.",
                 "roleSide": "mafia",
                 "cardImagePath": "lib/images/roles/role_cards/joker.jpg",
                 "characterImagePath": "lib/images/roles/role_characters/joker.png"
@@ -210,7 +210,7 @@
             {
                 "name": "حرفه‌ای",
                 "slug": "classic.professional",
-                "description": "هر شبی که بخواهد می‌تواند به یکی از اعضای تیم مافیا شلیک کند. اما با شلیک اشتباه به شهروندان به مجازات، خودش کشته می‌شود و دکتر نمی‌تواند او را نجات دهد. لئون یک جلیقه دارد که یکبار از تیر نجات پیدا می‌کند. حداکثر دو شلیک دارد.",
+                "description": "حرفه‌ای در شب فرصت شلیک دارد. او می‌تواند به یک نفر شلیک کند، در صورتی که هدف یک شهروند باشد خود حرفه از بازی بیرون می‌رود اما در صورت شلیک به اعضای مافیا او بیرون خواهد رفت.",
                 "roleSide": "citizen",
                 "cardImagePath": "lib/images/roles/role_cards/leon.jpg",
                 "characterImagePath": "lib/images/roles/role_characters/leon.png",
@@ -219,7 +219,7 @@
             {
                 "name": "شهردار",
                 "slug": "classic.mayor",
-                "description": "هر شبی که بخواهد می‌تواند به یکی از اعضای تیم مافیا شلیک کند. اما با شلیک اشتباه به شهروندان به مجازات، خودش کشته می‌شود و دکتر نمی‌تواند او را نجات دهد. لئون یک جلیقه دارد که یکبار از تیر نجات پیدا می‌کند. حداکثر دو شلیک دارد.",
+                "description": "شهردار در هنگام خواب نیمروزی نقش خود را ایفا می‌کند.  او یک بار فرصت دخالت در رای‌گیری را دارد. می‌تواند یک نفر از افراد حاضر در دفاع را مستقیما اخراج کند و یا رای‌گیری را کلا لغو کند",
                 "roleSide": "citizen",
                 "cardImagePath": "lib/images/roles/role_cards/mayor.jpg",
                 "characterImagePath": "lib/images/roles/role_characters/mayor.png",
@@ -228,7 +228,7 @@
             {
                 "name": "کارآگاه",
                 "slug": "classic.detective",
-                "description": "هر شبی که بخواهد می‌تواند به یکی از اعضای تیم مافیا شلیک کند. اما با شلیک اشتباه به شهروندان به مجازات، خودش کشته می‌شود و دکتر نمی‌تواند او را نجات دهد. لئون یک جلیقه دارد که یکبار از تیر نجات پیدا می‌کند. حداکثر دو شلیک دارد.",
+                "description": "کارآگاه بازی هر شب می‌تواند استعلام یک نفر را بگیرد. استعلام پدرخوانده همواره شهورند اعلام می‌شود.",
                 "roleSide": "citizen",
                 "cardImagePath": "lib/images/roles/role_cards/detective.jpg",
                 "characterImagePath": "lib/images/roles/role_characters/detective.png"
@@ -236,7 +236,7 @@
             {
                 "name": "روانپزشک",
                 "slug": "classic.therapist",
-                "description": "هر شبی که بخواهد می‌تواند به یکی از اعضای تیم مافیا شلیک کند. اما با شلیک اشتباه به شهروندان به مجازات، خودش کشته می‌شود و دکتر نمی‌تواند او را نجات دهد. لئون یک جلیقه دارد که یکبار از تیر نجات پیدا می‌کند. حداکثر دو شلیک دارد.",
+                "description": "روانپزشک می‌تواند در طول بازی ۲ بار برای یک شهروند سکوت تجویز کند تا در طول روز بعدی نتواند صحبت کند.",
                 "roleSide": "citizen",
                 "cardImagePath": "lib/images/roles/role_cards/therapist.jpg",
                 "characterImagePath": "lib/images/roles/role_characters/therapist.png",
@@ -245,7 +245,7 @@
             {
                 "name": "جان سخت",
                 "slug": "classic.die_hard",
-                "description": "هر شبی که بخواهد می‌تواند به یکی از اعضای تیم مافیا شلیک کند. اما با شلیک اشتباه به شهروندان به مجازات، خودش کشته می‌شود و دکتر نمی‌تواند او را نجات دهد. لئون یک جلیقه دارد که یکبار از تیر نجات پیدا می‌کند. حداکثر دو شلیک دارد.",
+                "description": "جان سخت در طول بازی ۲ بار می‌تواند استعلام وضعیت بگیرد تا نقش بازیکنانی که از بازی بیرون رفته‌اند برای همه نمایش داده‌شود. جان سخت برای یک مرتبه از شلیک مافیا در امان است.",
                 "roleSide": "citizen",
                 "cardImagePath": "lib/images/roles/role_cards/die_hard.jpg",
                 "characterImagePath": "lib/images/roles/role_characters/die_hard.png",
@@ -265,7 +265,7 @@
             {
                 "title": "بی‌خوابی",
                 "slug": "classic.insomnia",
-                "description": "بازیکن اخراجی با کارت دستبند هرکس را نشان کند، توانمندی‌های آن شب را از وی می‌گیرد. توانایی شلیک مختص به تیم مافیا است و این کارت مانع آن نمی‌شود.",
+                "description": "در صورت رو شدن این کارت، در انتهای روز دیگر شب نمی‌شود، نقشی در شب اعمال نخواهد شد و مستقیما روز بعدی شروع می‌شود.",
                 "selectionImagePath": "lib/images/last_move_cards/Insomnia-LastMoveCard.png",
                 "flippedImagePath": "lib/images/last_move_cards/Insomnia-LastMoveCard-Flipped.png",
                 "imagePath": "lib/images/last_move_cards/Insomnia-LastMoveCard-old.png",
@@ -274,7 +274,7 @@
             {
                 "title": "سرگیجه",
                 "slug": "classic.vertigo",
-                "description": " گرداننده بدون نیاز به استعلام جمعی نقش دقیق بازیکن اخراجی  را فاش می‌کند و او از بازی بیرون می‌رود. در این حالت امکان بازگشت به بازی توسط کنستانتین را ندارد.",
+                "description": "بازیکنی که این کارت را بدست آورد، یک نفر را انتخاب می‌کند، بازیکن انتخاب شده در ۲۴ ساعت آینده (یک شب و روز) دچار سرگیجه شده و هیچ یک از کارهایش به حساب نمی‌آد. یعنی نه نقش او در شب و نه رای‌هایش شمرده نخواهند شد.",
                 "selectionImagePath": "lib/images/last_move_cards/Vertigo-LastMoveCard.png",
                 "flippedImagePath": "lib/images/last_move_cards/Vertigo-LastMoveCard-Flipped.png",
                 "imagePath": "lib/images/last_move_cards/Vertigo-LastMoveCard-old.png",
@@ -283,7 +283,7 @@
             {
                 "title": "فرش قرمز",
                 "slug": "classic.red_carpet",
-                "description": "بازیکن قبل از خروج کارت نقش خود را با یکی از بازیکنان عوض می‌کند.",
+                "description": "بازیکن صاحب این کارت باید فرش قرمز را جلوی یک بازیکن قرار دهد، بازیکن انتخاب شده در روز بعد حتما به دفاع می‌رود. یعنی برای او رای‌گیری نمی‌شود و او مستقیما به دفاع خواهد رفت.",
                 "selectionImagePath": "lib/images/last_move_cards/RedCarpet-LastMoveCard.png",
                 "flippedImagePath": "lib/images/last_move_cards/RedCarpet-LastMoveCard-Flipped.png",
                 "imagePath": "lib/images/last_move_cards/RedCarpet-LastMoveCard-old.png",
@@ -292,7 +292,7 @@
             {
                 "title": "مسیر سبز",
                 "slug": "classic.green_mile",
-                "description": "بازیکن اخراجی با کارت دستبند هرکس را نشان کند، توانمندی‌های آن شب را از وی می‌گیرد. توانایی شلیک مختص به تیم مافیا است و این کارت مانع آن نمی‌شود.",
+                "description": "بازیکنی که این کارت نصیبش شود با انتخاب یک بازیکن دیگر او از رای گیری مصون می‌کند و بازیکن انتخاب شده دیگر در رای‌گیری شرکت نکرده و به دفاع نمی‌رود.",
                 "selectionImagePath": "lib/images/last_move_cards/GreenMile-LastMoveCard.png",
                 "flippedImagePath": "lib/images/last_move_cards/GreenMile-LastMoveCard-Flipped.png",
                 "imagePath": "lib/images/last_move_cards/GreenMile-LastMoveCard-old.png",
@@ -301,7 +301,7 @@
             {
                 "title": "شلیک نهایی",
                 "slug": "classic.final_shot",
-                "description": "بازیکن اخراجی با کارت دستبند هرکس را نشان کند، توانمندی‌های آن شب را از وی می‌گیرد. توانایی شلیک مختص به تیم مافیا است و این کارت مانع آن نمی‌شود.",
+                "description": "بازیکن صاحب این کارت، در شب بجای مافیا شلیک خواهد کرد.",
                 "selectionImagePath": "lib/images/last_move_cards/FinalShot-LastMoveCard.png",
                 "flippedImagePath": "lib/images/last_move_cards/FinalShot-LastMoveCard-Flipped.png",
                 "imagePath": "lib/images/last_move_cards/FinalShot-LastMoveCard-old.png",
@@ -310,7 +310,7 @@
             {
                 "title": "ذهن زیبا",
                 "slug": "classic.beautiful_mind",
-                "description": "اگر صاحب کارت بتواند نوستراداموس را در بازی شناسایی کند، به بازی برمی‌گردد و نوستراداموس از بازی خارج می‌شود. اگر نوستراداموس این کارت را انتخاب کند، او به بازی برمی‌گردد ولی سپرش از بین می‌رود.",
+                "description": "کسی که این کارت را بدست بیاورد، یک نفر را انتخاب کرده و نقش او را حدس می‌زند، در صورتی که حدسش درست باشد، در بازی می‌ماند اما در غیر این صورت کشته شده و از بازی بیرون خواهد رفت.",
                 "selectionImagePath": "lib/images/last_move_cards/BeautifulMind-LastMoveCard.png",
                 "flippedImagePath": "lib/images/last_move_cards/BeautifulMind-LastMoveCard-Flipped.png",
                 "imagePath": "lib/images/last_move_cards/BeautifulMind-LastMoveCard-old.png",
@@ -319,7 +319,7 @@
             {
                 "title": "دروغ بزرگ",
                 "slug": "classic.great_lie",
-                "description": "بازیکن اخراجی با کارت دستبند هرکس را نشان کند، توانمندی‌های آن شب را از وی می‌گیرد. توانایی شلیک مختص به تیم مافیا است و این کارت مانع آن نمی‌شود.",
+                "description": "بازیکن صاحب این کارت باید یک دروغ راجع به بازی بگوید و بعد از تائید گردانند بازی، از بازی بیرون می‌رود.",
                 "selectionImagePath": "lib/images/last_move_cards/GreatLie-LastMoveCard.png",
                 "flippedImagePath": "lib/images/last_move_cards/GreatLie-LastMoveCard-Flipped.png",
                 "imagePath": "lib/images/last_move_cards/GreatLie-LastMoveCard-old.png",
