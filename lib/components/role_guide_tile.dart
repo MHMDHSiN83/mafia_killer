@@ -42,7 +42,7 @@ class RoleGuideTile extends StatelessWidget {
                     ),
                     Text(
                       role.description,
-                      style: TextStyle(fontSize: 14, color: Colors.grey[300]),
+                      style: TextStyle(fontSize: 14, color: Colors.grey[300], height: 1.6),
                       textAlign: TextAlign.justify,
                     ),
                   ],
