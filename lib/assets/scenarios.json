@@ -9,6 +9,7 @@
         "silencedPlayerDuringDay": [],
         "report": [],
         "ableToSelectTile": false,
+        "takeInquiry" : false,
         "roles": [
             {
                 "name": "پدرخوانده",
@@ -163,6 +164,8 @@
         "silencedPlayerDuringDay": [],
         "report": [],
         "ableToSelectTile": false,
+        "takeInquiry" : false,
+        "hasGuessedRightForBeautifulMind" : false,
         "roles": [
             {
                 "name": "پدرخوانده",
@@ -249,7 +252,6 @@
                 "roleSide": "citizen",
                 "cardImagePath": "lib/images/roles/role_cards/die_hard.jpg",
                 "characterImagePath": "lib/images/roles/role_characters/die_hard.png",
-                "remainingAbility": 2,
                 "shield": 1
             },
             {

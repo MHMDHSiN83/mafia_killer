@@ -13,7 +13,6 @@ DieHard _$DieHardFromJson(Map<String, dynamic> json) => DieHard()
   ..characterImagePath = json['characterImagePath'] as String
   ..roleSide = $enumDecode(_$RoleSideEnumMap, json['roleSide'])
   ..slug = json['slug'] as String
-  ..remainingAbility = (json['remainingAbility'] as num).toInt()
   ..shield = (json['shield'] as num).toInt();
 
 Map<String, dynamic> _$DieHardToJson(DieHard instance) => <String, dynamic>{
@@ -23,7 +22,6 @@ Map<String, dynamic> _$DieHardToJson(DieHard instance) => <String, dynamic>{
       'characterImagePath': instance.characterImagePath,
       'roleSide': _$RoleSideEnumMap[instance.roleSide]!,
       'slug': instance.slug,
-      'remainingAbility': instance.remainingAbility,
       'shield': instance.shield,
     };
 

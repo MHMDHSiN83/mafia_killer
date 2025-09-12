@@ -31,6 +31,7 @@ ClassicScenario _$ClassicScenarioFromJson(Map<String, dynamic> json) =>
               json['currentPlayerAtNight'] as Map<String, dynamic>)
       ..ableToSelectTile = json['ableToSelectTile'] as bool
       ..immediateResponse = json['immediateResponse'] as String?
+      ..takeInquiry = json['takeInquiry'] as bool
       ..nightEvents = (json['nightEvents'] as Map<String, dynamic>).map(
         (k, e) => MapEntry(
             $enumDecode(_$NightEventEnumMap, k),
@@ -49,7 +50,18 @@ ClassicScenario _$ClassicScenarioFromJson(Map<String, dynamic> json) =>
               .map((e) => Player.fromJson(e as Map<String, dynamic>))
               .toList()
       ..report =
-          (json['report'] as List<dynamic>).map((e) => e as String).toList();
+          (json['report'] as List<dynamic>).map((e) => e as String).toList()
+      ..hasGuessedRightForBeautifulMind =
+          json['hasGuessedRightForBeautifulMind'] as bool
+      ..finalShotPlayerName = json['finalShotPlayerName'] as String?
+      ..permanentFinalShotPlayerName =
+          json['permanentFinalShotPlayerName'] as String?
+      ..redCarpetPlayerName = json['redCarpetPlayerName'] as String?
+      ..greenMilePlayerName = json['greenMilePlayerName'] as String?
+      ..permanentRedCarpetPlayerName =
+          json['permanentRedCarpetPlayerName'] as String?
+      ..permanentGreenMilePlayerName =
+          json['permanentGreenMilePlayerName'] as String?;
 
 Map<String, dynamic> _$ClassicScenarioToJson(ClassicScenario instance) =>
     <String, dynamic>{
@@ -62,12 +74,21 @@ Map<String, dynamic> _$ClassicScenarioToJson(ClassicScenario instance) =>
       'currentPlayerAtNight': instance.currentPlayerAtNight,
       'ableToSelectTile': instance.ableToSelectTile,
       'immediateResponse': instance.immediateResponse,
+      'takeInquiry': instance.takeInquiry,
       'nightEvents': instance.nightEvents
           .map((k, e) => MapEntry(_$NightEventEnumMap[k]!, e)),
       'defendingPlayers': instance.defendingPlayers,
       'killedInDayPlayer': instance.killedInDayPlayer,
       'silencedPlayerDuringDay': instance.silencedPlayerDuringDay,
       'report': instance.report,
+      'hasGuessedRightForBeautifulMind':
+          instance.hasGuessedRightForBeautifulMind,
+      'finalShotPlayerName': instance.finalShotPlayerName,
+      'permanentFinalShotPlayerName': instance.permanentFinalShotPlayerName,
+      'redCarpetPlayerName': instance.redCarpetPlayerName,
+      'greenMilePlayerName': instance.greenMilePlayerName,
+      'permanentRedCarpetPlayerName': instance.permanentRedCarpetPlayerName,
+      'permanentGreenMilePlayerName': instance.permanentGreenMilePlayerName,
     };
 
 const _$NightEventEnumMap = {

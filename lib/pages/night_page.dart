@@ -222,7 +222,6 @@ class _NightPageState extends State<NightPage> with WidgetsBindingObserver {
         return DieHardDialogbox(
           takeInquiry: () {
             Scenario.currentScenario.takeInquiry = true;
-            dieHardPlayer.role!.nightAction(null);
             Navigator.of(context).pop();
             setState(() {
               if (iterator.moveNext()) {
