@@ -128,7 +128,7 @@ class _LastMoveCardPageState extends State<LastMoveCardPage> {
         child: Column(
           children: [
             Expanded(
-              flex: 4,
+              flex: 3,
               child: ListView.builder(
                   padding: EdgeInsets.symmetric(vertical: 10),
                   itemCount:
@@ -144,7 +144,8 @@ class _LastMoveCardPageState extends State<LastMoveCardPage> {
             Expanded(
               flex: 1,
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 25),
                 child: CallRole(
                   text:
                       "${Scenario.currentScenario.killedInDayPlayer!.name} کشته امروز است و باید کارت حرکت آخر انتخاب کند",

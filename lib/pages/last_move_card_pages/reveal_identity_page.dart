@@ -40,8 +40,7 @@ class RevealIdentityPage extends StatelessWidget {
             return settingsPage(context, 7);
           },
           leftButtonText: "کارت حرکت آخر",
-          rightButtonText:
-              'شب ${GameStateManager.getNextStateNumber()}',
+          rightButtonText: 'شب ${GameStateManager.getNextStateNumber()}',
           leftButtonOnTap: () => Navigator.pop(context),
           rightButtonOnTap: () {
             GameStateManager.addLastMoveCardAction(
@@ -51,7 +50,6 @@ class RevealIdentityPage extends StatelessWidget {
               Player.getPlayerByName(
                   Scenario.currentScenario.killedInDayPlayer!.name)
             ]);
-
 
             if (Scenario.currentScenario.isGameOver()) {
               AudioManager.playNextPageEffect();
@@ -86,7 +84,8 @@ class RevealIdentityPage extends StatelessWidget {
               Expanded(
                   flex: 1,
                   child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 10, vertical: 25),
                     child: CallRole(
                         text:
                             "${Scenario.currentScenario.killedInDayPlayer!.name} ${Scenario.currentScenario.killedInDayPlayer!.role!.name} بود.",

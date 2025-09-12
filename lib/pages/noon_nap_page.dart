@@ -192,7 +192,7 @@ class _NoonNapPageState extends State<NoonNapPage> {
             Expanded(
               flex: 1,
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 25),
                 child: CallRole(
                   text: text,
                   buttonText: NoonNapPage.buttonText,

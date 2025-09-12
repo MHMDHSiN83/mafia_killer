@@ -62,8 +62,7 @@ class _SilenceOfTheLambsPageState extends State<SilenceOfTheLambsPage> {
           return settingsPage(context, 7);
         },
         leftButtonText: "کارت حرکت آخر",
-        rightButtonText:
-            'شب ${GameStateManager.getNextStateNumber()}',
+        rightButtonText: 'شب ${GameStateManager.getNextStateNumber()}',
         leftButtonOnTap: () => Navigator.pop(context),
         rightButtonOnTap: () {
           if ((widget.selectedPlayers.length == 2 && isTwoSilenced) ||
@@ -135,7 +134,8 @@ class _SilenceOfTheLambsPageState extends State<SilenceOfTheLambsPage> {
             Expanded(
               flex: 1,
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 25),
                 child: CallRole(
                   text:
                       "${killedInDayPlayer.name} ${(isTwoSilenced) ? "دو" : "یک"} نفرو انتخاب کن که فردا صبح ساکت باشن.",

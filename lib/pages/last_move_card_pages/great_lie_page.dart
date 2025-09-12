@@ -87,7 +87,7 @@ class GreatLiePage extends StatelessWidget {
               Expanded(
                 flex: 1,
                 child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 25),
                   child: CallRole(
                       text:
                           "${Scenario.currentScenario.killedInDayPlayer!.name} قبل از بیرون رفتن از بازی باید یک دروغ بگه.",

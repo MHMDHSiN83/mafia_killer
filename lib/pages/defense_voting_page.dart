@@ -160,7 +160,8 @@ class _DefenseVotingPageState extends State<DefenseVotingPage> {
               Expanded(
                 flex: 1,
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 25),
                   child: CallRole(
                     text:
                         "اگه دو نفر تعداد رای‌هاشون یکسان شد از قرعه مرگ استفاده کن",

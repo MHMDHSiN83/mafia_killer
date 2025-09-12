@@ -116,7 +116,7 @@ class _BeautifulMindChooseRolePageState
             Expanded(
               flex: 1,
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 25),
                 child: CallRole(
                   text:
                       "${Scenario.currentScenario.killedInDayPlayer!.name} اگر نقش بازیکن رو درست حدس بزنی در بازی میمونی",
