@@ -2,6 +2,7 @@ import 'package:json_annotation/json_annotation.dart';
 import 'package:mafia_killer/databases/game_state_manager.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/databases/scenario.dart';
+import 'package:mafia_killer/models/language.dart';
 import 'package:mafia_killer/models/last_move_card.dart';
 import 'package:mafia_killer/models/night_event.dart';
 import 'package:mafia_killer/models/player_status.dart';
@@ -490,5 +491,10 @@ class ClassicScenario extends Scenario {
     } else if (previousLastMoveCardTitle == 'شلیک نهایی') {
       finalShotPlayerName = permanentFinalShotPlayerName;
     }
+  }
+
+  @override
+  String getInquiryText() {
+    return "${Language.toPersian(Scenario.currentScenario.numberOfDeadPlayersBySide(RoleSide.citizen).toString())} شهروند | ${Language.toPersian(Scenario.currentScenario.numberOfDeadPlayersBySide(RoleSide.mafia).toString())} مافیا \n از بازی خارج شدند.";
   }
 }

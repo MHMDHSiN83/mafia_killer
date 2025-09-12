@@ -51,8 +51,7 @@ class _NightEventsPage extends State<NightEventsPage> {
       context: context,
       builder: (context) {
         return NewInquiryDialogbox(
-          inquiry:
-              "${Language.toPersian(Scenario.currentScenario.numberOfDeadPlayersBySide(RoleSide.citizen).toString())} شهروند | ${Language.toPersian(Scenario.currentScenario.numberOfDeadPlayersBySide(RoleSide.mafia).toString())} مافیا | ${Language.toPersian(Scenario.currentScenario.numberOfDeadPlayersBySide(RoleSide.independant).toString())} نوستراداموس \n از بازی خارج شدند.",
+          inquiry:  Scenario.currentScenario.getInquiryText(),
           // child: Column(
           //   children: [
           //     Text(

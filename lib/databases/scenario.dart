@@ -573,5 +573,9 @@ class Scenario {
   }
 
   void setLastMoveCardsAttribute() {}
+
+  String getInquiryText() {
+    return "";
+  }
   
 }
