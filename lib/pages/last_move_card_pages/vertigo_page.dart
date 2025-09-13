@@ -44,7 +44,7 @@ class _VertigoPageState extends State<VertigoPage> {
     return Scaffold(
       body: PageFrame(
         label: '/vertigo_page',
-        pageTitle: "دستبند",
+        pageTitle: "سرگیجه",
         settingsPage: () {
           if (LastMoveCardPage.selectedLastMoveCard != null) {
             LastMoveCardPage.selectedLastMoveCard!.isUsed = false;
@@ -118,7 +118,7 @@ class _VertigoPageState extends State<VertigoPage> {
                     const EdgeInsets.symmetric(horizontal: 10, vertical: 25),
                 child: CallRole(
                   text:
-                      "${killedInDayPlayer.name} توانایی یک نفر رو در شب بگیر.",
+                      "${killedInDayPlayer.name} توانایی یک نفر رو در شب و روز بعدی بگیر.",
                   buttonText: "",
                   onPressed: () {},
                 ),

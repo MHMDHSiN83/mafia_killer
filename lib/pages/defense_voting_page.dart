@@ -8,7 +8,7 @@ import 'package:mafia_killer/databases/game_state_manager.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/models/player_status.dart';
-import 'package:mafia_killer/models/scenarios/classic/classic_scenario.dart';
+import 'package:mafia_killer/models/scenarios/mafia_nights/mafia_nights_scenario.dart';
 import 'package:mafia_killer/utils/audio_manager.dart';
 import 'package:mafia_killer/models/scenarios/godfather/godfather_scenario.dart';
 import 'package:mafia_killer/utils/settings_page.dart';
@@ -98,8 +98,8 @@ class _DefenseVotingPageState extends State<DefenseVotingPage> {
               return;
             }
           } else {
-            if (Scenario.currentScenario is ClassicScenario &&
-                (Scenario.currentScenario as ClassicScenario)
+            if (Scenario.currentScenario is MafiaNightsScenario &&
+                (Scenario.currentScenario as MafiaNightsScenario)
                     .doesMayorHaveAbility()) {
               Navigator.pushNamed(context, '/noon_nap_page');
             } else {

@@ -6,17 +6,17 @@ import 'package:mafia_killer/databases/game_settings.dart';
 import 'package:mafia_killer/databases/game_state_manager.dart';
 import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/models/last_move_card.dart';
-import 'package:mafia_killer/models/scenarios/classic/last_move_cards/final_shot.dart';
-import 'package:mafia_killer/models/scenarios/classic/last_move_cards/great_lie.dart';
-import 'package:mafia_killer/models/scenarios/classic/last_move_cards/green_mile.dart';
-import 'package:mafia_killer/models/scenarios/classic/last_move_cards/insomnia.dart';
-import 'package:mafia_killer/models/scenarios/classic/last_move_cards/red_carpet.dart';
-import 'package:mafia_killer/models/scenarios/classic/last_move_cards/vertigo.dart';
+import 'package:mafia_killer/models/scenarios/mafia_nights/last_move_cards/final_shot.dart';
+import 'package:mafia_killer/models/scenarios/mafia_nights/last_move_cards/great_lie.dart';
+import 'package:mafia_killer/models/scenarios/mafia_nights/last_move_cards/green_mile.dart';
+import 'package:mafia_killer/models/scenarios/mafia_nights/last_move_cards/insomnia.dart';
+import 'package:mafia_killer/models/scenarios/mafia_nights/last_move_cards/red_carpet.dart';
+import 'package:mafia_killer/models/scenarios/mafia_nights/last_move_cards/vertigo.dart';
 import 'package:mafia_killer/models/scenarios/godfather/godfather_scenario.dart';
 import 'package:mafia_killer/models/scenarios/godfather/last_move_cards/beautiful_mind.dart'
     as godfather;
-import 'package:mafia_killer/models/scenarios/classic/last_move_cards/beautiful_mind.dart'
-    as classic;
+import 'package:mafia_killer/models/scenarios/mafia_nights/last_move_cards/beautiful_mind.dart'
+    as mafia_nights;
 import 'package:mafia_killer/models/scenarios/godfather/last_move_cards/face_off.dart';
 import 'package:mafia_killer/models/scenarios/godfather/last_move_cards/handcuffs.dart';
 import 'package:mafia_killer/models/scenarios/godfather/last_move_cards/reveal_identity.dart';
@@ -116,7 +116,7 @@ class _LastMoveCardPageState extends State<LastMoveCardPage> {
           } else if (LastMoveCardPage.selectedLastMoveCard is GreenMile) {
             Navigator.pushNamed(context, '/green_mile_page');
           } else if (LastMoveCardPage.selectedLastMoveCard
-              is classic.BeautifulMind) {
+              is mafia_nights.BeautifulMind) {
             Navigator.pushNamed(context, '/beautiful_mind_choose_role_page');
           } else if (LastMoveCardPage.selectedLastMoveCard is RedCarpet) {
             Navigator.pushNamed(context, '/red_carpet_page');

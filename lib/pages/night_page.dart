@@ -13,7 +13,7 @@ import 'package:mafia_killer/databases/game_state_manager.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/models/player_status.dart';
-import 'package:mafia_killer/models/scenarios/classic/roles/detective.dart';
+import 'package:mafia_killer/models/scenarios/mafia_nights/roles/detective.dart';
 import 'package:mafia_killer/models/scenarios/godfather/godfather_scenario.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/godfather.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/saul_goodman.dart';

@@ -10,7 +10,7 @@ import 'package:mafia_killer/databases/game_state_manager.dart';
 import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/models/language.dart';
 import 'package:mafia_killer/models/role_side.dart';
-import 'package:mafia_killer/models/scenarios/classic/classic_scenario.dart';
+import 'package:mafia_killer/models/scenarios/mafia_nights/mafia_nights_scenario.dart';
 import 'package:mafia_killer/models/scenarios/godfather/godfather_scenario.dart';
 import 'package:mafia_killer/models/talking_page_screen_arguments.dart';
 import 'package:mafia_killer/themes/app_color.dart';
@@ -166,7 +166,7 @@ class _NightEventsPage extends State<NightEventsPage> {
 
   bool takeInquiryIfNecessary() {
     if (Scenario.currentScenario.takeInquiry && !doesPressInquiry) {
-      if (Scenario.currentScenario is ClassicScenario) {
+      if (Scenario.currentScenario is MafiaNightsScenario) {
         customSnackBar(
           context,
           "جان سخت استعلام خواسته پس باید حتما استعلام شهر رو بگیری",

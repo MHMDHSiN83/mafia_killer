@@ -9,29 +9,29 @@ import 'package:mafia_killer/models/last_move_card.dart';
 import 'package:mafia_killer/models/night_event.dart';
 import 'package:mafia_killer/models/role.dart';
 import 'package:mafia_killer/models/role_side.dart';
-import 'package:mafia_killer/models/scenarios/classic/classic_scenario.dart';
-import 'package:mafia_killer/models/scenarios/classic/last_move_cards/final_shot.dart';
-import 'package:mafia_killer/models/scenarios/classic/last_move_cards/great_lie.dart';
-import 'package:mafia_killer/models/scenarios/classic/last_move_cards/green_mile.dart';
-import 'package:mafia_killer/models/scenarios/classic/last_move_cards/insomnia.dart';
-import 'package:mafia_killer/models/scenarios/classic/last_move_cards/red_carpet.dart';
-import 'package:mafia_killer/models/scenarios/classic/last_move_cards/vertigo.dart';
-import 'package:mafia_killer/models/scenarios/classic/roles/detective.dart';
-import 'package:mafia_killer/models/scenarios/classic/roles/die_hard.dart';
-import 'package:mafia_killer/models/scenarios/classic/roles/doctor.dart';
-import 'package:mafia_killer/models/scenarios/classic/roles/doctor_lecter.dart';
-import 'package:mafia_killer/models/scenarios/classic/roles/joker.dart';
-import 'package:mafia_killer/models/scenarios/classic/roles/mayor.dart';
-import 'package:mafia_killer/models/scenarios/classic/roles/professional.dart';
-import 'package:mafia_killer/models/scenarios/classic/roles/therapist.dart';
-import 'package:mafia_killer/models/scenarios/classic/last_move_cards/beautiful_mind.dart'
-    as classic;
-import 'package:mafia_killer/models/scenarios/classic/roles/citizen.dart'
-    as classic;
-import 'package:mafia_killer/models/scenarios/classic/roles/mafia.dart'
-    as classic;
-import 'package:mafia_killer/models/scenarios/classic/roles/godfather.dart'
-    as classic;
+import 'package:mafia_killer/models/scenarios/mafia_nights/mafia_nights_scenario.dart';
+import 'package:mafia_killer/models/scenarios/mafia_nights/last_move_cards/final_shot.dart';
+import 'package:mafia_killer/models/scenarios/mafia_nights/last_move_cards/great_lie.dart';
+import 'package:mafia_killer/models/scenarios/mafia_nights/last_move_cards/green_mile.dart';
+import 'package:mafia_killer/models/scenarios/mafia_nights/last_move_cards/insomnia.dart';
+import 'package:mafia_killer/models/scenarios/mafia_nights/last_move_cards/red_carpet.dart';
+import 'package:mafia_killer/models/scenarios/mafia_nights/last_move_cards/vertigo.dart';
+import 'package:mafia_killer/models/scenarios/mafia_nights/roles/detective.dart';
+import 'package:mafia_killer/models/scenarios/mafia_nights/roles/die_hard.dart';
+import 'package:mafia_killer/models/scenarios/mafia_nights/roles/doctor.dart';
+import 'package:mafia_killer/models/scenarios/mafia_nights/roles/doctor_lecter.dart';
+import 'package:mafia_killer/models/scenarios/mafia_nights/roles/joker.dart';
+import 'package:mafia_killer/models/scenarios/mafia_nights/roles/mayor.dart';
+import 'package:mafia_killer/models/scenarios/mafia_nights/roles/professional.dart';
+import 'package:mafia_killer/models/scenarios/mafia_nights/roles/therapist.dart';
+import 'package:mafia_killer/models/scenarios/mafia_nights/last_move_cards/beautiful_mind.dart'
+    as mafia_nights;
+import 'package:mafia_killer/models/scenarios/mafia_nights/roles/citizen.dart'
+    as mafia_nights;
+import 'package:mafia_killer/models/scenarios/mafia_nights/roles/mafia.dart'
+    as mafia_nights;
+import 'package:mafia_killer/models/scenarios/mafia_nights/roles/godfather.dart'
+    as mafia_nights;
 
 import 'package:mafia_killer/models/scenarios/godfather/godfather_scenario.dart';
 import 'package:mafia_killer/models/scenarios/godfather/last_move_cards/beautiful_mind.dart'
@@ -84,8 +84,8 @@ class Scenario {
     switch (json['name']) {
       case 'پدرخوانده':
         return GodfatherScenario.fromJson(json);
-      case 'کلاسیک':
-        return ClassicScenario.fromJson(json);
+      case 'شب‌های مافیا':
+        return MafiaNightsScenario.fromJson(json);
       default:
         UnimplementedError('error');
         return Scenario();
@@ -409,58 +409,58 @@ class Scenario {
           lastMoveCard = getLastMoveCardByType(SilenceOfTheLambs);
           break;
 
-        case 'classic.godfather':
-          role = getRoleByType(classic.Godfather, searchInGmaeRoles: false)!;
+        case 'mafia_nights.godfather':
+          role = getRoleByType(mafia_nights.Godfather, searchInGmaeRoles: false)!;
           break;
-        case 'classic.doctor_lecter':
+        case 'mafia_nights.doctor_lecter':
           role = getRoleByType(DoctorLecter, searchInGmaeRoles: false)!;
           break;
-        case 'classic.joker':
+        case 'mafia_nights.joker':
           role = getRoleByType(Joker, searchInGmaeRoles: false)!;
           break;
-        case 'classic.mafia':
-          role = getRoleByType(classic.Mafia, searchInGmaeRoles: false)!;
+        case 'mafia_nights.mafia':
+          role = getRoleByType(mafia_nights.Mafia, searchInGmaeRoles: false)!;
           break;
-        case 'classic.doctor':
+        case 'mafia_nights.doctor':
           role = getRoleByType(Doctor, searchInGmaeRoles: false)!;
           break;
-        case 'classic.professional':
+        case 'mafia_nights.professional':
           role = getRoleByType(Professional, searchInGmaeRoles: false)!;
           break;
-        case 'classic.mayor':
+        case 'mafia_nights.mayor':
           role = getRoleByType(Mayor, searchInGmaeRoles: false)!;
           break;
-        case 'classic.detective':
+        case 'mafia_nights.detective':
           role = getRoleByType(Detective, searchInGmaeRoles: false)!;
           break;
-        case 'classic.therapist':
+        case 'mafia_nights.therapist':
           role = getRoleByType(Therapist, searchInGmaeRoles: false)!;
           break;
-        case 'classic.die_hard':
+        case 'mafia_nights.die_hard':
           role = getRoleByType(DieHard, searchInGmaeRoles: false)!;
           break;
-        case 'classic.citizen':
-          role = getRoleByType(classic.Citizen, searchInGmaeRoles: false)!;
+        case 'mafia_nights.citizen':
+          role = getRoleByType(mafia_nights.Citizen, searchInGmaeRoles: false)!;
           break;
-        case 'classic.insomnia':
+        case 'mafia_nights.insomnia':
           lastMoveCard = getLastMoveCardByType(Insomnia);
           break;
-        case 'classic.vertigo':
+        case 'mafia_nights.vertigo':
           lastMoveCard = getLastMoveCardByType(Vertigo);
           break;
-        case 'classic.red_carpet':
+        case 'mafia_nights.red_carpet':
           lastMoveCard = getLastMoveCardByType(RedCarpet);
           break;
-        case 'classic.green_mile':
+        case 'mafia_nights.green_mile':
           lastMoveCard = getLastMoveCardByType(GreenMile);
           break;
-        case 'classic.final_shot':
+        case 'mafia_nights.final_shot':
           lastMoveCard = getLastMoveCardByType(FinalShot);
           break;
-        case 'classic.beautiful_mind':
-          lastMoveCard = getLastMoveCardByType(classic.BeautifulMind);
+        case 'mafia_nights.beautiful_mind':
+          lastMoveCard = getLastMoveCardByType(mafia_nights.BeautifulMind);
           break;
-        case 'classic.great_lie':
+        case 'mafia_nights.great_lie':
           lastMoveCard = getLastMoveCardByType(GreatLie);
           break;
       }

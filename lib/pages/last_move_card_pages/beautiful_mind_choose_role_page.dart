@@ -6,7 +6,7 @@ import 'package:mafia_killer/components/voting_tile.dart';
 import 'package:mafia_killer/databases/game_state_manager.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/databases/scenario.dart';
-import 'package:mafia_killer/models/scenarios/classic/classic_scenario.dart';
+import 'package:mafia_killer/models/scenarios/mafia_nights/mafia_nights_scenario.dart';
 import 'package:mafia_killer/pages/last_move_card_page.dart';
 import 'package:mafia_killer/utils/custom_snackbar.dart';
 import 'package:mafia_killer/utils/audio_manager.dart';
@@ -130,13 +130,13 @@ class _BeautifulMindChooseRolePageState
                               player: selectedPlayers[0],
                               guessedRight: () {
                                 isConfirmed = true;
-                                (Scenario.currentScenario as ClassicScenario)
+                                (Scenario.currentScenario as MafiaNightsScenario)
                                     .hasGuessedRightForBeautifulMind = true;
                                 Navigator.pop(context);
                               },
                               guessedWrong: () {
                                 isConfirmed = true;
-                                (Scenario.currentScenario as ClassicScenario)
+                                (Scenario.currentScenario as MafiaNightsScenario)
                                     .hasGuessedRightForBeautifulMind = false;
                                 Navigator.pop(context);
                               },

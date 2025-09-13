@@ -7,7 +7,7 @@ import 'package:mafia_killer/databases/game_state_manager.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/models/player_status.dart';
-import 'package:mafia_killer/models/scenarios/classic/classic_scenario.dart';
+import 'package:mafia_killer/models/scenarios/mafia_nights/mafia_nights_scenario.dart';
 import 'package:mafia_killer/utils/audio_manager.dart';
 import 'package:mafia_killer/models/scenarios/godfather/godfather_scenario.dart';
 import 'package:mafia_killer/utils/settings_page.dart';
@@ -88,7 +88,7 @@ class _NoonNapPageState extends State<NoonNapPage> {
   }
 
   void resetUIBeforeNight() {
-    iterator = (Scenario.currentScenario as ClassicScenario)
+    iterator = (Scenario.currentScenario as MafiaNightsScenario)
         .noonNapAction(mayorChoiceBox: mayorChoicBox)
         .iterator;
 

@@ -8,10 +8,10 @@ import 'package:mafia_killer/models/scenarios/godfather/roles/citizen.dart'
     as godfather;
 import 'package:mafia_killer/models/scenarios/godfather/roles/mafia.dart'
     as godfather;
-import 'package:mafia_killer/models/scenarios/classic/roles/citizen.dart'
-    as classic;
-import 'package:mafia_killer/models/scenarios/classic/roles/mafia.dart'
-    as classic;
+import 'package:mafia_killer/models/scenarios/mafia_nights/roles/citizen.dart'
+    as mafia_nights;
+import 'package:mafia_killer/models/scenarios/mafia_nights/roles/mafia.dart'
+    as mafia_nights;
 import 'package:mafia_killer/themes/app_color.dart';
 import 'package:mafia_killer/utils/audio_manager.dart';
 import 'package:mafia_killer/utils/custom_snackbar.dart';
@@ -36,8 +36,8 @@ class _RoleSelectionTileState extends State<RoleSelectionTile> {
     if (widget.counter == 0 ||
         widget.role is godfather.Citizen ||
         widget.role is godfather.Mafia ||
-        widget.role is classic.Citizen ||
-        widget.role is classic.Mafia) {
+        widget.role is mafia_nights.Citizen ||
+        widget.role is mafia_nights.Mafia) {
       AudioManager.playClickEffect();
       setState(() {
         widget.counter++;
