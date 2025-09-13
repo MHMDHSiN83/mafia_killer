@@ -127,21 +127,18 @@ class Scenario {
   static Future<void> getScenariosFromDatabase() async {
     filePath = await getFilePath();
     final file = File(filePath);
-    final bool useAsset = true;
+    final bool useAsset = false;
     if (await file.exists() & !useAsset) {
-      // print('Scenario already exists in internal storage');
       try {
         final jsonString = await file.readAsString();
         await loadScenariosFromString(jsonString);
       } catch (e) {
-        // print('Failed to read from file. Reloading from assets.');
         final assetJson =
             await rootBundle.loadString('lib/assets/scenarios.json');
         await loadScenariosFromString(assetJson);
         await file.writeAsString(assetJson);
       }
     } else {
-      // print('Asset copied to $filePath');
       final assetJson =
           await rootBundle.loadString('lib/assets/scenarios.json');
       await loadScenariosFromString(assetJson);
