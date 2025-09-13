@@ -23,7 +23,7 @@ import 'package:mafia_killer/pages/intro_night_page.dart';
 import 'package:mafia_killer/pages/night_page.dart';
 import 'package:mafia_killer/pages/noon_nap_page.dart';
 
-part '../mafiaNights/mafia_nights_scenario.g.dart';
+part 'mafia_nights_scenario.g.dart';
 
 @JsonSerializable()
 class MafiaNightsScenario extends Scenario {

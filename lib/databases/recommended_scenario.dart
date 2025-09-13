@@ -43,7 +43,7 @@ class RecommendedScenario {
     if (Scenario.currentScenario is GodfatherScenario) {
       return recommendedScenario['godfather']![Player.inGamePlayers.length];
     } else if (Scenario.currentScenario is MafiaNightsScenario) {
-      return recommendedScenario['mafia_nights']![Player.inGamePlayers.length]!;
+      return recommendedScenario['mafia_nights']![Player.inGamePlayers.length];
     }
     return null;
   }
@@ -60,21 +60,21 @@ class RecommendedScenario {
           ? (numberOfPlayers ~/ 4) - 1
           : (numberOfPlayers ~/ 4) - 2;
       return {
-        "godfather": 1,
-        "saul_goodman": 1,
-        "matador": 1,
-        "mafia": numberOfMafia,
-        "nostradamus": 1,
-        "doctor_watson": 1,
-        "leon": 1,
-        "citizen_kane": 1,
-        "constantine": 1,
-        "citizen": numberOfCitizen,
-        "beautiful_mind": 1,
-        "face_off": 1,
-        "handcuffs": numberOfHandcuff,
-        "reveal_identity": 1,
-        "silence_of_the_lambs": numberOfSilence,
+        "godfather.godfather": 1,
+        "godfather.saul_goodman": 1,
+        "godfather.matador": 1,
+        "godfather.mafia": numberOfMafia,
+        "godfather.nostradamus": 1,
+        "godfather.doctor_watson": 1,
+        "godfather.leon": 1,
+        "godfather.citizen_kane": 1,
+        "godfather.constantine": 1,
+        "godfather.citizen": numberOfCitizen,
+        "godfather.beautiful_mind": 1,
+        "godfather.face_off": 1,
+        "godfather.handcuffs": numberOfHandcuff,
+        "godfather.reveal_identity": 1,
+        "godfather.silence_of_the_lambs": numberOfSilence,
       };
     } else {
       int numberOfPlayers = Player.inGamePlayers.length;
@@ -86,24 +86,24 @@ class RecommendedScenario {
       int numberOfGreatLie = (numberOfPlayers - 2) ~/ 8;
 
       return {
-        "godfather": 1,
-        "doctor_lecter": 1,
-        "joker": 1,
-        "mafia": numberOfMafia,
-        "doctor": 1,
-        "professional": 1,
-        "mayor": 1,
-        "detective": 1,
-        "therapist": 1,
-        "die_hard": 1,
-        "citizen": numberOfCitizen,
-        "insomnia": 1,
-        "vertigo": numberOfVertigo,
-        "red_carpet": numberOfRedCarpet,
-        "green_mile": numberOfGreenMile,
-        "final_shot": 1,
-        "beautiful_mind": 1,
-        "great_lie": numberOfGreatLie,
+        "mafia_nights.godfather": 1,
+        "mafia_nights.doctor_lecter": 1,
+        "mafia_nights.joker": 1,
+        "mafia_nights.mafia": numberOfMafia,
+        "mafia_nights.doctor": 1,
+        "mafia_nights.professional": 1,
+        "mafia_nights.mayor": 1,
+        "mafia_nights.detective": 1,
+        "mafia_nights.therapist": 1,
+        "mafia_nights.die_hard": 1,
+        "mafia_nights.citizen": numberOfCitizen,
+        "mafia_nights.insomnia": 1,
+        "mafia_nights.vertigo": numberOfVertigo,
+        "mafia_nights.red_carpet": numberOfRedCarpet,
+        "mafia_nights.green_mile": numberOfGreenMile,
+        "mafia_nights.final_shot": 1,
+        "mafia_nights.beautiful_mind": 1,
+        "mafia_nights.great_lie": numberOfGreatLie,
       };
     }
   }
