@@ -37,7 +37,7 @@
                 "roleSide": "mafia",
                 "cardImagePath": "lib/images/roles/role_cards/matador.jpg",
                 "characterImagePath": "lib/images/roles/role_characters/matador.png",
-                "multiSelectionNumber": 2
+                "multiSelectionNumber": 1
             },
             {
                 "name": "مافیا ساده",
@@ -67,7 +67,7 @@
                 "cardImagePath": "lib/images/roles/role_cards/doctor_watson.jpg",
                 "characterImagePath": "lib/images/roles/role_characters/doctor_watson.png",
                 "selfHeal": 2,
-                "multiSelectionNumber": 2
+                "multiSelectionNumber": 1
             },
             {
                 "name": "لئون حرفه‌ای",
@@ -208,7 +208,7 @@
                 "cardImagePath": "lib/images/roles/role_cards/doctor_watson.jpg",
                 "characterImagePath": "lib/images/roles/role_characters/doctor_watson.png",
                 "selfHeal": 1,
-                "multiSelectionNumber": 2
+                "multiSelectionNumber": 1
             },
             {
                 "name": "حرفه‌ای",

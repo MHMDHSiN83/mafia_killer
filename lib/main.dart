@@ -33,7 +33,6 @@ import 'package:mafia_killer/test.dart';
 import 'package:mafia_killer/themes/dark_mode.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:mafia_killer/utils/ad_manager.dart';
-import 'package:wakelock_plus/wakelock_plus.dart';
 
 void main() {
   runApp(
@@ -42,7 +41,6 @@ void main() {
       child: MyApp(),
     ),
   );
-  WakelockPlus.enable();
 
   AdManager.initialize();
 
