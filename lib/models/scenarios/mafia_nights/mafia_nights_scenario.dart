@@ -234,7 +234,6 @@ class MafiaNightsScenario extends Scenario {
     List<String> constantRoleOrder = [
       'دکتر',
       'کارآگاه',
-      'شهردار',
       'جان سخت',
       'حرفه‌ای',
       'روان‌پزشک',
