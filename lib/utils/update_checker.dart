@@ -37,28 +37,6 @@ class UpdateChecker {
       }
     } catch (e) {
       return AppInfo.fullVersion;
-      // bool tryAgain = false;
-
-      // tryAgain = await showDialog<bool>(
-      //       context: context,
-      //       builder: (context) {
-      //         return ConnectionErrorDialogbox(
-      //           onCancel: () {
-      //           Navigator.of(context).pop(false);
-      //           SystemNavigator.pop();
-      //           },
-      //           onSave: () {
-      //              Navigator.of(context).pop(true); // Return true to retry
-      //           },
-      //         );
-      //       },
-      //     ) ??
-      //     false;
-      // if (tryAgain) {
-      //   return await getLatestVersion(context);
-      // } else {
-      //   return '';
-      // }
     }
   }
 

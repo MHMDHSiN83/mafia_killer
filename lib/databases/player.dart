@@ -60,25 +60,24 @@ class Player extends ChangeNotifier {
   static Future<void> getPlayersFromDatabase() async {
     filePath = await getFilePath();
     final file = File(filePath);
-    if (!(await file.exists())) {
+    if (await file.exists()) {
+      try {
+        final jsonString = await file.readAsString();
+        List<dynamic> jsonData = jsonDecode(jsonString);
+        players = jsonData.map((player) => Player.fromJson(player)).toList();
+      } catch (e) {
+        String jsonString =
+            await rootBundle.loadString('lib/assets/players.json');
+        List<dynamic> jsonData = jsonDecode(jsonString);
+        players = jsonData.map((player) => Player.fromJson(player)).toList();
+        await file.writeAsString(jsonString);
+      }
+    } else {
       String jsonString =
           await rootBundle.loadString('lib/assets/players.json');
       List<dynamic> jsonData = jsonDecode(jsonString);
       players = jsonData.map((player) => Player.fromJson(player)).toList();
       await file.writeAsString(jsonString);
-      print('Asset copied to $filePath');
-    } else {
-      print('File already exists in internal storage');
-      List<dynamic> jsonData;
-      try {
-        String jsonString = await file.readAsString();
-        jsonData = jsonDecode(jsonString);
-      } catch (e) {
-        String jsonString =
-            await rootBundle.loadString('lib/assets/scenarios.json');
-        jsonData = jsonDecode(jsonString);
-      }
-      players = jsonData.map((player) => Player.fromJson(player)).toList();
     }
   }
 
@@ -167,7 +166,9 @@ class Player extends ChangeNotifier {
   }
 
   bool hasAbility() {
-    return playerStatus == PlayerStatus.active && role!.hasAbility() && Scenario.currentScenario.isAnyTargetable();
+    return playerStatus == PlayerStatus.active &&
+        role!.hasAbility() &&
+        Scenario.currentScenario.isAnyTargetable();
   }
 
   static Player? getPlayerByRoleType(Type type) {
