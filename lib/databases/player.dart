@@ -20,7 +20,7 @@ class Player extends ChangeNotifier {
   Player.static(this.name);
 
   // Id id = Isar.autoIncrement;
-  bool doesParticipate = false;
+  bool doesParticipate = true;
   String name;
   Role? role;
 
