@@ -3,7 +3,7 @@ import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/models/last_move_card.dart';
 import 'package:mafia_killer/models/player_status.dart';
-import 'package:mafia_killer/models/scenarios/classic/classic_scenario.dart';
+import 'package:mafia_killer/models/scenarios/mafia_nights/mafia_nights_scenario.dart';
 
 part 'final_shot.g.dart';
 
@@ -30,17 +30,17 @@ class FinalShot extends LastMoveCard {
   @override
   void lastMoveCardAction(List<Player> players) {
     players[0].playerStatus = PlayerStatus.dead;
-    (Scenario.currentScenario as ClassicScenario).permanentFinalShotPlayerName =
+    (Scenario.currentScenario as MafiaNightsScenario).permanentFinalShotPlayerName =
         players[1].name;
-    (Scenario.currentScenario as ClassicScenario).finalShotPlayerName =
+    (Scenario.currentScenario as MafiaNightsScenario).finalShotPlayerName =
         players[1].name;
   }
 
   @override
   void undoLastMoveCardAction(List<Player> players) {
     players[0].playerStatus = PlayerStatus.active;
-    (Scenario.currentScenario as ClassicScenario).permanentFinalShotPlayerName =
+    (Scenario.currentScenario as MafiaNightsScenario).permanentFinalShotPlayerName =
         null;
-    (Scenario.currentScenario as ClassicScenario).finalShotPlayerName = null;
+    (Scenario.currentScenario as MafiaNightsScenario).finalShotPlayerName = null;
   }
 }

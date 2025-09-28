@@ -24,19 +24,21 @@ class NewInquiryDialogbox extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Spacer(
-              flex: 5,
+              flex: 4,
             ),
             Expanded(
                 flex: 4,
                 child: SizedBox(
                     width: 195,
                     // child: child,
-                    child: Text(
-                      inquiry,
-                      style: TextStyle(
-                        color: AppColors.brownColor,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 12,
+                    child: Center(
+                      child: Text(
+                        inquiry,
+                        style: TextStyle(
+                          color: AppColors.brownColor,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 12,
+                        ),
                       ),
                     ))),
             Expanded(

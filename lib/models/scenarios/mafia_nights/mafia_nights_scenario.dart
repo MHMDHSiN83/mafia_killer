@@ -2,31 +2,32 @@ import 'package:json_annotation/json_annotation.dart';
 import 'package:mafia_killer/databases/game_state_manager.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/databases/scenario.dart';
+import 'package:mafia_killer/models/language.dart';
 import 'package:mafia_killer/models/last_move_card.dart';
 import 'package:mafia_killer/models/night_event.dart';
 import 'package:mafia_killer/models/player_status.dart';
 import 'package:mafia_killer/models/role.dart';
 import 'package:mafia_killer/models/role_side.dart';
-import 'package:mafia_killer/models/scenarios/classic/roles/detective.dart';
-import 'package:mafia_killer/models/scenarios/classic/roles/die_hard.dart';
-import 'package:mafia_killer/models/scenarios/classic/roles/doctor.dart';
-import 'package:mafia_killer/models/scenarios/classic/roles/doctor_lecter.dart';
-import 'package:mafia_killer/models/scenarios/classic/roles/godfather.dart';
-import 'package:mafia_killer/models/scenarios/classic/roles/joker.dart';
-import 'package:mafia_killer/models/scenarios/classic/roles/mafia.dart';
-import 'package:mafia_killer/models/scenarios/classic/roles/mayor.dart';
-import 'package:mafia_killer/models/scenarios/classic/roles/professional.dart';
-import 'package:mafia_killer/models/scenarios/classic/roles/therapist.dart';
+import 'package:mafia_killer/models/scenarios/mafia_nights/roles/detective.dart';
+import 'package:mafia_killer/models/scenarios/mafia_nights/roles/die_hard.dart';
+import 'package:mafia_killer/models/scenarios/mafia_nights/roles/doctor.dart';
+import 'package:mafia_killer/models/scenarios/mafia_nights/roles/doctor_lecter.dart';
+import 'package:mafia_killer/models/scenarios/mafia_nights/roles/godfather.dart';
+import 'package:mafia_killer/models/scenarios/mafia_nights/roles/joker.dart';
+import 'package:mafia_killer/models/scenarios/mafia_nights/roles/mafia.dart';
+import 'package:mafia_killer/models/scenarios/mafia_nights/roles/mayor.dart';
+import 'package:mafia_killer/models/scenarios/mafia_nights/roles/professional.dart';
+import 'package:mafia_killer/models/scenarios/mafia_nights/roles/therapist.dart';
 import 'package:mafia_killer/models/ui_player_status.dart';
 import 'package:mafia_killer/pages/intro_night_page.dart';
 import 'package:mafia_killer/pages/night_page.dart';
 import 'package:mafia_killer/pages/noon_nap_page.dart';
 
-part 'classic_scenario.g.dart';
+part 'mafia_nights_scenario.g.dart';
 
 @JsonSerializable()
-class ClassicScenario extends Scenario {
-  ClassicScenario() : super();
+class MafiaNightsScenario extends Scenario {
+  MafiaNightsScenario() : super();
 
   bool hasGuessedRightForBeautifulMind = false;
   String? finalShotPlayerName;
@@ -36,11 +37,11 @@ class ClassicScenario extends Scenario {
   String? permanentRedCarpetPlayerName;
   String? permanentGreenMilePlayerName;
 
-  factory ClassicScenario.fromJson(Map<String, dynamic> json) =>
-      _$ClassicScenarioFromJson(json);
+  factory MafiaNightsScenario.fromJson(Map<String, dynamic> json) =>
+      _$MafiaNightsScenarioFromJson(json);
 
   @override
-  Map<String, dynamic> toJson() => _$ClassicScenarioToJson(this);
+  Map<String, dynamic> toJson() => _$MafiaNightsScenarioToJson(this);
 
   @override
   String validateConditions() {
@@ -233,7 +234,6 @@ class ClassicScenario extends Scenario {
     List<String> constantRoleOrder = [
       'دکتر',
       'کارآگاه',
-      'شهردار',
       'جان سخت',
       'حرفه‌ای',
       'روان‌پزشک',
@@ -490,5 +490,10 @@ class ClassicScenario extends Scenario {
     } else if (previousLastMoveCardTitle == 'شلیک نهایی') {
       finalShotPlayerName = permanentFinalShotPlayerName;
     }
+  }
+
+  @override
+  String getInquiryText() {
+    return "${Language.toPersian(Scenario.currentScenario.numberOfDeadPlayersBySide(RoleSide.citizen).toString())} شهروند | ${Language.toPersian(Scenario.currentScenario.numberOfDeadPlayersBySide(RoleSide.mafia).toString())} مافیا \n از بازی خارج شدند.";
   }
 }

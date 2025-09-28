@@ -1,20 +1,20 @@
 import 'dart:convert';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/models/role_side.dart';
-import 'package:mafia_killer/models/scenarios/classic/roles/detective.dart';
-import 'package:mafia_killer/models/scenarios/classic/roles/die_hard.dart';
-import 'package:mafia_killer/models/scenarios/classic/roles/doctor.dart';
-import 'package:mafia_killer/models/scenarios/classic/roles/doctor_lecter.dart';
-import 'package:mafia_killer/models/scenarios/classic/roles/joker.dart';
-import 'package:mafia_killer/models/scenarios/classic/roles/mayor.dart';
-import 'package:mafia_killer/models/scenarios/classic/roles/professional.dart';
-import 'package:mafia_killer/models/scenarios/classic/roles/therapist.dart';
-import 'package:mafia_killer/models/scenarios/classic/roles/mafia.dart'
-    as classic;
-import 'package:mafia_killer/models/scenarios/classic/roles/citizen.dart'
-    as classic;
-import 'package:mafia_killer/models/scenarios/classic/roles/godfather.dart'
-    as classic;
+import 'package:mafia_killer/models/scenarios/mafia_nights/roles/detective.dart';
+import 'package:mafia_killer/models/scenarios/mafia_nights/roles/die_hard.dart';
+import 'package:mafia_killer/models/scenarios/mafia_nights/roles/doctor.dart';
+import 'package:mafia_killer/models/scenarios/mafia_nights/roles/doctor_lecter.dart';
+import 'package:mafia_killer/models/scenarios/mafia_nights/roles/joker.dart';
+import 'package:mafia_killer/models/scenarios/mafia_nights/roles/mayor.dart';
+import 'package:mafia_killer/models/scenarios/mafia_nights/roles/professional.dart';
+import 'package:mafia_killer/models/scenarios/mafia_nights/roles/therapist.dart';
+import 'package:mafia_killer/models/scenarios/mafia_nights/roles/mafia.dart'
+    as mafia_nights;
+import 'package:mafia_killer/models/scenarios/mafia_nights/roles/citizen.dart'
+    as mafia_nights;
+import 'package:mafia_killer/models/scenarios/mafia_nights/roles/godfather.dart'
+    as mafia_nights;
 
 import 'package:mafia_killer/models/scenarios/godfather/roles/citizen_kane.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/constantine.dart';
@@ -72,28 +72,28 @@ class Role {
       case 'godfather.citizen':
         return godfather.Citizen.fromJson(json);
 
-      case 'classic.godfather':
-        return classic.Godfather.fromJson(json);
-      case 'classic.doctor_lecter':
+      case 'mafia_nights.godfather':
+        return mafia_nights.Godfather.fromJson(json);
+      case 'mafia_nights.doctor_lecter':
         return DoctorLecter.fromJson(json);
-      case 'classic.joker':
+      case 'mafia_nights.joker':
         return Joker.fromJson(json);
-      case 'classic.mafia':
-        return classic.Mafia.fromJson(json);
-      case 'classic.doctor':
+      case 'mafia_nights.mafia':
+        return mafia_nights.Mafia.fromJson(json);
+      case 'mafia_nights.doctor':
         return Doctor.fromJson(json);
-      case 'classic.professional':
+      case 'mafia_nights.professional':
         return Professional.fromJson(json);
-      case 'classic.mayor':
+      case 'mafia_nights.mayor':
         return Mayor.fromJson(json);
-      case 'classic.detective':
+      case 'mafia_nights.detective':
         return Detective.fromJson(json);
-      case 'classic.therapist':
+      case 'mafia_nights.therapist':
         return Therapist.fromJson(json);
-      case 'classic.die_hard':
+      case 'mafia_nights.die_hard':
         return DieHard.fromJson(json);
-      case 'classic.citizen':
-        return classic.Citizen.fromJson(json);
+      case 'mafia_nights.citizen':
+        return mafia_nights.Citizen.fromJson(json);
       default:
         return Role();
     }

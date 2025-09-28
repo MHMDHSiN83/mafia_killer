@@ -282,7 +282,8 @@ class _TalkingPageState extends State<TalkingPage> {
               Expanded(
                 flex: 4,
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 25),
                   child: CallRole(
                     text: notTalkingPlayersText(),
                     buttonText: "",
@@ -298,7 +299,8 @@ class _TalkingPageState extends State<TalkingPage> {
               Expanded(
                 flex: 4,
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 25),
                   child: CallRole(
                     text:
                         'بازیکنان پنج دقیقه فرصت دارند با هم صحبت کنند و در نهایت دو نفر با هم هم‌پیمان شوند',
@@ -315,7 +317,8 @@ class _TalkingPageState extends State<TalkingPage> {
               Expanded(
                 flex: 4,
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 25),
                   child: CallRole(
                     text:
                         'بازیکنان پنج دقیقه فرصت دارند با هم صحبت کنند و در نهایت دو نفر با هم هم‌پیمان شوند. \n${notTalkingPlayersText()}',

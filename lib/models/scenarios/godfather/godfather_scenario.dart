@@ -1,6 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/databases/scenario.dart';
+import 'package:mafia_killer/models/language.dart';
 import 'package:mafia_killer/models/last_move_card.dart';
 import 'package:mafia_killer/models/player_status.dart';
 import 'package:mafia_killer/models/role.dart';
@@ -206,7 +207,8 @@ class GodfatherScenario extends Scenario {
   }
 
   @override
-  Iterable<String> mafiaTeamAction({Function? mafiaChoiceBox, Function? noAbilityBox}) sync* {
+  Iterable<String> mafiaTeamAction(
+      {Function? mafiaChoiceBox, Function? noAbilityBox}) sync* {
     yield "تیم مافیا از خواب بیدار شه";
     ableToSelectTile = true;
     NightPage.buttonText = '';
@@ -519,5 +521,10 @@ class GodfatherScenario extends Scenario {
       return;
     }
     (nostradamusPlayer.role! as Nostradamus).setInquiryNumber();
+  }
+
+  @override
+  String getInquiryText() {
+    return "${Language.toPersian(Scenario.currentScenario.numberOfDeadPlayersBySide(RoleSide.citizen).toString())} شهروند | ${Language.toPersian(Scenario.currentScenario.numberOfDeadPlayersBySide(RoleSide.mafia).toString())} مافیا | ${Language.toPersian(Scenario.currentScenario.numberOfDeadPlayersBySide(RoleSide.independant).toString())} نوستراداموس \n از بازی خارج شدند.";
   }
 }

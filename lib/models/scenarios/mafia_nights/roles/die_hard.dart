@@ -1,5 +1,4 @@
 import 'package:mafia_killer/databases/player.dart';
-import 'package:mafia_killer/models/player_status.dart';
 import 'package:mafia_killer/models/ui_player_status.dart';
 import 'package:mafia_killer/models/role.dart';
 import 'package:mafia_killer/models/role_side.dart';
@@ -8,7 +7,6 @@ part 'die_hard.g.dart';
 
 @JsonSerializable()
 class DieHard extends Role {
-  int remainingAbility = 2;
   int shield = 1;
 
   DieHard() {
@@ -23,15 +21,6 @@ class DieHard extends Role {
 
   @override
   Map<String, dynamic> toJson() => _$DieHardToJson(this);
-  @override
-  bool hasAbility() {
-    return remainingAbility > 0;
-  }
-
-  @override
-  void nightAction(Player? player) {
-    remainingAbility--;
-  }
 
   @override
   void setAvailablePlayers() {
@@ -43,20 +32,5 @@ class DieHard extends Role {
   @override
   String awakingRole() {
     return "جان سخت بیدار شه و بگه که میخواد از استعلامش استفاده کنه یا نه";
-  }
-
-  @override
-  List<String> roleDetails() {
-    return ["استعلام: $remainingAbility"];
-  }
-
-  @override
-  Map<String, int> roleAbilities() {
-    return {'اسعتلام': remainingAbility};
-  }
-
-  @override
-  void saveAbilities(Map<String, int> abilities) {
-    remainingAbility = abilities['اسعتلام']!;
   }
 }

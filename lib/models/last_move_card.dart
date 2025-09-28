@@ -2,14 +2,14 @@ import 'dart:convert';
 
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/databases/scenario.dart';
-import 'package:mafia_killer/models/scenarios/classic/last_move_cards/final_shot.dart';
-import 'package:mafia_killer/models/scenarios/classic/last_move_cards/great_lie.dart';
-import 'package:mafia_killer/models/scenarios/classic/last_move_cards/green_mile.dart';
-import 'package:mafia_killer/models/scenarios/classic/last_move_cards/insomnia.dart';
-import 'package:mafia_killer/models/scenarios/classic/last_move_cards/red_carpet.dart';
-import 'package:mafia_killer/models/scenarios/classic/last_move_cards/vertigo.dart';
-import 'package:mafia_killer/models/scenarios/classic/last_move_cards/beautiful_mind.dart'
-    as classic;
+import 'package:mafia_killer/models/scenarios/mafia_nights/last_move_cards/final_shot.dart';
+import 'package:mafia_killer/models/scenarios/mafia_nights/last_move_cards/great_lie.dart';
+import 'package:mafia_killer/models/scenarios/mafia_nights/last_move_cards/green_mile.dart';
+import 'package:mafia_killer/models/scenarios/mafia_nights/last_move_cards/insomnia.dart';
+import 'package:mafia_killer/models/scenarios/mafia_nights/last_move_cards/red_carpet.dart';
+import 'package:mafia_killer/models/scenarios/mafia_nights/last_move_cards/vertigo.dart';
+import 'package:mafia_killer/models/scenarios/mafia_nights/last_move_cards/beautiful_mind.dart'
+    as mafia_nights;
 
 import 'package:mafia_killer/models/scenarios/godfather/last_move_cards/beautiful_mind.dart'
     as godfather;
@@ -42,19 +42,19 @@ class LastMoveCard {
       case "godfather.reveal_identity":
         return RevealIdentity.fromJson(json);
 
-      case "classic.insomnia":
+      case "mafia_nights.insomnia":
         return Insomnia.fromJson(json);
-      case "classic.vertigo":
+      case "mafia_nights.vertigo":
         return Vertigo.fromJson(json);
-      case "classic.red_carpet":
+      case "mafia_nights.red_carpet":
         return RedCarpet.fromJson(json);
-      case "classic.green_mile":
+      case "mafia_nights.green_mile":
         return GreenMile.fromJson(json);
-      case "classic.final_shot":
+      case "mafia_nights.final_shot":
         return FinalShot.fromJson(json);
-      case "classic.beautiful_mind":
-        return classic.BeautifulMind.fromJson(json);
-      case "classic.great_lie":
+      case "mafia_nights.beautiful_mind":
+        return mafia_nights.BeautifulMind.fromJson(json);
+      case "mafia_nights.great_lie":
         return GreatLie.fromJson(json);
     }
     throw Exception("salam");

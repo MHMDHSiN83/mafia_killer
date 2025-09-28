@@ -3,7 +3,7 @@ import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/models/last_move_card.dart';
 import 'package:mafia_killer/models/player_status.dart';
-import 'package:mafia_killer/models/scenarios/classic/classic_scenario.dart';
+import 'package:mafia_killer/models/scenarios/mafia_nights/mafia_nights_scenario.dart';
 
 part 'beautiful_mind.g.dart';
 
@@ -29,7 +29,7 @@ class BeautifulMind extends LastMoveCard {
 
   @override
   void lastMoveCardAction(List<Player> players) {
-    if (!(Scenario.currentScenario as ClassicScenario)
+    if (!(Scenario.currentScenario as MafiaNightsScenario)
         .hasGuessedRightForBeautifulMind) {
       players[0].playerStatus = PlayerStatus.dead;
     }
@@ -37,7 +37,7 @@ class BeautifulMind extends LastMoveCard {
 
   @override
   void undoLastMoveCardAction(List<Player> players) {
-    if (!(Scenario.currentScenario as ClassicScenario)
+    if (!(Scenario.currentScenario as MafiaNightsScenario)
         .hasGuessedRightForBeautifulMind) {
       players[0].playerStatus = PlayerStatus.active;
     }

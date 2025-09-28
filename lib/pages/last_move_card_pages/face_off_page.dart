@@ -99,7 +99,7 @@ class _FaceOffPageState extends State<FaceOffPage> {
             Expanded(
               flex: 1,
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 25),
                 child: CallRole(
                   text:
                       "${killedInDayPlayer.name} یک نفرو انتخاب کنه و نقششو باهاش عوض کنه.",

@@ -31,6 +31,7 @@ GodfatherScenario _$GodfatherScenarioFromJson(Map<String, dynamic> json) =>
               json['currentPlayerAtNight'] as Map<String, dynamic>)
       ..ableToSelectTile = json['ableToSelectTile'] as bool
       ..immediateResponse = json['immediateResponse'] as String?
+      ..takeInquiry = json['takeInquiry'] as bool
       ..nightEvents = (json['nightEvents'] as Map<String, dynamic>).map(
         (k, e) => MapEntry(
             $enumDecode(_$NightEventEnumMap, k),
@@ -62,6 +63,7 @@ Map<String, dynamic> _$GodfatherScenarioToJson(GodfatherScenario instance) =>
       'currentPlayerAtNight': instance.currentPlayerAtNight,
       'ableToSelectTile': instance.ableToSelectTile,
       'immediateResponse': instance.immediateResponse,
+      'takeInquiry': instance.takeInquiry,
       'nightEvents': instance.nightEvents
           .map((k, e) => MapEntry(_$NightEventEnumMap[k]!, e)),
       'defendingPlayers': instance.defendingPlayers,

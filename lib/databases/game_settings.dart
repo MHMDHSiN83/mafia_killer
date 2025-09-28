@@ -38,26 +38,24 @@ class GameSettings {
   static Future<void> getGameSettingsFromDatabase() async {
     filePath = await getFilePath();
     final file = File(filePath);
-    if (!(await file.exists())) {
-      print('Asset copied to $filePath');
+    if (await file.exists()) {
+      try {
+        final jsonString = await file.readAsString();
+        Map<String, dynamic> jsonData = jsonDecode(jsonString);
+        currentGameSettings = GameSettings.fromJson(jsonData);
+      } catch (e) {
+        String jsonString =
+            await rootBundle.loadString('lib/assets/game_settings.json');
+        Map<String, dynamic> jsonData = jsonDecode(jsonString);
+        currentGameSettings = GameSettings.fromJson(jsonData);
+        await file.writeAsString(jsonString);
+      }
+    } else {
       String jsonString =
           await rootBundle.loadString('lib/assets/game_settings.json');
       Map<String, dynamic> jsonData = jsonDecode(jsonString);
       currentGameSettings = GameSettings.fromJson(jsonData);
       await file.writeAsString(jsonString);
-    } else {
-      print('Game Settings already exists in internal storage');
-      String jsonString = await file.readAsString();
-      Map<String, dynamic> jsonData;
-      try {
-        jsonData = jsonDecode(jsonString);
-      } catch (e) {
-        print('Error reading game settings, loading default settings.');
-        String defaultJsonString =
-            await rootBundle.loadString('lib/assets/game_settings.json');
-        jsonData = jsonDecode(defaultJsonString);
-      }
-      currentGameSettings = GameSettings.fromJson(jsonData);
     }
   }
 
