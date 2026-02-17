@@ -34,7 +34,7 @@ class Godfather extends Role {
 
   @override
   void nightAction(Player? player) {
-    if(player != null) {
+    if (player != null) {
       Scenario.currentScenario.nightEvents[NightEvent.sixthSensedByGodfather] =
           [player];
     }
@@ -64,7 +64,7 @@ class Godfather extends Role {
 
   @override
   Map<String, int> roleAbilities() {
-    return {'حس ششم': remainingAbility, 'زره در شب' : shield};
+    return {'حس ششم': remainingAbility, 'زره در شب': shield};
   }
 
   @override

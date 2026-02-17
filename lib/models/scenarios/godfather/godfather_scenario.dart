@@ -389,8 +389,8 @@ class GodfatherScenario extends Scenario {
     }
 
     // citizen kane inquiry -> player has to die the next day
-    if ((citizenKane != null) &&
-        (citizenKane.role as CitizenKane).remainingAbility == 0) {
+    if ((citizenKane != null) && (inquiryByCitizenKane == null) && 
+        (citizenKane.role as CitizenKane).inquirySucceeded == true) {
       citizenKane.playerStatus = PlayerStatus.dead;
       report.add("${citizenKane.name} کشته شد.");
     }
@@ -399,8 +399,8 @@ class GodfatherScenario extends Scenario {
           inquiryByCitizenKane.playerStatus == PlayerStatus.active) {
         if (inquiryByCitizenKane.role!.roleSide == RoleSide.mafia) {
           report.add("${inquiryByCitizenKane.name} مافیای بازی است");
+          (citizenKane.role as CitizenKane).inquirySucceeded = true;
         }
-        (citizenKane.role as CitizenKane).remainingAbility--;
       }
     }
     // constantine reviving

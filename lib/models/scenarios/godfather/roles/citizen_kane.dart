@@ -11,6 +11,8 @@ part 'citizen_kane.g.dart';
 class CitizenKane extends Role {
   int remainingAbility = 1;
 
+  bool inquirySucceeded = false;
+
   CitizenKane() {
     name = "همشهری کین";
     description =

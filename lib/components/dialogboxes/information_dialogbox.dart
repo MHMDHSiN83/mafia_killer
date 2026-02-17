@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mafia_killer/components/dialogboxes/dialogbox_template.dart';
+import 'package:mafia_killer/components/dialogboxes/dialogbox_template_dir/dialogbox_template.dart';
 import 'package:mafia_killer/themes/app_color.dart';
 
 class InformationDialogbox extends StatelessWidget {
@@ -12,9 +12,18 @@ class InformationDialogbox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DialogboxTemplate(
-        onSave: onSave,
-        onCancel: () {},
-        firstButtonText: "متوجه شدم",
-        text: text);
+      firstButtonFunction: onSave,
+      firstButtonText: "متوجه شدم",
+      //secondButtonText: "ذخیره",
+      //secondButtonFunction: () {},
+      child: Text(
+        text,
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          color: Theme.of(context).colorScheme.inversePrimary,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    );
   }
 }
