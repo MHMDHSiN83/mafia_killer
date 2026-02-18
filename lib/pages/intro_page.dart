@@ -134,23 +134,23 @@ class _IntroPageState extends State<IntroPage> with WidgetsBindingObserver {
                             Theme.of(context).colorScheme.inversePrimary,
                         onTap: () {
                           //AudioManager.stopMusic();
-                          // if (UpdateChecker.isUpdateAvilable) {
-                          //   showDialog(
-                          //     context: context,
-                          //     builder: (context) => UpdateDialogbox(
-                          //       onSave: () {
-                          //         UpdateChecker.openBazaarPage(context);
-                          //       },
-                          //       onCancel: () {
-                          //         Navigator.pop(context);
-                          //       },
-                          //     ),
-                          //   );
-                          // } else {
-                          //   Navigator.pushNamed(context, '/players_page');
-                          // }
+                          if (UpdateChecker.isUpdateAvilable) {
+                            showDialog(
+                              context: context,
+                              builder: (context) => UpdateDialogbox(
+                                onSave: () {
+                                  UpdateChecker.openBazaarPage(context);
+                                },
+                                onCancel: () {
+                                  Navigator.pop(context);
+                                },
+                              ),
+                            );
+                          } else {
+                            Navigator.pushNamed(context, '/players_page');
+                          }
 
-                          Navigator.pushNamed(context, '/players_page');
+                          // Navigator.pushNamed(context, '/players_page');
                         },
                         child: Container(
                           width: playButtonSize,

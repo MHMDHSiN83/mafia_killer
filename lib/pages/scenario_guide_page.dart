@@ -46,24 +46,48 @@ class ScenarioGuidPage extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: IconButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          icon: Icon(
-                            Icons.arrow_forward,
-                            size: 60,
-                            color: AppColors.redColor,
-                          )),
+                    Spacer(
+                      flex: 5,
                     ),
+                    Expanded(
+                        flex: 8,
+                        child: Text(
+                          "سناریو ها",
+                          style: TextStyle(fontFamily: "DigiGaf", fontSize: 50),
+                        )),
+                    Spacer(
+                      flex: 5,
+                    ),
+                    Expanded(
+                      flex: 2,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: IconButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            icon: Icon(
+                              Icons.arrow_forward,
+                              size: 60,
+                              color: AppColors.redColor,
+                            )),
+                      ),
+                    ),
+                    Spacer(
+                      flex: 3,
+                    )
                   ],
                 ),
                 TabBar(
                   indicatorSize: TabBarIndicatorSize.tab,
+
+                  labelColor: AppColors.redColor,
+
+                  unselectedLabelColor:
+                      Theme.of(context).colorScheme.inversePrimary,
+
+                  indicatorColor: AppColors.redColor,
                   tabs: [
                     for (String scenarioName in Scenario.getScenarioNames())
                       Tab(
@@ -71,19 +95,8 @@ class ScenarioGuidPage extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              "سناریو    ",
-                              style: TextStyle(
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .inversePrimary,
-                                  decoration: TextDecoration.none,
-                                  fontFamily: 'DigiGaf',
-                                  fontSize: 26),
-                            ),
-                            Text(
                               scenarioName,
                               style: TextStyle(
-                                  color: AppColors.redColor,
                                   decoration: TextDecoration.none,
                                   fontFamily: 'DigiGaf',
                                   fontSize: 26),
