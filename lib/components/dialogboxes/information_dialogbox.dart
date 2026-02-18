@@ -14,6 +14,7 @@ class InformationDialogbox extends StatelessWidget {
     return DialogboxTemplate(
       firstButtonFunction: onSave,
       firstButtonText: "متوجه شدم",
+      firstButtonColor: AppColors.darkgreenColor,
       //secondButtonText: "ذخیره",
       //secondButtonFunction: () {},
       child: Text(

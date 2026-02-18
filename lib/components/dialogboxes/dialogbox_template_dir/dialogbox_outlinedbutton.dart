@@ -14,7 +14,10 @@ class DialogboxOutlinedbutton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return OutlinedButton(
+
+      
         style: OutlinedButton.styleFrom(
+          padding: EdgeInsets.all(0),
             minimumSize: Size(300, 200),
             side: BorderSide(
               color: color,

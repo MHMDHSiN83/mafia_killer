@@ -4,7 +4,7 @@ import 'package:mafia_killer/components/my_outlined_button.dart';
 import 'package:mafia_killer/themes/app_color.dart';
 
 class DialogboxTemplate extends StatelessWidget {
-  const DialogboxTemplate(
+  DialogboxTemplate(
       {super.key,
       required this.firstButtonFunction,
       this.secondButtonFunction,
@@ -12,6 +12,12 @@ class DialogboxTemplate extends StatelessWidget {
       required this.firstButtonText,
       this.secondButtonText,
       this.thirdButtonText,
+      this.firstButtonDisabled,
+      this.secondButtonDisabled,
+      this.thirdButtonDisabled,
+      required this.firstButtonColor,
+      this.secondButtonColor,
+      this.thirdButtonColor,
       required this.child});
 
   final VoidCallback firstButtonFunction;
@@ -20,6 +26,12 @@ class DialogboxTemplate extends StatelessWidget {
   final String firstButtonText;
   final String? secondButtonText;
   final String? thirdButtonText;
+  late bool? firstButtonDisabled = false;
+  late bool? secondButtonDisabled = false;
+  late bool? thirdButtonDisabled = false;
+  final Color firstButtonColor;
+  final Color? secondButtonColor;
+  final Color? thirdButtonColor;
   final Widget child;
 
   @override
@@ -28,39 +40,44 @@ class DialogboxTemplate extends StatelessWidget {
       backgroundColor: Colors.transparent,
       elevation: 10,
       content: Container(
+        padding: EdgeInsets.only(left: 10, right: 10, top: 15),
+
         decoration: BoxDecoration(
             image: DecorationImage(
                 image: AssetImage('lib/images/dialogbox/newDialogboxBG.png'),
-                fit: BoxFit.cover)),
-        height: 180,
+                fit: BoxFit.contain)),
+        height: 240,
         //width: 650,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Spacer(
-              flex: 4,
-            ),
-            Expanded(
-              flex: 4,
-              child: child,
-            ),
-            Spacer(
               flex: 3,
             ),
             Expanded(
-              flex: 4,
+              flex: 5,
+              child: Center(child: child),
+            ),
+            Spacer(
+              flex: 2,
+            ),
+            Expanded(
+              flex: 3,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Spacer(
-                    flex: secondButtonText != null ? 5 : 10,
+                    flex: (secondButtonText != null) ? 3 : 10,
                   ),
                   if (secondButtonText != null)
                     Expanded(
                         flex: 16,
                         child: DialogboxOutlinedbutton(
                           text: secondButtonText!,
-                          color: AppColors.redColor,
+                          color: (secondButtonDisabled != null &&
+                                  secondButtonDisabled!)
+                              ? secondButtonColor!.withOpacity(0.5)
+                              : secondButtonColor!,
                           onClick: secondButtonFunction!,
                         )),
                   if (secondButtonText != null)
@@ -71,12 +88,15 @@ class DialogboxTemplate extends StatelessWidget {
                       flex: 16,
                       child: DialogboxOutlinedbutton(
                         text: firstButtonText,
-                        color: AppColors.darkgreenColor,
+                        color: (firstButtonDisabled != null &&
+                                firstButtonDisabled!)
+                            ? firstButtonColor.withOpacity(0.5)
+                            : firstButtonColor,
                         onClick: firstButtonFunction,
                       )),
                   Spacer(
-                    flex: secondButtonText != null ? 5 : 10,
-                  )
+                    flex: (secondButtonText != null) ? 3 : 10,
+                  ),
                 ],
               ),
             ),
@@ -87,10 +107,26 @@ class DialogboxTemplate extends StatelessWidget {
             if (thirdButtonText != null)
               Expanded(
                   flex: 3,
-                  child: DialogboxOutlinedbutton(
-                    text: thirdButtonText!,
-                    color: AppColors.darkgreenColor,
-                    onClick: thirdButtonFunction!,
+                  child: Row(
+                    children: [
+                      Spacer(
+                        flex: 3,
+                      ),
+                      Expanded(
+                        flex: 35,
+                        child: DialogboxOutlinedbutton(
+                          text: thirdButtonText!,
+                          color: (thirdButtonDisabled != null &&
+                                  thirdButtonDisabled!)
+                              ? thirdButtonColor!.withOpacity(0.5)
+                              : thirdButtonColor!,
+                          onClick: thirdButtonFunction!,
+                        ),
+                      ),
+                      Spacer(
+                        flex: 3,
+                      )
+                    ],
                   )),
             Spacer(
               flex: 5,
