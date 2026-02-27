@@ -143,6 +143,7 @@ class _IntroPageState extends State<IntroPage> with WidgetsBindingObserver {
                                 },
                                 onCancel: () {
                                   Navigator.pop(context);
+                                  Navigator.pushNamed(context, '/players_page');
                                 },
                               ),
                             );

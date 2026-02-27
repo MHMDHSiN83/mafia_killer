@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:html/parser.dart' show parse;
 import 'package:http/http.dart' as http;
+import 'package:logger/web.dart';
 import 'package:mafia_killer/utils/app_info.dart';
 import 'package:mafia_killer/utils/custom_snackbar.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -41,12 +42,24 @@ class UpdateChecker {
   }
 
   static Future<bool> checkUpdate(BuildContext context) async {
-    String? version = await getLatestVersion(context);
-    if (version == AppInfo.fullVersion) {
-      isUpdateAvilable = false;
-    } else {
-      isUpdateAvilable = true;
-    }
+    // String? version = await getLatestVersion(context);
+    // if (version == AppInfo.fullVersion) {
+    //   isUpdateAvilable = false;
+    // } else {
+    //   isUpdateAvilable = true;
+    // }
+    // return isUpdateAvilable;
+
+    String? serverVersion = await getLatestVersion(context);
+    if (serverVersion == null) return false;
+
+    String cleanServerVersion = serverVersion.split('+')[0].trim();
+    String cleanAppVersion = AppInfo.fullVersion.split('+')[0].trim();
+
+    Logger(printer: PrettyPrinter()).d(cleanServerVersion);
+    Logger(printer: PrettyPrinter()).d(cleanAppVersion);
+
+    isUpdateAvilable = (cleanServerVersion != cleanAppVersion);
     return isUpdateAvilable;
   }
 }
