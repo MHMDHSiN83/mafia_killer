@@ -1,19 +1,12 @@
 buildscript {
-    repositories {
-        google()
-        mavenCentral()
-    }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:8.7.2'
-        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:2.1.20'
-    }
+  repositories {
+    maven { url 'https://maven.myket.ir/' }
+  }
 }
-
 allprojects {
-    repositories {
-        google()
-        mavenCentral()
-    }
+  repositories {
+    maven { url 'https://maven.myket.ir/' }
+  }
 }
 
 rootProject.buildDir = "../build"
@@ -23,4 +16,15 @@ subprojects {
 
 tasks.register("clean", Delete) {
     delete rootProject.buildDir
+}
+
+
+subprojects { subproject ->
+    subproject.plugins.withId("com.android.application") {
+        subproject.android.buildToolsVersion = "37.0.0"
+    }
+
+    subproject.plugins.withId("com.android.library") {
+        subproject.android.buildToolsVersion = "37.0.0"
+    }
 }

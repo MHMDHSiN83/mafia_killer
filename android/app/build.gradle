@@ -30,7 +30,9 @@ android {
     namespace = "com.gamemaster.mafia_killer"
     compileSdk = 36
 
-    ndkVersion = flutter.ndkVersion
+
+    buildToolsVersion = "37.0.0"
+    ndkVersion = "28.0.12674087"
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17

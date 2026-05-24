@@ -347,7 +347,7 @@ class _PageFrameState extends State<PageFrame> {
                         );
                       });
                 },
-                icon: FontAwesomeIcons.gun,
+                icon: FontAwesomeIcons.gun as IconData,
                 iconSize: 6,
                 isIconRight: true,
                 textColor: AppColors.redColor,
@@ -380,7 +380,7 @@ class _PageFrameState extends State<PageFrame> {
                         );
                       });
                 },
-                icon: FontAwesomeIcons.gun,
+                icon: FontAwesomeIcons.gun as IconData,
                 iconSize: 6,
                 isIconRight: false,
                 textColor: AppColors.redColor,
