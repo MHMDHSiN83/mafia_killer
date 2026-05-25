@@ -37,11 +37,20 @@ part 'zodiac_scenario.g.dart';
 leon
 
 citizen
-*/ 
+*/
 
 @JsonSerializable()
 class ZodiacScenario extends Scenario {
   ZodiacScenario() : super();
+
+  // bomb related stuff
+  int bombPassword = 0;
+  int bodyGuardGuess = 0;
+  int playerGuess = 0;
+  Player? explodedPlayer;
+  // Player? bombedPlayer;
+
+  // ----------------------------
 
   bool hasGuessedRightForBeautifulMind = false;
   String? finalShotPlayerName;
@@ -57,7 +66,6 @@ class ZodiacScenario extends Scenario {
   @override
   Map<String, dynamic> toJson() => _$ZodiacScenarioToJson(this);
 
-
   @override
   Iterable<String> callRolesIntroNight({Function? independantBox}) sync* {
     ableToSelectTile = false;
@@ -69,7 +77,7 @@ class ZodiacScenario extends Scenario {
     IntroNightPage.buttonText = 'بیدار شدند';
 
     int l = introMafiaTeamAwakingTexts.length;
-    
+
     // TODO: better implementaion
     for (int i = 0; i < l; i++) {
       yield introMafiaTeamAwakingTexts[i];

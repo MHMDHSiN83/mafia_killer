@@ -13,5 +13,7 @@ enum NightEvent {
   shotByProfessional,
   silencedByTherapist,
 
-  shotByZodiac
+  shotByZodiac,
+  bombedByBomber,
+  disabledByMagician,
 }

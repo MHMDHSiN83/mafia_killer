@@ -1,6 +1,5 @@
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/databases/scenario.dart';
-import 'package:mafia_killer/models/night_event.dart';
 import 'package:mafia_killer/models/role.dart';
 import 'package:mafia_killer/models/role_side.dart';
 
@@ -8,41 +7,41 @@ import 'package:json_annotation/json_annotation.dart';
 import 'package:mafia_killer/models/scenarios/zodiac/roles/zodiac.dart';
 import 'package:mafia_killer/models/scenarios/zodiac/zodiac_scenario.dart';
 import 'package:mafia_killer/models/ui_player_status.dart';
-part 'Bomber.g.dart';
+part 'body_guard.g.dart';
 
 @JsonSerializable()
-class Bomber extends Role {
-  int remainingAbility = 1;
+class BodyGuard extends Role {
 
-  Bomber() {
-    name = "بمب گذار";
+  BodyGuard() {
+    name = "محافظ";
     // description if needed
-    roleSide = RoleSide.mafia;
+    roleSide = RoleSide.citizen;
     cardImagePath = "lib/images/roles/godfather.jpg";
   }
 
-  factory Bomber.fromJson(Map<String, dynamic> json) => _$BomberFromJson(json);
+  factory BodyGuard.fromJson(Map<String, dynamic> json) =>
+      _$BodyGuardFromJson(json);
 
   @override
-  Map<String, dynamic> toJson() => _$BomberToJson(this);
+  Map<String, dynamic> toJson() => _$BodyGuardToJson(this);
 
+  // TODO: noon action
   @override
   void nightAction(Player? player) {
     if (player != null) {
-      Scenario.currentScenario.nightEvents[NightEvent.bombedByBomber] = [
-        player
-      ];
-      remainingAbility--;
+      if ((Scenario.currentScenario as ZodiacScenario).bodyGuardGuess !=
+          (Scenario.currentScenario as ZodiacScenario).bombPassword) {
+        (Scenario.currentScenario as ZodiacScenario).explodedPlayer = player;
+      }
     }
   }
 
-  @override
-  String awakingRole() {
-    return "بمب گذار آیا میخواد از قابلیتش استفاده کنه؟ اگر آره ی نفرو به من نشون بده";
-  }
 
   @override
-  bool hasAbility() {
-    return remainingAbility > 0;
+  String awakingRole() {
+    return "محافظ از خواب بیدار شه و به من بگه آیا میخواد خودشو فدا کنه و رمزو حدس بزنه";
   }
+
+
+
 }
