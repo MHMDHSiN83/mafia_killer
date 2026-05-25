@@ -263,6 +263,7 @@ class _NightPageState extends State<NightPage> with WidgetsBindingObserver {
     NightPage.isNightOver = false;
     Scenario.currentScenario.nightEvents = {};
     Scenario.currentScenario.report = [];
+    Scenario.currentScenario.takeInquiry = false;
     for (Player player in Player.inGamePlayers) {
       playerCheckboxStatus[player] = false;
     }

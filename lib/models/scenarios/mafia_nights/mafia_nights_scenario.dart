@@ -252,10 +252,8 @@ class MafiaNightsScenario extends Scenario {
       Player? player = Player.getPlayerByRoleName(constantRoleOrder[i]);
 
       if (player == null) {
-        Logger().d( Player.getPlayerByRoleType(Therapist)!.role!.name);
         continue;
       }
-      Logger().d(player.name);
 
       ableToSelectTile = true;
       resetUIPlayerStatus();
