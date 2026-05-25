@@ -12,4 +12,6 @@ enum NightEvent {
   oppositedByJoker,
   shotByProfessional,
   silencedByTherapist,
+
+  shotByZodiac
 }

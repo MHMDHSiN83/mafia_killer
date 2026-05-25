@@ -1,31 +1,30 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'citizen_kane.dart';
+part of 'doctor.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-CitizenKane _$CitizenKaneFromJson(Map<String, dynamic> json) => CitizenKane()
+Doctor _$DoctorFromJson(Map<String, dynamic> json) => Doctor()
   ..name = json['name'] as String
   ..description = json['description'] as String
   ..cardImagePath = json['cardImagePath'] as String
   ..characterImagePath = json['characterImagePath'] as String
   ..roleSide = $enumDecode(_$RoleSideEnumMap, json['roleSide'])
   ..slug = json['slug'] as String
-  ..remainingAbility = (json['remainingAbility'] as num).toInt()
-  ..inquirySucceeded = json['inquirySucceeded'] as bool;
+  ..selfHeal = (json['selfHeal'] as num).toInt()
+  ..multiSelectionNumber = (json['multiSelectionNumber'] as num).toInt();
 
-Map<String, dynamic> _$CitizenKaneToJson(CitizenKane instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$DoctorToJson(Doctor instance) => <String, dynamic>{
       'name': instance.name,
       'description': instance.description,
       'cardImagePath': instance.cardImagePath,
       'characterImagePath': instance.characterImagePath,
       'roleSide': _$RoleSideEnumMap[instance.roleSide]!,
       'slug': instance.slug,
-      'remainingAbility': instance.remainingAbility,
-      'inquirySucceeded': instance.inquirySucceeded,
+      'selfHeal': instance.selfHeal,
+      'multiSelectionNumber': instance.multiSelectionNumber,
     };
 
 const _$RoleSideEnumMap = {

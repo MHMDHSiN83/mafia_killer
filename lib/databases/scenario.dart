@@ -547,6 +547,14 @@ class Scenario {
       error = 'تعداد مافیا ها نمی‌تونه صفر باشه';
       return error;
     }
+
+    int citizenCount = getNumberOfRoleBySide(RoleSide.citizen);
+
+    if (citizenCount <= mafiaCount) {
+      error = 'تعداد مافیاها باید از شهروندها کمتر باشه';
+      return error;
+    }
+
     return error;
   }
 

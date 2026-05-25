@@ -1,13 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'mafia_nights_scenario.dart';
+part of 'zodiac_scenario.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-MafiaNightsScenario _$MafiaNightsScenarioFromJson(Map<String, dynamic> json) =>
-    MafiaNightsScenario()
+ZodiacScenario _$ZodiacScenarioFromJson(Map<String, dynamic> json) =>
+    ZodiacScenario()
       ..name = json['name'] as String
       ..roles = (json['roles'] as List<dynamic>)
           .map((e) => Role.fromJson(e as Map<String, dynamic>))
@@ -63,8 +63,7 @@ MafiaNightsScenario _$MafiaNightsScenarioFromJson(Map<String, dynamic> json) =>
       ..permanentGreenMilePlayerName =
           json['permanentGreenMilePlayerName'] as String?;
 
-Map<String, dynamic> _$MafiaNightsScenarioToJson(
-        MafiaNightsScenario instance) =>
+Map<String, dynamic> _$ZodiacScenarioToJson(ZodiacScenario instance) =>
     <String, dynamic>{
       'name': instance.name,
       'roles': instance.roles,
