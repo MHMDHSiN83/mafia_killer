@@ -73,6 +73,8 @@ class MafiaNightsScenario extends Scenario {
     IntroNightPage.buttonText = 'بیدار شدند';
 
     int l = introMafiaTeamAwakingTexts.length;
+    
+    // TODO: better implementaion
     for (int i = 0; i < l; i++) {
       yield introMafiaTeamAwakingTexts[i];
       if (i == l - 2) {
@@ -96,20 +98,20 @@ class MafiaNightsScenario extends Scenario {
       "تیم مافیا بیدار شن و همدیگه رو بشناسن",
     ];
     Role? godfather = getRoleByType(Godfather);
-    Role? matador = getRoleByType(DoctorLecter);
-    Role? saulGoodman = getRoleByType(Joker);
-    Role? theMafia = getRoleByType(Mafia);
+    Role? doctorLecter = getRoleByType(DoctorLecter);
+    Role? joker = getRoleByType(Joker);
+    Role? mafia = getRoleByType(Mafia);
     if (godfather != null) {
       introMafiaTeamAwakingTexts.add(godfather.introAwakingRole());
     }
-    if (matador != null) {
-      introMafiaTeamAwakingTexts.add(matador.introAwakingRole());
+    if (doctorLecter != null) {
+      introMafiaTeamAwakingTexts.add(doctorLecter.introAwakingRole());
     }
-    if (saulGoodman != null) {
-      introMafiaTeamAwakingTexts.add(saulGoodman.introAwakingRole());
+    if (joker != null) {
+      introMafiaTeamAwakingTexts.add(joker.introAwakingRole());
     }
-    if (theMafia != null) {
-      introMafiaTeamAwakingTexts.add(theMafia.introAwakingRole());
+    if (mafia != null) {
+      introMafiaTeamAwakingTexts.add(mafia.introAwakingRole());
     }
     introMafiaTeamAwakingTexts.add("تیم مافیا بخوابه");
     return introMafiaTeamAwakingTexts;
@@ -176,7 +178,7 @@ class MafiaNightsScenario extends Scenario {
       NightPage.buttonText = '';
       currentPlayerAtNight =
           Player.getPlayersByRoleSide(RoleSide.mafia)!.first; // TODO: wtf
-      yield 'تیم مافیا به یکی شلیک کنه'; // TODO: probable move to godfather role(?)
+      yield 'تیم مافیا به یکی شلیک کنه'; // TODO: probably should move it to godfather role(?)
       ableToSelectTile = true;
       nightEvents[NightEvent.shotByMafia] = [NightPage.targetPlayers[0]];
     } else {

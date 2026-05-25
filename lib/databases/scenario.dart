@@ -60,14 +60,18 @@ class Scenario {
   Scenario();
 
   late String name;
+
   late List<Role> roles;
+  List<Role> inGameRoles = [];
+
   List<LastMoveCard> lastMoveCards = [];
   List<LastMoveCard> inGameLastMoveCards = [];
   //TODO: temp, this should be fixed
   List<LastMoveCard> recommendedLastMoveCards = [];
-  List<Role> inGameRoles = [];
+
   static List<Scenario> scenarios = [];
   static late Scenario currentScenario;
+
   static late String filePath;
   Player? currentPlayerAtNight;
   bool ableToSelectTile = false;
@@ -147,6 +151,7 @@ class Scenario {
     currentScenario = scenarios.first;
   }
 
+  // TODO: wtf why one is inGameRoles and the other is roles
   List<Role> getRolesBySide(RoleSide side) {
     return roles.where((role) => role.roleSide == side).toList();
   }
@@ -229,10 +234,12 @@ class Scenario {
     return [];
   }
 
+  // TODO: change the name to getIntroCitizenTeamAwakingTexts
   List<Role> getIntroCitizenTeamRoles() {
     return [];
   }
 
+  // TODO wtf mamas what is gmae
   Role? getRoleByType(Type type, {searchInGmaeRoles = true}) {
     if (searchInGmaeRoles) {
       for (Role role in inGameRoles) {
@@ -263,12 +270,8 @@ class Scenario {
   Iterable<String> callRolesIntroNight({Function? independantBox}) sync* {}
 
   bool isAnyMaifaDead() {
-    for (Player player in Player.inGamePlayers) {
-      if (player.role!.roleSide == RoleSide.mafia &&
-          (player.playerStatus == PlayerStatus.dead ||
-              player.playerStatus == PlayerStatus.removed)) {
-        return true;
-      }
+    if (numberOfDeadPlayersBySide(RoleSide.mafia) > 0) {
+      return true;
     }
     return false;
   }
@@ -301,10 +304,12 @@ class Scenario {
 
   void setMafiaTeamAvailablePlayers() {}
 
-  Iterable<String> mafiaTeamAction({Function? mafiaChoiceBox, Function? noAbilityBox}) sync* {}
+  Iterable<String> mafiaTeamAction(
+      {Function? mafiaChoiceBox, Function? noAbilityBox}) sync* {}
 
   Iterable<String> otherRolesAction({Function? noAbilityBox}) sync* {}
 
+  // TODO: this function should get a map (name, dialogbox function) for each scenario
   Iterable<String> callRolesRegularNight(
       {Function? mafiaChoiceBox,
       Function? noAbilityBox,
@@ -407,7 +412,8 @@ class Scenario {
           break;
 
         case 'mafia_nights.godfather':
-          role = getRoleByType(mafia_nights.Godfather, searchInGmaeRoles: false)!;
+          role =
+              getRoleByType(mafia_nights.Godfather, searchInGmaeRoles: false)!;
           break;
         case 'mafia_nights.doctor_lecter':
           role = getRoleByType(DoctorLecter, searchInGmaeRoles: false)!;
@@ -572,7 +578,6 @@ class Scenario {
   void setLastMoveCardsAttribute() {}
 
   String getInquiryText() {
-    return "";
+    throw UnimplementedError();
   }
-  
 }

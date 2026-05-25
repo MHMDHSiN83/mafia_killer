@@ -111,6 +111,7 @@ class Role {
 
   void nightAction(Player? player) {}
 
+  // TODO: mafia kos??
   void setAvailablePlayers() {
     throw UnimplementedError("Mafia Kos");
   }

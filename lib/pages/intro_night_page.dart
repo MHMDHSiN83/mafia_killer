@@ -86,6 +86,8 @@ class _IntroNightPageState extends State<IntroNightPage>
     IntroNightPage.buttonText = 'بیدار شد';
     IntroNightPage.isNightOver = false;
     Scenario.currentScenario.ableToSelectTile = true;
+
+    // TODO: regardless of the scenario it gets nostradamusBox
     iterator = Scenario.currentScenario
         .callRolesIntroNight(independantBox: nostradamusBox)
         .iterator;
