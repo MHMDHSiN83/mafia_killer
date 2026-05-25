@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:logger/logger.dart';
 import 'package:mafia_killer/databases/game_state_manager.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/databases/scenario.dart';
@@ -249,9 +250,12 @@ class MafiaNightsScenario extends Scenario {
 
     for (int i = 0; i < constantRoleOrder.length; i++) {
       Player? player = Player.getPlayerByRoleName(constantRoleOrder[i]);
+
       if (player == null) {
+        Logger().d( Player.getPlayerByRoleType(Therapist)!.role!.name);
         continue;
       }
+      Logger().d(player.name);
 
       ableToSelectTile = true;
       resetUIPlayerStatus();

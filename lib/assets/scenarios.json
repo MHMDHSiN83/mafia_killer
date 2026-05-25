@@ -237,7 +237,7 @@
                 "characterImagePath": "lib/images/roles/role_characters/detective.png"
             },
             {
-                "name": "روانپزشک",
+                "name": "روان‌پزشک",
                 "slug": "mafia_nights.therapist",
                 "description": "روانپزشک می‌تواند در طول بازی ۲ بار برای یک شهروند سکوت تجویز کند تا در طول روز بعدی نتواند صحبت کند.",
                 "roleSide": "citizen",

@@ -1,6 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mafia_killer/components/guide_box.dart';
 import 'package:mafia_killer/components/my_outlined_button.dart';
 import 'package:mafia_killer/components/dialogboxes/player_status_dialogbox.dart';
@@ -10,6 +9,7 @@ import 'package:mafia_killer/databases/page_guide.dart';
 import 'dart:math' as math;
 import 'package:mafia_killer/themes/app_color.dart';
 import 'package:mafia_killer/utils/audio_manager.dart';
+
 
 class PageFrame extends StatefulWidget {
   const PageFrame({
@@ -347,7 +347,7 @@ class _PageFrameState extends State<PageFrame> {
                         );
                       });
                 },
-                icon: FontAwesomeIcons.gun as IconData,
+                icon: Icons.my_location,
                 iconSize: 6,
                 isIconRight: true,
                 textColor: AppColors.redColor,
@@ -380,7 +380,7 @@ class _PageFrameState extends State<PageFrame> {
                         );
                       });
                 },
-                icon: FontAwesomeIcons.gun as IconData,
+                icon: Icons.my_location,
                 iconSize: 6,
                 isIconRight: false,
                 textColor: AppColors.redColor,

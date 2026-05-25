@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mafia_killer/components/dialogboxes/dialogbox_template_dir/dialogbox_outlinedbutton.dart';
-import 'package:mafia_killer/components/my_outlined_button.dart';
-import 'package:mafia_killer/themes/app_color.dart';
+
 
 class DialogboxTemplate extends StatelessWidget {
   DialogboxTemplate(
