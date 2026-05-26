@@ -106,4 +106,9 @@ const _$NightEventEnumMap = {
   NightEvent.shotByProfessional: 'shotByProfessional',
   NightEvent.silencedByTherapist: 'silencedByTherapist',
   NightEvent.shotByZodiac: 'shotByZodiac',
+  NightEvent.bombedByBomber: 'bombedByBomber',
+  NightEvent.disabledByMagician: 'disabledByMagician',
+  NightEvent.realGunByMusketeer: 'realGunByMusketeer',
+  NightEvent.fakeGunByMusketeer: 'fakeGunByMusketeer',
+  NightEvent.awakedByOcean: 'awakedByOcean',
 };

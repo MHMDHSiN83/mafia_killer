@@ -4,9 +4,7 @@ import 'package:mafia_killer/models/role.dart';
 import 'package:mafia_killer/models/role_side.dart';
 
 import 'package:json_annotation/json_annotation.dart';
-import 'package:mafia_killer/models/scenarios/zodiac/roles/zodiac.dart';
 import 'package:mafia_killer/models/scenarios/zodiac/zodiac_scenario.dart';
-import 'package:mafia_killer/models/ui_player_status.dart';
 part 'body_guard.g.dart';
 
 @JsonSerializable()

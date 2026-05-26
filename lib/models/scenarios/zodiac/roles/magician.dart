@@ -7,7 +7,7 @@ import 'package:mafia_killer/models/night_event.dart';
 import 'package:mafia_killer/models/role.dart';
 import 'package:mafia_killer/models/role_side.dart';
 import 'package:json_annotation/json_annotation.dart';
-part 'Magician.g.dart';
+part 'magician.g.dart';
 
 @JsonSerializable()
 class Magician extends Role {

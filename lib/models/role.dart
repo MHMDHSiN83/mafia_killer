@@ -111,6 +111,7 @@ class Role {
 
   void nightAction(Player? player) {}
 
+
   // TODO: mafia kos?? on this subject remember to add alive bool in function argument to filter the players by
   void setAvailablePlayers() {
     throw UnimplementedError("Mafia Kos");

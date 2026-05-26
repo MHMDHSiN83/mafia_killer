@@ -16,4 +16,7 @@ enum NightEvent {
   shotByZodiac,
   bombedByBomber,
   disabledByMagician,
+  realGunByMusketeer,
+  fakeGunByMusketeer,
+  awakedByOcean
 }

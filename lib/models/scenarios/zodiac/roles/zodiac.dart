@@ -1,13 +1,10 @@
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/databases/scenario.dart';
-import 'package:mafia_killer/models/language.dart';
 import 'package:mafia_killer/models/night_event.dart';
-import 'package:mafia_killer/models/player_status.dart';
 import 'package:mafia_killer/models/ui_player_status.dart';
 import 'package:mafia_killer/models/role.dart';
 import 'package:mafia_killer/models/role_side.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:mafia_killer/pages/intro_night_page.dart';
 part 'zodiac.g.dart';
 
 @JsonSerializable()
