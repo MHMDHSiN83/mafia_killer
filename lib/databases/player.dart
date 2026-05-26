@@ -99,14 +99,10 @@ class Player extends ChangeNotifier {
   }
 
   static List<Player> getAliveInGamePlayers() {
-    List<Player> aliveInGamePlayers = [];
-    for (Player player in inGamePlayers) {
-      if (player.playerStatus != PlayerStatus.dead &&
-          player.playerStatus != PlayerStatus.removed) {
-        aliveInGamePlayers.add(player);
-      }
-    }
-    return aliveInGamePlayers;
+    return Player.inGamePlayers
+        .where((p) => (p.playerStatus != PlayerStatus.dead ||
+            p.playerStatus != PlayerStatus.removed))
+        .toList();
   }
 
   // U P D A T E
@@ -224,6 +220,8 @@ class Player extends ChangeNotifier {
             (p.playerStatus == PlayerStatus.active && player.name != p.name))
         .toList();
   }
+
+
 
   static Player? getPlayerByRoleName(String roleName) {
     for (var player in Player.inGamePlayers) {

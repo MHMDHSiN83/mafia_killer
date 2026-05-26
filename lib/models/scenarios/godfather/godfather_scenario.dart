@@ -51,7 +51,7 @@ class GodfatherScenario extends Scenario {
       return error;
     }
 
-    if (!doesNostradamusParticipate() && doesBeautifulMindParticipate()) {
+    if (!doesIndependantRoleParticipate() && doesBeautifulMindParticipate()) {
       error = 'وقتی نوستراداموس توی بازی نیست، کارت ذهن زیبا قابل استفاده نیست';
       return error;
     }
@@ -73,7 +73,7 @@ class GodfatherScenario extends Scenario {
 
   @override
   Iterable<String> callRolesIntroNight({Function? independantBox}) sync* {
-    if (doesNostradamusParticipate()) {
+    if (doesIndependantRoleParticipate()) {
       Player? nostradamusPlayer = Player.getPlayerByRoleType(Nostradamus);
       nostradamusPlayer!.role!.setAvailablePlayers();
       currentPlayerAtNight = nostradamusPlayer;
@@ -480,14 +480,8 @@ class GodfatherScenario extends Scenario {
     return false;
   }
 
-  bool doesNostradamusParticipate() {
-    for (Role role in Scenario.currentScenario.inGameRoles) {
-      if (role is Nostradamus) {
-        return true;
-      }
-    }
-    return false;
-  }
+
+  
 
   bool doesBeautifulMindParticipate() {
     for (LastMoveCard lastMoveCard

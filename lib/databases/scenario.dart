@@ -588,4 +588,9 @@ class Scenario {
   String getInquiryText() {
     throw UnimplementedError();
   }
+
+  bool doesIndependantRoleParticipate() {
+    return Scenario.currentScenario.inGameRoles
+        .any((role) => role.roleSide == RoleSide.independant);
+  }
 }

@@ -18,6 +18,12 @@ import 'package:mafia_killer/models/scenarios/mafia_nights/roles/mafia.dart';
 import 'package:mafia_killer/models/scenarios/mafia_nights/roles/mayor.dart';
 import 'package:mafia_killer/models/scenarios/mafia_nights/roles/professional.dart';
 import 'package:mafia_killer/models/scenarios/mafia_nights/roles/therapist.dart';
+import 'package:mafia_killer/models/scenarios/zodiac/roles/body_guard.dart';
+import 'package:mafia_killer/models/scenarios/zodiac/roles/bomber.dart';
+import 'package:mafia_killer/models/scenarios/zodiac/roles/magician.dart';
+import 'package:mafia_killer/models/scenarios/zodiac/roles/musketeer.dart';
+import 'package:mafia_killer/models/scenarios/zodiac/roles/ocean.dart';
+import 'package:mafia_killer/models/scenarios/zodiac/roles/zodiac.dart';
 import 'package:mafia_killer/models/ui_player_status.dart';
 import 'package:mafia_killer/pages/intro_night_page.dart';
 import 'package:mafia_killer/pages/night_page.dart';
@@ -68,6 +74,12 @@ class ZodiacScenario extends Scenario {
 
   @override
   Iterable<String> callRolesIntroNight({Function? independantBox}) sync* {
+    if (doesIndependantRoleParticipate()) {
+      Player zodiacPlayer = Player.getPlayerByRoleType(Zodiac)!;
+      yield zodiacPlayer.role!.introAwakingRole();
+      yield zodiacPlayer.role!.introSleepRoleText();
+    }
+
     ableToSelectTile = false;
     currentPlayerAtNight = Player.inGamePlayers.first;
     resetUIPlayerStatus();
@@ -101,18 +113,19 @@ class ZodiacScenario extends Scenario {
     List<String> introMafiaTeamAwakingTexts = [
       "تیم مافیا بیدار شن و همدیگه رو بشناسن",
     ];
-    Role? godfather = getRoleByType(Godfather);
-    Role? doctorLecter = getRoleByType(DoctorLecter);
-    Role? joker = getRoleByType(Joker);
+    Role? alcapone = getRoleByType(Godfather);
+    Role? bomber = getRoleByType(Bomber);
+    Role? magician = getRoleByType(Magician);
     Role? mafia = getRoleByType(Mafia);
-    if (godfather != null) {
-      introMafiaTeamAwakingTexts.add(godfather.introAwakingRole());
+
+    if (alcapone != null) {
+      introMafiaTeamAwakingTexts.add(alcapone.introAwakingRole());
     }
-    if (doctorLecter != null) {
-      introMafiaTeamAwakingTexts.add(doctorLecter.introAwakingRole());
+    if (bomber != null) {
+      introMafiaTeamAwakingTexts.add(bomber.introAwakingRole());
     }
-    if (joker != null) {
-      introMafiaTeamAwakingTexts.add(joker.introAwakingRole());
+    if (magician != null) {
+      introMafiaTeamAwakingTexts.add(magician.introAwakingRole());
     }
     if (mafia != null) {
       introMafiaTeamAwakingTexts.add(mafia.introAwakingRole());
@@ -124,45 +137,41 @@ class ZodiacScenario extends Scenario {
   @override
   List<Role> getIntroCitizenTeamRoles() {
     List<Role> citizenRoles = [];
-    for (Role role in inGameRoles) {
-      if (role is Doctor) {
-        citizenRoles.add(role);
-        break;
-      }
+
+    Role? doctor = inGameRoles.whereType<Doctor>().firstOrNull;
+    if (doctor != null) {
+      citizenRoles.add(doctor);
     }
-    for (Role role in inGameRoles) {
-      if (role is Detective) {
-        citizenRoles.add(role);
-        break;
-      }
+
+    Role? detective = inGameRoles.whereType<Detective>().firstOrNull;
+    if (detective != null) {
+      citizenRoles.add(detective);
     }
-    for (Role role in inGameRoles) {
-      if (role is Mayor) {
-        citizenRoles.add(role);
-        break;
-      }
+
+    Role? professional = inGameRoles.whereType<Professional>().firstOrNull;
+    if (professional != null) {
+      citizenRoles.add(professional);
     }
-    for (Role role in inGameRoles) {
-      if (role is DieHard) {
-        citizenRoles.add(role);
-        break;
-      }
+
+    Role? musketeer = inGameRoles.whereType<Musketeer>().firstOrNull;
+    if (musketeer != null) {
+      citizenRoles.add(musketeer);
     }
-    for (Role role in inGameRoles) {
-      if (role is Professional) {
-        citizenRoles.add(role);
-        break;
-      }
+
+    Role? ocean = inGameRoles.whereType<Ocean>().firstOrNull;
+    if (ocean != null) {
+      citizenRoles.add(ocean);
     }
-    for (Role role in inGameRoles) {
-      if (role is Therapist) {
-        citizenRoles.add(role);
-        break;
-      }
+
+    Role? bodyGuard = inGameRoles.whereType<BodyGuard>().firstOrNull;
+    if (bodyGuard != null) {
+      citizenRoles.add(bodyGuard);
     }
+
     return citizenRoles;
   }
 
+  // TODO
   @override
   void setMafiaTeamAvailablePlayers() {
     resetUIPlayerStatus();
@@ -173,6 +182,7 @@ class ZodiacScenario extends Scenario {
     }
   }
 
+  // TODO
   @override
   Iterable<String> mafiaTeamAction(
       {Function? mafiaChoiceBox, Function? noAbilityBox}) sync* {
@@ -229,12 +239,14 @@ class ZodiacScenario extends Scenario {
     yield 'تیم مافیا بخوابه';
   }
 
+  // TODO
   @override
   List<String> getMafiaRoleOrder() {
     List<String> constantRoleOrder = ['دکتر لکتر', 'جوکر'];
     return constantRoleOrder;
   }
 
+  // TODO
   @override
   List<String> getOtherRoleOrder() {
     List<String> constantRoleOrder = [
@@ -247,6 +259,7 @@ class ZodiacScenario extends Scenario {
     return constantRoleOrder;
   }
 
+  // TODO
   @override
   Iterable<String> otherRolesAction(
       {Function? noAbilityBox, Function? dieHardBox}) sync* {
@@ -299,6 +312,7 @@ class ZodiacScenario extends Scenario {
     }
   }
 
+  // TODO
   @override
   Iterable<String> callRolesRegularNight(
       {Function? mafiaChoiceBox,
@@ -326,6 +340,7 @@ class ZodiacScenario extends Scenario {
     nightReport();
   }
 
+  // TODO
   @override
   void nightReport() {
     Player? shotByMafia = getFirstPlayer(NightEvent.shotByMafia);
@@ -382,18 +397,23 @@ class ZodiacScenario extends Scenario {
   @override
   bool isGameOver() {
     int mafiaCounter = 0, citizenCounter = 0;
+    bool zodiacAlive = false;
     for (Player player in Player.inGamePlayers) {
       if (player.playerStatus != PlayerStatus.dead &&
           player.playerStatus != PlayerStatus.removed) {
         if (player.role!.roleSide == RoleSide.mafia) {
           mafiaCounter++;
-        } else {
+        } else if (player.role!.roleSide == RoleSide.citizen) {
           citizenCounter++;
+        } else {
+          zodiacAlive = true;
         }
       }
     }
 
-    if (mafiaCounter == 0 || mafiaCounter >= citizenCounter) {
+    if ((!zodiacAlive &&
+            (mafiaCounter == 0 || mafiaCounter >= citizenCounter)) ||
+        (mafiaCounter + citizenCounter == 1 && zodiacAlive)) {
       return true;
     }
     return false;
@@ -401,16 +421,20 @@ class ZodiacScenario extends Scenario {
 
   @override
   RoleSide whichTeamWon() {
-    for (Player player in Player.inGamePlayers) {
-      if (player.playerStatus != PlayerStatus.dead &&
-          player.playerStatus != PlayerStatus.removed &&
-          player.role!.roleSide == RoleSide.mafia) {
-        return RoleSide.mafia;
-      }
-    }
-    return RoleSide.citizen;
+    List<Player> alivePlayers = Player.getAliveInGamePlayers();
+    bool zodiacAlive =
+        alivePlayers.any((p) => p.role!.roleSide == RoleSide.independant);
+    bool mafiaAlive =
+        alivePlayers.any((p) => p.role!.roleSide == RoleSide.mafia);
+
+    return (zodiacAlive)
+        ? RoleSide.independant
+        : (mafiaAlive)
+            ? RoleSide.mafia
+            : RoleSide.citizen;
   }
 
+  // TODO
   String getNoonNapChoiceText() {
     List<String> mafiaTeamAct = [
       "تیم مافیا به یک نفر شلیک کنه",
@@ -420,6 +444,7 @@ class ZodiacScenario extends Scenario {
     return mafiaTeamAct[NightPage.mafiaTeamChoice];
   }
 
+  // TODO
   Iterable<String> noonNapAction({Function? mayorChoiceBox}) sync* {
     NoonNapPage.buttonText = 'خوابیدن';
     yield "وقت خواب نیم‌روزی رسیده و همه بخوابن";
@@ -450,6 +475,7 @@ class ZodiacScenario extends Scenario {
     NoonNapPage.buttonText = '';
   }
 
+  // TODO
   bool doesMayorHaveAbility() {
     Player? mayorPlayer = Player.getPlayerByRoleType(Mayor);
     if (mayorPlayer == null) {
@@ -458,6 +484,7 @@ class ZodiacScenario extends Scenario {
     return mayorPlayer.hasAbility();
   }
 
+  // TODO
   @override
   List<Player> getPlayersForRegularVoting() {
     List<Player> alivePlayers = Player.inGamePlayers
@@ -470,6 +497,7 @@ class ZodiacScenario extends Scenario {
     return alivePlayers;
   }
 
+  // TODO
   @override
   void storeDefendingPlayers(List<Player> players) {
     defendingPlayers = players;
@@ -482,6 +510,7 @@ class ZodiacScenario extends Scenario {
     }
   }
 
+  // TODO
   @override
   void setLastMoveCardsAttribute() {
     redCarpetPlayerName = null;
@@ -498,6 +527,7 @@ class ZodiacScenario extends Scenario {
     }
   }
 
+  // TODO
   @override
   String getInquiryText() {
     return "${Language.toPersian(Scenario.currentScenario.numberOfDeadPlayersBySide(RoleSide.citizen).toString())} شهروند | ${Language.toPersian(Scenario.currentScenario.numberOfDeadPlayersBySide(RoleSide.mafia).toString())} مافیا \n از بازی خارج شدند.";
