@@ -1,13 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'mafia_nights_scenario.dart';
+part of 'zodiac_scenario.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-MafiaNightsScenario _$MafiaNightsScenarioFromJson(Map<String, dynamic> json) =>
-    MafiaNightsScenario()
+ZodiacScenario _$ZodiacScenarioFromJson(Map<String, dynamic> json) =>
+    ZodiacScenario()
       ..name = json['name'] as String
       ..roles = (json['roles'] as List<dynamic>)
           .map((e) => Role.fromJson(e as Map<String, dynamic>))
@@ -51,6 +51,12 @@ MafiaNightsScenario _$MafiaNightsScenarioFromJson(Map<String, dynamic> json) =>
               .toList()
       ..report =
           (json['report'] as List<dynamic>).map((e) => e as String).toList()
+      ..bombPassword = (json['bombPassword'] as num).toInt()
+      ..bodyGuardGuess = (json['bodyGuardGuess'] as num).toInt()
+      ..playerGuess = (json['playerGuess'] as num).toInt()
+      ..explodedPlayer = json['explodedPlayer'] == null
+          ? null
+          : Player.fromJson(json['explodedPlayer'] as Map<String, dynamic>)
       ..hasGuessedRightForBeautifulMind =
           json['hasGuessedRightForBeautifulMind'] as bool
       ..finalShotPlayerName = json['finalShotPlayerName'] as String?
@@ -63,8 +69,7 @@ MafiaNightsScenario _$MafiaNightsScenarioFromJson(Map<String, dynamic> json) =>
       ..permanentGreenMilePlayerName =
           json['permanentGreenMilePlayerName'] as String?;
 
-Map<String, dynamic> _$MafiaNightsScenarioToJson(
-        MafiaNightsScenario instance) =>
+Map<String, dynamic> _$ZodiacScenarioToJson(ZodiacScenario instance) =>
     <String, dynamic>{
       'name': instance.name,
       'roles': instance.roles,
@@ -82,6 +87,10 @@ Map<String, dynamic> _$MafiaNightsScenarioToJson(
       'killedInDayPlayer': instance.killedInDayPlayer,
       'silencedPlayerDuringDay': instance.silencedPlayerDuringDay,
       'report': instance.report,
+      'bombPassword': instance.bombPassword,
+      'bodyGuardGuess': instance.bodyGuardGuess,
+      'playerGuess': instance.playerGuess,
+      'explodedPlayer': instance.explodedPlayer,
       'hasGuessedRightForBeautifulMind':
           instance.hasGuessedRightForBeautifulMind,
       'finalShotPlayerName': instance.finalShotPlayerName,

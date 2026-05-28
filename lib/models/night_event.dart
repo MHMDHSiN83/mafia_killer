@@ -12,4 +12,11 @@ enum NightEvent {
   oppositedByJoker,
   shotByProfessional,
   silencedByTherapist,
+
+  shotByZodiac,
+  bombedByBomber,
+  disabledByMagician,
+  realGunByMusketeer,
+  fakeGunByMusketeer,
+  awakedByOcean
 }

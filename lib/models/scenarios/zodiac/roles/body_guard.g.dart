@@ -1,31 +1,26 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'citizen_kane.dart';
+part of 'body_guard.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-CitizenKane _$CitizenKaneFromJson(Map<String, dynamic> json) => CitizenKane()
+BodyGuard _$BodyGuardFromJson(Map<String, dynamic> json) => BodyGuard()
   ..name = json['name'] as String
   ..description = json['description'] as String
   ..cardImagePath = json['cardImagePath'] as String
   ..characterImagePath = json['characterImagePath'] as String
   ..roleSide = $enumDecode(_$RoleSideEnumMap, json['roleSide'])
-  ..slug = json['slug'] as String
-  ..remainingAbility = (json['remainingAbility'] as num).toInt()
-  ..inquirySucceeded = json['inquirySucceeded'] as bool;
+  ..slug = json['slug'] as String;
 
-Map<String, dynamic> _$CitizenKaneToJson(CitizenKane instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$BodyGuardToJson(BodyGuard instance) => <String, dynamic>{
       'name': instance.name,
       'description': instance.description,
       'cardImagePath': instance.cardImagePath,
       'characterImagePath': instance.characterImagePath,
       'roleSide': _$RoleSideEnumMap[instance.roleSide]!,
       'slug': instance.slug,
-      'remainingAbility': instance.remainingAbility,
-      'inquirySucceeded': instance.inquirySucceeded,
     };
 
 const _$RoleSideEnumMap = {

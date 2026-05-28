@@ -27,6 +27,8 @@ class Mayor extends Role {
     return remainingAbility > 0;
   }
 
+
+
   @override
   void nightAction(Player? player) {
     remainingAbility--;

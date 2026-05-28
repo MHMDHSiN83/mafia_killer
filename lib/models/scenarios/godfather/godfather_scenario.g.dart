@@ -12,6 +12,9 @@ GodfatherScenario _$GodfatherScenarioFromJson(Map<String, dynamic> json) =>
       ..roles = (json['roles'] as List<dynamic>)
           .map((e) => Role.fromJson(e as Map<String, dynamic>))
           .toList()
+      ..inGameRoles = (json['inGameRoles'] as List<dynamic>)
+          .map((e) => Role.fromJson(e as Map<String, dynamic>))
+          .toList()
       ..lastMoveCards = (json['lastMoveCards'] as List<dynamic>)
           .map((e) => LastMoveCard.fromJson(e as Map<String, dynamic>))
           .toList()
@@ -22,9 +25,6 @@ GodfatherScenario _$GodfatherScenarioFromJson(Map<String, dynamic> json) =>
           (json['recommendedLastMoveCards'] as List<dynamic>)
               .map((e) => LastMoveCard.fromJson(e as Map<String, dynamic>))
               .toList()
-      ..inGameRoles = (json['inGameRoles'] as List<dynamic>)
-          .map((e) => Role.fromJson(e as Map<String, dynamic>))
-          .toList()
       ..currentPlayerAtNight = json['currentPlayerAtNight'] == null
           ? null
           : Player.fromJson(
@@ -56,10 +56,10 @@ Map<String, dynamic> _$GodfatherScenarioToJson(GodfatherScenario instance) =>
     <String, dynamic>{
       'name': instance.name,
       'roles': instance.roles,
+      'inGameRoles': instance.inGameRoles,
       'lastMoveCards': instance.lastMoveCards,
       'inGameLastMoveCards': instance.inGameLastMoveCards,
       'recommendedLastMoveCards': instance.recommendedLastMoveCards,
-      'inGameRoles': instance.inGameRoles,
       'currentPlayerAtNight': instance.currentPlayerAtNight,
       'ableToSelectTile': instance.ableToSelectTile,
       'immediateResponse': instance.immediateResponse,
@@ -85,4 +85,10 @@ const _$NightEventEnumMap = {
   NightEvent.oppositedByJoker: 'oppositedByJoker',
   NightEvent.shotByProfessional: 'shotByProfessional',
   NightEvent.silencedByTherapist: 'silencedByTherapist',
+  NightEvent.shotByZodiac: 'shotByZodiac',
+  NightEvent.bombedByBomber: 'bombedByBomber',
+  NightEvent.disabledByMagician: 'disabledByMagician',
+  NightEvent.realGunByMusketeer: 'realGunByMusketeer',
+  NightEvent.fakeGunByMusketeer: 'fakeGunByMusketeer',
+  NightEvent.awakedByOcean: 'awakedByOcean',
 };
