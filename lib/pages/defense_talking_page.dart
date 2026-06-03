@@ -95,9 +95,8 @@ class _DefenseTalkingPageState extends State<DefenseTalkingPage> {
       resizeToAvoidBottomInset: false,
       body: PageFrame(
         label: ModalRoute.of(context)!.settings.name!,
-        pageTitle: 'روز ${GameStateManager.getCurrentStateNumber()}',
-        leftButtonText:
-            'شب ${GameStateManager.getPreviousState()}',
+        pageTitle: 'روز ${GameStateManager.getCurrentStateNumberPersian()}',
+        leftButtonText: 'شب ${GameStateManager.getPreviousState()}',
         rightButtonText: 'رای گیری',
         leftButtonOnTap: () {
           Navigator.pop(context);

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:mafia_killer/components/call_role.dart';
+import 'package:mafia_killer/components/dialogboxes/bomber_dialogbox.dart';
 import 'package:mafia_killer/components/dialogboxes/confirmation_dialogbox.dart';
 import 'package:mafia_killer/components/dialogboxes/detective_dialogbox.dart';
 import 'package:mafia_killer/components/dialogboxes/mafia_choice_dialogbox.dart';
 import 'package:mafia_killer/components/dialogboxes/die_hard_dialogbox.dart';
 import 'package:mafia_killer/components/dialogboxes/message_dialogbox.dart';
+import 'package:mafia_killer/components/dialogboxes/musketeer_dialogbox.dart';
 import 'package:mafia_killer/components/my_divider.dart';
 import 'package:mafia_killer/components/night_player_tile2.dart';
 import 'package:mafia_killer/components/page_frame.dart';
@@ -12,11 +14,13 @@ import 'package:mafia_killer/components/dialogboxes/sixth_sense_dialogbox.dart';
 import 'package:mafia_killer/databases/game_state_manager.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/databases/scenario.dart';
+import 'package:mafia_killer/models/night_event.dart';
 import 'package:mafia_killer/models/player_status.dart';
 import 'package:mafia_killer/models/scenarios/mafia_nights/roles/detective.dart';
 import 'package:mafia_killer/models/scenarios/godfather/godfather_scenario.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/godfather.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/saul_goodman.dart';
+import 'package:mafia_killer/models/scenarios/zodiac/zodiac_scenario.dart';
 import 'package:mafia_killer/models/ui_player_status.dart';
 import 'package:mafia_killer/themes/app_color.dart';
 import 'package:mafia_killer/utils/audio_manager.dart';
@@ -196,6 +200,7 @@ class _NightPageState extends State<NightPage> with WidgetsBindingObserver {
     );
   }
 
+  // TODO: nightAction method called twice (here and mafia nights scenario)
   void detectiveAction(Player player) {
     NightPage.targetPlayers = [];
     NightPage.targetPlayers.add(player);
@@ -241,6 +246,48 @@ class _NightPageState extends State<NightPage> with WidgetsBindingObserver {
         );
       },
     );
+  }
+
+  // TODO
+  void musketeerAction(Player targetPlayer) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return MusketeerDialogbox(
+          fakeBullet: () {
+            (Scenario.currentScenario as ZodiacScenario).isRealGun = false;
+            Navigator.of(context).pop();
+            setState(() {
+              if (iterator.moveNext()) {
+                text = iterator.current;
+              }
+            });
+          },
+          realBullet: () {
+            (Scenario.currentScenario as ZodiacScenario).isRealGun = false;
+            Navigator.of(context).pop();
+            setState(() {
+              if (iterator.moveNext()) {
+                text = iterator.current;
+              }
+            });
+          },
+        );
+      },
+    );
+  }
+
+  void bomberAction(Player targetPlayer) {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return BomberDialogbox(
+            setPassword: (password) {
+              (Scenario.currentScenario as ZodiacScenario).bombPassword =
+                  password;
+            },
+          );
+        });
   }
 
   void resetUIBeforeNight() {
@@ -295,7 +342,7 @@ class _NightPageState extends State<NightPage> with WidgetsBindingObserver {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              'شروع مجدد شب ${GameStateManager.getCurrentStateNumber()}',
+              'شروع مجدد شب ${GameStateManager.getCurrentStateNumberPersian()}',
               style: TextStyle(
                 color: Theme.of(context).colorScheme.primary,
                 fontWeight: FontWeight.bold,
@@ -367,13 +414,14 @@ class _NightPageState extends State<NightPage> with WidgetsBindingObserver {
     return Scaffold(
       body: PageFrame(
         label: '/night_page',
-        pageTitle: 'شب ${GameStateManager.getCurrentStateNumber()}',
+        pageTitle: 'شب ${GameStateManager.getCurrentStateNumberPersian()}',
         reloadContentOfPage: () {
           setState(() {});
         },
         settingsPage: settingsPage,
         rightButtonText: 'اتفاقات شب',
-        leftButtonText: "روز ${GameStateManager.getPreviousStateNumber()}",
+        leftButtonText:
+            "روز ${GameStateManager.getPreviousStateNumberPersian()}",
         leftButtonOnTap: () {
           resetNight();
           GameStateManager.goToPreviousState();
@@ -429,6 +477,12 @@ class _NightPageState extends State<NightPage> with WidgetsBindingObserver {
                             case 3:
                               detectiveAction(Player.inGamePlayers[index]);
                               break;
+                            case 4:
+                              musketeerAction(Player.inGamePlayers[index]);
+                              break;
+                            case 5:
+                              bomberAction(Player.inGamePlayers[index]);
+                              break;
                             default:
                           }
                         },
@@ -450,7 +504,8 @@ class _NightPageState extends State<NightPage> with WidgetsBindingObserver {
                         //TODO: wtf
                         if (NightPage.buttonText != 'تائید' ||
                             Scenario.currentScenario.currentPlayerAtNight!.role!
-                                .hasAllSelected(NightPage.targetPlayers.length)) {
+                                .hasAllSelected(
+                                    NightPage.targetPlayers.length)) {
                           if (iterator.moveNext()) {
                             text = iterator.current;
                             NightPage.targetPlayers = [];

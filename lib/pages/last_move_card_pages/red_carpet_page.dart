@@ -52,7 +52,7 @@ class _RedCarpetPageState extends State<RedCarpetPage> {
           return settingsPage(context, 7);
         },
         leftButtonText: "کارت حرکت آخر",
-        rightButtonText: 'شب ${GameStateManager.getNextStateNumber()}',
+        rightButtonText: 'شب ${GameStateManager.getNextStateNumberPersian()}',
         leftButtonOnTap: () {
           Navigator.pop(context);
         },

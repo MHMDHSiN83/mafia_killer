@@ -26,7 +26,7 @@ class Magician extends Role {
   @override
   Map<String, dynamic> toJson() => _$MagicianToJson(this);
   @override
-  void nightAction(Player? player) {
+  void nightAction(Player? player, {int? action}) {
     if (player != null) {
       Scenario.currentScenario
           .addPlayerToNightEvent(NightEvent.disabledByMagician, player);

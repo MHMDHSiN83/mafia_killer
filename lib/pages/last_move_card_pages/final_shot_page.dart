@@ -52,8 +52,7 @@ class _FinalShotPageState extends State<FinalShotPage> {
           return settingsPage(context, 7);
         },
         leftButtonText: "کارت حرکت آخر",
-        rightButtonText:
-            'شب ${GameStateManager.getNextStateNumber()}',
+        rightButtonText: 'شب ${GameStateManager.getNextStateNumberPersian()}',
         leftButtonOnTap: () {
           Navigator.pop(context);
         },
@@ -68,7 +67,6 @@ class _FinalShotPageState extends State<FinalShotPage> {
                   Scenario.currentScenario.killedInDayPlayer!.name),
               Player.getPlayerByName(widget.selectedPlayers[0].name),
             ]);
-
 
             if (Scenario.currentScenario.isGameOver()) {
               AudioManager.playNextPageEffect();
@@ -116,7 +114,8 @@ class _FinalShotPageState extends State<FinalShotPage> {
             Expanded(
               flex: 1,
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 25),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 25),
                 child: CallRole(
                   text:
                       "${killedInDayPlayer.name} به جای مافیا یک نفر رو برای شلیک امشب انتخاب کن.",

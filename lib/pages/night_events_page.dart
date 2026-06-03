@@ -51,7 +51,7 @@ class _NightEventsPage extends State<NightEventsPage> {
       context: context,
       builder: (context) {
         return NewInquiryDialogbox(
-          inquiry:  Scenario.currentScenario.getInquiryText(),
+          inquiry: Scenario.currentScenario.getInquiryText(),
           // child: Column(
           //   children: [
           //     Text(
@@ -187,8 +187,8 @@ class _NightEventsPage extends State<NightEventsPage> {
         label: '/night_events_page',
         pageTitle: "اتفاقات شب",
         settingsPage: settingsPage,
-        leftButtonText: "شب ${GameStateManager.getCurrentStateNumber()}",
-        rightButtonText: "روز ${GameStateManager.getNextStateNumber()}",
+        leftButtonText: "شب ${GameStateManager.getCurrentStateNumberPersian()}",
+        rightButtonText: "روز ${GameStateManager.getNextStateNumberPersian()}",
         leftButtonOnTap: () {
           if (doesPressInquiry) {
             GameSettings.currentGameSettings.inquiry += 1;
@@ -216,7 +216,7 @@ class _NightEventsPage extends State<NightEventsPage> {
                   nextPagePath: '/regular_voting_page',
                   seconds: GameSettings.currentGameSettings.mainSpeakTime,
                   leftButtonText:
-                      'شب ${GameStateManager.getPreviousStateNumber()}',
+                      'شب ${GameStateManager.getPreviousStateNumberPersian()}',
                   rightButtonText: 'رای گیری',
                   isDefense: false,
                 ),

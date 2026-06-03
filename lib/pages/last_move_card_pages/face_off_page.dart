@@ -53,8 +53,7 @@ class _FaceOffPageState extends State<FaceOffPage> {
           return settingsPage(context, 7);
         },
         leftButtonText: "کارت حرکت آخر",
-        rightButtonText:
-            'شب ${GameStateManager.getNextStateNumber()}',
+        rightButtonText: 'شب ${GameStateManager.getNextStateNumberPersian()}',
         leftButtonOnTap: () => Navigator.pop(context),
         rightButtonOnTap: () {
           if (FaceOffPage.selectedPlayers.length == 1) {
@@ -99,7 +98,8 @@ class _FaceOffPageState extends State<FaceOffPage> {
             Expanded(
               flex: 1,
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 25),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 25),
                 child: CallRole(
                   text:
                       "${killedInDayPlayer.name} یک نفرو انتخاب کنه و نقششو باهاش عوض کنه.",

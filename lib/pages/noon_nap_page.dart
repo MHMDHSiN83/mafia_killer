@@ -127,7 +127,7 @@ class _NoonNapPageState extends State<NoonNapPage> {
           return settingsPage(context, 5);
         },
         leftButtonText: "رای‌گیری دفاعیه",
-        rightButtonText: 'شب ${GameStateManager.getNextStateNumber()}',
+        rightButtonText: 'شب ${GameStateManager.getNextStateNumberPersian()}',
         leftButtonOnTap: () => Navigator.pop(context),
         rightButtonOnTap: () {
           if (Scenario.currentScenario is GodfatherScenario) {
@@ -192,7 +192,8 @@ class _NoonNapPageState extends State<NoonNapPage> {
             Expanded(
               flex: 1,
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 25),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 25),
                 child: CallRole(
                   text: text,
                   buttonText: NoonNapPage.buttonText,

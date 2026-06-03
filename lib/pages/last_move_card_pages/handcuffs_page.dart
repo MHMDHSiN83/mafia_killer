@@ -52,7 +52,7 @@ class _HandcuffsPageState extends State<HandcuffsPage> {
           return settingsPage(context, 7);
         },
         leftButtonText: "کارت حرکت آخر",
-        rightButtonText: 'شب ${GameStateManager.getNextStateNumber()}',
+        rightButtonText: 'شب ${GameStateManager.getNextStateNumberPersian()}',
         leftButtonOnTap: () {
           Navigator.pop(context);
         },

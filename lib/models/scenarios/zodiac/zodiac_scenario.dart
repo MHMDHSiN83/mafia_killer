@@ -18,6 +18,7 @@ import 'package:mafia_killer/models/scenarios/mafia_nights/roles/mafia.dart';
 import 'package:mafia_killer/models/scenarios/mafia_nights/roles/mayor.dart';
 import 'package:mafia_killer/models/scenarios/mafia_nights/roles/professional.dart';
 import 'package:mafia_killer/models/scenarios/mafia_nights/roles/therapist.dart';
+import 'package:mafia_killer/models/scenarios/zodiac/roles/alcapone.dart';
 import 'package:mafia_killer/models/scenarios/zodiac/roles/body_guard.dart';
 import 'package:mafia_killer/models/scenarios/zodiac/roles/bomber.dart';
 import 'package:mafia_killer/models/scenarios/zodiac/roles/magician.dart';
@@ -58,13 +59,7 @@ class ZodiacScenario extends Scenario {
 
   // ----------------------------
 
-  bool hasGuessedRightForBeautifulMind = false;
-  String? finalShotPlayerName;
-  String? permanentFinalShotPlayerName;
-  String? redCarpetPlayerName;
-  String? greenMilePlayerName;
-  String? permanentRedCarpetPlayerName;
-  String? permanentGreenMilePlayerName;
+  bool? isRealGun;
 
   factory ZodiacScenario.fromJson(Map<String, dynamic> json) =>
       _$ZodiacScenarioFromJson(json);
@@ -171,39 +166,29 @@ class ZodiacScenario extends Scenario {
     return citizenRoles;
   }
 
-  // TODO
   @override
   void setMafiaTeamAvailablePlayers() {
     resetUIPlayerStatus();
     for (Player player in Player.inGamePlayers) {
-      if (player.role! is Godfather) {
+      if (player.role! is Alcapone) {
         player.uiPlayerStatus = UIPlayerStatus.untargetable;
       }
     }
   }
 
-  // TODO
   @override
   Iterable<String> mafiaTeamAction(
       {Function? mafiaChoiceBox, Function? noAbilityBox}) sync* {
     yield "تیم مافیا از خواب بیدار شه";
-    if (finalShotPlayerName == null) {
-      ableToSelectTile = true;
-      NightPage.buttonText = '';
-      currentPlayerAtNight =
-          Player.getPlayersByRoleSide(RoleSide.mafia)!.first; // TODO: wtf
-      yield 'تیم مافیا به یکی شلیک کنه'; // TODO: probably should move it to godfather role(?)
-      ableToSelectTile = true;
-      nightEvents[NightEvent.shotByMafia] = [NightPage.targetPlayers[0]];
-    } else {
-      nightEvents[NightEvent.shotByMafia] = [
-        Player.getPlayerByName(finalShotPlayerName!)
-      ];
-      currentPlayerAtNight =
-          Player.getPlayersByRoleSide(RoleSide.mafia)!.first; // TODO: wtf
-      NightPage.buttonText = '';
-      ableToSelectTile = true;
-    }
+
+    ableToSelectTile = true;
+    NightPage.buttonText = '';
+    currentPlayerAtNight = Player.getPlayersByRoleSide(RoleSide.mafia)!
+        .first; // TODO: wtf (wtf is this wtf)
+    yield 'تیم مافیا به یکی شلیک کنه'; // TODO: probably should move it to godfather role(?)
+    ableToSelectTile = true;
+    nightEvents[NightEvent.shotByMafia] = [NightPage.targetPlayers[0]];
+
     List<String> constantRoleOrder = getMafiaRoleOrder();
 
     for (int i = 0; i < constantRoleOrder.length; i++) {
@@ -239,36 +224,37 @@ class ZodiacScenario extends Scenario {
     yield 'تیم مافیا بخوابه';
   }
 
-  // TODO
   @override
   List<String> getMafiaRoleOrder() {
-    List<String> constantRoleOrder = ['دکتر لکتر', 'جوکر'];
+    List<String> constantRoleOrder = ['شعبده باز', 'بمب گذار'];
     return constantRoleOrder;
   }
 
-  // TODO
   @override
   List<String> getOtherRoleOrder() {
     List<String> constantRoleOrder = [
       'دکتر',
       'کارآگاه',
-      'جان سخت',
       'حرفه‌ای',
-      'روان‌پزشک',
+      'تفنگ دار',
+      'زودیاک',
+      'اوشن',
     ];
     return constantRoleOrder;
   }
 
-  // TODO
+  // TODO:  bomber
   @override
   Iterable<String> otherRolesAction(
-      {Function? noAbilityBox, Function? dieHardBox}) sync* {
+      {Function? noAbilityBox, Function? musketeerBox}) sync* {
     List<String> constantRoleOrder = getOtherRoleOrder();
     NightPage.buttonText = 'خوابید';
 
     for (int i = 0; i < constantRoleOrder.length; i++) {
       Player? player = Player.getPlayerByRoleName(constantRoleOrder[i]);
-      if (player == null) {
+      if (player == null ||
+          (player.role! is Zodiac &&
+              GameStateManager.getCurrentStateNumber() % 2 == 1)) {
         continue;
       }
 
@@ -285,13 +271,20 @@ class ZodiacScenario extends Scenario {
           NightPage.typeOfConfirmation = 3;
           NightPage.buttonText = "تائید";
         }
-        if (player.role! is DieHard) {
-          dieHardBox!(player);
+        if (player.role! is Musketeer) {
+          NightPage.typeOfConfirmation = 4;
+          NightPage.buttonText = "مافیاکص";
         }
+        if (player.role! is Bomber) {
+          NightPage.typeOfConfirmation = 5;
+          NightPage.buttonText = "کص ممس";
+        }
+
         yield player.role!.awakingRole();
+
         NightPage.typeOfConfirmation = 0;
         for (Player p in NightPage.targetPlayers) {
-          player.role!.nightAction(p);
+          player.role!.nightAction(p, action: (isRealGun!) ? 1 : 0);
         }
         ableToSelectTile = false;
         NightPage.buttonText = "خوابید";
@@ -312,7 +305,6 @@ class ZodiacScenario extends Scenario {
     }
   }
 
-  // TODO
   @override
   Iterable<String> callRolesRegularNight(
       {Function? mafiaChoiceBox,
@@ -328,8 +320,7 @@ class ZodiacScenario extends Scenario {
     }
 
     final otherRolesIterator =
-        otherRolesAction(noAbilityBox: noAbilityBox!, dieHardBox: dieHardBox)
-            .iterator;
+        otherRolesAction(noAbilityBox: noAbilityBox!).iterator;
 
     while (otherRolesIterator.moveNext()) {
       yield otherRolesIterator.current;
@@ -340,32 +331,25 @@ class ZodiacScenario extends Scenario {
     nightReport();
   }
 
-  // TODO
+  // TODO : who else beside zodiac doesn't get killed by mafia shot (has shield)
   @override
   void nightReport() {
     Player? shotByMafia = getFirstPlayer(NightEvent.shotByMafia);
     Player? shotByProfessional = getFirstPlayer(NightEvent.shotByProfessional);
-    Player? savedByDoctorLecter =
-        getFirstPlayer(NightEvent.savedByDoctorLecter);
-    Player? silencedByTherapist =
-        getFirstPlayer(NightEvent.silencedByTherapist);
+    Player? shotByZodiac = getFirstPlayer(NightEvent.shotByZodiac);
+    Player? bombedByBomber = getFirstPlayer(NightEvent.bombedByBomber);
 
     List<Player> savedByDoctor = nightEvents[NightEvent.savedByDoctor] ?? [];
     Player? professional = Player.getPlayerByRoleType(Professional);
+    Player? zodiac = Player.getPlayerByRoleType(Zodiac);
 
     // mafia shot process -> Done
     if (shotByMafia != null) {
       bool isSaved = savedByDoctor.any((p) => p.name == shotByMafia.name);
 
-      if (!isSaved &&
-          (shotByMafia.role is! DieHard ||
-              (shotByMafia.role is DieHard &&
-                  (shotByMafia.role as DieHard).shield <= 0))) {
+      if (!isSaved && shotByMafia.role is! Zodiac) {
         shotByMafia.playerStatus = PlayerStatus.dead;
         report.add("${shotByMafia.name} کشته شد.");
-      } else if (shotByMafia.role is DieHard &&
-          (shotByMafia.role as DieHard).shield > 0) {
-        (shotByMafia.role as DieHard).shield--;
       }
     }
 
@@ -376,17 +360,35 @@ class ZodiacScenario extends Scenario {
       if (shotByProfessional.role!.roleSide == RoleSide.citizen) {
         professional!.playerStatus = PlayerStatus.dead;
         report.add("${professional.name} کشته شد.");
-      } else if (!isSaved &&
-          (savedByDoctorLecter == null ||
-              (savedByDoctorLecter.name != shotByProfessional.name))) {
+      } else if (!isSaved && shotByProfessional.role is! Zodiac) {
         shotByProfessional.playerStatus = PlayerStatus.dead;
         report.add("${shotByProfessional.name} کشته شد.");
       }
     }
 
-    if (silencedByTherapist != null) {
-      silencedPlayerDuringDay = [silencedByTherapist];
-      report.add("${silencedByTherapist.name} امروز نمی‌تونه حرف بزنه.");
+    // zodiac shot process
+
+    if (shotByZodiac != null) {
+      bool isSaved = savedByDoctor.any((p) => p.name == shotByZodiac.name);
+
+      String? deadPlayerName;
+      if (shotByZodiac.role is BodyGuard) {
+        zodiac!.playerStatus = PlayerStatus.dead;
+        deadPlayerName = zodiac.name;
+      } else if (!isSaved) {
+        shotByZodiac.playerStatus = (PlayerStatus.dead);
+        deadPlayerName = (shotByZodiac.name);
+      }
+
+      if (deadPlayerName != null) report.add("$deadPlayerName کشته شد.");
+    }
+
+    // bomber process
+    // TODO: maybe we should announce when the bombed person is dead that they have been bombed before they died
+    if (bombedByBomber != null &&
+        bombedByBomber.playerStatus != PlayerStatus.dead &&
+        bombedByBomber.playerStatus != PlayerStatus.removed) {
+      report.add("بمب جلوی ${bombedByBomber.name} قرار گرفت.");
     }
 
     if (report.isEmpty) {
@@ -434,24 +436,15 @@ class ZodiacScenario extends Scenario {
             : RoleSide.citizen;
   }
 
+  
   // TODO
-  String getNoonNapChoiceText() {
-    List<String> mafiaTeamAct = [
-      "تیم مافیا به یک نفر شلیک کنه",
-      "پدرخوانده کسی که میخواد امشب سلاخی کنه رو نشون بده و نقششو حدس بزنه",
-      "ساول گودمن یک نفر رو خریداره کنه",
-    ];
-    return mafiaTeamAct[NightPage.mafiaTeamChoice];
-  }
-
-  // TODO
-  Iterable<String> noonNapAction({Function? mayorChoiceBox}) sync* {
+  Iterable<String> noonNapAction({Function? bodyGuardChoiceBox}) sync* {
     NoonNapPage.buttonText = 'خوابیدن';
     yield "وقت خواب نیم‌روزی رسیده و همه بخوابن";
     NoonNapPage.buttonText = 'بیدار شد';
-    yield "شهردار از خواب بیدار شه";
-    mayorChoiceBox!();
-    yield "شهردار از خواب بیدار شه";
+    yield "محافظ از خواب بیدار شه";
+    bodyGuardChoiceBox!();
+    yield "محافظ از خواب بیدار شه";
     Player? mayorPlayer = Player.getPlayerByRoleType(Mayor);
 
     NoonNapPage.buttonText = 'خوابید';
@@ -484,52 +477,18 @@ class ZodiacScenario extends Scenario {
     return mayorPlayer.hasAbility();
   }
 
-  // TODO
   @override
   List<Player> getPlayersForRegularVoting() {
-    List<Player> alivePlayers = Player.inGamePlayers
-        .where((player) =>
-            player.playerStatus != PlayerStatus.dead &&
-            player.playerStatus != PlayerStatus.removed &&
-            player.name != redCarpetPlayerName &&
-            player.name != greenMilePlayerName)
-        .toList();
-    return alivePlayers;
+    return Player.getAliveInGamePlayers();
   }
 
-  // TODO
   @override
   void storeDefendingPlayers(List<Player> players) {
     defendingPlayers = players;
-    if (redCarpetPlayerName != null) {
-      bool alreadyInList =
-          defendingPlayers.any((p) => p.name == redCarpetPlayerName);
-      if (!alreadyInList) {
-        defendingPlayers.add(Player.getPlayerByName(redCarpetPlayerName!));
-      }
-    }
   }
 
-  // TODO
-  @override
-  void setLastMoveCardsAttribute() {
-    redCarpetPlayerName = null;
-    greenMilePlayerName = null;
-    finalShotPlayerName = null;
-    String? previousLastMoveCardTitle =
-        GameStateManager.getPreviousLastMoveCardTitle();
-    if (previousLastMoveCardTitle == 'فرش قرمز') {
-      redCarpetPlayerName = permanentRedCarpetPlayerName;
-    } else if (previousLastMoveCardTitle == 'مسیر سبز') {
-      greenMilePlayerName = permanentGreenMilePlayerName;
-    } else if (previousLastMoveCardTitle == 'شلیک نهایی') {
-      finalShotPlayerName = permanentFinalShotPlayerName;
-    }
-  }
-
-  // TODO
   @override
   String getInquiryText() {
-    return "${Language.toPersian(Scenario.currentScenario.numberOfDeadPlayersBySide(RoleSide.citizen).toString())} شهروند | ${Language.toPersian(Scenario.currentScenario.numberOfDeadPlayersBySide(RoleSide.mafia).toString())} مافیا \n از بازی خارج شدند.";
+    return "${Language.toPersian(Scenario.currentScenario.numberOfDeadPlayersBySide(RoleSide.citizen).toString())} شهروند | ${Language.toPersian(Scenario.currentScenario.numberOfDeadPlayersBySide(RoleSide.mafia).toString())} مافیا | ${Language.toPersian(Scenario.currentScenario.numberOfDeadPlayersBySide(RoleSide.independant).toString())} زودیاک \n از بازی خارج شدند.";
   }
 }

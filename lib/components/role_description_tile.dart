@@ -110,6 +110,7 @@ class _RoleDescriptionTileState extends State<RoleDescriptionTile> {
                 return Container(
                   margin:
                       const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+                  // TODO: make this counter a component and generalize
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [

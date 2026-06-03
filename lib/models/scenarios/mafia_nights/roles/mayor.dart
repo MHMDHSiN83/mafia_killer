@@ -30,7 +30,7 @@ class Mayor extends Role {
 
 
   @override
-  void nightAction(Player? player) {
+  void nightAction(Player? player, {int? action}) {
     remainingAbility--;
     if (player != null) {
       Scenario.currentScenario.killedInDayPlayer = player;

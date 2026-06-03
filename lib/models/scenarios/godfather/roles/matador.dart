@@ -27,7 +27,7 @@ class Matador extends Role {
   @override
   Map<String, dynamic> toJson() => _$MatadorToJson(this);
   @override
-  void nightAction(Player? player) {
+  void nightAction(Player? player, {int? action}) {
     if (player != null) {
       Scenario.currentScenario
           .addPlayerToNightEvent(NightEvent.disabledByMatador, player);

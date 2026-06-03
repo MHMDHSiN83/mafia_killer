@@ -40,7 +40,7 @@ class RevealIdentityPage extends StatelessWidget {
             return settingsPage(context, 7);
           },
           leftButtonText: "کارت حرکت آخر",
-          rightButtonText: 'شب ${GameStateManager.getNextStateNumber()}',
+          rightButtonText: 'شب ${GameStateManager.getNextStateNumberPersian()}',
           leftButtonOnTap: () => Navigator.pop(context),
           rightButtonOnTap: () {
             GameStateManager.addLastMoveCardAction(

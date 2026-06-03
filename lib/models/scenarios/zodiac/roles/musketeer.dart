@@ -28,8 +28,8 @@ class Musketeer extends Role {
 
   // TODO: isReal argument
   @override
-  void nightAction(Player? player) {
-    bool isReal = true;
+  void nightAction(Player? player, {int? action}) {
+    bool isReal = (action == 1);
     if (player != null && (!isReal || hasRealGun)) {
       Scenario.currentScenario.nightEvents[(isReal)
           ? NightEvent.realGunByMusketeer

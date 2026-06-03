@@ -128,15 +128,19 @@ class GameStateManager {
     }
   }
 
-  static String getCurrentStateNumber() {
+  static String getCurrentStateNumberPersian() {
     return Language.getPersianOrdinal(int.parse(currentState[1]));
   }
 
-  static String getNextStateNumber() {
+  static int getCurrentStateNumber() {
+    return int.parse(currentState[1]);
+  }
+
+  static String getNextStateNumberPersian() {
     return Language.getPersianOrdinal(int.parse(getNextState()[1]));
   }
 
-  static String getPreviousStateNumber() {
+  static String getPreviousStateNumberPersian() {
     return Language.getPersianOrdinal(int.parse(getPreviousState()[1]));
   }
 

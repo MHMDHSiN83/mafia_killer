@@ -24,7 +24,7 @@ class Detective extends Role {
   Map<String, dynamic> toJson() => _$DetectiveToJson(this);
 
   @override
-  void nightAction(Player? player) {
+  void nightAction(Player? player, {int? action}) {
     if (player == null) return;
 
     final isOppositedByJoker = Scenario.currentScenario

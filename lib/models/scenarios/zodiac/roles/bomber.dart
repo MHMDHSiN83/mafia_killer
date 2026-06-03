@@ -5,6 +5,8 @@ import 'package:mafia_killer/models/role.dart';
 import 'package:mafia_killer/models/role_side.dart';
 
 import 'package:json_annotation/json_annotation.dart';
+import 'package:mafia_killer/models/scenarios/zodiac/roles/zodiac.dart';
+import 'package:mafia_killer/models/scenarios/zodiac/zodiac_scenario.dart';
 part 'bomber.g.dart';
 
 @JsonSerializable()
@@ -24,7 +26,7 @@ class Bomber extends Role {
   Map<String, dynamic> toJson() => _$BomberToJson(this);
 
   @override
-  void nightAction(Player? player) {
+  void nightAction(Player? player, {int? action}) {
     if (player != null) {
       Scenario.currentScenario.nightEvents[NightEvent.bombedByBomber] = [
         player

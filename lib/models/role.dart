@@ -98,6 +98,7 @@ class Role {
         return Role();
     }
   }
+  
 
   Map<String, dynamic> toJson() {
     return {
@@ -109,7 +110,7 @@ class Role {
     };
   }
 
-  void nightAction(Player? player) {}
+  void nightAction(Player? player,{int? action}) {}
 
 
   // TODO: mafia kos?? on this subject remember to add alive bool in function argument to filter the players by

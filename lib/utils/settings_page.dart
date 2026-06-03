@@ -12,7 +12,7 @@ Widget? settingsPage(BuildContext context, int l) {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            'شروع مجدد روز ${GameStateManager.getCurrentStateNumber()}',
+            'شروع مجدد روز ${GameStateManager.getCurrentStateNumberPersian()}',
             style: TextStyle(
               color: Theme.of(context).colorScheme.primary,
               fontWeight: FontWeight.bold,

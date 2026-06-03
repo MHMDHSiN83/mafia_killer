@@ -25,7 +25,7 @@ class BodyGuard extends Role {
 
   // TODO: noon action
   @override
-  void nightAction(Player? player) {
+  void nightAction(Player? player, {int? action}) {
     if (player != null) {
       if ((Scenario.currentScenario as ZodiacScenario).bodyGuardGuess !=
           (Scenario.currentScenario as ZodiacScenario).bombPassword) {
