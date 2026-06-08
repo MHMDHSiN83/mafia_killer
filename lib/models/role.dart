@@ -9,12 +9,14 @@ import 'package:mafia_killer/models/scenarios/mafia_nights/roles/joker.dart';
 import 'package:mafia_killer/models/scenarios/mafia_nights/roles/mayor.dart';
 import 'package:mafia_killer/models/scenarios/mafia_nights/roles/professional.dart';
 import 'package:mafia_killer/models/scenarios/mafia_nights/roles/therapist.dart';
-import 'package:mafia_killer/models/scenarios/mafia_nights/roles/mafia.dart'
+
+import 'package:mafia_killer/models/scenarios/mafia_nights/models.dart'
     as mafia_nights;
-import 'package:mafia_killer/models/scenarios/mafia_nights/roles/citizen.dart'
-    as mafia_nights;
-import 'package:mafia_killer/models/scenarios/mafia_nights/roles/godfather.dart'
-    as mafia_nights;
+
+import 'package:mafia_killer/models/scenarios/godfather/models.dart'
+    as godfather;
+
+import 'package:mafia_killer/models/scenarios/zodiac/models.dart' as zodiac;
 
 import 'package:mafia_killer/models/scenarios/godfather/roles/citizen_kane.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/constantine.dart';
@@ -23,12 +25,8 @@ import 'package:mafia_killer/models/scenarios/godfather/roles/leon.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/matador.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/nostradamus.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/saul_goodman.dart';
-import 'package:mafia_killer/models/scenarios/godfather/roles/godfather.dart'
-    as godfather;
-import 'package:mafia_killer/models/scenarios/godfather/roles/mafia.dart'
-    as godfather;
-import 'package:mafia_killer/models/scenarios/godfather/roles/citizen.dart'
-    as godfather;
+
+import 'package:mafia_killer/models/scenarios/zodiac/models.dart';
 import 'package:mafia_killer/pages/intro_night_page.dart';
 
 class Role {
@@ -53,7 +51,7 @@ class Role {
     switch (json['slug']) {
       case 'godfather.godfather':
         return godfather.Godfather.fromJson(json);
-      case 'godfather.saulgoodman':
+      case 'godfather.saul_goodman':
         return SaulGoodman.fromJson(json);
       case 'godfather.matador':
         return Matador.fromJson(json);
@@ -81,24 +79,49 @@ class Role {
       case 'mafia_nights.mafia':
         return mafia_nights.Mafia.fromJson(json);
       case 'mafia_nights.doctor':
-        return Doctor.fromJson(json);
+        return mafia_nights.Doctor.fromJson(json);
       case 'mafia_nights.professional':
-        return Professional.fromJson(json);
+        return mafia_nights.Professional.fromJson(json);
       case 'mafia_nights.mayor':
         return Mayor.fromJson(json);
       case 'mafia_nights.detective':
-        return Detective.fromJson(json);
+        return mafia_nights.Detective.fromJson(json);
       case 'mafia_nights.therapist':
         return Therapist.fromJson(json);
       case 'mafia_nights.die_hard':
         return DieHard.fromJson(json);
       case 'mafia_nights.citizen':
         return mafia_nights.Citizen.fromJson(json);
+
+      case 'zodiac.alcapone':
+        return Alcapone.fromJson(json);
+      case 'zodiac.bomber':
+        return Bomber.fromJson(json);
+      case 'zodiac.magician':
+        return Magician.fromJson(json);
+      case 'zodiac.mafia':
+        return zodiac.Mafia.fromJson(json);
+      case 'zodiac.doctor':
+        return zodiac.Doctor.fromJson(json);
+      case 'zodiac.professional':
+        return zodiac.Professional.fromJson(json);
+      case 'zodiac.ocean':
+        return Ocean.fromJson(json);
+      case 'zodiac.detective':
+        return zodiac.Detective.fromJson(json);
+      case 'zodiac.body_guard':
+        return BodyGuard.fromJson(json);
+      case 'zodiac.musketeer':
+        return Musketeer.fromJson(json);
+      case 'zodiac.citizen':
+        return zodiac.Citizen.fromJson(json);
+      case 'zodiac.zodiac':
+        return Zodiac.fromJson(json);
+
       default:
         return Role();
     }
   }
-  
 
   Map<String, dynamic> toJson() {
     return {
@@ -110,8 +133,7 @@ class Role {
     };
   }
 
-  void nightAction(Player? player,{int? action}) {}
-
+  void nightAction(Player? player, {int? action}) {}
 
   // TODO: mafia kos?? on this subject remember to add alive bool in function argument to filter the players by
   void setAvailablePlayers() {

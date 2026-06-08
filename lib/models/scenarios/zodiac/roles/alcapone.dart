@@ -6,10 +6,9 @@ part 'alcapone.g.dart';
 
 @JsonSerializable()
 class Alcapone extends Role {
-
   Alcapone() {
     name = "آل کاپون";
-    // description if needed
+    description = "salam";
     roleSide = RoleSide.mafia;
     cardImagePath = "lib/images/roles/godfather.jpg";
   }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/themes/app_color.dart';
 
 class DropdownBox extends StatelessWidget {
@@ -16,13 +17,12 @@ class DropdownBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    options.add("زودیاک (به‌زودی)");
-    options.add("ال‌کلاسیکو (به‌زودی)");
+    options.add("دن کاپو (به‌زودی)");
     return SizedBox(
       width: 140,
       height: 40,
       child: DropdownButtonFormField<String>(
-          value: selectedItem,
+          initialValue: selectedItem,
           onChanged: (String? selectedItem) => onSelect(selectedItem, varName),
           isExpanded: true,
           dropdownColor: const Color(0xFF382E2E),
@@ -43,7 +43,7 @@ class DropdownBox extends StatelessWidget {
           items: options.asMap().entries.map<DropdownMenuItem<String>>((entry) {
             int index = entry.key;
             String value = entry.value;
-            bool isDisabled = index > 1;
+            bool isDisabled = index >= Scenario.getScenarioNames().length;
             return DropdownMenuItem<String>(
               value: isDisabled ? null : value,
               enabled: !isDisabled,
