@@ -5,6 +5,7 @@ import 'package:mafia_killer/models/role.dart';
 import 'package:mafia_killer/models/role_side.dart';
 
 import 'package:json_annotation/json_annotation.dart';
+import 'package:mafia_killer/models/ui_player_status.dart';
 
 part 'musketeer.g.dart';
 
@@ -36,6 +37,15 @@ class Musketeer extends Role {
           : NightEvent.fakeGunByMusketeer] = [player];
       remainingAbility--;
       if (isReal) hasRealGun = false;
+    }
+  }
+
+  @override
+  void setAvailablePlayers() {
+    for (Player player in Player.inGamePlayers) {
+      if (player.role!.name is Musketeer) {
+        player.uiPlayerStatus = UIPlayerStatus.untargetable;
+      }
     }
   }
 

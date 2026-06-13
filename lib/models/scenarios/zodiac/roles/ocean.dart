@@ -5,13 +5,13 @@ import 'package:mafia_killer/models/role.dart';
 import 'package:mafia_killer/models/role_side.dart';
 
 import 'package:json_annotation/json_annotation.dart';
+import 'package:mafia_killer/models/ui_player_status.dart';
 
 part 'ocean.g.dart';
 
 @JsonSerializable()
 class Ocean extends Role {
   int remainingAbility = 2;
-
 
   Ocean() {
     name = "اوشن";
@@ -25,12 +25,20 @@ class Ocean extends Role {
   @override
   Map<String, dynamic> toJson() => _$OceanToJson(this);
 
-
   @override
   void nightAction(Player? player, {int? action}) {
     if (player != null) {
       Scenario.currentScenario.nightEvents[NightEvent.awakedByOcean] = [player];
       remainingAbility--;
+    }
+  }
+
+  @override
+  void setAvailablePlayers() {
+    for (Player player in Player.inGamePlayers) {
+      if (player.role!.name is Ocean) {
+        player.uiPlayerStatus = UIPlayerStatus.untargetable;
+      }
     }
   }
 

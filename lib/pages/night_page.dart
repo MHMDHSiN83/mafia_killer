@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 import 'package:mafia_killer/components/call_role.dart';
 import 'package:mafia_killer/components/dialogboxes/bomber_dialogbox.dart';
 import 'package:mafia_killer/components/dialogboxes/confirmation_dialogbox.dart';
@@ -16,6 +17,7 @@ import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/models/night_event.dart';
 import 'package:mafia_killer/models/player_status.dart';
+import 'package:mafia_killer/models/scenarios/mafia_nights/mafia_nights_scenario.dart';
 import 'package:mafia_killer/models/scenarios/mafia_nights/roles/detective.dart';
 import 'package:mafia_killer/models/scenarios/godfather/godfather_scenario.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/godfather.dart';
@@ -25,6 +27,14 @@ import 'package:mafia_killer/models/ui_player_status.dart';
 import 'package:mafia_killer/themes/app_color.dart';
 import 'package:mafia_killer/utils/audio_manager.dart';
 import 'package:mafia_killer/utils/custom_snackbar.dart';
+
+import 'package:mafia_killer/models/scenarios/mafia_nights/models.dart'
+    as mafia_nights;
+
+import 'package:mafia_killer/models/scenarios/godfather/models.dart'
+    as godfather;
+
+import 'package:mafia_killer/models/scenarios/zodiac/models.dart' as zodiac;
 
 class NightPage extends StatefulWidget {
   const NightPage({super.key});
@@ -204,9 +214,16 @@ class _NightPageState extends State<NightPage> with WidgetsBindingObserver {
   void detectiveAction(Player player) {
     NightPage.targetPlayers = [];
     NightPage.targetPlayers.add(player);
-    Player.getPlayerByRoleType(Detective)!
-        .role!
-        .nightAction(NightPage.targetPlayers[0]);
+    if (Scenario.currentScenario is MafiaNightsScenario) {
+      Player.getPlayerByRoleType(mafia_nights.Detective)!
+          .role!
+          .nightAction(NightPage.targetPlayers[0]);
+    } else if (Scenario.currentScenario is ZodiacScenario) {
+      Player.getPlayerByRoleType(zodiac.Detective)!
+          .role!
+          .nightAction(NightPage.targetPlayers[0]);
+    }
+
     showDialog(
       context: context,
       builder: (context) {
@@ -506,7 +523,9 @@ class _NightPageState extends State<NightPage> with WidgetsBindingObserver {
                             Scenario.currentScenario.currentPlayerAtNight!.role!
                                 .hasAllSelected(
                                     NightPage.targetPlayers.length)) {
+                          Logger().d("message");
                           if (iterator.moveNext()) {
+                            Logger().d("naaaaaaaa");
                             text = iterator.current;
                             NightPage.targetPlayers = [];
                             for (Player player in Player.inGamePlayers) {

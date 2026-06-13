@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:logger/web.dart';
 import 'package:mafia_killer/databases/game_state_manager.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/databases/scenario.dart';
@@ -8,12 +9,11 @@ import 'package:mafia_killer/models/night_event.dart';
 import 'package:mafia_killer/models/player_status.dart';
 import 'package:mafia_killer/models/role.dart';
 import 'package:mafia_killer/models/role_side.dart';
-import 'package:mafia_killer/models/scenarios/mafia_nights/roles/detective.dart';
-import 'package:mafia_killer/models/scenarios/mafia_nights/roles/doctor.dart';
-import 'package:mafia_killer/models/scenarios/mafia_nights/roles/godfather.dart';
-import 'package:mafia_killer/models/scenarios/mafia_nights/roles/mafia.dart';
+import 'package:mafia_killer/models/scenarios/zodiac/roles/detective.dart';
+import 'package:mafia_killer/models/scenarios/zodiac/roles/doctor.dart';
+import 'package:mafia_killer/models/scenarios/zodiac/roles/mafia.dart';
 import 'package:mafia_killer/models/scenarios/mafia_nights/roles/mayor.dart';
-import 'package:mafia_killer/models/scenarios/mafia_nights/roles/professional.dart';
+import 'package:mafia_killer/models/scenarios/zodiac/roles/professional.dart';
 import 'package:mafia_killer/models/scenarios/zodiac/roles/alcapone.dart';
 import 'package:mafia_killer/models/scenarios/zodiac/roles/body_guard.dart';
 import 'package:mafia_killer/models/scenarios/zodiac/roles/bomber.dart';
@@ -104,7 +104,7 @@ class ZodiacScenario extends Scenario {
     List<String> introMafiaTeamAwakingTexts = [
       "تیم مافیا بیدار شن و همدیگه رو بشناسن",
     ];
-    Role? alcapone = getRoleByType(Godfather);
+    Role? alcapone = getRoleByType(Alcapone);
     Role? bomber = getRoleByType(Bomber);
     Role? magician = getRoleByType(Magician);
     Role? mafia = getRoleByType(Mafia);
@@ -253,7 +253,7 @@ class ZodiacScenario extends Scenario {
               GameStateManager.getCurrentStateNumber() % 2 == 1)) {
         continue;
       }
-
+      Logger().d(player.role!);
       ableToSelectTile = true;
       resetUIPlayerStatus();
       player.role!.setAvailablePlayers();
@@ -264,8 +264,9 @@ class ZodiacScenario extends Scenario {
           NightPage.buttonText = "تائید";
         }
         if (player.role! is Detective) {
+          Logger().d("here");
           NightPage.typeOfConfirmation = 3;
-          NightPage.buttonText = "تائید";
+          NightPage.buttonText = "تایید";
         }
         if (player.role! is Musketeer) {
           NightPage.typeOfConfirmation = 4;
@@ -275,12 +276,17 @@ class ZodiacScenario extends Scenario {
           NightPage.typeOfConfirmation = 5;
           NightPage.buttonText = "کص ممس";
         }
-
+        Logger().d("inja first");
         yield player.role!.awakingRole();
 
+        Logger().d("inja");
         NightPage.typeOfConfirmation = 0;
         for (Player p in NightPage.targetPlayers) {
-          player.role!.nightAction(p, action: (isRealGun!) ? 1 : 0);
+          if (player.role! is Musketeer) {
+            player.role!.nightAction(p, action: (isRealGun!) ? 1 : 0);
+            continue;
+          }
+          player.role!.nightAction(p);
         }
         ableToSelectTile = false;
         NightPage.buttonText = "خوابید";
@@ -432,7 +438,6 @@ class ZodiacScenario extends Scenario {
             : RoleSide.citizen;
   }
 
-  
   // TODO
   Iterable<String> noonNapAction({Function? bodyGuardChoiceBox}) sync* {
     NoonNapPage.buttonText = 'خوابیدن';

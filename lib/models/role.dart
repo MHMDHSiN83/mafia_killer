@@ -130,6 +130,7 @@ class Role {
       'roleSide': roleSide.toString().split('.').last,
       'cardImagePath': cardImagePath,
       'characterImagePath': characterImagePath,
+      'slug': slug,
     };
   }
 
