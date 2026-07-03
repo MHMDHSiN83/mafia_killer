@@ -523,9 +523,7 @@ class _NightPageState extends State<NightPage> with WidgetsBindingObserver {
                             Scenario.currentScenario.currentPlayerAtNight!.role!
                                 .hasAllSelected(
                                     NightPage.targetPlayers.length)) {
-                          Logger().d("message");
                           if (iterator.moveNext()) {
-                            Logger().d("naaaaaaaa");
                             text = iterator.current;
                             NightPage.targetPlayers = [];
                             for (Player player in Player.inGamePlayers) {

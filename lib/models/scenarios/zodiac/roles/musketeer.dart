@@ -58,4 +58,11 @@ class Musketeer extends Role {
   bool hasAbility() {
     return hasRealGun;
   }
+
+  @override
+  List<String> roleDetails() {
+    return [
+      " تیر جنگی: ${hasRealGun ? 1 : 0}\n تیر مشقی: ${remainingAbility - (hasRealGun ? 1 : 0)}"
+    ];
+  }
 }

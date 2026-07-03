@@ -65,15 +65,16 @@ class ZodiacScenario extends Scenario {
 
   @override
   Iterable<String> callRolesIntroNight({Function? independantBox}) sync* {
+    ableToSelectTile = false;
+    currentPlayerAtNight = Player.inGamePlayers.first;
+
+    resetUIPlayerStatus();
+
     if (doesIndependantRoleParticipate()) {
       Player zodiacPlayer = Player.getPlayerByRoleType(Zodiac)!;
       yield zodiacPlayer.role!.introAwakingRole();
       yield zodiacPlayer.role!.introSleepRoleText();
     }
-
-    ableToSelectTile = false;
-    currentPlayerAtNight = Player.inGamePlayers.first;
-    resetUIPlayerStatus();
 
     List<String> introMafiaTeamAwakingTexts = getIntroMafiaTeamAwakingTexts();
     List<Role> introCitizenTeamRoles = getIntroCitizenTeamRoles();
@@ -199,8 +200,13 @@ class ZodiacScenario extends Scenario {
       NightPage.buttonText = '';
       currentPlayerAtNight = player;
       if (player.hasAbility()) {
+        if (player.role! is Bomber) {
+          NightPage.buttonText = "هیچکس";
+        }
         yield player.role!.awakingRole();
-        player.role!.nightAction(NightPage.targetPlayers[0]);
+        for (Player p in NightPage.targetPlayers) {
+          player.role!.nightAction(p);
+        }
         ableToSelectTile = false;
       } else {
         if (!isAnyTargetable()) {
@@ -253,7 +259,6 @@ class ZodiacScenario extends Scenario {
               GameStateManager.getCurrentStateNumber() % 2 == 1)) {
         continue;
       }
-      Logger().d(player.role!);
       ableToSelectTile = true;
       resetUIPlayerStatus();
       player.role!.setAvailablePlayers();
@@ -264,7 +269,6 @@ class ZodiacScenario extends Scenario {
           NightPage.buttonText = "تائید";
         }
         if (player.role! is Detective) {
-          Logger().d("here");
           NightPage.typeOfConfirmation = 3;
           NightPage.buttonText = "تایید";
         }
@@ -272,14 +276,9 @@ class ZodiacScenario extends Scenario {
           NightPage.typeOfConfirmation = 4;
           NightPage.buttonText = "مافیاکص";
         }
-        if (player.role! is Bomber) {
-          NightPage.typeOfConfirmation = 5;
-          NightPage.buttonText = "کص ممس";
-        }
-        Logger().d("inja first");
+
         yield player.role!.awakingRole();
 
-        Logger().d("inja");
         NightPage.typeOfConfirmation = 0;
         for (Player p in NightPage.targetPlayers) {
           if (player.role! is Musketeer) {
@@ -340,10 +339,12 @@ class ZodiacScenario extends Scenario {
     Player? shotByProfessional = getFirstPlayer(NightEvent.shotByProfessional);
     Player? shotByZodiac = getFirstPlayer(NightEvent.shotByZodiac);
     Player? bombedByBomber = getFirstPlayer(NightEvent.bombedByBomber);
+    Player? awakedByOcean = getFirstPlayer(NightEvent.awakedByOcean);
 
     List<Player> savedByDoctor = nightEvents[NightEvent.savedByDoctor] ?? [];
     Player? professional = Player.getPlayerByRoleType(Professional);
     Player? zodiac = Player.getPlayerByRoleType(Zodiac);
+    Player? ocean = Player.getPlayerByRoleType(Ocean);
 
     // mafia shot process -> Done
     if (shotByMafia != null) {
@@ -391,6 +392,14 @@ class ZodiacScenario extends Scenario {
         bombedByBomber.playerStatus != PlayerStatus.dead &&
         bombedByBomber.playerStatus != PlayerStatus.removed) {
       report.add("بمب جلوی ${bombedByBomber.name} قرار گرفت.");
+    }
+
+    // ocean process
+    if (awakedByOcean != null) {
+      if (awakedByOcean.role!.roleSide != RoleSide.citizen) {
+        ocean!.playerStatus = PlayerStatus.dead;
+        report.add("${ocean.name} کشته شد.");
+      }
     }
 
     if (report.isEmpty) {

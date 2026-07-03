@@ -37,14 +37,7 @@ class Bomber extends Role {
   }
 
   @override
-  void setAvailablePlayers() {
-    for (Player player in Player.inGamePlayers) {
-      if (player.role!.roleSide == RoleSide.mafia) {
-        player.uiPlayerStatus = UIPlayerStatus.untargetable;
-      }
-    }
-  }
-
+  void setAvailablePlayers() {}
 
   @override
   String awakingRole() {

@@ -116,7 +116,6 @@ class Scenario {
   static List<String> getScenarioNames() {
     List<String> result = [];
     for (Scenario scenario in scenarios) {
-      Logger().d(scenario.name);
       result.add(scenario.name);
     }
     return result;
@@ -134,7 +133,6 @@ class Scenario {
   static Future<void> loadScenariosFromString(String jsonString) async {
     final List<dynamic> jsonData = jsonDecode(jsonString);
     scenarios = jsonData.map((s) => Scenario.fromJson(s)).toList();
-    Logger().d(scenarios[2].roles.length);
   }
 
   static Future<void> getScenariosFromDatabase() async {
@@ -259,7 +257,6 @@ class Scenario {
       return null;
     } else {
       for (Role role in roles) {
-        Logger().d(role.name);
         if (role.runtimeType == type) {
           return role;
         }
