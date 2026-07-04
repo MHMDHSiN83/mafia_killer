@@ -70,7 +70,7 @@ class _DefenseVotingPageState extends State<DefenseVotingPage> {
           return settingsPage(context, 5);
         },
         leftButtonText: "صحبت دفاعیه",
-        rightButtonText: 'شب ${GameStateManager.getNextStateNumber()}',
+        rightButtonText: 'شب ${GameStateManager.getNextStateNumberPersian()}',
         leftButtonOnTap: () => Navigator.pop(context),
         rightButtonOnTap: () {
           switch (selectedPlayers.length) {

@@ -40,8 +40,7 @@ class FacedOffRolePage extends StatelessWidget {
             return settingsPage(context, 8);
           },
           leftButtonText: "کارت حرکت آخر",
-          rightButtonText:
-              'شب ${GameStateManager.getNextStateNumber()}',
+          rightButtonText: 'شب ${GameStateManager.getNextStateNumberPersian()}',
           leftButtonOnTap: () => Navigator.pop(context),
           rightButtonOnTap: () {
             GameStateManager.addLastMoveCardAction([
@@ -87,7 +86,8 @@ class FacedOffRolePage extends StatelessWidget {
               Expanded(
                   flex: 1,
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 25),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 10, vertical: 25),
                     child: CallRole(
                         text:
                             "${FaceOffPage.selectedPlayers[0].name} را بیدار کن و نقش جدیدشو بهش نشون بده",

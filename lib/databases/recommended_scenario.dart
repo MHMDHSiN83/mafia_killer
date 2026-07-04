@@ -4,6 +4,7 @@ import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/databases/scenario.dart';
 import 'package:mafia_killer/models/scenarios/mafia_nights/mafia_nights_scenario.dart';
 import 'package:mafia_killer/models/scenarios/godfather/godfather_scenario.dart';
+import 'package:mafia_killer/models/scenarios/zodiac/zodiac_scenario.dart';
 
 class RecommendedScenario {
   RecommendedScenario();
@@ -28,11 +29,15 @@ class RecommendedScenario {
         for (int i = 0; i < roleCountList.length; i++) {
           roleMap[roles[i]] = roleCountList[i];
         }
-        for (int i = 0;
-            i < lastMoveCardDistributions[playerCount].length;
-            i++) {
-          roleMap[lastMoveCards[i]] = lastMoveCardDistributions[playerCount][i];
+        if (lastMoveCardDistributions != null) {
+          for (int i = 0;
+              i < lastMoveCardDistributions[playerCount].length;
+              i++) {
+            roleMap[lastMoveCards[i]] =
+                lastMoveCardDistributions[playerCount][i];
+          }
         }
+
         combinedMap[int.parse(playerCount)] = roleMap;
         recommendedScenario[scenario["name"]] = combinedMap;
       });
@@ -44,6 +49,8 @@ class RecommendedScenario {
       return recommendedScenario['godfather']![Player.inGamePlayers.length];
     } else if (Scenario.currentScenario is MafiaNightsScenario) {
       return recommendedScenario['mafia_nights']![Player.inGamePlayers.length];
+    } else if (Scenario.currentScenario is ZodiacScenario) {
+      return recommendedScenario['zodiac']![Player.inGamePlayers.length];
     }
     return null;
   }

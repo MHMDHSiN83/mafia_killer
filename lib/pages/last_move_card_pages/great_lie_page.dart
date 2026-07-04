@@ -40,7 +40,7 @@ class GreatLiePage extends StatelessWidget {
             return settingsPage(context, 7);
           },
           leftButtonText: "کارت حرکت آخر",
-          rightButtonText: 'شب ${GameStateManager.getNextStateNumber()}',
+          rightButtonText: 'شب ${GameStateManager.getNextStateNumberPersian()}',
           leftButtonOnTap: () => Navigator.pop(context),
           rightButtonOnTap: () {
             GameStateManager.addLastMoveCardAction(
@@ -87,7 +87,8 @@ class GreatLiePage extends StatelessWidget {
               Expanded(
                 flex: 1,
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 25),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 25),
                   child: CallRole(
                       text:
                           "${Scenario.currentScenario.killedInDayPlayer!.name} قبل از بیرون رفتن از بازی باید یک دروغ بگه.",

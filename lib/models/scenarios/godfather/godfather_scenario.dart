@@ -206,6 +206,8 @@ class GodfatherScenario extends Scenario {
     return mafiaTeamAct[NightPage.mafiaTeamChoice];
   }
 
+
+  // TODO: make this method dynamic (constant role order like mafia nights)
   @override
   Iterable<String> mafiaTeamAction(
       {Function? mafiaChoiceBox, Function? noAbilityBox}) sync* {

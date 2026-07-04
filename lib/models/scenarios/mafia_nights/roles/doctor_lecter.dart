@@ -26,7 +26,7 @@ class DoctorLecter extends Role {
   Map<String, dynamic> toJson() => _$DoctorLecterToJson(this);
 
   @override
-  void nightAction(Player? player) {
+  void nightAction(Player? player, {int? action}) {
     if (player != null) {
       Scenario.currentScenario.nightEvents[NightEvent.savedByDoctorLecter] = [
         player

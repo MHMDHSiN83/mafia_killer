@@ -409,7 +409,7 @@ class MafiaNightsScenario extends Scenario {
     return RoleSide.citizen;
   }
 
-  String getNoonNapChoiceText() {
+ String getNoonNapChoiceText() {
     List<String> mafiaTeamAct = [
       "تیم مافیا به یک نفر شلیک کنه",
       "پدرخوانده کسی که میخواد امشب سلاخی کنه رو نشون بده و نقششو حدس بزنه",

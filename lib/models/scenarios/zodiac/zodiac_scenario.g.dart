@@ -57,17 +57,7 @@ ZodiacScenario _$ZodiacScenarioFromJson(Map<String, dynamic> json) =>
       ..explodedPlayer = json['explodedPlayer'] == null
           ? null
           : Player.fromJson(json['explodedPlayer'] as Map<String, dynamic>)
-      ..hasGuessedRightForBeautifulMind =
-          json['hasGuessedRightForBeautifulMind'] as bool
-      ..finalShotPlayerName = json['finalShotPlayerName'] as String?
-      ..permanentFinalShotPlayerName =
-          json['permanentFinalShotPlayerName'] as String?
-      ..redCarpetPlayerName = json['redCarpetPlayerName'] as String?
-      ..greenMilePlayerName = json['greenMilePlayerName'] as String?
-      ..permanentRedCarpetPlayerName =
-          json['permanentRedCarpetPlayerName'] as String?
-      ..permanentGreenMilePlayerName =
-          json['permanentGreenMilePlayerName'] as String?;
+      ..isRealGun = json['isRealGun'] as bool?;
 
 Map<String, dynamic> _$ZodiacScenarioToJson(ZodiacScenario instance) =>
     <String, dynamic>{
@@ -91,14 +81,7 @@ Map<String, dynamic> _$ZodiacScenarioToJson(ZodiacScenario instance) =>
       'bodyGuardGuess': instance.bodyGuardGuess,
       'playerGuess': instance.playerGuess,
       'explodedPlayer': instance.explodedPlayer,
-      'hasGuessedRightForBeautifulMind':
-          instance.hasGuessedRightForBeautifulMind,
-      'finalShotPlayerName': instance.finalShotPlayerName,
-      'permanentFinalShotPlayerName': instance.permanentFinalShotPlayerName,
-      'redCarpetPlayerName': instance.redCarpetPlayerName,
-      'greenMilePlayerName': instance.greenMilePlayerName,
-      'permanentRedCarpetPlayerName': instance.permanentRedCarpetPlayerName,
-      'permanentGreenMilePlayerName': instance.permanentGreenMilePlayerName,
+      'isRealGun': instance.isRealGun,
     };
 
 const _$NightEventEnumMap = {

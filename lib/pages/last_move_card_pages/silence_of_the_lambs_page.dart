@@ -62,7 +62,7 @@ class _SilenceOfTheLambsPageState extends State<SilenceOfTheLambsPage> {
           return settingsPage(context, 7);
         },
         leftButtonText: "کارت حرکت آخر",
-        rightButtonText: 'شب ${GameStateManager.getNextStateNumber()}',
+        rightButtonText: 'شب ${GameStateManager.getNextStateNumberPersian()}',
         leftButtonOnTap: () => Navigator.pop(context),
         rightButtonOnTap: () {
           if ((widget.selectedPlayers.length == 2 && isTwoSilenced) ||

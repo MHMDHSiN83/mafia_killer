@@ -25,7 +25,7 @@ class Joker extends Role {
   @override
   Map<String, dynamic> toJson() => _$JokerToJson(this);
   @override
-  void nightAction(Player? player) {
+  void nightAction(Player? player, {int? action}) {
     if (player != null) {
       Scenario.currentScenario.nightEvents[NightEvent.oppositedByJoker] = [player];
       lastPlayerName = player.name;

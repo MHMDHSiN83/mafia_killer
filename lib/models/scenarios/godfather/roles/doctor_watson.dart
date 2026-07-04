@@ -29,7 +29,7 @@ class DoctorWatson extends Role {
   Map<String, dynamic> toJson() => _$DoctorWatsonToJson(this);
 
   @override
-  void nightAction(Player? player) {
+  void nightAction(Player? player, {int? action}) {
     if (player != null) {
       Scenario.currentScenario
           .addPlayerToNightEvent(NightEvent.savedByDoctor, player);

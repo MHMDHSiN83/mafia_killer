@@ -58,13 +58,13 @@ class _BeautifulMindChooseRolePageState
           return settingsPage(context, 7);
         },
         leftButtonText: "کارت حرکت آخر",
-        rightButtonText: 'شب ${GameStateManager.getNextStateNumber()}',
+        rightButtonText: 'شب ${GameStateManager.getNextStateNumberPersian()}',
         leftButtonOnTap: () => Navigator.pop(context),
         rightButtonOnTap: () {
           if (isConfirmed && selectedPlayers.length == 1) {
-            GameStateManager.addLastMoveCardAction([
-              Scenario.currentScenario.killedInDayPlayer!
-            ], LastMoveCardPage.selectedLastMoveCard!);
+            GameStateManager.addLastMoveCardAction(
+                [Scenario.currentScenario.killedInDayPlayer!],
+                LastMoveCardPage.selectedLastMoveCard!);
             LastMoveCardPage.selectedLastMoveCard!.lastMoveCardAction([
               Player.getPlayerByName(
                   Scenario.currentScenario.killedInDayPlayer!.name)
@@ -116,7 +116,8 @@ class _BeautifulMindChooseRolePageState
             Expanded(
               flex: 1,
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 25),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 25),
                 child: CallRole(
                   text:
                       "${Scenario.currentScenario.killedInDayPlayer!.name} اگر نقش بازیکن رو درست حدس بزنی در بازی میمونی",
@@ -130,13 +131,15 @@ class _BeautifulMindChooseRolePageState
                               player: selectedPlayers[0],
                               guessedRight: () {
                                 isConfirmed = true;
-                                (Scenario.currentScenario as MafiaNightsScenario)
+                                (Scenario.currentScenario
+                                        as MafiaNightsScenario)
                                     .hasGuessedRightForBeautifulMind = true;
                                 Navigator.pop(context);
                               },
                               guessedWrong: () {
                                 isConfirmed = true;
-                                (Scenario.currentScenario as MafiaNightsScenario)
+                                (Scenario.currentScenario
+                                        as MafiaNightsScenario)
                                     .hasGuessedRightForBeautifulMind = false;
                                 Navigator.pop(context);
                               },

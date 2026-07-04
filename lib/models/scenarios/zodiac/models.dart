@@ -1,0 +1,12 @@
+export 'roles/alcapone.dart';
+export 'roles/body_guard.dart';
+export 'roles/bomber.dart';
+export 'roles/citizen.dart';
+export 'roles/detective.dart';
+export 'roles/doctor.dart';
+export 'roles/mafia.dart';
+export 'roles/magician.dart';
+export 'roles/musketeer.dart';
+export 'roles/ocean.dart';
+export 'roles/professional.dart';
+export 'roles/zodiac.dart';

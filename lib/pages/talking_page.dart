@@ -144,7 +144,7 @@ class _TalkingPageState extends State<TalkingPage> {
         label: args.isDefense ? '/defense_talking_page' : '/talking_page',
         pageTitle: args.isDefense
             ? 'صحبت دفاعیه'
-            : 'روز ${GameStateManager.getCurrentStateNumber()}',
+            : 'روز ${GameStateManager.getCurrentStateNumberPersian()}',
         settingsPage: () {
           return settingsPage(context, args.isDefense ? 4 : 2);
         },

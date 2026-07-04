@@ -104,7 +104,7 @@ class _LastMoveCardPageState extends State<LastMoveCardPage> {
                 nextPagePath: '/regular_voting_page',
                 seconds: GameSettings.currentGameSettings.mainSpeakTime,
                 leftButtonText:
-                    'روز ${GameStateManager.getPreviousStateNumber()}',
+                    'روز ${GameStateManager.getPreviousStateNumberPersian()}',
                 rightButtonText: 'رای گیری',
                 isDefense: false,
               ),

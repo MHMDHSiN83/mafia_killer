@@ -30,7 +30,7 @@ class Constantine extends Role {
   }
 
   @override
-  void nightAction(Player? player) {
+  void nightAction(Player? player, {int? action}) {
     if (player != null) {
       Scenario.currentScenario.nightEvents[NightEvent.revivedByConstantine] = [
         player

@@ -58,8 +58,7 @@ class _BeautifulMindChooseNostradamusPageState
           return settingsPage(context, 7);
         },
         leftButtonText: "کارت حرکت آخر",
-        rightButtonText:
-            'شب ${GameStateManager.getNextStateNumber()}',
+        rightButtonText: 'شب ${GameStateManager.getNextStateNumberPersian()}',
         leftButtonOnTap: () => Navigator.pop(context),
         rightButtonOnTap: () {
           if (isConfirmed && selectedPlayers.length == 1) {
@@ -119,7 +118,8 @@ class _BeautifulMindChooseNostradamusPageState
             Expanded(
               flex: 1,
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 25),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 25),
                 child: CallRole(
                   text:
                       "${Scenario.currentScenario.killedInDayPlayer!.name} اگر نوستراداموس بازی رو درست حدس بزنی در بازی میمونی",

@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/services.dart';
+import 'package:logger/web.dart';
 import 'package:mafia_killer/databases/player.dart';
 import 'package:mafia_killer/databases/recommended_scenario.dart';
 import 'package:mafia_killer/models/player_status.dart';
@@ -24,35 +25,39 @@ import 'package:mafia_killer/models/scenarios/mafia_nights/roles/joker.dart';
 import 'package:mafia_killer/models/scenarios/mafia_nights/roles/mayor.dart';
 import 'package:mafia_killer/models/scenarios/mafia_nights/roles/professional.dart';
 import 'package:mafia_killer/models/scenarios/mafia_nights/roles/therapist.dart';
-import 'package:mafia_killer/models/scenarios/mafia_nights/last_move_cards/beautiful_mind.dart'
-    as mafia_nights;
-import 'package:mafia_killer/models/scenarios/mafia_nights/roles/citizen.dart'
-    as mafia_nights;
-import 'package:mafia_killer/models/scenarios/mafia_nights/roles/mafia.dart'
-    as mafia_nights;
-import 'package:mafia_killer/models/scenarios/mafia_nights/roles/godfather.dart'
+
+import 'package:mafia_killer/models/scenarios/mafia_nights/models.dart'
     as mafia_nights;
 
-import 'package:mafia_killer/models/scenarios/godfather/godfather_scenario.dart';
-import 'package:mafia_killer/models/scenarios/godfather/last_move_cards/beautiful_mind.dart'
+import 'package:mafia_killer/models/scenarios/godfather/models.dart'
     as godfather;
+
+import 'package:mafia_killer/models/scenarios/zodiac/models.dart' as zodiac;
+
+import 'package:mafia_killer/models/scenarios/godfather/godfather_scenario.dart';
+
 import 'package:mafia_killer/models/scenarios/godfather/last_move_cards/face_off.dart';
 import 'package:mafia_killer/models/scenarios/godfather/last_move_cards/handcuffs.dart';
 import 'package:mafia_killer/models/scenarios/godfather/last_move_cards/reveal_identity.dart';
 import 'package:mafia_killer/models/scenarios/godfather/last_move_cards/silence_of_the_lambs.dart';
-import 'package:mafia_killer/models/scenarios/godfather/roles/citizen.dart'
-    as godfather;
+
 import 'package:mafia_killer/models/scenarios/godfather/roles/citizen_kane.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/constantine.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/doctor_watson.dart';
-import 'package:mafia_killer/models/scenarios/godfather/roles/godfather.dart'
-    as godfather;
+
 import 'package:mafia_killer/models/scenarios/godfather/roles/leon.dart';
-import 'package:mafia_killer/models/scenarios/godfather/roles/mafia.dart'
-    as godfather;
+
 import 'package:mafia_killer/models/scenarios/godfather/roles/matador.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/nostradamus.dart';
 import 'package:mafia_killer/models/scenarios/godfather/roles/saul_goodman.dart';
+import 'package:mafia_killer/models/scenarios/zodiac/roles/alcapone.dart';
+import 'package:mafia_killer/models/scenarios/zodiac/roles/body_guard.dart';
+import 'package:mafia_killer/models/scenarios/zodiac/roles/bomber.dart';
+import 'package:mafia_killer/models/scenarios/zodiac/roles/magician.dart';
+import 'package:mafia_killer/models/scenarios/zodiac/roles/musketeer.dart';
+import 'package:mafia_killer/models/scenarios/zodiac/roles/ocean.dart';
+import 'package:mafia_killer/models/scenarios/zodiac/roles/zodiac.dart';
+import 'package:mafia_killer/models/scenarios/zodiac/zodiac_scenario.dart';
 import 'package:mafia_killer/models/ui_player_status.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -90,6 +95,8 @@ class Scenario {
         return GodfatherScenario.fromJson(json);
       case 'شب‌های مافیا':
         return MafiaNightsScenario.fromJson(json);
+      case 'زودیاک':
+        return ZodiacScenario.fromJson(json);
       default:
         UnimplementedError('error');
         return Scenario();
@@ -131,7 +138,7 @@ class Scenario {
   static Future<void> getScenariosFromDatabase() async {
     filePath = await getFilePath();
     final file = File(filePath);
-    final bool useAsset = false;
+    final bool useAsset = true;
     if (await file.exists() & !useAsset) {
       try {
         final jsonString = await file.readAsString();
@@ -466,16 +473,55 @@ class Scenario {
         case 'mafia_nights.great_lie':
           lastMoveCard = getLastMoveCardByType(GreatLie);
           break;
+
+        case 'zodiac.alcapone':
+          role = getRoleByType(Alcapone, searchInGmaeRoles: false)!;
+          break;
+        case 'zodiac.bomber':
+          role = getRoleByType(Bomber, searchInGmaeRoles: false)!;
+          break;
+        case 'zodiac.magician':
+          role = getRoleByType(Magician, searchInGmaeRoles: false)!;
+          break;
+        case 'zodiac.mafia':
+          role = getRoleByType(zodiac.Mafia, searchInGmaeRoles: false)!;
+          break;
+        case 'zodiac.doctor':
+          role = getRoleByType(zodiac.Doctor, searchInGmaeRoles: false)!;
+          break;
+        case 'zodiac.professional':
+          role = getRoleByType(zodiac.Professional, searchInGmaeRoles: false)!;
+          break;
+        case 'zodiac.ocean':
+          role = getRoleByType(Ocean, searchInGmaeRoles: false)!;
+          break;
+        case 'zodiac.detective':
+          role = getRoleByType(zodiac.Detective, searchInGmaeRoles: false)!;
+          break;
+        case 'zodiac.body_guard':
+          role = getRoleByType(BodyGuard, searchInGmaeRoles: false)!;
+          break;
+        case 'zodiac.musketeer':
+          role = getRoleByType(Musketeer, searchInGmaeRoles: false)!;
+          break;
+        case 'zodiac.citizen':
+          role = getRoleByType(zodiac.Citizen, searchInGmaeRoles: false)!;
+          break;
+        case 'zodiac.zodiac':
+          role = getRoleByType(Zodiac, searchInGmaeRoles: false)!;
+          break;
       }
 
       for (int i = 0; i < value; i++) {
         addRole(role);
       }
-      for (int i = 0; i < value; i++) {
-        addLastMoveCard(lastMoveCard);
-      }
-      for (int i = 0; i < value; i++) {
-        addRecommendedLastMoveCard(lastMoveCard);
+      if (lastMoveCard != null) {
+        for (int i = 0; i < value; i++) {
+          addLastMoveCard(lastMoveCard);
+        }
+        for (int i = 0; i < value; i++) {
+          addRecommendedLastMoveCard(lastMoveCard);
+        }
       }
     });
   }
