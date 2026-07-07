@@ -43,7 +43,7 @@ class Musketeer extends Role {
   @override
   void setAvailablePlayers() {
     for (Player player in Player.inGamePlayers) {
-      if (player.role!.name is Musketeer) {
+      if (player.role! is Musketeer) {
         player.uiPlayerStatus = UIPlayerStatus.untargetable;
       }
     }

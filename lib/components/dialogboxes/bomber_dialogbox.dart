@@ -34,7 +34,7 @@ class _BomberDialogboxState extends State<BomberDialogbox> {
   @override
   Widget build(BuildContext context) {
     return DialogboxTemplate(
-      firstButtonFunction: widget.setPassword(currentNumber + 1),
+      firstButtonFunction: () => widget.setPassword(currentNumber + 1),
       firstButtonText: "تایید",
       firstButtonColor: AppColors.darkgreenColor,
       secondButtonFunction: () => Navigator.pop(context),

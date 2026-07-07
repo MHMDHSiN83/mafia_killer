@@ -36,7 +36,7 @@ class Ocean extends Role {
   @override
   void setAvailablePlayers() {
     for (Player player in Player.inGamePlayers) {
-      if (player.role!.name is Ocean) {
+      if (player.role! is Ocean) {
         player.uiPlayerStatus = UIPlayerStatus.untargetable;
       }
     }

@@ -100,7 +100,7 @@ class Player extends ChangeNotifier {
 
   static List<Player> getAliveInGamePlayers() {
     return Player.inGamePlayers
-        .where((p) => (p.playerStatus != PlayerStatus.dead ||
+        .where((p) => (p.playerStatus != PlayerStatus.dead &&
             p.playerStatus != PlayerStatus.removed))
         .toList();
   }
